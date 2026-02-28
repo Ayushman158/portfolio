@@ -158,26 +158,26 @@ export default function Home() {
       </div>
 
       {/* Pill Navigation */}
-      <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[90%] max-w-5xl stagger-fade">
-        <div className="pill-nav shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative flex items-center justify-between px-6 py-3">
+      <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] sm:w-[90%] max-w-5xl stagger-fade">
+        <div className="pill-nav shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative flex items-center justify-between px-4 sm:px-6 py-3">
           {/* Logo Left */}
-          <Link href="/" className="flex items-center gap-2 z-10 group">
-            <img src="/assets/avatar.png" alt="Ayushman Bharadwaj" className="w-10 h-10 md:w-12 md:h-12 object-contain object-bottom transition-transform duration-300 group-hover:scale-105" />
+          <Link href="/" className="flex items-center gap-2 z-10 group flex-shrink-0">
+            <img src="/assets/avatar.png" alt="Ayushman Bharadwaj" className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain object-bottom transition-transform duration-300 group-hover:scale-105" />
           </Link>
 
-          {/* Centered Links (Absolute relative to pill) */}
-          <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-8">
-            <Link href="#work" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
+          {/* Centered Links */}
+          <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-4 sm:gap-6 md:gap-8 w-max">
+            <Link href="#work" className="text-xs sm:text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
               Work
             </Link>
-            <Link href="/resume" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
+            <Link href="/resume" className="text-xs sm:text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
               Resume
             </Link>
           </div>
 
           {/* CTA Right */}
-          <div ref={magnetBtn} className="relative inline-block cursor-pointer z-10">
-            <Link href="mailto:ayushman15899@gmail.com" className="px-4 py-2 md:px-5 md:py-2 text-sm font-medium text-white bg-blue-500 rounded-full shadow-md flex items-center justify-center pointer-events-none">
+          <div ref={magnetBtn} className="relative inline-block cursor-pointer z-10 flex-shrink-0">
+            <Link href="mailto:ayushman15899@gmail.com" className="px-3 sm:px-4 py-2 md:px-5 md:py-2 text-xs sm:text-sm font-medium text-white bg-blue-500 rounded-full shadow-md flex items-center justify-center pointer-events-none">
               <span ref={magnetText} className="block pointer-events-none">Connect</span>
             </Link>
           </div>
@@ -186,16 +186,8 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#f8fafc] bg-architectural-grid">
-
-        {/* Top-Left Context */}
-        <div className="absolute top-28 left-6 md:left-12 z-20 overflow-hidden">
-          <span className="block text-xs font-mono font-bold tracking-[0.2em] text-slate-400 uppercase stagger-fade">
-            India · IND
-          </span>
-        </div>
-
         {/* Main Content Container */}
-        <div className="w-full mx-auto px-6 md:px-12 relative z-10 flex flex-col justify-center -translate-y-8">
+        <div className="w-full mx-auto px-6 md:px-12 relative z-10 flex flex-col justify-center translate-y-8 md:translate-y-12 mt-12">
           {/* Friendly Typography */}
           <div className="relative mix-blend-multiply w-full max-w-4xl mx-auto text-center">
             <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.3] md:leading-[1.2]">
