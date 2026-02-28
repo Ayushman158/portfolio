@@ -23,14 +23,10 @@ export default function Home() {
     // 1. Custom Cursor Logic
     const xToDot = gsap.quickTo(cursorDot.current, "x", { duration: 0.1, ease: "power3" });
     const yToDot = gsap.quickTo(cursorDot.current, "y", { duration: 0.1, ease: "power3" });
-    const xToRing = gsap.quickTo(cursorRing.current, "x", { duration: 0.3, ease: "power3" });
-    const yToRing = gsap.quickTo(cursorRing.current, "y", { duration: 0.3, ease: "power3" });
 
     const moveCursor = (e) => {
       xToDot(e.clientX);
       yToDot(e.clientY);
-      xToRing(e.clientX);
-      yToRing(e.clientY);
     };
 
     window.addEventListener('mousemove', moveCursor);
@@ -39,10 +35,10 @@ export default function Home() {
     const interactiveEls = document.querySelectorAll('a, button, .interactive-target');
     interactiveEls.forEach(el => {
       el.addEventListener('mouseenter', () => {
-        gsap.to(cursorRing.current, { scale: 1.5, backdropFilter: 'blur(4px)', backgroundColor: 'rgba(14, 165, 233, 0.1)', duration: 0.3 });
+        gsap.to(cursorDot.current, { scale: 1.1, transformOrigin: 'top left', duration: 0.2 });
       });
       el.addEventListener('mouseleave', () => {
-        gsap.to(cursorRing.current, { scale: 1, backdropFilter: 'blur(0px)', backgroundColor: 'transparent', duration: 0.3 });
+        gsap.to(cursorDot.current, { scale: 1, transformOrigin: 'top left', duration: 0.2 });
       });
     });
 
@@ -137,8 +133,14 @@ export default function Home() {
 
       {/* Custom Cursor Elements */}
       <div className="hidden md:block">
-        <div ref={cursorDot} className="fixed top-0 left-0 w-2 h-2 rounded-full bg-blue-500 pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 mix-blend-difference"></div>
-        <div ref={cursorRing} className="fixed top-0 left-0 w-10 h-10 rounded-full border border-blue-400 pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-colors duration-300"></div>
+        <div ref={cursorDot} className="fixed top-0 left-0 pointer-events-none z-[9999] flex flex-col items-start drop-shadow-md">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 1L8 20.5L11 12.5L19 9.5L1 1Z" fill="#0ea5e9" stroke="white" strokeWidth="1.5" strokeLinejoin="round" />
+          </svg>
+          <div className="bg-[#0ea5e9] text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md ml-3 -mt-1 whitespace-nowrap">
+            Ayushman
+          </div>
+        </div>
       </div>
 
       {/* Pill Navigation */}
