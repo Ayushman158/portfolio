@@ -207,25 +207,31 @@ export default function Home() {
               </div>
             </h1>
 
-            <div className="mt-12 flex justify-center stagger-fade">
-              <button
+            {/* Skill Pills */}
+            <div className="flex flex-wrap justify-center gap-3 md:gap-4 mt-6 md:mt-8 stagger-fade">
+              <span className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold bg-blue-50 text-blue-600 border border-blue-100 shadow-sm">
+                UX/UI Design
+              </span>
+              <span className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold bg-purple-50 text-purple-600 border border-purple-100 shadow-sm">
+                Design Systems
+              </span>
+              <span className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold bg-orange-50 text-orange-600 border border-orange-100 shadow-sm">
+                Vibe Coding
+              </span>
+            </div>
+
+            <div className="mt-16 flex justify-center stagger-fade w-full mx-auto pb-4">
+              <Link
+                href="#work"
                 onClick={(e) => {
                   e.preventDefault();
-                  if (navigator.share) {
-                    navigator.share({
-                      title: 'Ayushman Bharadwaj | Interaction Designer',
-                      url: window.location.href
-                    });
-                  } else {
-                    navigator.clipboard.writeText(window.location.href);
-                    alert('Link copied to clipboard!');
-                  }
+                  document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="interactive-target text-xs font-mono uppercase tracking-[0.2em] text-slate-400 hover:text-blue-600 transition-colors flex flex-col items-center gap-2 group"
+                className="interactive-target text-xs font-mono uppercase tracking-[0.2em] text-slate-400 hover:text-blue-600 transition-colors flex flex-col items-center gap-2 group mx-auto cursor-pointer"
               >
-                <span>Share Portfolio</span>
+                <span>Scroll down</span>
                 <i className="ph ph-arrow-down text-lg animate-bounce group-hover:text-blue-600"></i>
-              </button>
+              </Link>
             </div>
           </div>
         </div>
