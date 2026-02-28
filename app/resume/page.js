@@ -17,13 +17,11 @@ export default function Resume() {
                 <header className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 stagger-fade">
 
                     {/* Circular Image Container */}
-                    <div className="relative w-48 h-48 sm:w-64 sm:h-64 shrink-0 rounded-full bg-[#3b469b] overflow-hidden shadow-xl border-4 border-white flex items-end justify-center">
-                        {/* Note: The user's image is a cutout on a blue circle. We are using the existing hero image heavily masked/rounded into the circle to approximate it. */}
-                        <div className="absolute inset-0 bg-[#3b469b]"></div>
+                    <div className="relative w-48 h-48 sm:w-64 sm:h-64 shrink-0 rounded-full bg-[#3b469b] overflow-hidden shadow-xl border-4 border-white flex items-center justify-center">
                         <img
-                            src="/assets/hero.png"
+                            src="/assets/avatar.png"
                             alt="Ayushman Bharadwaj"
-                            className="relative w-[110%] h-auto -bottom-4 mix-blend-luminosity opacity-90 transition-transform duration-700 hover:opacity-100 hover:scale-[1.05]"
+                            className="relative w-full h-full object-cover transition-transform duration-700 hover:scale-[1.05]"
                         />
                     </div>
 
