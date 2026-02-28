@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayushman Bharadwaj | Designer & Developer</title>
+    <meta name="description" content="Portfolio of Ayushman Bharadwaj, a UI/UX Designer and Frontend Developer specializing in end-to-end product builds.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Background Blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <a href="index.html" class="logo">Ayushman<span>.</span></a>
+            <a href="#work" class="btn btn-secondary">View Work</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container relative z-10">
+            <div class="fade-in-up">
+                <h1 style="margin-bottom: 1.5rem; max-width: 800px;">
+                    Designing & Building Digital Products <span style="color: var(--accent);">That Actually Ship.</span>
+                </h1>
+            </div>
+            <div class="fade-in-up stagger-1">
+                <p style="max-width: 600px; margin-bottom: 2.5rem; font-size: 1.25rem;">
+                    I bridge the gap between pixel-perfect aesthetics and robust engineering. Specializing in UI/UX design, frontend development, and rapid product building.
+                </p>
+            </div>
+            <div class="fade-in-up stagger-2">
+                <a href="#work" class="btn btn-primary">See Selected Works</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Section -->
+    <section id="work" class="container relative z-10">
+        <div class="fade-in-up">
+            <h2>Selected Digital Products</h2>
+            <p>End-to-end projects from user research to shipped code.</p>
+        </div>
+
+        <div class="portfolio-grid">
+            <!-- Hoychoy Cafe Project Card -->
+            <a href="case-study.html" class="portfolio-card fade-in-up stagger-1">
+                <img src="assets/hero.png" alt="Hoychoy Cafe Delivery App Interface" class="portfolio-card-img" />
+                <div class="portfolio-card-content">
+                    <div class="portfolio-tags">
+                        <span class="tag">UI/UX Design</span>
+                        <span class="tag">Frontend</span>
+                    </div>
+                    <h3 class="portfolio-card-title">Hoychoy Cafe</h3>
+                    <p class="portfolio-card-desc">An end-to-end hyperlocal delivery platform engineered for frictionless ordering in tier-3 cities.</p>
+                    <span class="read-more">
+                        Read Case Study
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </span>
+                </div>
+            </a>
+            
+            <!-- Placeholder Card for future projects -->
+            <div class="portfolio-card fade-in-up stagger-2" style="cursor: default; opacity: 0.5;">
+                <div class="portfolio-card-img" style="background: var(--bg-glass); display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">
+                    Coming Soon
+                </div>
+                <div class="portfolio-card-content">
+                    <div class="portfolio-tags">
+                        <span class="tag">Research</span>
+                        <span class="tag">AI Integration</span>
+                    </div>
+                    <h3 class="portfolio-card-title">Project Delta</h3>
+                    <p class="portfolio-card-desc">Advanced data processing dashboard with AI-driven insights and complex data visualization.</p>
+                    <span class="read-more" style="color: var(--text-muted);">
+                        In Development
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="padding: 4rem 0; border-top: 1px solid var(--border-color); margin-top: 4rem; text-align: center; color: var(--text-muted);">
+        <div class="container relative z-10">
+            <h2 class="logo" style="margin-bottom: 1rem; color: var(--text-primary); font-size: 2rem;">Ayushman<span>.</span></h2>
+            <p>© 2026 Ayushman Bharadwaj. Crafting digital experiences.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>

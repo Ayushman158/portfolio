@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --background: #f8fafc;
+        --foreground: #0f172a;
+        --primary: #0ea5e9;
+        --primary-foreground: #ffffff;
+        --secondary: #e2e8f0;
+        --secondary-foreground: #0f172a;
+        --border: #e2e8f0;
+        --glass-bg: rgba(255, 255, 255, 0.7);
+        --glass-border: rgba(255, 255, 255, 0.5);
+    }
+
+    body {
+        background-color: var(--background);
+        color: var(--foreground);
+        font-family: var(--font-inter), sans-serif;
+    }
+
+    /* Hide default cursor on desktop where pointer is fine */
+    @media (hover: hover) and (pointer: fine) {
+
+        *,
+        body,
+        html {
+            cursor: none !important;
+        }
+    }
+}
+
+@layer components {
+    .glass-panel {
+        @apply bg-white/70 backdrop-blur-md border border-white/50 shadow-lg rounded-2xl;
+    }
+
+    .pill-nav {
+        @apply bg-white/80 backdrop-blur-lg border border-white/60 shadow-md rounded-2xl md:rounded-full px-4 py-3 md:px-6 md:py-3 flex flex-col md:flex-row items-center justify-between;
+    }
+}
+
+@layer utilities {
+    .text-gradient {
+        background: linear-gradient(to right, #0ea5e9, #3b82f6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .bg-architectural-grid {
+        background-image: repeating-linear-gradient(90deg,
+                rgba(15, 23, 42, 0.04) 0px,
+                rgba(15, 23, 42, 0.04) 1px,
+                transparent 1px,
+                transparent calc(100vw / 6));
+    }
+}
+
+::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
