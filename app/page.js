@@ -159,25 +159,25 @@ export default function Home() {
 
       {/* Pill Navigation */}
       <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] sm:w-[90%] max-w-5xl stagger-fade">
-        <div className="pill-nav shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative flex items-center justify-between px-4 sm:px-6 py-3">
+        <div className="bg-white/80 backdrop-blur-lg border border-white/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-2xl md:rounded-full relative flex flex-row items-center justify-between px-3 md:px-6 py-2 md:py-3">
           {/* Logo Left */}
-          <Link href="/" className="flex items-center gap-2 z-10 group flex-shrink-0">
+          <Link href="/" className="flex items-center z-10 group flex-shrink-0">
             <img src="/assets/avatar.png" alt="Ayushman Bharadwaj" className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain object-bottom transition-transform duration-300 group-hover:scale-105" />
           </Link>
 
           {/* Centered Links */}
-          <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-4 sm:gap-6 md:gap-8 w-max">
-            <Link href="#work" className="text-xs sm:text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
+          <div className="flex items-center justify-center gap-3 sm:gap-6 md:gap-8 flex-1 px-2 md:px-4 shrink min-w-0">
+            <Link href="#work" className="text-[11px] sm:text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors whitespace-nowrap">
               Work
             </Link>
-            <Link href="/resume" className="text-xs sm:text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
+            <Link href="/resume" className="text-[11px] sm:text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors whitespace-nowrap">
               Resume
             </Link>
           </div>
 
           {/* CTA Right */}
           <div ref={magnetBtn} className="relative inline-block cursor-pointer z-10 flex-shrink-0">
-            <Link href="mailto:ayushman15899@gmail.com" className="px-3 sm:px-4 py-2 md:px-5 md:py-2 text-xs sm:text-sm font-medium text-white bg-blue-500 rounded-full shadow-md flex items-center justify-center pointer-events-none">
+            <Link href="mailto:ayushman15899@gmail.com" className="px-3 sm:px-4 py-2 md:px-5 md:py-2 text-[11px] sm:text-sm font-medium text-white bg-blue-500 rounded-full shadow-md flex items-center justify-center pointer-events-none whitespace-nowrap">
               <span ref={magnetText} className="block pointer-events-none">Connect</span>
             </Link>
           </div>
