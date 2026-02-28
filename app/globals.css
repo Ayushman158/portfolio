@@ -51,11 +51,8 @@
     }
 
     .bg-architectural-grid {
-        background-image: repeating-linear-gradient(90deg,
-                rgba(15, 23, 42, 0.04) 0px,
-                rgba(15, 23, 42, 0.04) 1px,
-                transparent 1px,
-                transparent calc(100vw / 6));
+        background-image: radial-gradient(rgba(148, 163, 184, 0.4) 1px, transparent 1px);
+        background-size: 20px 20px;
     }
 }
 
