@@ -299,13 +299,13 @@ export default function Home() {
             {/* Project 1: FieldNote Pipeline */}
             <Link href="https://fieldnote-ten.vercel.app/" target="_blank" className="bg-slate-900 rounded-3xl p-6 border border-slate-800 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group card-reveal interactive-target flex flex-col relative overflow-hidden">
               {/* Background Accents */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 group-hover:bg-emerald-500/20 transition-colors duration-700"></div>
+              <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-500/20 transition-colors duration-700"></div>
 
-              <div className="relative aspect-video bg-slate-800/80 rounded-2xl mb-6 flex items-center justify-center p-2 border border-slate-700 overflow-hidden group-hover:border-emerald-500/30 transition-colors">
+              <div className="relative aspect-video bg-slate-800/80 rounded-2xl mb-6 flex items-center justify-center p-2 border border-slate-700 overflow-hidden group-hover:border-blue-500/30 transition-colors">
                 <img src="/assets/fieldnote-ss.png" alt="FieldNote AI Framework" className="w-full h-full object-cover rounded-xl shadow-lg opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
               </div>
               <div className="mt-auto relative z-10">
-                <h4 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors flex items-center gap-2">FieldNote AI <i className="ph ph-arrow-up-right opacity-0 -translate-x-2 translate-y-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform"></i></h4>
+                <h4 className="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors flex items-center gap-2">FieldNote AI <i className="ph ph-arrow-up-right opacity-0 -translate-x-2 translate-y-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform"></i></h4>
                 <p className="text-slate-400 text-sm leading-relaxed mb-4">Connecting Web Speech API to Gemini 1.5 Flash to automatically parse and tag unstructured user interview transcripts.</p>
                 <div className="flex gap-2">
                   <span className="px-2.5 py-1 bg-slate-800 border border-slate-700 text-[10px] font-bold uppercase tracking-wider text-slate-300 rounded-md">Next.js</span>
@@ -360,19 +360,19 @@ export default function Home() {
                     <span className="font-medium text-slate-700 group-hover:text-blue-700">In the Gym</span>
                   </div>
 
-                  <div className="interactive-target group cursor-none px-5 py-3 rounded-full border border-slate-200 bg-white shadow-sm flex items-center gap-2 transition-all duration-300 hover:border-cyan-300 hover:bg-cyan-50 hover:text-cyan-600">
-                    <i className="ph ph-swimming-pool text-xl text-slate-400 group-hover:text-cyan-500 transition-colors"></i>
-                    <span className="font-medium text-slate-700 group-hover:text-cyan-700">In the Pool</span>
+                  <div className="interactive-target group cursor-none px-5 py-3 rounded-full border border-slate-200 bg-white shadow-sm flex items-center gap-2 transition-all duration-300 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600">
+                    <i className="ph ph-swimming-pool text-xl text-slate-400 group-hover:text-blue-500 transition-colors"></i>
+                    <span className="font-medium text-slate-700 group-hover:text-blue-700">In the Pool</span>
                   </div>
 
-                  <div className="interactive-target group cursor-none px-5 py-3 rounded-full border border-slate-200 bg-white shadow-sm flex items-center gap-2 transition-all duration-300 hover:border-purple-300 hover:bg-purple-50 hover:text-purple-600">
-                    <i className="ph ph-guitar text-xl text-slate-400 group-hover:text-purple-500 transition-colors"></i>
-                    <span className="font-medium text-slate-700 group-hover:text-purple-700">Playing Guitar</span>
+                  <div className="interactive-target group cursor-none px-5 py-3 rounded-full border border-slate-200 bg-white shadow-sm flex items-center gap-2 transition-all duration-300 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600">
+                    <i className="ph ph-guitar text-xl text-slate-400 group-hover:text-blue-500 transition-colors"></i>
+                    <span className="font-medium text-slate-700 group-hover:text-blue-700">Playing Guitar</span>
                   </div>
 
-                  <div className="interactive-target group cursor-none px-5 py-3 rounded-full border border-slate-200 bg-white shadow-sm flex items-center gap-2 transition-all duration-300 hover:border-amber-300 hover:bg-amber-50 hover:text-amber-600">
-                    <i className="ph ph-coffee text-xl text-slate-400 group-hover:text-amber-500 transition-colors"></i>
-                    <span className="font-medium text-slate-700 group-hover:text-amber-700">Having Coffee</span>
+                  <div className="interactive-target group cursor-none px-5 py-3 rounded-full border border-slate-200 bg-white shadow-sm flex items-center gap-2 transition-all duration-300 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600">
+                    <i className="ph ph-coffee text-xl text-slate-400 group-hover:text-blue-500 transition-colors"></i>
+                    <span className="font-medium text-slate-700 group-hover:text-blue-700">Having Coffee</span>
                   </div>
                 </div>
 

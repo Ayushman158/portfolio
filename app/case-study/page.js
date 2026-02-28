@@ -339,102 +339,177 @@ export default function CaseStudy() {
                         This project wasn't just designed; it was <em className="text-slate-900 font-medium">built end-to-end</em>. It exemplifies the power of <strong>Vibe Coding</strong>—using rapid, intent-driven, AI-assisted development to move from UX concept to shipping production logic.
                     </p>
 
-                    <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200 shadow-sm overflow-x-auto relative">
-                        <div className="mb-6 sticky left-0 min-w-[250px]">
+                    <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200 shadow-sm relative overflow-hidden">
+                        <div className="mb-8">
                             <h3 className="text-xl font-bold text-slate-900 mb-2">Service Blueprint</h3>
-                            <p className="text-sm text-slate-600">
-                                Mapping the Zero-Subscription Ecosystem: How user actions trigger frontstage UI, backstage serverless functions, and third-party integrations (Telegram & WhatsApp).
+                            <p className="text-sm text-slate-600 max-w-2xl">
+                                Mapping the Zero-Subscription Ecosystem: Flow of user actions into frontstage UI, backstage serverless functions, and third-party integrations.
                             </p>
                         </div>
 
-                        <div className="min-w-[800px] grid grid-cols-[160px_1fr_1fr_1fr_1fr] gap-4 text-sm mt-8 relative">
-                            {/* Headers */}
-                            <div className="font-bold text-slate-400 uppercase tracking-widest text-xs py-2 bg-white sticky left-0 z-10 px-2 flex items-center">Service Layer</div>
-                            <div className="font-bold text-slate-900 bg-slate-50 rounded-xl p-3 text-center">1. Discovery</div>
-                            <div className="font-bold text-slate-900 bg-slate-50 rounded-xl p-3 text-center">2. Selection</div>
-                            <div className="font-bold text-slate-900 bg-slate-50 rounded-xl p-3 text-center">3. Checkout</div>
-                            <div className="font-bold text-slate-900 bg-slate-50 rounded-xl p-3 text-center">4. Fulfillment</div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+                            {/* Phase 1: Discovery */}
+                            <div className="flex flex-col gap-4">
+                                <div className="bg-slate-50 border border-slate-200 p-4 rounded-2xl text-center">
+                                    <h4 className="font-bold text-slate-900 text-sm">1. Discovery</h4>
+                                </div>
 
-                            {/* Customer Actions */}
-                            <div className="font-bold text-blue-600 self-center bg-white sticky left-0 z-10 px-2">Customer Actions</div>
-                            <div className="bg-white border border-blue-100 p-4 rounded-xl shadow-sm relative text-center flex items-center justify-center">
-                                <p className="text-slate-700 font-medium tracking-tight">Scans QR or opens URL</p>
-                            </div>
-                            <div className="bg-white border border-blue-100 p-4 rounded-xl shadow-sm relative text-center flex items-center justify-center">
-                                <p className="text-slate-700 font-medium tracking-tight">Browses menu & adds items</p>
-                            </div>
-                            <div className="bg-white border-2 border-blue-400 p-4 rounded-xl shadow-md relative text-center flex items-center justify-center -translate-y-1">
-                                <p className="text-slate-900 font-bold tracking-tight">Approves GPS & Clicks 'Pay'</p>
-                            </div>
-                            <div className="bg-white border border-blue-100 p-4 rounded-xl shadow-sm relative text-center flex items-center justify-center">
-                                <p className="text-slate-700 font-medium tracking-tight">Sends pre-filled WhatsApp msg</p>
-                            </div>
-
-                            {/* Visibility Line */}
-                            <div className="col-span-5 h-px border-t border-dashed border-slate-300 my-2 relative">
-                                <span className="absolute -top-3 left-0 bg-white px-2 py-1 text-[10px] uppercase font-bold tracking-widest text-slate-400 sticky">Line of Visibility</span>
-                            </div>
-
-                            {/* Frontstage Actions */}
-                            <div className="font-bold text-amber-600 self-center bg-white sticky left-0 z-10 px-2">Frontstage Actions</div>
-                            <div className="bg-amber-50 border border-amber-100 p-4 rounded-xl text-amber-900 shadow-inner flex items-center justify-center text-center">
-                                <p>Next.js web app loads structure</p>
-                            </div>
-                            <div className="bg-amber-50 border border-amber-100 p-4 rounded-xl text-amber-900 shadow-inner flex items-center justify-center text-center">
-                                <p>Cart updates & out-of-stock items disable</p>
-                            </div>
-                            <div className="bg-amber-100 border border-amber-300 p-4 rounded-xl text-amber-900 shadow-sm relative flex items-center justify-center text-center">
-                                <p className="font-semibold text-amber-950">Displays automated distance-based delivery fee</p>
-                            </div>
-                            <div className="bg-amber-50 border border-amber-100 p-4 rounded-xl text-amber-900 shadow-inner flex items-center justify-center text-center">
-                                <p>Success screen with WhatsApp redirect button</p>
+                                {/* Customer */}
+                                <div>
+                                    <span className="block text-[10px] uppercase tracking-widest font-bold text-blue-500 mb-1 lg:hidden">Customer Action</span>
+                                    <div className="bg-white border border-slate-200 p-4 rounded-xl shadow-sm text-sm text-slate-700 h-full">
+                                        Scans table QR code or opens direct URL.
+                                    </div>
+                                </div>
+                                {/* Frontstage */}
+                                <div>
+                                    <span className="block text-[10px] uppercase tracking-widest font-bold text-slate-400 mb-1 lg:hidden">Frontstage UI</span>
+                                    <div className="bg-slate-50 border border-slate-100 p-4 rounded-xl text-sm text-slate-600 h-full">
+                                        Next.js app serves static shell instantly.
+                                    </div>
+                                </div>
+                                {/* Backstage */}
+                                <div>
+                                    <span className="block text-[10px] uppercase tracking-widest font-bold text-slate-400 mb-1 lg:hidden">Backstage Logic</span>
+                                    <div className="bg-slate-100 border border-slate-200 p-4 rounded-xl text-sm text-slate-700 h-full">
+                                        Vercel Edge Network routes the request globally.
+                                    </div>
+                                </div>
+                                {/* Process */}
+                                <div>
+                                    <span className="block text-[10px] uppercase tracking-widest font-bold text-slate-400 mb-1 lg:hidden">Support Process</span>
+                                    <div className="bg-slate-50 border border-slate-100 p-4 rounded-xl text-xs text-slate-500 h-full">
+                                        DNS resolution & SSL handshake.
+                                    </div>
+                                </div>
                             </div>
 
-                            {/* Visibility Line */}
-                            <div className="col-span-5 h-px border-t border-dashed border-slate-300 my-2 relative">
-                                <span className="absolute -top-3 left-0 bg-white px-2 py-1 text-[10px] uppercase font-bold tracking-widest text-slate-400 sticky">Line of Interaction</span>
+                            {/* Phase 2: Selection */}
+                            <div className="flex flex-col gap-4">
+                                <div className="bg-slate-50 border border-slate-200 p-4 rounded-2xl text-center">
+                                    <h4 className="font-bold text-slate-900 text-sm">2. Selection</h4>
+                                </div>
+
+                                {/* Customer */}
+                                <div>
+                                    <span className="block text-[10px] uppercase tracking-widest font-bold text-blue-500 mb-1 lg:hidden">Customer Action</span>
+                                    <div className="bg-white border border-slate-200 p-4 rounded-xl shadow-sm text-sm text-slate-700 h-full">
+                                        Browses digital menu and adds items to cart.
+                                    </div>
+                                </div>
+                                {/* Frontstage */}
+                                <div>
+                                    <span className="block text-[10px] uppercase tracking-widest font-bold text-slate-400 mb-1 lg:hidden">Frontstage UI</span>
+                                    <div className="bg-slate-50 border border-slate-100 p-4 rounded-xl text-sm text-slate-600 h-full">
+                                        Real-time cart updates and state management.
+                                    </div>
+                                </div>
+                                {/* Backstage */}
+                                <div>
+                                    <span className="block text-[10px] uppercase tracking-widest font-bold text-slate-400 mb-1 lg:hidden">Backstage Logic</span>
+                                    <div className="bg-slate-100 border border-slate-200 p-4 rounded-xl text-sm text-slate-700 h-full">
+                                        Local storage persists cart data cross-session.
+                                    </div>
+                                </div>
+                                {/* Process */}
+                                <div>
+                                    <span className="block text-[10px] uppercase tracking-widest font-bold text-slate-400 mb-1 lg:hidden">Support Process</span>
+                                    <div className="bg-slate-50 border border-slate-100 p-4 rounded-xl text-xs text-slate-500 h-full">
+                                        React Context API state triggers.
+                                    </div>
+                                </div>
                             </div>
 
-                            {/* Backstage Actions */}
-                            <div className="font-bold text-slate-800 self-center bg-white sticky left-0 z-10 px-2">Backstage Actions</div>
-                            <div className="bg-slate-50 p-4 rounded-xl text-slate-500 border border-slate-100 flex items-center justify-center text-center">
-                                <p>CDN routes request</p>
-                            </div>
-                            <div className="bg-slate-50 p-4 rounded-xl text-slate-500 border border-slate-100 flex items-center justify-center text-center">
-                                <p>Validates item availability locally</p>
-                            </div>
-                            <div className="bg-slate-900 p-4 rounded-xl text-white shadow-xl relative z-20 flex items-center justify-center text-center">
-                                <p className="font-bold">Next.js API POST compiles JSON invoice</p>
-                            </div>
-                            <div className="bg-sky-500 p-4 rounded-xl text-white shadow-md relative group flex flex-col items-center justify-center text-center">
-                                <i className="ph-fill ph-telegram-logo mb-1 text-2xl block text-sky-200"></i>
-                                <p className="font-medium text-sky-50 leading-snug tracking-tight">Bot pushes live order payload to Staff Group</p>
-                                {/* Diagonal connecting line (visual indicator) */}
-                                <div className="absolute top-1/2 -left-4 w-4 h-full border-t border-r border-sky-300 -z-10 rounded-tr-xl"></div>
+                            {/* Phase 3: Checkout */}
+                            <div className="flex flex-col gap-4">
+                                <div className="bg-slate-50 border border-slate-200 p-4 rounded-2xl text-center">
+                                    <h4 className="font-bold text-slate-900 text-sm">3. Checkout</h4>
+                                </div>
+
+                                {/* Customer */}
+                                <div>
+                                    <span className="block text-[10px] uppercase tracking-widest font-bold text-blue-500 mb-1 lg:hidden">Customer Action</span>
+                                    <div className="bg-blue-50 border border-blue-200 p-4 rounded-xl shadow-sm text-sm text-blue-900 font-bold h-full">
+                                        Approves GPS location & clicks 'Place Order'.
+                                    </div>
+                                </div>
+                                {/* Frontstage */}
+                                <div>
+                                    <span className="block text-[10px] uppercase tracking-widest font-bold text-slate-400 mb-1 lg:hidden">Frontstage UI</span>
+                                    <div className="bg-slate-50 border border-slate-100 p-4 rounded-xl text-sm text-slate-600 h-full">
+                                        Calculates distance fees & validates minimums.
+                                    </div>
+                                </div>
+                                {/* Backstage */}
+                                <div>
+                                    <span className="block text-[10px] uppercase tracking-widest font-bold text-slate-400 mb-1 lg:hidden">Backstage Logic</span>
+                                    <div className="bg-slate-900 border border-slate-800 p-4 rounded-xl text-sm text-white shadow-md h-full font-medium">
+                                        Next.js API POST compiles JSON order payload.
+                                    </div>
+                                </div>
+                                {/* Process */}
+                                <div>
+                                    <span className="block text-[10px] uppercase tracking-widest font-bold text-slate-400 mb-1 lg:hidden">Support Process</span>
+                                    <div className="bg-slate-50 border border-slate-100 p-4 rounded-xl text-xs text-slate-500 h-full font-medium">
+                                        <i className="ph-bold ph-math-operations mr-1"></i>
+                                        Haversine GPS Math Formula.
+                                    </div>
+                                </div>
                             </div>
 
-                            {/* Line of Architecture */}
-                            <div className="col-span-5 h-px border-t border-dashed border-slate-300 my-2 relative">
-                                <span className="absolute -top-3 left-0 bg-white px-2 py-1 text-[10px] uppercase font-bold tracking-widest text-slate-400 sticky">Internal Support Processes</span>
+                            {/* Phase 4: Fulfillment */}
+                            <div className="flex flex-col gap-4">
+                                <div className="bg-slate-50 border border-slate-200 p-4 rounded-2xl text-center">
+                                    <h4 className="font-bold text-slate-900 text-sm">4. Fulfillment</h4>
+                                </div>
+
+                                {/* Customer */}
+                                <div>
+                                    <span className="block text-[10px] uppercase tracking-widest font-bold text-blue-500 mb-1 lg:hidden">Customer Action</span>
+                                    <div className="bg-white border border-slate-200 p-4 rounded-xl shadow-sm text-sm text-slate-700 h-full">
+                                        Redirects to WhatsApp & hits send.
+                                    </div>
+                                </div>
+                                {/* Frontstage */}
+                                <div>
+                                    <span className="block text-[10px] uppercase tracking-widest font-bold text-slate-400 mb-1 lg:hidden">Frontstage UI</span>
+                                    <div className="bg-slate-50 border border-slate-100 p-4 rounded-xl text-sm text-slate-600 h-full">
+                                        Success screen displays confirmation state.
+                                    </div>
+                                </div>
+                                {/* Backstage */}
+                                <div>
+                                    <span className="block text-[10px] uppercase tracking-widest font-bold text-slate-400 mb-1 lg:hidden">Backstage Logic</span>
+                                    <div className="bg-blue-600 border border-blue-500 p-4 rounded-xl text-sm text-white shadow-md h-full font-medium">
+                                        <i className="ph-fill ph-telegram-logo mr-1"></i>
+                                        Telegram BotFather pushes alert to Staff.
+                                    </div>
+                                </div>
+                                {/* Process */}
+                                <div>
+                                    <span className="block text-[10px] uppercase tracking-widest font-bold text-slate-400 mb-1 lg:hidden">Support Process</span>
+                                    <div className="bg-slate-50 text-slate-700 border border-slate-200 p-4 rounded-xl text-xs font-semibold h-full">
+                                        <i className="ph-fill ph-whatsapp-logo mr-1 text-slate-400"></i>
+                                        WhatsApp wa.me Protocol
+                                    </div>
+                                </div>
                             </div>
 
-                            {/* Processes */}
-                            <div className="font-bold text-indigo-600 self-center bg-white sticky left-0 z-10 px-2">Support Processes</div>
-                            <div className="bg-indigo-50/50 p-4 rounded-xl text-indigo-900/50 border border-indigo-100/50 text-xs flex items-center justify-center text-center">
-                                <p>Vercel Edge Network</p>
+                            {/* Desktop Labels Row (Hidden on Mobile) */}
+                            <div className="absolute top-[3.5rem] -left-20 w-16 hidden xl:flex flex-col gap-4 text-right pt-[10px]">
+                                <div className="h-[68px] flex items-center justify-end">
+                                    <span className="text-[10px] uppercase tracking-widest font-bold text-blue-500 rotate-180" style={{ writingMode: 'vertical-rl' }}>Customer</span>
+                                </div>
+                                <div className="h-[68px] flex items-center justify-end">
+                                    <span className="text-[10px] uppercase tracking-widest font-bold text-slate-400 rotate-180" style={{ writingMode: 'vertical-rl' }}>Frontstage</span>
+                                </div>
+                                <div className="h-[68px] flex items-center justify-end">
+                                    <span className="text-[10px] uppercase tracking-widest font-bold text-slate-400 rotate-180" style={{ writingMode: 'vertical-rl' }}>Backstage</span>
+                                </div>
+                                <div className="h-[68px] flex items-center justify-end">
+                                    <span className="text-[10px] uppercase tracking-widest font-bold text-slate-400 rotate-180" style={{ writingMode: 'vertical-rl' }}>Process</span>
+                                </div>
                             </div>
-                            <div className="bg-indigo-50/50 p-4 rounded-xl text-indigo-900/50 border border-indigo-100/50 text-xs flex items-center justify-center text-center">
-                                <p>Client-side State (Context)</p>
-                            </div>
-                            <div className="bg-indigo-50 p-4 rounded-xl text-indigo-900 border border-indigo-200 shadow-sm relative flex flex-col items-center justify-center text-center">
-                                <i className="ph-fill ph-math-operations text-indigo-400 text-lg mb-1 block"></i>
-                                <p className="font-semibold text-indigo-950">Haversine GPS Formula</p>
-                            </div>
-                            <div className="bg-[#25D366]/10 p-4 rounded-xl text-[#075E54] border border-[#25D366]/30 shadow-sm font-medium flex flex-col items-center justify-center text-center">
-                                <i className="ph-fill ph-whatsapp-logo text-[#25D366] text-lg mb-1 block"></i>
-                                <p className="text-[#128C7E]">WhatsApp URL Protocol (wa.me)</p>
-                            </div>
-
                         </div>
                     </div>
 
