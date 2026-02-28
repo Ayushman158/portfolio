@@ -197,26 +197,18 @@ export default function Home() {
         {/* Main Content Container */}
         <div className="w-full mx-auto px-6 md:px-12 relative z-10 flex flex-col justify-center -translate-y-8">
 
-          {/* Massive Typography */}
-          <div className="relative mix-blend-multiply w-full">
-            <h1 className="text-[12vw] xl:text-[11vw] leading-[0.85] font-light tracking-tighter text-slate-900 uppercase flex flex-col">
-              <div className="overflow-hidden">
-                <span className="block stagger-fade">AYUSHMAN</span>
-              </div>
-              <div className="overflow-hidden flex flex-col md:flex-row md:items-end gap-4 md:gap-8 xl:gap-12">
-                <span className="block stagger-fade relative group cursor-default">
-                  <span className="relative z-10">BHARADWAJ</span>
-                  {/* Glitch Accent on Hover */}
-                  <span className="absolute inset-0 text-blue-500 opacity-0 group-hover:opacity-100 group-hover:translate-x-[6px] transition-all duration-300 pointer-events-none mix-blend-screen">BHARADWAJ</span>
-                  <span className="absolute inset-0 text-orange-500 opacity-0 group-hover:opacity-100 group-hover:-translate-x-[6px] transition-all duration-300 pointer-events-none mix-blend-multiply">BHARADWAJ</span>
+          {/* Friendly Typography */}
+          <div className="relative mix-blend-multiply w-full max-w-5xl">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-slate-900 leading-[1.1]">
+              <div className="overflow-hidden mb-4 md:mb-6">
+                <span className="block stagger-fade text-2xl md:text-3xl lg:text-4xl text-slate-500 font-bold tracking-normal normal-case">
+                  Hi, I'm Ayushman Bharadwaj. <span className="inline-block animate-waving-hand origin-bottom-right">👋</span>
                 </span>
-
-                {/* Asymmetrical Bio */}
-                <div className="pb-2 md:pb-4 md:mb-1 max-w-xs md:max-w-[280px] xl:max-w-sm stagger-fade">
-                  <p className="text-base md:text-lg xl:text-xl text-slate-500 font-light leading-snug tracking-normal normal-case">
-                    <strong className="font-medium text-slate-800">Interaction Designer.</strong><br /> Bridging human behavior and robust technology.
-                  </p>
-                </div>
+              </div>
+              <div className="overflow-hidden">
+                <span className="block stagger-fade normal-case font-bold tracking-tight pb-2">
+                  I'm an interaction designer bridging <span className="text-blue-600">human</span> behavior and robust technology.
+                </span>
               </div>
             </h1>
           </div>
