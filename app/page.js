@@ -42,6 +42,19 @@ export default function Home() {
       });
     });
 
+    // Random Color on Window Enter
+    const figmaColors = ['#0ea5e9', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#f43f5e'];
+    const handleMouseEnter = () => {
+      const randomColor = figmaColors[Math.floor(Math.random() * figmaColors.length)];
+      if (cursorDot.current) {
+        const path = cursorDot.current.querySelector('path');
+        const tag = cursorDot.current.querySelector('.cursor-name-tag');
+        if (path) path.setAttribute('fill', randomColor);
+        if (tag) tag.style.backgroundColor = randomColor;
+      }
+    };
+    document.addEventListener('mouseenter', handleMouseEnter);
+
     // 2. Magnetic Button Logic for the primary CTA
     if (magnetBtn.current) {
       magnetBtn.current.addEventListener('mousemove', (e) => {
@@ -124,6 +137,7 @@ export default function Home() {
     return () => {
       window.removeEventListener('mousemove', moveCursor);
       window.removeEventListener('mousemove', handleMouseMoveGlow);
+      document.removeEventListener('mouseenter', handleMouseEnter);
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
   }, []);
@@ -137,8 +151,8 @@ export default function Home() {
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M1 1L8 20.5L11 12.5L19 9.5L1 1Z" fill="#0ea5e9" stroke="white" strokeWidth="1.5" strokeLinejoin="round" />
           </svg>
-          <div className="bg-[#0ea5e9] text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md ml-3 -mt-1 whitespace-nowrap">
-            Ayushman
+          <div className="cursor-name-tag bg-[#0ea5e9] text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md ml-3 -mt-1 whitespace-nowrap transition-colors duration-300">
+            You
           </div>
         </div>
       </div>
