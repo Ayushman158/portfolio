@@ -170,14 +170,14 @@ export default function Home() {
             <Link href="#work" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
               Work
             </Link>
-            <Link href="#about" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
+            <Link href="/resume" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
               Resume
             </Link>
           </div>
 
           {/* CTA Right */}
           <div ref={magnetBtn} className="relative inline-block cursor-pointer z-10">
-            <Link href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" className="px-4 py-2 md:px-5 md:py-2 text-sm font-medium text-white bg-blue-500 rounded-full shadow-md flex items-center justify-center pointer-events-none">
+            <Link href="mailto:ayushman15899@gmail.com" className="px-4 py-2 md:px-5 md:py-2 text-sm font-medium text-white bg-blue-500 rounded-full shadow-md flex items-center justify-center pointer-events-none">
               <span ref={magnetText} className="block pointer-events-none">Connect</span>
             </Link>
           </div>
