@@ -198,16 +198,16 @@ export default function Home() {
         <div className="w-full mx-auto px-6 md:px-12 relative z-10 flex flex-col justify-center -translate-y-8">
           {/* Friendly Typography */}
           <div className="relative mix-blend-multiply w-full max-w-4xl mx-auto text-center">
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.2]">
-              <div className="overflow-hidden">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.3] md:leading-[1.2]">
+              <div className="overflow-hidden pb-1">
                 <span className="block stagger-fade text-slate-800">
                   Hi, I am Ayushman Bharadwaj. <br className="hidden md:block" />
-                  I am an interaction designer <span className="inline-block animate-waving-hand origin-bottom-right">👋</span>
+                  I am an <span className="text-blue-600 font-black">interaction designer</span> <span className="inline-block animate-waving-hand origin-bottom-right">👋</span>
                 </span>
               </div>
             </h1>
 
-            <div className="mt-8 flex justify-center stagger-fade">
+            <div className="mt-12 flex justify-center stagger-fade">
               <button
                 onClick={(e) => {
                   e.preventDefault();
@@ -221,9 +221,10 @@ export default function Home() {
                     alert('Link copied to clipboard!');
                   }
                 }}
-                className="interactive-target px-6 py-2.5 text-sm font-semibold text-slate-600 bg-white border border-slate-200 hover:border-blue-500 hover:text-blue-600 rounded-full transition-colors flex items-center gap-2 shadow-sm"
+                className="interactive-target text-xs font-mono uppercase tracking-[0.2em] text-slate-400 hover:text-blue-600 transition-colors flex flex-col items-center gap-2 group"
               >
-                <i className="ph ph-share-network"></i> Share Portfolio
+                <span>Share Portfolio</span>
+                <i className="ph ph-arrow-down text-lg animate-bounce group-hover:text-blue-600"></i>
               </button>
             </div>
           </div>
