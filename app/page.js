@@ -196,39 +196,37 @@ export default function Home() {
 
         {/* Main Content Container */}
         <div className="w-full mx-auto px-6 md:px-12 relative z-10 flex flex-col justify-center -translate-y-8">
-
           {/* Friendly Typography */}
-          <div className="relative mix-blend-multiply w-full max-w-5xl">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-slate-900 leading-[1.1]">
-              <div className="overflow-hidden mb-4 md:mb-6">
-                <span className="block stagger-fade text-2xl md:text-3xl lg:text-4xl text-slate-500 font-bold tracking-normal normal-case">
-                  Hi, I'm Ayushman Bharadwaj. <span className="inline-block animate-waving-hand origin-bottom-right">👋</span>
-                </span>
-              </div>
+          <div className="relative mix-blend-multiply w-full max-w-4xl mx-auto text-center">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.2]">
               <div className="overflow-hidden">
-                <span className="block stagger-fade normal-case font-bold tracking-tight pb-2">
-                  I'm an interaction designer bridging <span className="text-blue-600">human</span> behavior and robust technology.
+                <span className="block stagger-fade text-slate-800">
+                  Hi, I am Ayushman Bharadwaj. <br className="hidden md:block" />
+                  I am an interaction designer <span className="inline-block animate-waving-hand origin-bottom-right">👋</span>
                 </span>
               </div>
             </h1>
-          </div>
-        </div>
 
-        {/* Bottom CTAs */}
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-20 fade-in-up">
-          <div className="bg-slate-900 p-1.5 rounded-[2rem] flex flex-wrap md:flex-nowrap justify-center gap-1 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.3)] backdrop-blur-md">
-            <Link href="#work" className="interactive-target px-8 py-3 text-sm font-semibold text-white bg-transparent hover:bg-white/10 rounded-full transition-colors flex items-center gap-2 whitespace-nowrap">
-              Selected Works
-            </Link>
-            <div className="w-px h-auto bg-slate-700/50 mx-1 my-2 hidden md:block"></div>
-            <Link href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" className="interactive-target w-12 h-12 flex items-center justify-center rounded-full bg-transparent hover:bg-white/10 text-white transition-colors">
-              <i className="ph-fill ph-linkedin-logo text-xl"></i>
-            </Link>
-            <Link href="https://x.com/AyushmanBharad" target="_blank" className="interactive-target w-12 h-12 flex items-center justify-center rounded-full bg-transparent hover:bg-white/10 text-white transition-colors">
-              <i className="ph-fill ph-twitter-logo text-xl"></i>
-            </Link>
+            <div className="mt-8 flex justify-center stagger-fade">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (navigator.share) {
+                    navigator.share({
+                      title: 'Ayushman Bharadwaj | Interaction Designer',
+                      url: window.location.href
+                    });
+                  } else {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert('Link copied to clipboard!');
+                  }
+                }}
+                className="interactive-target px-6 py-2.5 text-sm font-semibold text-slate-600 bg-white border border-slate-200 hover:border-blue-500 hover:text-blue-600 rounded-full transition-colors flex items-center gap-2 shadow-sm"
+              >
+                <i className="ph ph-share-network"></i> Share Portfolio
+              </button>
+            </div>
           </div>
-          <span className="text-xs font-mono uppercase tracking-widest text-slate-400">Or scroll down ↓</span>
         </div>
       </section>
 
