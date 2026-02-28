@@ -157,12 +157,30 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Centered Spaced Navigation */}
-      <nav className="fixed top-8 left-0 w-full z-50 flex justify-center fade-in-up mix-blend-difference">
-        <div className="flex items-center gap-12 font-mono text-xs uppercase tracking-[0.15em] text-white">
-          <Link href="#work" className="hover:opacity-70 transition-opacity">Work</Link>
-          <Link href="#about" className="hover:opacity-70 transition-opacity">Resume</Link>
-          <Link href="#contact" className="hover:opacity-70 transition-opacity">Connect</Link>
+      {/* Pill Navigation */}
+      <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[90%] max-w-5xl stagger-fade">
+        <div className="pill-nav shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative flex items-center justify-between px-6 py-3">
+          {/* Logo Left */}
+          <Link href="/" className="text-xl font-bold tracking-tight text-slate-900 z-10">
+            Ayushman<span className="text-blue-500">.</span>
+          </Link>
+
+          {/* Centered Links (Absolute relative to pill) */}
+          <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-8">
+            <Link href="#work" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
+              Work
+            </Link>
+            <Link href="#about" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
+              Resume
+            </Link>
+          </div>
+
+          {/* CTA Right */}
+          <div ref={magnetBtn} className="relative inline-block cursor-pointer z-10">
+            <Link href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" className="px-4 py-2 md:px-5 md:py-2 text-sm font-medium text-white bg-blue-500 rounded-full shadow-md flex items-center justify-center pointer-events-none">
+              <span ref={magnetText} className="block pointer-events-none">Connect</span>
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -335,8 +353,8 @@ export default function Home() {
 
           <div className="space-y-16">
             {/* Primary Intersection Statement */}
-            <h2 className="stagger-fade text-4xl md:text-6xl font-extrabold text-slate-900 leading-[1.15] tracking-tight max-w-4xl">
-              I design at the intersection of <span className="whitespace-nowrap"><span className="text-gradient">behavior</span>,</span> <span className="whitespace-nowrap"><span className="text-gradient">business</span>,</span> and <span className="text-gradient">technology</span>.
+            <h2 className="stagger-fade text-4xl md:text-6xl font-extrabold text-slate-900 leading-normal tracking-tight max-w-4xl py-2">
+              I design at the intersection of <span className="whitespace-nowrap"><span className="text-gradient pr-1 pb-1">behavior</span>,</span> <span className="whitespace-nowrap"><span className="text-gradient pr-1 pb-1">business</span>,</span> and <span className="text-gradient pr-1 pb-1">technology</span>.
             </h2>
 
             {/* Secondary Traits/Hobbies */}
