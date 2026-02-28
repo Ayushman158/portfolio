@@ -16,12 +16,12 @@ export default function Resume() {
                 {/* Header Section */}
                 <header className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 stagger-fade">
 
-                    {/* Circular Image Container */}
-                    <div className="relative w-48 h-48 sm:w-64 sm:h-64 shrink-0 rounded-full bg-[#3b469b] overflow-hidden shadow-xl border-4 border-white flex items-center justify-center">
+                    {/* Avatar Image Container */}
+                    <div className="relative w-48 h-48 sm:w-64 sm:h-64 shrink-0 flex items-center justify-center">
                         <img
                             src="/assets/avatar.png"
                             alt="Ayushman Bharadwaj"
-                            className="relative w-full h-full object-cover transition-transform duration-700 hover:scale-[1.05]"
+                            className="relative w-full h-full object-contain object-bottom transition-transform duration-700 hover:scale-[1.05]"
                         />
                     </div>
 

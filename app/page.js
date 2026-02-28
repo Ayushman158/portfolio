@@ -161,9 +161,8 @@ export default function Home() {
       <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[90%] max-w-5xl stagger-fade">
         <div className="pill-nav shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative flex items-center justify-between px-6 py-3">
           {/* Logo Left */}
-          <Link href="/" className="flex items-center gap-3 z-10 group">
-            <img src="/assets/avatar.png" alt="Ayushman Bharadwaj" className="w-8 h-8 md:w-9 md:h-9 rounded-full object-cover border border-slate-200 shadow-sm transition-transform duration-300 group-hover:scale-105" />
-            <span className="text-xl font-bold tracking-tight text-slate-900">Ayushman<span className="text-blue-500">.</span></span>
+          <Link href="/" className="flex items-center gap-2 z-10 group">
+            <img src="/assets/avatar.png" alt="Ayushman Bharadwaj" className="w-10 h-10 md:w-12 md:h-12 object-contain object-bottom transition-transform duration-300 group-hover:scale-105" />
           </Link>
 
           {/* Centered Links (Absolute relative to pill) */}
