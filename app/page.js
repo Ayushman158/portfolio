@@ -157,26 +157,12 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Pill Navigation */}
-      <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[90%] max-w-5xl stagger-fade">
-        <div className="pill-nav shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-          <Link href="/" className="text-xl font-bold tracking-tight text-slate-900 mb-2 md:mb-0">
-            Ayushman<span className="text-blue-500">.</span>
-          </Link>
-          <div className="flex items-center gap-4 md:gap-6">
-            <Link href="#work" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
-              Work
-            </Link>
-            <Link href="#about" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
-              About
-            </Link>
-            {/* Magnetic Nav Button */}
-            <div ref={magnetBtn} className="relative inline-block cursor-pointer">
-              <Link href="#contact" className="px-4 py-2 md:px-5 md:py-2 text-sm font-medium text-white bg-blue-500 rounded-full shadow-md flex items-center justify-center pointer-events-none">
-                <span ref={magnetText} className="block pointer-events-none">Let's Talk</span>
-              </Link>
-            </div>
-          </div>
+      {/* Centered Spaced Navigation */}
+      <nav className="fixed top-8 left-0 w-full z-50 flex justify-center fade-in-up mix-blend-difference">
+        <div className="flex items-center gap-12 font-mono text-xs uppercase tracking-[0.15em] text-white">
+          <Link href="#work" className="hover:opacity-70 transition-opacity">Work</Link>
+          <Link href="#about" className="hover:opacity-70 transition-opacity">Resume</Link>
+          <Link href="#contact" className="hover:opacity-70 transition-opacity">Connect</Link>
         </div>
       </nav>
 
