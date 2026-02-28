@@ -1,8 +1,55 @@
+'use client';
 import Link from 'next/link';
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 
 export default function Resume() {
+    // Cursor Ref
+    const cursorDot = useRef(null);
+
+    useEffect(() => {
+        // 1. Custom Cursor Logic
+        const xToDot = gsap.quickTo(cursorDot.current, "x", { duration: 0.1, ease: "power3" });
+        const yToDot = gsap.quickTo(cursorDot.current, "y", { duration: 0.1, ease: "power3" });
+
+        const moveCursor = (e) => {
+            xToDot(e.clientX);
+            yToDot(e.clientY);
+        };
+
+        window.addEventListener('mousemove', moveCursor);
+
+        // Interactive Elements Cursor State
+        const interactiveEls = document.querySelectorAll('a, button, .interactive-target');
+        interactiveEls.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                gsap.to(cursorDot.current, { scale: 1.1, transformOrigin: 'top left', duration: 0.2 });
+            });
+            el.addEventListener('mouseleave', () => {
+                gsap.to(cursorDot.current, { scale: 1, transformOrigin: 'top left', duration: 0.2 });
+            });
+        });
+
+        // Cleanup
+        return () => {
+            window.removeEventListener('mousemove', moveCursor);
+        };
+    }, []);
+
     return (
-        <main className="min-h-screen bg-white text-slate-800 font-sans md:py-24 py-16 px-6 sm:px-12 selection:bg-[#3b469b]/20">
+        <main className="min-h-screen bg-white text-slate-800 font-sans md:py-24 py-16 px-6 sm:px-12 selection:bg-[#3b469b]/20 relative">
+
+            {/* Custom Cursor Elements */}
+            <div className="hidden md:block">
+                <div ref={cursorDot} className="fixed top-0 left-0 pointer-events-none z-[9999] flex flex-col items-start drop-shadow-md">
+                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1L8 20.5L11 12.5L19 9.5L1 1Z" fill="#3b469b" stroke="white" strokeWidth="1.5" strokeLinejoin="round" />
+                    </svg>
+                    <div className="cursor-name-tag bg-[#3b469b] text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md ml-3 -mt-1 whitespace-nowrap transition-colors duration-300">
+                        You
+                    </div>
+                </div>
+            </div>
 
             {/* Top Navigation Wrapper for consistency (optional if you want it to feel like part of the site, but this page is standalone per the design) */}
             <div className="max-w-4xl mx-auto md:mb-12 mb-8 fade-in-up">
