@@ -157,61 +157,82 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Centered Spaced Navigation */}
-      <nav className="fixed top-8 left-0 w-full z-50 flex justify-center fade-in-up mix-blend-difference">
-        <div className="flex items-center gap-12 font-mono text-xs uppercase tracking-[0.15em] text-white">
-          <Link href="#work" className="hover:opacity-70 transition-opacity">Work</Link>
-          <Link href="#about" className="hover:opacity-70 transition-opacity">Resume</Link>
-          <Link href="#contact" className="hover:opacity-70 transition-opacity">Connect</Link>
+      {/* Pill Navigation */}
+      <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[90%] max-w-5xl stagger-fade">
+        <div className="pill-nav shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+          <Link href="/" className="text-xl font-bold tracking-tight text-slate-900 mb-2 md:mb-0">
+            Ayushman<span className="text-blue-500">.</span>
+          </Link>
+          <div className="flex items-center gap-4 md:gap-6">
+            <Link href="#work" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
+              Work
+            </Link>
+            <Link href="#about" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
+              About
+            </Link>
+            {/* Magnetic Nav Button */}
+            <div ref={magnetBtn} className="relative inline-block cursor-pointer">
+              <Link href="#contact" className="px-4 py-2 md:px-5 md:py-2 text-sm font-medium text-white bg-blue-500 rounded-full shadow-md flex items-center justify-center pointer-events-none">
+                <span ref={magnetText} className="block pointer-events-none">Let's Talk</span>
+              </Link>
+            </div>
+          </div>
         </div>
       </nav>
 
-      {/* Minimal Profile Hero Section */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-12 overflow-hidden bg-[#EAE6DF] dotted-background selection:bg-stone-300">
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#f8fafc] bg-architectural-grid">
 
-        {/* Profile Card */}
-        <div className="mb-10 sm:mb-14 relative group stagger-fade max-w-[260px] sm:max-w-xs md:max-w-sm w-[70vw]">
-          <div className="aspect-[3/4] sm:aspect-[4/5] rounded-[32px] sm:rounded-[48px] overflow-hidden shadow-2xl transition-transform duration-700 hover:scale-[1.02]">
-            <img
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2600&auto=format&fit=crop"
-              alt="Ayushman Profile"
-              className="w-full h-full object-cover grayscale-[20%] contrast-[1.05]"
-            />
-          </div>
+        {/* Top-Left Context */}
+        <div className="absolute top-28 left-6 md:left-12 z-20 overflow-hidden">
+          <span className="block text-xs font-mono font-bold tracking-[0.2em] text-slate-400 uppercase stagger-fade">
+            India · IND
+          </span>
         </div>
 
-        {/* Typographic Introduction */}
-        <div className="w-full max-w-4xl px-4 sm:px-8 text-center flex flex-col items-center relative z-10">
-          <div className="mb-4 sm:mb-6 flex justify-center items-center gap-2 sm:gap-3 stagger-fade">
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-display font-semibold tracking-tight text-[#1C1B1A]">
-              Hi <span className="inline-block animate-[wave_2s_ease-in-out_infinite] origin-bottom-right">👋</span>
+        {/* Main Content Container */}
+        <div className="w-full mx-auto px-6 md:px-12 relative z-10 flex flex-col justify-center -translate-y-8">
+
+          {/* Massive Typography */}
+          <div className="relative mix-blend-multiply w-full">
+            <h1 className="text-[12vw] xl:text-[11vw] leading-[0.85] font-light tracking-tighter text-slate-900 uppercase flex flex-col">
+              <div className="overflow-hidden">
+                <span className="block stagger-fade">AYUSHMAN</span>
+              </div>
+              <div className="overflow-hidden flex flex-col md:flex-row md:items-end gap-4 md:gap-8 xl:gap-12">
+                <span className="block stagger-fade relative group cursor-default">
+                  <span className="relative z-10">BHARADWAJ</span>
+                  {/* Glitch Accent on Hover */}
+                  <span className="absolute inset-0 text-blue-500 opacity-0 group-hover:opacity-100 group-hover:translate-x-[6px] transition-all duration-300 pointer-events-none mix-blend-screen">BHARADWAJ</span>
+                  <span className="absolute inset-0 text-orange-500 opacity-0 group-hover:opacity-100 group-hover:-translate-x-[6px] transition-all duration-300 pointer-events-none mix-blend-multiply">BHARADWAJ</span>
+                </span>
+
+                {/* Asymmetrical Bio */}
+                <div className="pb-2 md:pb-4 md:mb-1 max-w-xs md:max-w-[280px] xl:max-w-sm stagger-fade">
+                  <p className="text-base md:text-lg xl:text-xl text-slate-500 font-light leading-snug tracking-normal normal-case">
+                    <strong className="font-medium text-slate-800">Interaction Designer.</strong><br /> Bridging human behavior and robust technology.
+                  </p>
+                </div>
+              </div>
             </h1>
           </div>
-
-          <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] leading-[1.05] font-display font-medium tracking-tight text-[#1C1B1A] max-w-[90%] md:max-w-[1000px] text-center mb-8 sm:mb-12">
-            I&apos;m <span className="font-bold">Ayushman</span>, and I love crafting fun things with passionate people!
-          </h2>
-
-          {/* Minimal Tags */}
-          <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 stagger-fade">
-            <div className="interactive-target px-4 sm:px-6 py-2.5 sm:py-3 rounded-full bg-[#f4f1eb] shadow-sm border border-stone-200/50 flex items-center justify-center gap-2 transition-transform hover:scale-105 cursor-none">
-              <i className="ph ph-bezier-curve text-orange-600 text-lg"></i>
-              <span className="font-mono text-xs sm:text-sm font-semibold tracking-wide text-[#1C1B1A]">Product Designer</span>
-            </div>
-            <div className="interactive-target px-4 sm:px-6 py-2.5 sm:py-3 rounded-full bg-[#f4f1eb] shadow-sm border border-stone-200/50 flex items-center justify-center gap-2 transition-transform hover:scale-105 cursor-none">
-              <i className="ph ph-pen-nib text-blue-600 text-lg"></i>
-              <span className="font-mono text-xs sm:text-sm font-semibold tracking-wide text-[#1C1B1A]">Design Engineer</span>
-            </div>
-            <div className="interactive-target px-4 sm:px-6 py-2.5 sm:py-3 rounded-full bg-[#f4f1eb] shadow-sm border border-stone-200/50 flex items-center justify-center gap-2 transition-transform hover:scale-105 cursor-none">
-              <i className="ph ph-laptop text-emerald-600 text-lg"></i>
-              <span className="font-mono text-xs sm:text-sm font-semibold tracking-wide text-[#1C1B1A]">Creative Developer</span>
-            </div>
-          </div>
         </div>
 
-        {/* Subtle scroll indicator */}
-        <div className="absolute bottom-6 sm:bottom-12 left-1/2 -translate-x-1/2 fade-in-up">
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#827C75]">Scroll</span>
+        {/* Bottom CTAs */}
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-20 fade-in-up">
+          <div className="bg-slate-900 p-1.5 rounded-[2rem] flex flex-wrap md:flex-nowrap justify-center gap-1 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.3)] backdrop-blur-md">
+            <Link href="#work" className="interactive-target px-8 py-3 text-sm font-semibold text-white bg-transparent hover:bg-white/10 rounded-full transition-colors flex items-center gap-2 whitespace-nowrap">
+              Selected Works
+            </Link>
+            <div className="w-px h-auto bg-slate-700/50 mx-1 my-2 hidden md:block"></div>
+            <Link href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" className="interactive-target w-12 h-12 flex items-center justify-center rounded-full bg-transparent hover:bg-white/10 text-white transition-colors">
+              <i className="ph-fill ph-linkedin-logo text-xl"></i>
+            </Link>
+            <Link href="https://x.com/AyushmanBharad" target="_blank" className="interactive-target w-12 h-12 flex items-center justify-center rounded-full bg-transparent hover:bg-white/10 text-white transition-colors">
+              <i className="ph-fill ph-twitter-logo text-xl"></i>
+            </Link>
+          </div>
+          <span className="text-xs font-mono uppercase tracking-widest text-slate-400">Or scroll down ↓</span>
         </div>
       </section>
 
@@ -274,13 +295,12 @@ export default function Home() {
 
           </div>
         </div>
-      </section >
+      </section>
 
       {/* Weekend Builds Section */}
-      < section className="py-24 px-6 bg-slate-50 border-t border-slate-100 relative z-10 overflow-hidden" >
+      <section className="py-24 px-6 bg-slate-50 border-t border-slate-100 relative z-10 overflow-hidden">
         {/* Decorative Grid BG */}
-        < div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#0f172a 1px, transparent 1px)', backgroundSize: '32px 32px' }
-        }></div >
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#0f172a 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="mb-12 card-reveal">
@@ -321,10 +341,10 @@ export default function Home() {
 
           </div>
         </div>
-      </section >
+      </section>
 
       {/* Interactive About Section */}
-      < section id="about" className="py-32 px-6 bg-slate-50 relative z-10 border-t border-slate-200" >
+      <section id="about" className="py-32 px-6 bg-slate-50 relative z-10 border-t border-slate-200">
         <div className="max-w-5xl mx-auto">
 
           <div className="space-y-16">
@@ -378,10 +398,10 @@ export default function Home() {
           </div>
 
         </div>
-      </section >
+      </section>
 
       {/* Footer */}
-      < footer className="py-12 bg-white relative z-10" >
+      <footer className="py-12 bg-white relative z-10">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
           <div className="mb-4 md:mb-0 flex items-center gap-6">
             <Link href="/" className="text-xl font-bold tracking-tight text-slate-900 interactive-target">
@@ -400,8 +420,8 @@ export default function Home() {
             © {new Date().getFullYear()} Ayushman Bharadwaj. All rights reserved.
           </p>
         </div>
-      </footer >
+      </footer>
 
-    </main >
+    </main>
   );
 }
