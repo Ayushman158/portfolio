@@ -90,25 +90,12 @@ export default function Resume() {
                         <section className="mt-4">
                             <h2 className="text-2xl font-bold text-[#3b469b] mb-6">Skills</h2>
 
-                            {/* Tool Icons */}
-                            <div className="flex items-center gap-3 mb-6">
-                                <div className="w-12 h-12 rounded-xl bg-black flex items-center justify-center shadow-sm">
-                                    <svg width="24" height="24" viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 28.5C19 33.7467 14.7467 38 9.5 38C4.25329 38 0 33.7467 0 28.5C0 23.2533 4.25329 19 9.5 19C14.7467 19 19 23.2533 19 28.5Z" fill="#0ACF83" /><path d="M0 28.5C0 23.2533 4.25329 19 9.5 19L19 19V38L9.5 38C4.25329 38 0 33.7467 0 28.5Z" fill="#A259FF" /><path d="M0 9.5C0 4.25329 4.25329 0 9.5 0L19 0V19L9.5 19C4.25329 19 0 14.7467 0 9.5Z" fill="#F24E1E" /><path d="M19 0L28.5 0C33.7467 0 38 4.25329 38 9.5C38 14.7467 33.7467 19 28.5 19L19 19V0Z" fill="#FF7262" /><path d="M38 28.5C38 33.7467 33.7467 38 28.5 38C23.2533 38 19 33.7467 19 28.5C19 23.2533 23.2533 19 28.5 19C33.7467 19 38 23.2533 38 28.5Z" fill="#1ABCFE" /></svg>
-                                </div>
-                                <div className="w-12 h-12 rounded-xl bg-black flex items-center justify-center shadow-sm">
-                                    {/* Webflow Approximation */}
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M24 6v12h-3v-7.39l-4 7.39h-3l-4-7.39V18H7v-7.39l-4 7.39H0V6h3v7.39l4-7.39h3l4 7.39V6h3l4 7.39 3-7.39h3z" /></svg>
-                                </div>
-                                <div className="w-12 h-12 rounded-xl bg-[#330000] border-2 border-[#ff7c00] flex items-center justify-center shadow-sm text-[#ff7c00] font-bold text-xl">
-                                    Ai
-                                </div>
-                                <div className="w-12 h-12 rounded-xl bg-[#000033] border-2 border-[#ff7cff] flex items-center justify-center shadow-sm text-[#ff7cff] font-bold text-xl">
-                                    Ae
-                                </div>
-                            </div>
-
-                            {/* Text Pills */}
-                            <div className="flex flex-wrap gap-3">
+                            {/* Tool Icons & Skills */}
+                            <div className="flex flex-wrap gap-3 mb-6">
+                                <span className="px-4 py-2 border-2 border-slate-300 rounded-full text-xs font-semibold text-slate-600 bg-white">Figma</span>
+                                <span className="px-4 py-2 border-2 border-slate-300 rounded-full text-xs font-semibold text-slate-600 bg-white">Antigravity</span>
+                                <span className="px-4 py-2 border-2 border-slate-300 rounded-full text-xs font-semibold text-slate-600 bg-white">Illustrator</span>
+                                <span className="px-4 py-2 border-2 border-slate-300 rounded-full text-xs font-semibold text-slate-600 bg-white">After Effects</span>
                                 <span className="px-4 py-2 border-2 border-slate-300 rounded-full text-xs font-semibold text-slate-600 bg-white">UX Research</span>
                                 <span className="px-4 py-2 border-2 border-slate-300 rounded-full text-xs font-semibold text-slate-600 bg-white">Usability Design</span>
                                 <span className="px-4 py-2 border-2 border-slate-300 rounded-full text-xs font-semibold text-slate-600 bg-white">Design Thinking</span>
@@ -150,32 +137,6 @@ export default function Resume() {
                             </div>
                         </section>
 
-                        {/* QR Section */}
-                        <section className="flex flex-col items-center justify-center mt-auto md:pb-12 h-64 relative group">
-                            <div className="flex flex-col -ml-4 items-center gap-1 -rotate-6 mb-4 translate-x-4">
-                                <span className="font-display font-medium text-lg tracking-tight text-slate-800">Curious how it all comes together?</span>
-                                <span className="font-display font-medium text-lg tracking-tight text-slate-800">Scan to explore the work.</span>
-                            </div>
-
-                            {/* Hand-drawn arrow approximation */}
-                            <svg width="60" height="80" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute right-4 top-12 opacity-80 z-20 overflow-visible text-[#3b469b]">
-                                <path d="M5 5 C 40 10, 50 30, 20 40 C 0 50, 60 60, 40 70 L 30 65 M 40 70 L 45 60" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" className="group-hover:stroke-blue-500 transition-colors duration-500"></path>
-                            </svg>
-
-                            <div className="w-32 h-32 aspect-square relative flex-shrink-0 mt-2 z-10 transition-transform duration-500 group-hover:scale-110">
-                                {/* QR Code Placeholder styling */}
-                                <div className="w-full h-full border-4 border-[#3b469b] rounded-xl flex flex-wrap p-1">
-                                    {/* Generative blocks to look like a QR */}
-                                    {Array.from({ length: 49 }).map((_, i) => (
-                                        <div key={i} className={`w-[14.28%] h-[14.28%] ${Math.random() > 0.4 ? 'bg-[#3b469b]' : 'bg-transparent'} ${i === 0 || i === 6 || i === 42 ? 'border-2 border-white' : ''}`}></div>
-                                    ))}
-                                    {/* Large markers */}
-                                    <div className="absolute top-2 left-2 w-6 h-6 border-4 border-[#3b469b] bg-white rounded-sm flex items-center justify-center"><div className="w-2 h-2 bg-[#3b469b]"></div></div>
-                                    <div className="absolute top-2 right-2 w-6 h-6 border-4 border-[#3b469b] bg-white rounded-sm flex items-center justify-center"><div className="w-2 h-2 bg-[#3b469b]"></div></div>
-                                    <div className="absolute bottom-2 left-2 w-6 h-6 border-4 border-[#3b469b] bg-white rounded-sm flex items-center justify-center"><div className="w-2 h-2 bg-[#3b469b]"></div></div>
-                                </div>
-                            </div>
-                        </section>
 
                     </div>
                 </div>
