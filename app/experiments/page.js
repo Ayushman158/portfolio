@@ -1,21 +1,93 @@
 'use client';
 import Link from 'next/link';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Experiments() {
+    const cursorDot = useRef(null);
+
+    useEffect(() => {
+        // Hide default cursor on desktop
+        if (window.innerWidth >= 768) {
+            document.body.style.cursor = 'none';
+        }
+
+        const moveCursor = (e) => {
+            gsap.to(cursorDot.current, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.1,
+                ease: 'power2.out',
+            });
+        };
+
+        const handleMouseEnter = (e) => {
+            const el = e.target.closest('.interactive-target');
+            if (el && cursorDot.current) {
+                gsap.to(cursorDot.current.querySelector('svg'), {
+                    scale: 1.5,
+                    duration: 0.3,
+                    ease: 'power2.out',
+                });
+            }
+        };
+
+        const handleMouseLeave = (e) => {
+            const el = e.target.closest('.interactive-target');
+            if (el && cursorDot.current) {
+                gsap.to(cursorDot.current.querySelector('svg'), {
+                    scale: 1,
+                    duration: 0.3,
+                    ease: 'power2.out',
+                });
+            }
+        };
+
+        window.addEventListener('mousemove', moveCursor);
+        document.addEventListener('mouseover', handleMouseEnter);
+        document.addEventListener('mouseout', handleMouseLeave);
+
+        // Cleanup
+        return () => {
+            if (window.innerWidth >= 768) {
+                document.body.style.cursor = 'auto';
+            }
+            window.removeEventListener('mousemove', moveCursor);
+            document.removeEventListener('mouseover', handleMouseEnter);
+            document.removeEventListener('mouseout', handleMouseLeave);
+        };
+    }, []);
+
     return (
-        <main className="min-h-screen bg-white text-slate-800 font-sans md:py-24 py-16 px-6 sm:px-12 selection:bg-blue-200">
+        <main className="min-h-screen bg-[#f8fafc] text-slate-800 font-sans md:py-24 py-16 px-6 sm:px-12 selection:bg-blue-200 overflow-x-hidden relative">
+
+            {/* Custom Cursor Elements */}
+            <div className="hidden md:block">
+                <div ref={cursorDot} className="fixed top-0 left-0 pointer-events-none z-[9999] flex flex-col items-start drop-shadow-md">
+                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1L8 20.5L11 12.5L19 9.5L1 1Z" fill="#0ea5e9" stroke="white" strokeWidth="1.5" strokeLinejoin="round" />
+                    </svg>
+                    <div className="cursor-name-tag bg-[#0ea5e9] text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md ml-3 -mt-1 whitespace-nowrap transition-colors duration-300">
+                        View
+                    </div>
+                </div>
+            </div>
+
             {/* Top Navigation Wrapper */}
-            <div className="max-w-4xl mx-auto md:mb-16 mb-12 fade-in-up flex items-center justify-between">
-                <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-blue-600 transition-colors">
+            <div className="max-w-5xl mx-auto md:mb-16 mb-12 fade-in-up flex items-center justify-between">
+                <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-blue-600 transition-colors interactive-target">
                     <i className="ph ph-arrow-left"></i> Back
                 </Link>
             </div>
 
-            <div className="max-w-4xl mx-auto flex flex-col gap-16">
+            <div className="max-w-5xl mx-auto flex flex-col gap-16">
 
                 {/* Header Section */}
                 <header className="fade-in-up">
-                    <h1 className="text-4xl md:text-5xl font-black text-slate-900 leading-[1.1] mb-6 tracking-tight">
+                    <h1 className="text-4xl md:text-6xl font-black text-slate-900 leading-[1.1] mb-6 tracking-tight">
                         AI Experiments.
                     </h1>
                     <p className="text-lg md:text-xl text-slate-500 leading-relaxed max-w-2xl font-medium">
@@ -23,49 +95,33 @@ export default function Experiments() {
                     </p>
                 </header>
 
-                <div className="flex flex-col border-t border-slate-200 fade-in-up" style={{ animationDelay: '0.2s' }}>
+                <div className="flex flex-col border-t border-slate-200 fade-in-up pt-12" style={{ animationDelay: '0.2s' }}>
 
-                    {/* Experiment 1: AI Sales Rep */}
-                    <div className="group flex flex-col md:flex-row md:items-start justify-between py-8 md:py-10 border-b border-slate-200 interactive-target hover:-translate-y-1 transition-transform">
-                        <div className="flex-1 mb-6 md:mb-0 pr-4">
-                            <h3 className="text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900 mb-3 flex items-center gap-3">
-                                Conversational AI Sales Rep
-                            </h3>
-                            <p className="text-slate-500 text-lg leading-relaxed max-w-lg mb-4">A fully autonomous voice agent built with modern LLM APIs to handle complex, multi-turn sales discoveries over the phone.</p>
+                    {/* Experiment: FieldNote */}
+                    <a href="https://fieldnote-ten.vercel.app/" target="_blank" rel="noopener noreferrer" className="group flex flex-col md:flex-row items-center gap-12 p-8 md:p-12 border border-slate-200 rounded-3xl bg-white hover:border-blue-200 hover:shadow-xl transition-all interactive-target hover:-translate-y-2 relative overflow-hidden">
 
-                            <div className="flex flex-wrap gap-2">
-                                <span className="text-xs font-mono uppercase tracking-widest text-slate-400 bg-slate-50 px-2 py-1 rounded border border-slate-100">Next.js</span>
-                                <span className="text-xs font-mono uppercase tracking-widest text-slate-400 bg-slate-50 px-2 py-1 rounded border border-slate-100">OpenAI Realtime</span>
-                                <span className="text-xs font-mono uppercase tracking-widest text-slate-400 bg-slate-50 px-2 py-1 rounded border border-slate-100">Twilio WebRTC</span>
-                            </div>
-                        </div>
-                        <div className="flex md:flex-col items-center md:items-end gap-4 shrink-0 mt-4 md:mt-0 relative z-10 block">
-                            <Link href="https://github.com/Ayushman158/ai-sales-agent" target="_blank" className="text-slate-500 hover:text-blue-600 transition-colors px-4 py-2 border border-slate-200 hover:border-blue-200 rounded-full text-xs font-bold uppercase tracking-widest flex items-center gap-2 bg-white">
-                                <i className="ph-fill ph-github-logo text-base"></i> View Code
-                            </Link>
-                        </div>
-                    </div>
+                        {/* Hover Gradient Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-tr from-blue-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
 
-                    {/* Experiment 2: FieldNote */}
-                    <div className="group flex flex-col md:flex-row md:items-start justify-between py-8 md:py-10 border-b border-slate-200 interactive-target hover:-translate-y-1 transition-transform">
-                        <div className="flex-1 mb-6 md:mb-0 pr-4">
-                            <h3 className="text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900 mb-3 flex items-center gap-3">
+                        <div className="flex-1 relative z-10 w-full">
+                            <h3 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 mb-4 flex items-center gap-3 group-hover:text-blue-600 transition-colors">
                                 FieldNote
+                                <i className="ph ph-arrow-up-right text-2xl text-blue-500 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all"></i>
                             </h3>
-                            <p className="text-slate-500 text-lg leading-relaxed max-w-lg mb-4">An AI-powered UX research assistant that automatically transcribes user interviews and synthesizes actionable insights using Gemini 1.5 Pro.</p>
+                            <p className="text-slate-500 text-lg md:text-xl leading-relaxed mb-6">An AI-powered UX research assistant that automatically transcribes user interviews and synthesizes actionable insights using Gemini 1.5 Pro.</p>
 
                             <div className="flex flex-wrap gap-2">
-                                <span className="text-xs font-mono uppercase tracking-widest text-slate-400 bg-slate-50 px-2 py-1 rounded border border-slate-100">React</span>
-                                <span className="text-xs font-mono uppercase tracking-widest text-slate-400 bg-slate-50 px-2 py-1 rounded border border-slate-100">Web Speech API</span>
-                                <span className="text-xs font-mono uppercase tracking-widest text-slate-400 bg-slate-50 px-2 py-1 rounded border border-slate-100">Gemini Pro API</span>
+                                <span className="text-xs font-mono uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">React</span>
+                                <span className="text-xs font-mono uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">Web Speech API</span>
+                                <span className="text-xs font-mono uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">Gemini Pro</span>
                             </div>
                         </div>
-                        <div className="flex md:flex-col items-center md:items-end gap-4 shrink-0 mt-4 md:mt-0 relative z-10 block">
-                            <Link href="https://github.com/Ayushman158/User-Research-Summarizer" target="_blank" className="text-slate-500 hover:text-blue-600 transition-colors px-4 py-2 border border-slate-200 hover:border-blue-200 rounded-full text-xs font-bold uppercase tracking-widest flex items-center gap-2 bg-white">
-                                <i className="ph-fill ph-github-logo text-base"></i> View Code
-                            </Link>
+
+                        {/* Image Reveal */}
+                        <div className="w-full md:w-[45%] rounded-2xl overflow-hidden border border-slate-200 shadow-sm relative z-10 group-hover:shadow-lg transition-transform group-hover:scale-[1.02] aspect-video">
+                            <img src="/assets/fieldnote-ss.png" alt="FieldNote App Preview" className="w-full h-full object-cover object-left-top" />
                         </div>
-                    </div>
+                    </a>
 
                 </div>
             </div>

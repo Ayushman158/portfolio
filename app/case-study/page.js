@@ -98,10 +98,10 @@ export default function CaseStudy() {
                     <div className="flex-1">
                         <div className="flex flex-wrap gap-2 mb-8">
                             <span className="px-3 py-1 bg-blue-50 border border-blue-100 text-xs font-bold uppercase tracking-widest text-blue-600 rounded">UX Case Study</span>
-                            <span className="px-3 py-1 bg-slate-200 border border-slate-300 text-xs font-bold uppercase tracking-widest text-slate-600 rounded">2024</span>
+                            <span className="px-3 py-1 bg-slate-200 border border-slate-300 text-xs font-bold uppercase tracking-widest text-slate-600 rounded">2025</span>
                         </div>
                         <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-slate-900 mb-8 leading-[1]">
-                            Zero Friction<br/><span className="text-slate-400">Delivery.</span>
+                            Zero Friction<br /><span className="text-slate-400">Delivery.</span>
                         </h1>
                         <p className="text-2xl md:text-3xl text-slate-500 font-medium leading-tight max-w-2xl mb-12">
                             Designing an end-to-end hyperlocal Web App for Hoychoy Cafe that requires zero downloads and zero logins.
@@ -111,6 +111,12 @@ export default function CaseStudy() {
                             <i className="ph ph-arrow-up-right text-2xl group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
                         </Link>
                     </div>
+                    {/* Splash Screen Image Section */}
+                    <div className="flex-1 w-full flex justify-center md:justify-end">
+                        <div className="w-full max-w-md rounded-3xl overflow-hidden shadow-2xl border border-slate-200 rotate-2 hover:rotate-0 transition-transform duration-500 interactive-target">
+                            <img src="/assets/hoychoy-thumb.png" alt="Hoychoy Cafe Splash Screen" className="w-full h-auto object-cover" />
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -118,7 +124,7 @@ export default function CaseStudy() {
             <section className="bg-slate-900 text-white py-32 px-6 w-full">
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-5xl md:text-7xl font-bold tracking-tight mb-16">🧩 The Problem</h2>
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
                         <div className="space-y-8">
                             <p className="text-2xl md:text-3xl text-slate-400 font-light leading-relaxed">
@@ -159,7 +165,7 @@ export default function CaseStudy() {
             {/* Act 3: Narrative Feature Breakdown */}
             <section className="bg-[#f8fafc] py-32 px-6 w-full">
                 <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 items-start">
-                    
+
                     {/* Sticky Sidebar Text */}
                     <div className="md:col-span-4 md:sticky top-32 space-y-8">
                         <div className="w-16 h-1 bg-blue-500 mb-8"></div>
@@ -167,7 +173,7 @@ export default function CaseStudy() {
                         <p className="text-xl text-slate-500 leading-relaxed font-medium">
                             The entire user journey from menu discovery to UPI payment was rigorously streamlined. We utilized the Web Share API and WhatsApp integration to bypass traditional backends.
                         </p>
-                        
+
                         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm mt-8">
                             <span className="block text-xs uppercase tracking-widest text-slate-400 font-bold mb-2">Design Decision</span>
                             <p className="text-slate-700 text-sm">Replacing a standard database user-auth flow with an immediate WhatsApp API handoff reduced Time-To-Purchase by 4 minutes.</p>
@@ -177,16 +183,8 @@ export default function CaseStudy() {
                     {/* Scrolling Media Gallery */}
                     <div className="md:col-span-8 space-y-12">
                         <div className="bg-slate-200 rounded-[2.5rem] p-4 md:p-8 shadow-inner overflow-hidden flex justify-center">
-                            <div className="w-full max-w-[320px] bg-white rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.15)] ring-4 ring-slate-100 overflow-hidden border-[6px] border-slate-900 relative">
-                                <div className="absolute top-0 inset-x-0 h-6 bg-slate-900 rounded-b-xl z-20 flex justify-center">
-                                    <div className="w-16 h-4 bg-black rounded-full mt-1"></div>
-                                </div>
-                                <div className="relative w-full aspect-[9/19.5] bg-slate-100">
-                                    <img src="/assets/recording.webp" alt="Hoychoy App Ordering Flow Demo" className="absolute inset-0 w-full h-full object-cover" />
-                                </div>
-                                <div className="absolute bottom-2 inset-x-0 flex justify-center z-50 pointer-events-none">
-                                    <div className="w-1/3 h-1 bg-black/20 rounded-full"></div>
-                                </div>
+                            <div className="w-full rounded-2xl overflow-hidden shadow-xl border border-slate-300">
+                                <img src="/assets/recording.webp" alt="Hoychoy App Ordering Flow Demo Full" className="w-full h-auto object-cover" />
                             </div>
                         </div>
                     </div>
@@ -198,33 +196,56 @@ export default function CaseStudy() {
             <section className="bg-slate-900 py-32 px-6 w-full text-white">
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-4xl md:text-6xl font-bold tracking-tight mb-16">⚙️ The Zero-Subscription Backbone</h2>
-                    
-                    <div className="bg-slate-800 rounded-3xl p-8 md:p-12 border border-slate-700">
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-center items-center">
-                            <div className="bg-slate-900 py-6 px-4 rounded-2xl border border-slate-700">
-                                <i className="ph-fill ph-user text-4xl text-blue-400 mb-3"></i>
-                                <p className="font-bold">Next.js Web App</p>
-                                <p className="text-xs text-slate-400 mt-1">Frontend Interface</p>
-                            </div>
-                            
-                            <i className="ph-bold ph-arrow-right text-slate-500 text-3xl hidden md:block"></i>
-                            
-                            <div className="bg-slate-900 py-6 px-4 rounded-2xl border border-slate-700">
-                                <i className="ph-fill ph-robot text-4xl text-purple-400 mb-3"></i>
-                                <p className="font-bold">Telegram Bot API</p>
-                                <p className="text-xs text-slate-400 mt-1">Order Processing</p>
+
+                    <div className="bg-slate-800 rounded-3xl p-8 md:p-12 border border-slate-700 overflow-x-auto">
+                        <div className="min-w-[768px] grid grid-cols-4 gap-4 text-sm mt-4">
+                            {/* Headers */}
+                            <div className="font-bold text-slate-400 border-b border-slate-700 pb-2">Layer</div>
+                            <div className="font-bold text-slate-400 border-b border-slate-700 pb-2">Discover & Order</div>
+                            <div className="font-bold text-slate-400 border-b border-slate-700 pb-2">Payment Processing</div>
+                            <div className="font-bold text-slate-400 border-b border-slate-700 pb-2">Fulfillment</div>
+
+                            {/* Customer Actions */}
+                            <div className="py-4 font-bold text-blue-400 flex items-center gap-2"><i className="ph-fill ph-user text-xl"></i> Customer Actions</div>
+                            <div className="py-4 bg-slate-900 rounded p-4 border border-slate-700">Scans QR / Clicks Link & Browses Menu</div>
+                            <div className="py-4 bg-slate-900 rounded p-4 border border-slate-700">Proceeds to UPI App & Pays</div>
+                            <div className="py-4 bg-slate-900 rounded p-4 border border-slate-700">Receives order status via WhatsApp</div>
+
+                            {/* Line of Interaction */}
+                            <div className="col-span-4 border-t border-dashed border-slate-600 my-4 relative">
+                                <span className="absolute -top-3 left-0 text-[10px] uppercase tracking-widest text-slate-500 bg-slate-800 pr-2">Line of Interaction</span>
                             </div>
 
-                            <i className="ph-bold ph-arrow-right text-slate-500 text-3xl hidden md:block"></i>
+                            {/* Frontstage Actions */}
+                            <div className="py-4 font-bold text-indigo-400 flex items-center gap-2"><i className="ph-fill ph-device-mobile text-xl"></i> Frontstage (Next.js)</div>
+                            <div className="py-4 bg-slate-900 rounded p-4 border border-slate-700">Renders Dynamic UI & Cart State</div>
+                            <div className="py-4 bg-slate-900 rounded p-4 border border-slate-700">Generates Deep UPI URI with exact amount</div>
+                            <div className="py-4 bg-slate-900 rounded p-4 border border-slate-700">Displays Success/Error UI State</div>
 
-                            <div className="bg-slate-900 py-6 px-4 rounded-2xl border border-slate-700">
-                                <i className="ph-fill ph-whatsapp-logo text-4xl text-green-400 mb-3"></i>
-                                <p className="font-bold">WhatsApp Business</p>
-                                <p className="text-xs text-slate-400 mt-1">Merchant Dashboard</p>
+                            {/* Line of Visibility */}
+                            <div className="col-span-4 border-t border-dashed border-slate-600 my-4 relative">
+                                <span className="absolute -top-3 left-0 text-[10px] uppercase tracking-widest text-slate-500 bg-slate-800 pr-2">Line of Visibility</span>
                             </div>
+
+                            {/* Backstage Actions */}
+                            <div className="py-4 font-bold text-purple-400 flex items-center gap-2"><i className="ph-fill ph-code text-xl"></i> Backstage (Logic)</div>
+                            <div className="py-4 bg-slate-900 rounded p-4 border border-slate-700">Calculates Haversine distance pricing</div>
+                            <div className="py-4 bg-slate-900 rounded p-4 border border-slate-700">Generates UPI URL parameters automatically</div>
+                            <div className="py-4 bg-slate-900 rounded p-4 border border-slate-700">Formats order JSON into WhatsApp string</div>
+
+                            {/* Line of Internal Interaction */}
+                            <div className="col-span-4 border-t border-dashed border-slate-600 my-4 relative">
+                                <span className="absolute -top-3 left-0 text-[10px] uppercase tracking-widest text-slate-500 bg-slate-800 pr-2">Line of Internal Interaction</span>
+                            </div>
+
+                            {/* Support Processes */}
+                            <div className="py-4 font-bold text-green-400 flex items-center gap-2"><i className="ph-fill ph-database text-xl"></i> Support (APIs)</div>
+                            <div className="py-4 bg-slate-900 rounded p-4 border border-slate-700">Vercel Edge Functions running Node.js</div>
+                            <div className="py-4 bg-slate-900 rounded p-4 border border-slate-700">Zero-fee UPI network rails</div>
+                            <div className="py-4 bg-slate-900 rounded p-4 border border-slate-700">Telegram Bot API POST request to Merchant</div>
                         </div>
                         <p className="text-slate-400 text-center mt-12 text-lg max-w-3xl mx-auto">
-                            By chaining together free-tier APIs, we entirely sidestepped the need for continuous AWS/database hosting costs, providing the client with an infinitely scalable architecture for $0/month in server fees.
+                            By chaining together free-tier APIs into this service blueprint, we entirely sidestepped the need for continuous AWS/database hosting costs, providing the client with an infinitely scalable architecture for $0/month in server fees.
                         </p>
                     </div>
                 </div>

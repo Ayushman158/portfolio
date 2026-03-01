@@ -229,23 +229,26 @@ export default function Home() {
 
           <div className="flex flex-col border-t border-slate-200">
             {/* Project Row 1 */}
-            <Link href="/case-study" className="group flex flex-col md:flex-row md:items-center justify-between py-8 md:py-10 border-b border-slate-200 interactive-target relative z-10">
-              <div className="flex-1 mb-4 md:mb-0 pr-4 relative z-20">
-                <h3 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors mb-2 flex items-center gap-3">
-                  Hoychoy Cafe
-                  <i className="ph ph-arrow-up-right text-2xl md:text-3xl opacity-0 -translate-x-4 translate-y-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300"></i>
-                </h3>
-                <p className="text-slate-500 text-lg md:text-xl leading-relaxed">End-to-end hyperlocal delivery web application.</p>
-              </div>
-              <div className="flex items-center gap-3 md:w-64 md:justify-end shrink-0 relative z-20">
-                <span className="text-xs font-mono uppercase tracking-widest text-slate-400">UX Design</span>
-                <span className="text-slate-300">•</span>
-                <span className="text-xs font-mono uppercase tracking-widest text-slate-400">2024</span>
+            <Link href="/case-study" className="group flex flex-col md:flex-row gap-8 py-8 md:py-12 border-b border-slate-200 interactive-target md:items-center">
+
+              {/* Static Presentation Image */}
+              <div className="w-full md:w-[35%] aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 shrink-0 bg-slate-50 relative z-20">
+                <img src="/assets/hoychoy-thumb.png" alt="Hoychoy Cafe" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out" />
               </div>
 
-              {/* Hover Image Reveal */}
-              <div className="absolute right-1/4 top-1/2 -translate-y-1/2 w-64 md:w-80 h-auto rounded-2xl shadow-2xl opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 z-0 origin-center rotate-3 group-hover:rotate-0 overflow-hidden border border-slate-200 hidden md:block">
-                <img src="/assets/hoychoy-thumb.png" alt="Hoychoy Cafe Preview" className="w-full h-full object-cover" />
+              <div className="flex-1 flex flex-col md:flex-row md:items-center justify-between relative z-20">
+                <div className="mb-4 md:mb-0 pr-4">
+                  <h3 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors mb-4 flex items-center gap-3">
+                    Hoychoy Cafe
+                    <i className="ph ph-arrow-up-right text-2xl md:text-3xl opacity-0 -translate-x-4 translate-y-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300"></i>
+                  </h3>
+                  <p className="text-slate-500 text-lg md:text-xl leading-relaxed">End-to-end hyperlocal delivery web application.</p>
+                </div>
+                <div className="flex items-center gap-4 shrink-0 mt-6 md:mt-0 md:justify-end">
+                  <span className="text-xs font-mono uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">UX Design</span>
+                  <span className="text-slate-300 hidden md:block">•</span>
+                  <span className="text-xs font-mono uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">2025</span>
+                </div>
               </div>
             </Link>
           </div>
