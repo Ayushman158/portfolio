@@ -235,7 +235,7 @@ export default function CaseStudy() {
                     <p className="text-xl md:text-2xl text-slate-600 mb-16 max-w-3xl leading-relaxed font-medium">
                         To uncover hidden friction, I mapped the entire service flow using classic FigJam-style blueprints. The single point of failure became immediately obvious: <strong>the owner</strong>.
                     </p>
-                    
+
                     {/* Before Blueprint (FigJam) */}
                     <div className="bg-white/80 rounded-2xl p-8 md:p-12 border border-slate-200 shadow-sm mb-16 relative overflow-x-auto">
                         <div className="absolute top-0 right-0 bg-red-50 text-red-600 px-4 py-2 rounded-bl-2xl rounded-tr-xl font-bold text-sm uppercase tracking-widest border-b border-l border-red-100">Before Redesign</div>
@@ -299,7 +299,7 @@ export default function CaseStudy() {
             {/* Act 4: Strategy, Solution & Impact */}
             <section className="bg-[#f8fafc] py-32 px-6 w-full border-t border-slate-200">
                 <div className="max-w-6xl mx-auto space-y-32">
-                    
+
                     {/* Design Strategy */}
                     <div>
                         <div className="w-16 h-1 bg-blue-500 mb-8"></div>
@@ -307,7 +307,7 @@ export default function CaseStudy() {
                         <p className="text-xl md:text-2xl text-slate-500 font-medium leading-relaxed max-w-3xl mb-12">
                             Instead of completely replacing WhatsApp, we repositioned it. We preserved user familiarity while introducing operational clarity for the owner.
                         </p>
-                        
+
                         <div className="grid grid-cols-1 gap-8 max-w-4xl bg-[#fcfbf9] rounded-3xl border border-[#e5e5e5] p-8 md:p-12 shadow-sm">
                             <div className="relative">
                                 <h3 className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-4">Old Model (Friction)</h3>
@@ -321,9 +321,9 @@ export default function CaseStudy() {
                                     <span className="bg-white shadow-sm border border-[#e5e5e5] text-slate-700 px-4 py-3 rounded">Kitchen</span>
                                 </div>
                             </div>
-                            
+
                             <div className="border-t border-dashed border-slate-300 my-2"></div>
-                            
+
                             <div className="relative">
                                 <h3 className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-4">New Model (Flow)</h3>
                                 <div className="flex flex-col gap-4 text-sm font-medium">
@@ -405,7 +405,7 @@ export default function CaseStudy() {
                                         </div>
                                     </div>
                                     <p className="text-slate-600 font-medium leading-relaxed">
-                                        <strong>Before:</strong> The initial checkout draft forced users to manually type long delivery instructions and address formats. <br/><br/><strong>After:</strong> We swapped the manual text area for one-tap structured toggles (e.g., "Same as last time") and hardcoded direct UPI deep links. <br/><br/><strong>Why:</strong> This structural change eliminated keyboard interaction, dropping checkout abandonment by converting a typing task into a tapping task.
+                                        <strong>Before:</strong> The initial checkout draft forced users to manually type long delivery instructions and address formats. <br /><br /><strong>After:</strong> We swapped the manual text area for one-tap structured toggles (e.g., "Same as last time") and hardcoded direct UPI deep links. <br /><br /><strong>Why:</strong> This structural change eliminated keyboard interaction, dropping checkout abandonment by converting a typing task into a tapping task.
                                     </p>
                                 </div>
                             </div>
@@ -414,7 +414,6 @@ export default function CaseStudy() {
                         {/* Media Display */}
                         <div className="bg-slate-200 rounded-[2.5rem] p-4 md:p-8 shadow-inner overflow-hidden flex justify-center sticky top-32">
                             <div className="w-full rounded-2xl overflow-hidden shadow-xl border border-slate-300 relative group bg-white">
-                                <div className="absolute top-4 left-4 bg-slate-900/80 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full z-10 shadow-lg">Mobile UI Screens</div>
                                 <img src="/assets/recording.webp" alt="Menu, Cart, Checkout, Order Confirmation" className="w-full h-auto object-cover" />
                             </div>
                         </div>
@@ -423,7 +422,7 @@ export default function CaseStudy() {
                     {/* Impact */}
                     <div>
                         <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-8 text-center">7. Impact <span className="text-slate-400 font-light text-2xl md:text-3xl block mt-2">(2-Week Pilot)</span></h2>
-                        
+
                         <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden mb-12">
                             <table className="w-full text-left border-collapse">
                                 <thead>
@@ -462,7 +461,7 @@ export default function CaseStudy() {
                                 </tbody>
                             </table>
                         </div>
-                        
+
                         <div className="text-center space-y-4 max-w-3xl mx-auto">
                             <p className="text-2xl text-slate-800 font-bold">The café shifted from conversation-driven operations to system-driven operations.</p>
                             <div className="flex flex-wrap justify-center gap-4 text-sm font-bold uppercase tracking-widest text-blue-600 pt-4">
