@@ -232,7 +232,7 @@ export default function Home() {
             <Link href="/case-study" className="group flex flex-col md:flex-row gap-8 py-8 md:py-12 border-b border-slate-200 interactive-target md:items-center">
 
               {/* Static Presentation Image */}
-              <div className="w-full md:w-[35%] aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 shrink-0 bg-slate-50 relative z-20">
+              <div className="w-full md:w-[45%] aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 shrink-0 bg-slate-50 relative z-20">
                 <img src="/assets/hoychoy-thumb.png" alt="Hoychoy Cafe" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out" />
               </div>
 

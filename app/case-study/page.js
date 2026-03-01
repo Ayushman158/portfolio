@@ -112,8 +112,8 @@ export default function CaseStudy() {
                         </Link>
                     </div>
                     {/* Splash Screen Image Section */}
-                    <div className="flex-1 w-full flex justify-center md:justify-end">
-                        <div className="w-full max-w-md rounded-3xl overflow-hidden shadow-2xl border border-slate-200 rotate-2 hover:rotate-0 transition-transform duration-500 interactive-target">
+                    <div className="flex-1 w-full flex justify-center md:justify-end relative">
+                        <div className="w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl border border-slate-200 rotate-2 hover:rotate-0 transition-transform duration-500 interactive-target">
                             <img src="/assets/hoychoy-thumb.png" alt="Hoychoy Cafe Splash Screen" className="w-full h-auto object-cover" />
                         </div>
                     </div>
@@ -170,7 +170,19 @@ export default function CaseStudy() {
                     <div className="md:col-span-4 md:sticky top-32 space-y-8">
                         <div className="w-16 h-1 bg-blue-500 mb-8"></div>
                         <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 leading-tight">Zero-Friction Checkout Flow</h2>
-                        <p className="text-xl text-slate-500 leading-relaxed font-medium">
+
+                        {/* Order Flow Breadcrumbs */}
+                        <div className="flex flex-wrap items-center gap-2 text-sm font-bold text-slate-400 py-2">
+                            <span className="bg-white border border-slate-200 text-slate-600 px-3 py-1.5 rounded-full flex items-center gap-2 shadow-sm"><i className="ph-bold ph-qr-code text-blue-500"></i> Scan QR</span>
+                            <i className="ph-bold ph-caret-right"></i>
+                            <span className="bg-white border border-slate-200 text-slate-600 px-3 py-1.5 rounded-full flex items-center gap-2 shadow-sm"><i className="ph-bold ph-list text-blue-500"></i> Menu</span>
+                            <i className="ph-bold ph-caret-right"></i>
+                            <span className="bg-white border border-slate-200 text-slate-600 px-3 py-1.5 rounded-full flex items-center gap-2 shadow-sm"><i className="ph-bold ph-map-pin text-blue-500"></i> Location</span>
+                            <i className="ph-bold ph-caret-right"></i>
+                            <span className="bg-white border border-slate-200 text-slate-600 px-3 py-1.5 rounded-full flex items-center gap-2 shadow-sm"><i className="ph-bold ph-currency-inr text-blue-500"></i> Pay</span>
+                        </div>
+
+                        <p className="text-xl text-slate-500 leading-relaxed font-medium mt-6">
                             The entire user journey from menu discovery to UPI payment was rigorously streamlined. We utilized the Web Share API and WhatsApp integration to bypass traditional backends.
                         </p>
 
@@ -207,7 +219,7 @@ export default function CaseStudy() {
 
                             {/* Customer Actions */}
                             <div className="py-4 font-bold text-blue-400 flex items-center gap-2"><i className="ph-fill ph-user text-xl"></i> Customer Actions</div>
-                            <div className="py-4 bg-slate-900 rounded p-4 border border-slate-700">Scans QR / Clicks Link & Browses Menu</div>
+                            <div className="py-4 bg-slate-900 rounded p-4 border border-slate-700">Scans QR, Adds Location & Browses Menu</div>
                             <div className="py-4 bg-slate-900 rounded p-4 border border-slate-700">Proceeds to UPI App & Pays</div>
                             <div className="py-4 bg-slate-900 rounded p-4 border border-slate-700">Receives order status via WhatsApp</div>
 
@@ -240,9 +252,27 @@ export default function CaseStudy() {
 
                             {/* Support Processes */}
                             <div className="py-4 font-bold text-green-400 flex items-center gap-2"><i className="ph-fill ph-database text-xl"></i> Support (APIs)</div>
-                            <div className="py-4 bg-slate-900 rounded p-4 border border-slate-700">Vercel Edge Functions running Node.js</div>
-                            <div className="py-4 bg-slate-900 rounded p-4 border border-slate-700">Zero-fee UPI network rails</div>
-                            <div className="py-4 bg-slate-900 rounded p-4 border border-slate-700">Telegram Bot API POST request to Merchant</div>
+
+                            <div className="py-4 bg-slate-900 rounded p-4 border border-slate-700 flex flex-col gap-3">
+                                <span>Edge Functions (Node.js)</span>
+                                <span className="bg-white text-black text-[10px] px-2 py-1 rounded w-max font-bold flex items-center gap-1 uppercase tracking-widest"><i className="ph-fill ph-triangle"></i> Vercel</span>
+                            </div>
+
+                            <div className="py-4 bg-slate-900 rounded p-4 border border-slate-700 flex flex-col gap-3">
+                                <span>Zero-fee UPI rails</span>
+                                <div className="flex gap-2">
+                                    <span className="bg-[#5f259f] text-white text-[10px] px-2 py-1 rounded w-max font-bold tracking-widest uppercase">PhonePe</span>
+                                    <span className="bg-white text-slate-800 text-[10px] px-2 py-1 rounded w-max font-bold tracking-widest flex items-center gap-1 uppercase"><i className="ph-bold ph-google-logo text-blue-500"></i> Pay</span>
+                                </div>
+                            </div>
+
+                            <div className="py-4 bg-slate-900 rounded p-4 border border-slate-700 flex flex-col gap-3">
+                                <span>API POST to Merchant</span>
+                                <div className="flex flex-wrap gap-2">
+                                    <span className="bg-[#229ED9] text-white text-[10px] px-2 py-1 rounded w-max font-bold flex items-center gap-1 uppercase tracking-widest"><i className="ph-bold ph-telegram-logo"></i> Telegram</span>
+                                    <span className="bg-[#25D366] text-[#075E54] text-[10px] px-2 py-1 rounded w-max font-bold flex items-center gap-1 uppercase tracking-widest"><i className="ph-bold ph-whatsapp-logo"></i> WhatsApp</span>
+                                </div>
+                            </div>
                         </div>
                         <p className="text-slate-400 text-center mt-12 text-lg max-w-3xl mx-auto">
                             By chaining together free-tier APIs into this service blueprint, we entirely sidestepped the need for continuous AWS/database hosting costs, providing the client with an infinitely scalable architecture for $0/month in server fees.
