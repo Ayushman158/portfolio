@@ -296,14 +296,120 @@ export default function CaseStudy() {
                 </div>
             </section>
 
-            {/* Act 4: Strategy, Solution & Impact */}
+            {/* Act 4: Information Architecture (FigJam Style) */}
+            <section className="bg-white py-32 px-6 w-full text-slate-900 border-b border-slate-200">
+                <div className="max-w-6xl mx-auto">
+                    <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-8">4. Information Architecture</h2>
+                    <p className="text-xl md:text-2xl text-slate-600 mb-16 max-w-3xl leading-relaxed font-medium">
+                        A flat, linear architecture designed for extreme speed. No dead ends, no complex navigation trees—just a direct funnel from discovery to payment to confirmation.
+                    </p>
+
+                    {/* IA Diagram */}
+                    <div className="bg-[#fcfbf9] rounded-3xl p-8 md:p-12 border border-[#e5e5e5] shadow-sm overflow-x-auto relative" style={{ backgroundImage: 'radial-gradient(#d4d4d4 1px, transparent 0)', backgroundSize: '24px 24px' }}>
+                        <div className="min-w-[800px] flex flex-col items-center gap-4 font-medium text-sm">
+
+                            {/* Level 1: Entry */}
+                            <div className="flex gap-16">
+                                <div className="bg-[#fff9c4] shadow-sm border border-[#fff59d] px-6 py-4 rounded-xl text-slate-800 font-bold text-center w-52 relative z-10 hover:-translate-y-1 transition-transform">
+                                    <i className="ph-fill ph-qr-code text-3xl mb-2 text-slate-500 block"></i>
+                                    Table QR Code
+                                </div>
+                                <div className="bg-[#fff9c4] shadow-sm border border-[#fff59d] px-6 py-4 rounded-xl text-slate-800 font-bold text-center w-52 relative z-10 hover:-translate-y-1 transition-transform">
+                                    <i className="ph-fill ph-instagram-logo text-3xl mb-2 text-pink-500 block"></i>
+                                    Instagram Bio Link
+                                </div>
+                            </div>
+
+                            <div className="flex gap-[160px] text-slate-300">
+                                <i className="ph-bold ph-arrow-down text-2xl"></i>
+                                <i className="ph-bold ph-arrow-down text-2xl"></i>
+                            </div>
+
+                            {/* Level 2: Core */}
+                            <div className="bg-[#e0f2fe] shadow-sm border border-[#bae6fd] px-8 py-5 rounded-2xl text-sky-900 font-bold text-lg text-center w-[480px] z-10 hover:-translate-y-1 transition-transform">
+                                <i className="ph-fill ph-house text-3xl mb-2 text-sky-500 block"></i>
+                                Main Menu (Single Page)
+                            </div>
+
+                            <i className="ph-bold ph-arrow-down text-2xl text-slate-300"></i>
+
+                            {/* Level 3: Branches */}
+                            <div className="flex gap-12 items-start relative pb-4">
+                                {/* Filter Branch */}
+                                <div className="flex flex-col items-center gap-4 mt-8">
+                                    <div className="bg-white shadow-sm border border-slate-200 px-6 py-3 rounded-xl text-slate-700 text-center w-48 hover:-translate-y-1 transition-transform font-bold text-slate-600">
+                                        Category Filters
+                                    </div>
+                                    <div className="bg-white shadow-sm border border-slate-200 px-6 py-3 rounded-xl text-slate-700 text-center w-48 hover:-translate-y-1 transition-transform font-bold text-slate-600">
+                                        Search Bar
+                                    </div>
+                                    <div className="bg-white shadow-sm border border-slate-200 px-6 py-3 rounded-xl text-slate-700 text-center w-48 hover:-translate-y-1 transition-transform font-bold text-slate-600">
+                                        Product Modal
+                                    </div>
+                                </div>
+
+                                <div className="flex items-center gap-2 mt-12">
+                                    <span className="text-xs uppercase tracking-widest font-bold text-slate-400">Interacts</span>
+                                    <i className="ph-bold ph-arrow-right text-2xl text-slate-300"></i>
+                                </div>
+
+                                {/* Cart Branch */}
+                                <div className="flex flex-col items-center gap-6">
+                                    <div className="bg-[#eefcf3] shadow-sm border border-[#bbf7d0] px-8 py-5 rounded-3xl text-green-900 font-bold text-center w-72 z-10 hover:-translate-y-1 transition-transform text-lg">
+                                        <i className="ph-fill ph-shopping-cart text-3xl mb-2 text-green-500 block"></i>
+                                        Slide-out Cart
+                                    </div>
+
+                                    <i className="ph-bold ph-arrow-down text-2xl text-slate-300 -mt-2"></i>
+
+                                    {/* Checkout */}
+                                    <div className="bg-white shadow-sm border border-slate-200 p-8 rounded-3xl text-slate-800 w-[360px] text-left relative overflow-hidden z-10 hover:-translate-y-1 transition-transform">
+                                        <div className="absolute top-0 left-0 w-1.5 h-full bg-blue-500"></div>
+                                        <h4 className="font-bold text-sm mb-4 uppercase tracking-widest text-slate-400">Checkout Modal</h4>
+                                        <ul className="space-y-4 font-bold text-slate-600">
+                                            <li className="flex items-center gap-3"><i className="ph-bold ph-check text-blue-500 text-lg"></i> Contact Details & Address</li>
+                                            <li className="flex items-center gap-3"><i className="ph-bold ph-check text-blue-500 text-lg"></i> Order Type (Delivery/Pickup)</li>
+                                            <li className="flex items-center gap-3"><i className="ph-bold ph-check text-blue-500 text-lg"></i> Kitchen Notes</li>
+                                        </ul>
+                                    </div>
+
+                                    <i className="ph-bold ph-arrow-down text-2xl text-slate-300 -mt-2"></i>
+
+                                    {/* Payment / Automation */}
+                                    <div className="flex gap-6">
+                                        <div className="bg-[#f3e8ff] shadow-sm border border-[#e9d5ff] px-6 py-4 rounded-xl text-purple-900 font-bold text-center w-48 relative z-10 hover:-translate-y-1 transition-transform">
+                                            <i className="ph-fill ph-currency-inr text-3xl mb-2 text-purple-500 block"></i>
+                                            UPI Deep Link
+                                        </div>
+                                        <div className="bg-[#fef2f2] shadow-sm border border-[#fecaca] px-6 py-4 rounded-xl text-red-900 font-bold text-center w-48 relative z-10 hover:-translate-y-1 transition-transform">
+                                            <i className="ph-fill ph-paper-plane-tilt text-3xl mb-2 text-red-500 block"></i>
+                                            Telegram Connect
+                                        </div>
+                                    </div>
+
+                                    <i className="ph-bold ph-arrow-down text-2xl text-slate-300 -mt-2"></i>
+
+                                    <div className="bg-slate-800 shadow-md border border-slate-700 px-8 py-5 rounded-3xl text-white font-bold text-center w-full z-10">
+                                        <i className="ph-fill ph-check-circle text-3xl mb-2 text-green-400 block"></i>
+                                        WhatsApp Confirmation
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Act 5: Strategy, Solution & Impact */}
             <section className="bg-[#f8fafc] py-32 px-6 w-full border-t border-slate-200">
                 <div className="max-w-6xl mx-auto space-y-32">
 
                     {/* Design Strategy */}
                     <div>
                         <div className="w-16 h-1 bg-blue-500 mb-8"></div>
-                        <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-8">4. Design Strategy (Model Shift)</h2>
+                        <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-8">5. Design Strategy (Model Shift)</h2>
                         <p className="text-xl md:text-2xl text-slate-500 font-medium leading-relaxed max-w-3xl mb-12">
                             Instead of completely replacing WhatsApp, we repositioned it. We preserved user familiarity while introducing operational clarity for the owner.
                         </p>
@@ -362,7 +468,7 @@ export default function CaseStudy() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
                         <div className="space-y-16">
                             <div>
-                                <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-8">5. The Solution</h2>
+                                <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-8">6. The Solution</h2>
                                 <div className="space-y-8">
                                     <div>
                                         <h4 className="text-xl font-bold text-slate-800 mb-2">1. Branded Web Interface</h4>
@@ -380,7 +486,7 @@ export default function CaseStudy() {
                             </div>
 
                             <div>
-                                <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-6">6. UX Decisions</h2>
+                                <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-6">7. UX Decisions</h2>
                                 <ul className="space-y-4 text-slate-600 font-medium list-disc pl-5">
                                     <li>No login barrier prioritizing immediate conversion.</li>
                                     <li>Web-first logic over forcing a native app download.</li>
@@ -421,7 +527,7 @@ export default function CaseStudy() {
 
                     {/* Impact */}
                     <div>
-                        <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-8 text-center">7. Impact <span className="text-slate-400 font-light text-2xl md:text-3xl block mt-2">(2-Week Pilot)</span></h2>
+                        <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-8 text-center">8. Impact <span className="text-slate-400 font-light text-2xl md:text-3xl block mt-2">(2-Week Pilot)</span></h2>
 
                         <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden mb-12">
                             <table className="w-full text-left border-collapse">
