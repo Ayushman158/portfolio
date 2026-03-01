@@ -1,96 +1,18 @@
-'use client';
-import { useEffect, useRef } from 'react';
-import Link from 'next/link';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import re
 
-export default function CaseStudy() {
-    const cursorDot = useRef(null);
+with open('app/case-study/page.js', 'r') as f:
+    content = f.read()
 
-    useEffect(() => {
-        // Register GSAP plugins
-        gsap.registerPlugin(ScrollTrigger);
+# Isolate the parts to keep (imports, cursors, nav) and the parts to replace (header, article)
+match = re.search(r'(<nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50.*?</nav>).*?{/\* Case Study Header \*/}', content, flags=re.DOTALL)
 
-        // 1. Custom Cursor Logic
-        const xToDot = gsap.quickTo(cursorDot.current, "x", { duration: 0.1, ease: "power3" });
-        const yToDot = gsap.quickTo(cursorDot.current, "y", { duration: 0.1, ease: "power3" });
+if not match:
+    print("Could not find insertion boundary.")
+    exit(1)
 
-        const moveCursor = (e) => {
-            xToDot(e.clientX);
-            yToDot(e.clientY);
-        };
+before_nav = content[:match.end(1)]
 
-        window.addEventListener('mousemove', moveCursor);
-
-        // Interactive Elements Cursor State
-        const interactiveEls = document.querySelectorAll('a, button, .interactive-target');
-        interactiveEls.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                gsap.to(cursorDot.current, { scale: 1.1, transformOrigin: 'top left', duration: 0.2 });
-            });
-            el.addEventListener('mouseleave', () => {
-                gsap.to(cursorDot.current, { scale: 1, transformOrigin: 'top left', duration: 0.2 });
-            });
-        });
-
-        // Random Color on Window Enter
-        const figmaColors = ['#0ea5e9', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#f43f5e'];
-        const handleMouseEnter = () => {
-            const randomColor = figmaColors[Math.floor(Math.random() * figmaColors.length)];
-            if (cursorDot.current) {
-                const path = cursorDot.current.querySelector('path');
-                const tag = cursorDot.current.querySelector('.cursor-name-tag');
-                if (path) path.setAttribute('fill', randomColor);
-                if (tag) tag.style.backgroundColor = randomColor;
-            }
-        };
-        document.addEventListener('mouseenter', handleMouseEnter);
-
-        // 2. Scroll Animations
-        const fadeSections = document.querySelectorAll('.fade-in-up');
-        fadeSections.forEach((section) => {
-            gsap.fromTo(section,
-                { opacity: 0, y: 30 },
-                { scrollTrigger: { trigger: section, start: "top 85%" }, opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
-            );
-        });
-
-        // Cleanup
-        return () => {
-            window.removeEventListener('mousemove', moveCursor);
-            document.removeEventListener('mouseenter', handleMouseEnter);
-            ScrollTrigger.getAll().forEach(t => t.kill());
-        };
-    }, []);
-
-    return (
-        <main className="min-h-screen bg-[#f8fafc] text-slate-800 overflow-x-hidden relative pb-32">
-
-            {/* Custom Cursor Elements */}
-            <div className="hidden md:block">
-                <div ref={cursorDot} className="fixed top-0 left-0 pointer-events-none z-[9999] flex flex-col items-start drop-shadow-md">
-                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 1L8 20.5L11 12.5L19 9.5L1 1Z" fill="#0ea5e9" stroke="white" strokeWidth="1.5" strokeLinejoin="round" />
-                    </svg>
-                    <div className="cursor-name-tag bg-[#0ea5e9] text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md ml-3 -mt-1 whitespace-nowrap transition-colors duration-300">
-                        You
-                    </div>
-                </div>
-            </div>
-
-            {/* Pill Navigation */}
-            <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-5xl fade-in-up">
-                <div className="pill-nav shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-                    <Link href="/" className="text-xl font-bold tracking-tight text-slate-900 interactive-target">
-                        Ayushman<span className="text-blue-500">.</span>
-                    </Link>
-                    <div className="flex items-center gap-6">
-                        <Link href="/#work" className="px-5 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-full shadow-sm hover:bg-slate-50 transition-all flex items-center gap-2 interactive-target">
-                            <i className="ph ph-arrow-left"></i> Back to Portfolio
-                        </Link>
-                    </div>
-                </div>
-            </nav>
+new_editorial_body = """
 
             {/* Editorial Hero Section */}
             <section className="pt-48 pb-16 px-6 fade-in-up bg-[#f8fafc] w-full min-h-[85vh] flex flex-col justify-center border-b border-slate-200">
@@ -233,3 +155,11 @@ export default function CaseStudy() {
         </main>
     );
 }
+"""
+
+final = before_nav + new_editorial_body
+
+with open('app/case-study/page.js', 'w') as f:
+    f.write(final)
+
+print("Generated immersive editorial layout.")
