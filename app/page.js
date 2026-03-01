@@ -80,6 +80,12 @@ export default function Home() {
       { opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: "power3.out", delay: 0.2 }
     );
 
+    // Dynamic Tagline Hook Animation
+    gsap.fromTo('#tagline-hook',
+      { opacity: 0, scale: 0.8, rotate: 0 },
+      { opacity: 1, scale: 1, rotate: -4, duration: 1.2, ease: "back.out(1.7)", delay: 1.2 }
+    );
+
     // 4. Scroll Reveal for Portfolio Cards
     const cards = document.querySelectorAll('.card-reveal');
     cards.forEach(card => {
@@ -177,8 +183,18 @@ export default function Home() {
         {/* Main Content Container */}
         <div className="w-full mx-auto px-6 md:px-12 relative z-10 flex flex-col justify-center translate-y-8 md:translate-y-12 mt-12">
           {/* Friendly Typography */}
-          <div className="relative mix-blend-multiply w-full max-w-4xl mx-auto text-center">
-            <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.3] md:leading-[1.2]">
+          <div className="relative mix-blend-multiply w-full max-w-4xl mx-auto text-center mt-8 md:mt-12 overflow-visible">
+
+            {/* Dynamic Tagline (Handwritten Hook) */}
+            <div id="tagline-hook" className="absolute -top-10 sm:-top-12 md:-top-14 right-2 sm:right-8 md:-right-8 lg:-right-4 text-xl sm:text-3xl md:text-4xl text-blue-600 opacity-0 pointer-events-none z-20 flex flex-col items-center drop-shadow-sm max-w-[80vw]" style={{ fontFamily: 'var(--font-reenie-beanie)' }}>
+              <span className="whitespace-nowrap">Designing products that ship.</span>
+              <svg className="w-12 h-5 sm:w-16 sm:h-6 md:w-24 md:h-8 -mt-1 text-blue-400" viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 20 Q 50 45 95 20" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+                <path d="M80 15 L 95 20 L 85 30" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.3] md:leading-[1.2]">
               <div className="overflow-hidden pb-1">
                 <span className="block stagger-fade text-slate-800">
                   Hi, I am Ayushman Bharadwaj. <br className="hidden md:block" />

@@ -1,9 +1,15 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { Inter, Reenie_Beanie } from 'next/font/google'
 
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter'
+})
+
+const reenieBeanie = Reenie_Beanie({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-reenie-beanie'
 })
 
 export const metadata = {
@@ -35,7 +41,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable}`}>
+    <html lang="en" className={`${inter.variable} ${reenieBeanie.variable}`}>
       <head>
         <script src="https://unpkg.com/@phosphor-icons/web"></script>
       </head>
