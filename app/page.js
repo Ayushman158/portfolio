@@ -177,8 +177,8 @@ export default function Home() {
 
           {/* CTA Right */}
           <div ref={magnetBtn} className="relative inline-block cursor-pointer z-10 flex-shrink-0">
-            <Link href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" rel="noopener noreferrer" className="px-3 sm:px-4 py-2 md:px-5 md:py-2 text-[11px] sm:text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 transition-colors rounded-full shadow-[0_0_15px_rgba(59,130,246,0.3)] flex items-center justify-center pointer-events-none whitespace-nowrap">
-              <span ref={magnetText} className="block pointer-events-none">Connect</span>
+            <Link href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" rel="noopener noreferrer" className="px-3 sm:px-4 py-2 md:px-5 md:py-2 text-[11px] sm:text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 transition-colors rounded-full shadow-[0_0_15px_rgba(59,130,246,0.3)] flex items-center justify-center whitespace-nowrap">
+              <span ref={magnetText} className="block">Connect</span>
             </Link>
           </div>
         </div>
