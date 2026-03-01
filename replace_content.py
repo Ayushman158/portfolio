@@ -1,191 +1,26 @@
-'use client';
-import { useEffect, useRef } from 'react';
-import Link from 'next/link';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import re
 
-export default function CaseStudy() {
-    const cursorDot = useRef(null);
+with open('app/case-study/page.js', 'r') as f:
+    text = f.read()
 
-    useEffect(() => {
-        // Register GSAP plugins
-        gsap.registerPlugin(ScrollTrigger);
+# We want to replace from {/* Act 3: Narrative Feature Breakdown */} to </section>\n\n        </main>
 
-        // 1. Custom Cursor Logic
-        const xToDot = gsap.quickTo(cursorDot.current, "x", { duration: 0.1, ease: "power3" });
-        const yToDot = gsap.quickTo(cursorDot.current, "y", { duration: 0.1, ease: "power3" });
+target_start = r"\{\/\* Act 3: Narrative Feature Breakdown \*\/\}"
+target_end = r"\{\/\* Final Act: The Tech Backbone \*\/\}.*?<\/section>"
 
-        const moveCursor = (e) => {
-            xToDot(e.clientX);
-            yToDot(e.clientY);
-        };
+# Wait, let's just find the exact chunks.
+# First, split lines to be safer.
+with open('app/case-study/page.js', 'r') as f:
+    lines = f.readlines()
 
-        window.addEventListener('mousemove', moveCursor);
-
-        // Interactive Elements Cursor State
-        const interactiveEls = document.querySelectorAll('a, button, .interactive-target');
-        interactiveEls.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                gsap.to(cursorDot.current, { scale: 1.1, transformOrigin: 'top left', duration: 0.2 });
-            });
-            el.addEventListener('mouseleave', () => {
-                gsap.to(cursorDot.current, { scale: 1, transformOrigin: 'top left', duration: 0.2 });
-            });
-        });
-
-        // Random Color on Window Enter
-        const figmaColors = ['#0ea5e9', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#f43f5e'];
-        const handleMouseEnter = () => {
-            const randomColor = figmaColors[Math.floor(Math.random() * figmaColors.length)];
-            if (cursorDot.current) {
-                const path = cursorDot.current.querySelector('path');
-                const tag = cursorDot.current.querySelector('.cursor-name-tag');
-                if (path) path.setAttribute('fill', randomColor);
-                if (tag) tag.style.backgroundColor = randomColor;
-            }
-        };
-        document.addEventListener('mouseenter', handleMouseEnter);
-
-        // 2. Scroll Animations
-        const fadeSections = document.querySelectorAll('.fade-in-up');
-        fadeSections.forEach((section) => {
-            gsap.fromTo(section,
-                { opacity: 0, y: 30 },
-                { scrollTrigger: { trigger: section, start: "top 85%" }, opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
-            );
-        });
-
-        // Cleanup
-        return () => {
-            window.removeEventListener('mousemove', moveCursor);
-            document.removeEventListener('mouseenter', handleMouseEnter);
-            ScrollTrigger.getAll().forEach(t => t.kill());
-        };
-    }, []);
-
-    return (
-        <main className="min-h-screen bg-[#f8fafc] text-slate-800 overflow-x-hidden relative pb-32">
-
-            {/* Custom Cursor Elements */}
-            <div className="hidden md:block">
-                <div ref={cursorDot} className="fixed top-0 left-0 pointer-events-none z-[9999] flex flex-col items-start drop-shadow-md">
-                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 1L8 20.5L11 12.5L19 9.5L1 1Z" fill="#0ea5e9" stroke="white" strokeWidth="1.5" strokeLinejoin="round" />
-                    </svg>
-                    <div className="cursor-name-tag bg-[#0ea5e9] text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md ml-3 -mt-1 whitespace-nowrap transition-colors duration-300">
-                        You
-                    </div>
-                </div>
-            </div>
-
-            {/* Pill Navigation */}
-            <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-5xl fade-in-up">
-                <div className="pill-nav shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-                    <Link href="/" className="text-xl font-bold tracking-tight text-slate-900 interactive-target">
-                        Ayushman<span className="text-blue-500">.</span>
-                    </Link>
-                    <div className="flex items-center gap-6">
-                        <Link href="/#work" className="px-5 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-full shadow-sm hover:bg-slate-50 transition-all flex items-center gap-2 interactive-target">
-                            <i className="ph ph-arrow-left"></i> Back to Portfolio
-                        </Link>
-                    </div>
-                </div>
-            </nav>
-
-            {/* Editorial Hero Section */}
-            <section className="pt-48 pb-16 px-6 fade-in-up bg-[#f8fafc] w-full min-h-[85vh] flex flex-col justify-center border-b border-slate-200">
-                <div className="max-w-7xl mx-auto w-full relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
-                    <div className="flex-1">
-                        <div className="flex flex-wrap gap-2 mb-8">
-                            <span className="px-3 py-1 bg-blue-50 border border-blue-100 text-xs font-bold uppercase tracking-widest text-blue-600 rounded">UX Case Study</span>
-                            <span className="px-3 py-1 bg-purple-50 border border-purple-100 text-xs font-bold uppercase tracking-widest text-purple-600 rounded">UX Lead & Product Owner</span>
-                            <span className="px-3 py-1 bg-slate-200 border border-slate-300 text-xs font-bold uppercase tracking-widest text-slate-600 rounded">6 Weeks</span>
-                        </div>
-                        <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-slate-900 mb-8 leading-[1]">
-                            Structured<br /><span className="text-slate-400">Ordering.</span>
-                        </h1>
-                        <p className="text-2xl md:text-3xl text-slate-500 font-medium leading-tight max-w-2xl mb-12">
-                            Transforming conversational, manual WhatsApp ordering into a structured, low-friction system.
-                        </p>
-                        <Link href="https://www.hoychoycafe.com/" target="_blank" rel="noopener noreferrer" className="interactive-target group relative inline-flex items-center justify-center gap-3 px-8 py-5 bg-slate-900 text-white rounded-full text-lg font-bold hover:bg-blue-600 transition-colors">
-                            View Live Project
-                            <i className="ph ph-arrow-up-right text-2xl group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
-                        </Link>
-                    </div>
-                    {/* Splash Screen Image Section */}
-                    <div className="flex-1 w-full flex justify-center md:justify-end relative">
-                        <div className="w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl border border-slate-200 rotate-2 hover:rotate-0 transition-transform duration-500 interactive-target">
-                            <img src="/assets/hoychoy-thumb.png" alt="Hoychoy Cafe Splash Screen" className="w-full h-auto object-cover" />
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Act 1: The Context & flow Issue */}
-            <section className="bg-slate-900 text-white py-32 px-6 w-full">
-                <div className="max-w-6xl mx-auto">
-                    <h2 className="text-5xl md:text-7xl font-bold tracking-tight mb-16">1. The Workflow Issue</h2>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
-                        <div className="space-y-8">
-                            <p className="text-2xl md:text-3xl text-slate-400 font-light leading-relaxed">
-                                Hoychoy Café handled all online orders through WhatsApp. Customers viewed a PDF, typed their address, and sent UPI screenshots.
-                            </p>
-                            <p className="text-xl text-slate-300 leading-relaxed font-medium mb-8">
-                                The system worked—until peak hours exposed its fragility. The owner manually clarified missing details, verified payments, and relayed orders to the kitchen. <strong>This wasn't a UI issue. It was a workflow issue.</strong>
-                            </p>
-
-                            {/* "Before System" Flow Diagram */}
-                            <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700 mt-8">
-                                <span className="block text-xs uppercase tracking-widest text-slate-400 font-bold mb-6 mb-4">Old System Architecture (Bottlenecked)</span>
-                                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-center">
-                                    <div className="bg-slate-700 px-4 py-3 rounded-lg w-full sm:w-auto text-sm font-medium"><i className="ph-fill ph-user mb-1 block text-blue-400 text-xl"></i> Customer</div>
-                                    <i className="ph-bold ph-arrow-right text-slate-500 hidden sm:block"></i>
-                                    <i className="ph-bold ph-arrow-down text-slate-500 sm:hidden"></i>
-
-                                    <div className="bg-slate-700 px-4 py-3 rounded-lg w-full sm:w-auto text-sm font-medium border-b-2 border-slate-500"><i className="ph-fill ph-whatsapp-logo mb-1 block text-green-400 text-xl"></i> Chat</div>
-                                    <i className="ph-bold ph-arrow-right text-slate-500 hidden sm:block"></i>
-                                    <i className="ph-bold ph-arrow-down text-slate-500 sm:hidden"></i>
-
-                                    <div className="bg-red-900/50 px-4 py-3 rounded-lg w-full sm:w-auto text-sm font-bold border border-red-500/50 text-red-100 flex-1 relative">
-                                        <i className="ph-fill ph-warning mb-1 block text-red-400 text-xl mx-auto"></i> Owner (Bottleneck)
-                                    </div>
-                                    <i className="ph-bold ph-arrow-right text-slate-500 hidden sm:block"></i>
-                                    <i className="ph-bold ph-arrow-down text-slate-500 sm:hidden"></i>
-
-                                    <div className="bg-slate-700 px-4 py-3 rounded-lg w-full sm:w-auto text-sm font-medium"><i className="ph-fill ph-cooking-pot mb-1 block text-orange-400 text-xl"></i> Kitchen</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Research Insights Metrics */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                            <div className="bg-slate-800/50 p-8 rounded-3xl border border-slate-700/50 h-full flex flex-col justify-center">
-                                <h3 className="text-6xl font-black text-red-400 tracking-tighter mb-4">50%</h3>
-                                <p className="text-slate-400 text-lg uppercase tracking-widest font-bold">Of Peak Time</p>
-                                <p className="text-slate-500 mt-2 text-sm">spent exclusively clarifying incomplete orders with customers.</p>
-                            </div>
-                            <div className="bg-slate-800/50 p-8 rounded-3xl border border-slate-700/50 h-full flex flex-col justify-center">
-                                <h3 className="text-6xl font-black text-amber-400 tracking-tighter mb-4">50+</h3>
-                                <p className="text-slate-400 text-lg uppercase tracking-widest font-bold">Threads Analyzed</p>
-                                <p className="text-slate-500 mt-2 text-sm">revealing payment mismatch and lost orders as core friction points.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Act 2: Key Insight */}
-            <section className="bg-white py-32 px-6 w-full border-b border-slate-100">
-                <div className="max-w-6xl mx-auto text-center">
-                    <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900 mb-6 font-serif italic text-blue-600">The Critical Insight</h2>
-                    <p className="text-3xl md:text-5xl font-bold text-slate-400 leading-tight max-w-4xl mx-auto mt-8">
-                        The problem wasn't WhatsApp itself. <br /><span className="text-slate-900">The problem was the absence of a structured system.</span>
-                    </p>
-                </div>
-            </section>
-
-            {/* Act 3: Service Blueprint */}
+new_lines = []
+skip = False
+for i, line in enumerate(lines):
+    if "{/* Act 3: Narrative Feature Breakdown */}" in line:
+        skip = True
+        
+        # Insert new content here
+        new_content = """            {/* Act 3: Service Blueprint */}
             <section className="bg-slate-900 py-32 px-6 w-full text-white">
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-5xl md:text-7xl font-bold tracking-tight mb-8">3. Uncovering Friction</h2>
@@ -398,7 +233,14 @@ export default function CaseStudy() {
                         </div>
                     </div>
                 </div>
-            </section>
-        </main>
-    );
-}
+            </section>\n"""
+        new_lines.append(new_content)
+        
+    if skip and "</main>" in line:
+        skip = False
+        
+    if not skip:
+        new_lines.append(line)
+
+with open('app/case-study/page.js', 'w') as f:
+    f.writelines(new_lines)
