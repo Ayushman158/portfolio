@@ -13,8 +13,6 @@ export default function Home() {
   const magnetBtn = useRef(null);
   const magnetText = useRef(null);
 
-  // Bento Grid Ref for Mouse Glow
-  const gridRef = useRef(null);
 
   useEffect(() => {
     // Register GSAP plugins
@@ -120,23 +118,10 @@ export default function Home() {
       }, 30);
     });
 
-    // 6. Mouse Tracking Glow for Bento Cards
-    const handleMouseMoveGlow = (e) => {
-      const cards = gridRef.current?.querySelectorAll('.bento-card');
-      cards?.forEach((card) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty('--mouse-x', `${x}px`);
-        card.style.setProperty('--mouse-y', `${y}px`);
-      });
-    };
-    window.addEventListener('mousemove', handleMouseMoveGlow);
 
     // Cleanup
     return () => {
       window.removeEventListener('mousemove', moveCursor);
-      window.removeEventListener('mousemove', handleMouseMoveGlow);
       document.removeEventListener('mouseenter', handleMouseEnter);
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
@@ -169,6 +154,9 @@ export default function Home() {
           <div className="flex items-center justify-center gap-3 sm:gap-6 md:gap-8 flex-1 px-2 md:px-4 shrink min-w-0">
             <Link href="#work" className="text-[11px] sm:text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors whitespace-nowrap">
               Work
+            </Link>
+            <Link href="/experiments" className="text-[11px] sm:text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors whitespace-nowrap">
+              Experiments
             </Link>
             <Link href="/resume" className="text-[11px] sm:text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors whitespace-nowrap">
               Resume
@@ -229,167 +217,41 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Selected Works Section */}
-      <section id="work" className="py-32 px-6 bg-white border-t border-slate-100 relative z-10">
-        <div className="max-w-7xl mx-auto">
+      {/* Minimal Selected Works List */}
+      <section id="work" className="py-24 md:py-32 px-6 bg-white border-t border-slate-100 relative z-10">
+        <div className="max-w-4xl mx-auto">
           <div className="mb-16 card-reveal">
-            <h2 className="text-4xl font-bold text-slate-900 mb-4 tracking-tight">Selected Works</h2>
-            <p className="text-lg text-slate-500 max-w-2xl">A collection of end-to-end engineered products demonstrating both design thinking and technical execution.</p>
+            <h2 className="text-sm font-mono tracking-[0.2em] text-slate-400 uppercase mb-4">Selected Works</h2>
+            <p className="text-xl md:text-2xl text-slate-800 tracking-tight leading-[1.4] max-w-2xl font-medium">
+              End-to-end engineered products demonstrating design thinking and technical execution.
+            </p>
           </div>
 
-          <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 h-auto md:h-[600px]">
-            {/* Bento Box 1: Hoychoy Card (Spans 2 columns, 2 rows) */}
-            <Link href="/case-study" className="md:col-span-2 md:row-span-2 group block card-reveal interactive-target h-full bento-card relative overflow-hidden rounded-[2rem]">
-              <div className="pointer-events-none absolute -inset-px rounded-[2rem] opacity-0 transition-opacity duration-500 group-hover:opacity-100 z-20" style={{ background: 'radial-gradient(800px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(14,165,233,0.08), transparent 40%)' }}></div>
-              <div className="bg-white rounded-[2rem] p-6 h-full flex flex-col transition-all duration-500 hover:bg-slate-50 border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative z-10">
-                {/* Image Container */}
-                <div className="flex-grow bg-slate-100 rounded-3xl overflow-hidden relative mb-6 flex items-end justify-center px-8 pt-12 group-hover:bg-blue-50/50 transition-colors duration-500">
-                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/5 to-transparent pointer-events-none"></div>
-                  <img src="/assets/hero.png" alt="Hoychoy Cafe Web App" className="relative w-[90%] md:w-[75%] h-auto rounded-t-2xl shadow-[0_0_50px_rgba(0,0,0,0.15)] transition-transform duration-700 group-hover:scale-105 group-hover:-translate-y-4 object-cover object-top" />
-                </div>
-                {/* Content */}
-                <div className="px-2 mt-auto">
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <span className="px-3 py-1 bg-white border border-slate-200 text-xs font-bold uppercase tracking-widest text-slate-500 rounded-full">Frontend</span>
-                    <span className="px-3 py-1 bg-white border border-slate-200 text-xs font-bold uppercase tracking-widest text-slate-500 rounded-full">UX Design</span>
-                    <span className="px-3 py-1 bg-blue-50 border border-blue-200 flex flex-row items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-blue-600 rounded-full"><div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>Live</span>
-                  </div>
-                  <h3 className="text-3xl font-extrabold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors flex items-center gap-2">
-                    Hoychoy Cafe <i className="ph ph-arrow-up-right opacity-0 -translate-x-4 translate-y-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300"></i>
-                  </h3>
-                  <p className="text-slate-500 text-lg leading-relaxed">End-to-end hyperlocal delivery app.</p>
-                </div>
+          <div className="flex flex-col border-t border-slate-200">
+            {/* Project Row 1 */}
+            <Link href="/case-study" className="group flex flex-col md:flex-row md:items-center justify-between py-8 md:py-10 border-b border-slate-200 interactive-target">
+              <div className="flex-1 mb-4 md:mb-0 pr-4">
+                <h3 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors mb-2 flex items-center gap-3">
+                  Hoychoy Cafe
+                  <i className="ph ph-arrow-up-right text-2xl md:text-3xl opacity-0 -translate-x-4 translate-y-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300"></i>
+                </h3>
+                <p className="text-slate-500 text-lg md:text-xl leading-relaxed">End-to-end hyperlocal delivery web application.</p>
+              </div>
+              <div className="flex items-center gap-3 md:w-64 md:justify-end shrink-0">
+                <span className="text-xs font-mono uppercase tracking-widest text-slate-400">UX Design</span>
+                <span className="text-slate-300">•</span>
+                <span className="text-xs font-mono uppercase tracking-widest text-slate-400">2024</span>
               </div>
             </Link>
-
-            {/* Bento Box 2: Skill Focus */}
-            <div className="md:col-span-1 md:row-span-1 bg-white rounded-[2rem] p-8 flex flex-col justify-between border border-slate-200 shadow-sm group card-reveal interactive-target hover:-translate-y-1 transition-transform duration-500 bento-card relative overflow-hidden">
-              <div className="pointer-events-none absolute -inset-px rounded-[2rem] opacity-0 transition-opacity duration-500 group-hover:opacity-100 z-20" style={{ background: 'radial-gradient(400px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(14,165,233,0.06), transparent 40%)' }}></div>
-              <div className="relative z-10 w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mb-6 group-hover:bg-blue-50 transition-colors">
-                <i className="ph ph-lightning text-2xl text-slate-600 group-hover:text-blue-500"></i>
-              </div>
-              <div className="relative z-10">
-                <h4 className="text-2xl font-bold text-slate-900 mb-2 tracking-tight">Vibe Coding</h4>
-                <p className="text-slate-500 text-sm font-medium leading-relaxed">Bridging the gap between high-fidelity design logic and rapid, AI-assisted engineering.</p>
-              </div>
-            </div>
-
-            {/* Bento Box 3: Metric */}
-            <div className="md:col-span-1 md:row-span-1 bg-white rounded-[2rem] p-8 flex flex-col justify-between border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)] group card-reveal interactive-target hover:bg-slate-50 transition-colors duration-500 bento-card relative overflow-hidden">
-              <div className="pointer-events-none absolute -inset-px rounded-[2rem] opacity-0 transition-opacity duration-500 group-hover:opacity-100 z-20" style={{ background: 'radial-gradient(400px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(239,68,68,0.06), transparent 40%)' }}></div>
-              <div className="relative z-10 text-right">
-                <i className="ph ph-arrows-in line-through text-3xl text-slate-300 group-hover:text-red-400 transition-colors duration-500"></i>
-              </div>
-              <div className="relative z-10">
-                <h4 className="text-4xl font-extrabold text-slate-900 mb-2 tracking-tighter">Zero</h4>
-                <p className="text-slate-500 font-medium leading-relaxed uppercase tracking-widest text-sm">Friction UX</p>
-              </div>
-            </div>
-
           </div>
-        </div>
-      </section>
-
-      {/* Weekend Builds Section */}
-      <section className="py-24 px-6 bg-slate-50 border-t border-slate-100 relative z-10 overflow-hidden">
-        {/* Decorative Grid BG */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#0f172a 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
-
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="mb-12 card-reveal">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 tracking-tight flex items-center gap-3">
-              <i className="ph-fill ph-flask text-blue-500"></i> Weekend Builds
-            </h2>
-            <p className="text-lg text-slate-500 max-w-2xl">Quirky projects and mini-experiments built to explore new interactions, AI APIs, and frontend physics outside of regular hours.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-            {/* Project 1: FieldNote Pipeline */}
-            <Link href="https://fieldnote-ten.vercel.app/" target="_blank" className="bg-slate-900 rounded-3xl p-6 border border-slate-800 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group card-reveal interactive-target flex flex-col relative overflow-hidden">
-              {/* Background Accents */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-500/20 transition-colors duration-700"></div>
-
-              <div className="relative aspect-video bg-slate-800/80 rounded-2xl mb-6 flex items-center justify-center p-2 border border-slate-700 overflow-hidden group-hover:border-blue-500/30 transition-colors">
-                <img src="/assets/fieldnote-ss.png" alt="FieldNote AI Framework" className="w-full h-full object-cover rounded-xl shadow-lg opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
-              </div>
-              <div className="mt-auto relative z-10">
-                <h4 className="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors flex items-center gap-2">FieldNote AI <i className="ph ph-arrow-up-right opacity-0 -translate-x-2 translate-y-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform"></i></h4>
-                <p className="text-slate-400 text-sm leading-relaxed mb-4">Connecting Web Speech API to Gemini 1.5 Flash to automatically parse and tag unstructured user interview transcripts.</p>
-                <div className="flex gap-2">
-                  <span className="px-2.5 py-1 bg-slate-800 border border-slate-700 text-[10px] font-bold uppercase tracking-wider text-slate-300 rounded-md">Next.js</span>
-                  <span className="px-2.5 py-1 bg-slate-800 border border-slate-700 text-[10px] font-bold uppercase tracking-wider text-slate-300 rounded-md">Gemini API</span>
-                </div>
-              </div>
+          
+          {/* AI Experiments CTA */}
+          <div className="mt-24 text-center">
+            <Link href="/experiments" className="group inline-flex items-center gap-3 text-sm md:text-lg font-medium text-slate-600 hover:text-blue-600 transition-colors interactive-target px-8 py-4 rounded-full border border-slate-200 hover:border-blue-200 hover:bg-blue-50/50">
+              Explore AI Experiments
+              <i className="ph ph-arrow-right transition-transform group-hover:translate-x-1"></i>
             </Link>
-
-            {/* Project 2: Coming Soon */}
-            <div className="bg-slate-50/50 rounded-3xl p-6 border border-slate-200/50 border-dashed flex flex-col items-center justify-center text-center opacity-60 card-reveal">
-              <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mb-4">
-                <i className="ph-duotone ph-hammer text-2xl text-slate-400"></i>
-              </div>
-              <h4 className="text-lg font-bold text-slate-700 tracking-widest uppercase mb-2">More Builds Coming Soon</h4>
-              <p className="text-sm text-slate-500 font-mono">Currently cooking in the lab.</p>
-            </div>
-
           </div>
-        </div>
-      </section>
-
-      {/* Interactive About Section */}
-      <section id="about" className="py-32 px-6 bg-slate-50 relative z-10 border-t border-slate-200">
-        <div className="max-w-5xl mx-auto">
-
-          <div className="space-y-16">
-            {/* Primary Intersection Statement */}
-            <h2 className="stagger-fade text-4xl md:text-6xl font-extrabold text-slate-900 leading-normal tracking-tight max-w-4xl py-2">
-              I design at the intersection of <span className="whitespace-nowrap"><span className="text-gradient pr-1 pb-1">behavior</span>,</span> <span className="whitespace-nowrap"><span className="text-gradient pr-1 pb-1">business</span>,</span> and <span className="text-gradient pr-1 pb-1">technology</span>.
-            </h2>
-
-            {/* Secondary Traits/Hobbies */}
-            <div className="grid md:grid-cols-2 gap-12 pt-8 border-t border-slate-200">
-
-              <div className="stagger-fade space-y-4">
-                <h3 className="text-sm font-bold uppercase tracking-widest text-slate-400">The Approach</h3>
-                <p className="text-lg text-slate-600 leading-relaxed">
-                  My background spans <span className="font-semibold text-slate-800">product development</span> and <span className="font-semibold text-slate-800">engineering</span>, allowing me to build what I design. I focus on creating systems that are not only viable and feasible, but deeply resonant with human behavior.
-                </p>
-              </div>
-
-              <div className="stagger-fade space-y-6">
-                <h3 className="text-sm font-bold uppercase tracking-widest text-slate-400">Off-Screen</h3>
-                <p className="text-lg text-slate-500">
-                  When I'm not working on digital products, I'm usually thinking about my next idea while...
-                </p>
-
-                {/* Interactive Hobby Pills */}
-                <div className="flex flex-wrap gap-3">
-                  <div className="interactive-target group cursor-none px-5 py-3 rounded-full border border-slate-200 bg-white shadow-sm flex items-center gap-2 transition-all duration-300 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600">
-                    <i className="ph ph-barbell text-xl text-slate-400 group-hover:text-blue-500 transition-colors"></i>
-                    <span className="font-medium text-slate-700 group-hover:text-blue-700">In the Gym</span>
-                  </div>
-
-                  <div className="interactive-target group cursor-none px-5 py-3 rounded-full border border-slate-200 bg-white shadow-sm flex items-center gap-2 transition-all duration-300 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600">
-                    <i className="ph ph-swimming-pool text-xl text-slate-400 group-hover:text-blue-500 transition-colors"></i>
-                    <span className="font-medium text-slate-700 group-hover:text-blue-700">In the Pool</span>
-                  </div>
-
-                  <div className="interactive-target group cursor-none px-5 py-3 rounded-full border border-slate-200 bg-white shadow-sm flex items-center gap-2 transition-all duration-300 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600">
-                    <i className="ph ph-guitar text-xl text-slate-400 group-hover:text-blue-500 transition-colors"></i>
-                    <span className="font-medium text-slate-700 group-hover:text-blue-700">Playing Guitar</span>
-                  </div>
-
-                  <div className="interactive-target group cursor-none px-5 py-3 rounded-full border border-slate-200 bg-white shadow-sm flex items-center gap-2 transition-all duration-300 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600">
-                    <i className="ph ph-coffee text-xl text-slate-400 group-hover:text-blue-500 transition-colors"></i>
-                    <span className="font-medium text-slate-700 group-hover:text-blue-700">Having Coffee</span>
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
-          </div>
-
         </div>
       </section>
 
