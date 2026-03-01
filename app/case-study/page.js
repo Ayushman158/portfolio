@@ -308,18 +308,11 @@ export default function CaseStudy() {
                             {/* Screen Content (Video/Image Loop) */}
                             <div className="relative flex-grow bg-slate-100 overflow-hidden">
                                 {/* Simulated Video / Animated Frame Sequence */}
-                                <video
-                                    autoPlay
-                                    loop
-                                    muted
-                                    playsInline
+                                <img
+                                    src="/assets/recording.webp"
+                                    alt="Hoychoy App Ordering Flow Demo"
                                     className="absolute inset-0 w-full h-full object-cover"
-                                    poster="/assets/hero.png"
-                                >
-                                    <source src="/assets/demo.mp4" type="video/mp4" />
-                                    {/* Fallback to image if video isn't linked yet */}
-                                    <img src="/assets/hero.png" alt="App Mockup" className="absolute inset-0 w-full h-full object-cover" />
-                                </video>
+                                />
                                 {/* Gradient fade at bottom for realistic scroll cutoff */}
                                 <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-slate-950/40 to-transparent pointer-events-none"></div>
                             </div>
