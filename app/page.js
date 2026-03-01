@@ -177,7 +177,7 @@ export default function Home() {
 
           {/* CTA Right */}
           <div ref={magnetBtn} className="relative inline-block cursor-pointer z-10 flex-shrink-0">
-            <Link href="mailto:ayushman15899@gmail.com" className="px-3 sm:px-4 py-2 md:px-5 md:py-2 text-[11px] sm:text-sm font-medium text-white bg-blue-500 rounded-full shadow-md flex items-center justify-center pointer-events-none whitespace-nowrap">
+            <Link href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" rel="noopener noreferrer" className="px-3 sm:px-4 py-2 md:px-5 md:py-2 text-[11px] sm:text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 transition-colors rounded-full shadow-[0_0_15px_rgba(59,130,246,0.3)] flex items-center justify-center pointer-events-none whitespace-nowrap">
               <span ref={magnetText} className="block pointer-events-none">Connect</span>
             </Link>
           </div>
@@ -394,23 +394,32 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 bg-white relative z-10">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
-          <div className="mb-4 md:mb-0 flex items-center gap-6">
-            <Link href="/" className="text-xl font-bold tracking-tight text-slate-900 interactive-target">
-              Ayushman<span className="text-blue-500">.</span>
+      <footer className="relative z-10 py-16 overflow-hidden bg-slate-50 border-t border-slate-100">
+        {/* Subtle Radial Gradient Background */}
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at center top, rgba(14, 165, 233, 0.08), transparent 70%)' }}></div>
+
+        <div className="max-w-4xl mx-auto px-6 flex flex-col items-center justify-center relative z-10">
+          {/* Avatar Logo */}
+          <Link href="/" className="mb-6 flex items-center justify-center w-14 h-14 rounded-full border border-slate-200 bg-white shadow-sm overflow-hidden interactive-target hover:scale-[1.05] transition-transform">
+            <img src="/assets/avatar.png" alt="Ayushman Bharadwaj" className="w-full h-full object-contain object-bottom" />
+          </Link>
+
+          {/* Social Links */}
+          <div className="flex items-center gap-4 mb-8">
+            <Link href="mailto:ayushman15899@gmail.com" className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-400 hover:text-blue-500 hover:border-blue-200 hover:shadow-md transition-all interactive-target">
+              <i className="ph-fill ph-envelope-simple text-lg"></i>
             </Link>
-            <div className="flex items-center gap-4 text-slate-400">
-              <Link href="https://x.com/AyushmanBharad" target="_blank" className="hover:text-blue-500 transition-colors interactive-target">
-                <i className="ph-fill ph-twitter-logo text-xl"></i>
-              </Link>
-              <Link href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" className="hover:text-blue-700 transition-colors interactive-target">
-                <i className="ph-fill ph-linkedin-logo text-xl"></i>
-              </Link>
-            </div>
+            <Link href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-400 hover:text-blue-700 hover:border-blue-200 hover:shadow-md transition-all interactive-target">
+              <i className="ph-fill ph-linkedin-logo text-lg"></i>
+            </Link>
+            <Link href="https://x.com/AyushmanBharad" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-400 hover:text-sky-500 hover:border-sky-200 hover:shadow-md transition-all interactive-target">
+              <i className="ph-fill ph-twitter-logo text-lg"></i>
+            </Link>
           </div>
-          <p className="text-slate-500 text-sm">
-            © {new Date().getFullYear()} Ayushman Bharadwaj. All rights reserved.
+
+          {/* Copyright */}
+          <p className="text-slate-400 text-[10px] md:text-xs font-mono tracking-[0.2em] uppercase">
+            © {new Date().getFullYear()} Ayushman. All rights reserved.
           </p>
         </div>
       </footer>
