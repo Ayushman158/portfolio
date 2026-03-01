@@ -10,19 +10,24 @@ export default function Experiments() {
     const cursorDot = useRef(null);
 
     useEffect(() => {
+        // Register GSAP plugins
+        gsap.registerPlugin(ScrollTrigger);
+
         // Hide default cursor on desktop
         if (window.innerWidth >= 768) {
             document.body.style.cursor = 'none';
         }
 
+        // 1. Custom Cursor Logic
+        const xToDot = gsap.quickTo(cursorDot.current, "x", { duration: 0.1, ease: "power3" });
+        const yToDot = gsap.quickTo(cursorDot.current, "y", { duration: 0.1, ease: "power3" });
+
         const moveCursor = (e) => {
-            gsap.to(cursorDot.current, {
-                x: e.clientX,
-                y: e.clientY,
-                duration: 0.1,
-                ease: 'power2.out',
-            });
+            xToDot(e.clientX);
+            yToDot(e.clientY);
         };
+
+        window.addEventListener('mousemove', moveCursor);
 
         const handleMouseEnter = (e) => {
             const el = e.target.closest('.interactive-target');
@@ -46,7 +51,6 @@ export default function Experiments() {
             }
         };
 
-        window.addEventListener('mousemove', moveCursor);
         document.addEventListener('mouseover', handleMouseEnter);
         document.addEventListener('mouseout', handleMouseLeave);
 
@@ -58,6 +62,7 @@ export default function Experiments() {
             window.removeEventListener('mousemove', moveCursor);
             document.removeEventListener('mouseover', handleMouseEnter);
             document.removeEventListener('mouseout', handleMouseLeave);
+            ScrollTrigger.getAll().forEach(t => t.kill());
         };
     }, []);
 
