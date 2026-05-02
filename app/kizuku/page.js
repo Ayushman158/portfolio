@@ -142,7 +142,7 @@ export default function KizukuPage() {
         </nav>
 
         {/* Status banner */}
-        <div className="flex justify-center mt-5 px-6">
+        <div className="flex justify-center mt-28 px-6">
           <div className="flex items-center gap-2.5 px-4 py-2 rounded-full text-xs font-medium"
             style={{ backgroundColor: '#FEF9C3', border: '1px solid #ECD85860', color: '#7A6218' }}>
             <span className="w-1.5 h-1.5 rounded-full bg-[#D4A017] animate-pulse inline-block" />
@@ -178,7 +178,7 @@ export default function KizukuPage() {
             </p>
 
             <div className="flex flex-wrap gap-6 pt-4" style={{ borderTop: `1px solid ${T.heading}10` }}>
-              {[['2 weeks', 'sprint'], ['ios', 'platform'], ['21', 'illustrations'], ['4 stages', 'process']].map(([v, k]) => (
+              {[['2 weeks', 'sprint'], ['ios', 'platform'], ['18', 'illustrations'], ['4 stages', 'process']].map(([v, k]) => (
                 <div key={k}>
                   <p className="font-bold text-sm" style={{ color: T.heading }}>{v}</p>
                   <p className="text-[10px] uppercase tracking-widest mt-0.5" style={{ color: T.caption }}>{k}</p>
