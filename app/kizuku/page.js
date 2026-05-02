@@ -17,8 +17,8 @@ const LOOP_SCREENS = [
 
 const PERSONAS = [
   { type: 'optimizer', tree: 'spiral tree',  color: '#ECD858', bg: '#FEFCE8', textDark: '#1C2B1A', img: '/kizuku/screen-optimiser.png',    treeImg: '/kizuku/optimizer-tree.png', quote: '"is this the most efficient use of my time right now?"' },
-  { type: 'seeker',    tree: 'crystal tree', color: '#A8CEDE', bg: '#EFF8FC', textDark: '#1C2B1A', img: '/kizuku/screen-questionnaire.png', treeImg: '/kizuku/crystal-tree.png',   quote: '"what if this is not the life i was supposed to build?"' },
-  { type: 'planner',   tree: 'strata tree',  color: '#A8CA9C', bg: '#EFFAF0', textDark: '#1C2B1A', img: '/kizuku/screen-reflection.png',    treeImg: '/kizuku/tree-stage-5.png',   quote: '"i need to make sure i am not making a mistake i cannot undo."' },
+  { type: 'seeker',    tree: 'crystal tree', color: '#A8CEDE', bg: '#EFF8FC', textDark: '#1C2B1A', img: '/kizuku/screen-questionnaire.png', treeImg: '/kizuku/seeker-tree.png',   quote: '"what if this is not the life i was supposed to build?"' },
+  { type: 'planner',   tree: 'strata tree',  color: '#A8CA9C', bg: '#EFFAF0', textDark: '#1C2B1A', img: '/kizuku/screen-reflection.png',    treeImg: '/kizuku/planner-tree.png',   quote: '"i need to make sure i am not making a mistake i cannot undo."' },
 ];
 
 // Contrast-safe text tokens (all ≥ 4.5:1 on white #FFFFFF)
