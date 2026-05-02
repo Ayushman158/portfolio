@@ -127,13 +127,18 @@ export default function KizukuPage() {
       <section className="relative min-h-screen flex flex-col overflow-hidden"
         style={{ background: 'linear-gradient(145deg, #F5F0E8 0%, #FFFFFF 45%, #F0F5EE 100%)' }}>
 
-        {/* Nav bar */}
-        <nav className="flex justify-between items-center px-6 md:px-12 pt-7">
-          <Link href="/" className="text-xs tracking-widest uppercase font-medium transition-opacity hover:opacity-60"
-            style={{ color: T.secondary }}>
-            ← ayushman
-          </Link>
-          <img src="/kizuku/Home/logo.png" alt="Kizuku" className="h-8 w-auto" />
+        {/* Pill Navigation */}
+        <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-5xl fade-in-up">
+          <div className="bg-white/90 backdrop-blur-md border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-full px-6 py-3 flex items-center justify-between">
+            <Link href="/" className="text-xl font-bold tracking-tight text-slate-900 interactive-target">
+              Ayushman<span className="text-blue-500">.</span>
+            </Link>
+            <div className="flex items-center gap-6">
+              <Link href="/#work" className="px-5 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-full shadow-sm hover:bg-slate-50 transition-all flex items-center gap-2 interactive-target">
+                <i className="ph ph-arrow-left"></i> Back to Portfolio
+              </Link>
+            </div>
+          </div>
         </nav>
 
         {/* Status banner */}
