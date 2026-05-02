@@ -270,11 +270,12 @@ export default function KizukuPage() {
             </div>
             
             <div className="flex justify-center w-full mt-10 mb-6">
-              <div className="relative border-gray-200 bg-[#0c0c0c] border border-slate-200/50 rounded-3xl md:rounded-[2.5rem] w-full max-w-[400px] aspect-[400/850] shadow-2xl overflow-hidden" style={{ boxShadow: '0 20px 60px rgba(44,82,40,0.12)' }}>
+              <div className="relative border-gray-200 bg-[#0c0c0c] border border-slate-200/50 rounded-3xl md:rounded-[2.5rem] w-full max-w-[390px] aspect-[390/844] shadow-2xl overflow-hidden mx-auto" style={{ boxShadow: '0 20px 60px rgba(44,82,40,0.12)' }}>
                 <iframe
-                  style={{ position: 'absolute', top: '-1%', left: '-1%', width: '102%', height: '102%', border: 'none' }}
-                  src="https://embed.figma.com/proto/80dVRiAfseQp409VZtvZZ6/Kizuku?node-id=160-994&scaling=scale-down-width&hide-ui=1"
+                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
+                  src="https://embed.figma.com/proto/80dVRiAfseQp409VZtvZZ6/Kizuku?node-id=160-994&scaling=scale-down-width&content-scaling=fixed&embed-host=share&hide-ui=1"
                   allowFullScreen
+                  allow="fullscreen"
                   title="Kizuku prototype"
                 />
               </div>
