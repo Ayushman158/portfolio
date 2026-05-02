@@ -268,8 +268,12 @@ export default function KizukuPage() {
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 8L8 2M8 2H4M8 2V6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </a>
             </div>
-            <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid rgba(44,82,40,0.1)', boxShadow: '0 4px 24px rgba(44,82,40,0.08)' }}>
-              <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
+            
+            <div className="flex justify-center w-full mt-10 mb-6">
+              <div className="relative border-gray-900 bg-gray-900 border-[12px] md:border-[16px] rounded-[2.5rem] md:rounded-[3.5rem] w-[320px] h-[680px] md:w-[400px] md:h-[850px] shadow-2xl overflow-hidden" style={{ boxShadow: '0 20px 60px rgba(44,82,40,0.15)' }}>
+                {/* Dynamic Island / Notch */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 md:w-36 h-6 md:h-8 bg-gray-900 rounded-b-3xl z-10 pointer-events-none"></div>
+                
                 <iframe
                   style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
                   src="https://embed.figma.com/proto/80dVRiAfseQp409VZtvZZ6/Kizuku?node-id=160-994&scaling=scale-down&content-scaling=fixed&embed-host=share&hide-ui=1"
