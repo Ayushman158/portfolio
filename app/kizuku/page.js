@@ -270,13 +270,10 @@ export default function KizukuPage() {
             </div>
             
             <div className="flex justify-center w-full mt-10 mb-6">
-              <div className="relative border-gray-900 bg-gray-900 border-[12px] md:border-[16px] rounded-[2.5rem] md:rounded-[3.5rem] w-[320px] h-[680px] md:w-[400px] md:h-[850px] shadow-2xl overflow-hidden" style={{ boxShadow: '0 20px 60px rgba(44,82,40,0.15)' }}>
-                {/* Dynamic Island / Notch */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 md:w-36 h-6 md:h-8 bg-gray-900 rounded-b-3xl z-10 pointer-events-none"></div>
-                
+              <div className="relative border-gray-200 bg-[#0c0c0c] border border-slate-200/50 rounded-3xl md:rounded-[2.5rem] w-full max-w-[400px] aspect-[400/850] shadow-2xl overflow-hidden" style={{ boxShadow: '0 20px 60px rgba(44,82,40,0.12)' }}>
                 <iframe
-                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
-                  src="https://embed.figma.com/proto/80dVRiAfseQp409VZtvZZ6/Kizuku?node-id=160-994&scaling=scale-down&content-scaling=fixed&embed-host=share&hide-ui=1"
+                  style={{ position: 'absolute', top: '-1%', left: '-1%', width: '102%', height: '102%', border: 'none' }}
+                  src="https://embed.figma.com/proto/80dVRiAfseQp409VZtvZZ6/Kizuku?node-id=160-994&scaling=scale-down-width&hide-ui=1"
                   allowFullScreen
                   title="Kizuku prototype"
                 />
