@@ -409,7 +409,7 @@ export default function KizukuPage() {
           {/* Logo floral painting */}
           <div className="kz-reveal kz-img-scale mb-12 rounded-3xl overflow-hidden"
             style={{ boxShadow: '0 4px 32px rgba(44,82,40,0.08)', border: '1px solid rgba(44,82,40,0.06)' }}>
-            <img src="/kizuku/logo-painting.png" alt="Hand-painted logo floral exploration" className="w-full h-auto block" loading="lazy" />
+            <img src="/kizuku/logo-formation.png" alt="Hand-painted logo floral exploration" className="w-full h-auto block" loading="lazy" />
           </div>
 
           {/* Colour palette */}
