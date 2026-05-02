@@ -223,7 +223,7 @@ export default function KizukuPage() {
           <div className="kz-reveal grid grid-cols-3 md:grid-cols-5 gap-3 md:gap-5 mb-12">
             {LOOP_SCREENS.map((s) => (
               <div key={s.label} className="flex flex-col items-center gap-2.5">
-                <div className="w-full rounded-[1.5rem] overflow-hidden"
+                <div className="w-full rounded-xl md:rounded-[1.5rem] overflow-hidden"
                   style={{ boxShadow: '0 8px 32px rgba(44,82,40,0.1)', border: '1px solid rgba(44,82,40,0.07)' }}>
                   <img src={s.src} alt={s.label} className="w-full h-auto block" loading="lazy" />
                 </div>
@@ -407,7 +407,7 @@ export default function KizukuPage() {
           </div>
 
           {/* Logo floral painting */}
-          <div className="kz-reveal kz-img-scale mb-12 rounded-3xl overflow-hidden"
+          <div className="kz-reveal kz-img-scale mb-12 -mx-6 md:mx-0 rounded-none md:rounded-3xl overflow-hidden"
             style={{ boxShadow: '0 4px 32px rgba(44,82,40,0.08)', border: '1px solid rgba(44,82,40,0.06)' }}>
             <img src="/kizuku/logo-formation.png" alt="Hand-painted logo floral exploration" className="w-full h-auto block" loading="lazy" />
           </div>
