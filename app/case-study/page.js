@@ -108,7 +108,7 @@ export default function CaseStudy() {
                     </div>
                     <div className="flex-1 w-full flex justify-center md:justify-end relative">
                         <div className="w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl border border-slate-200 rotate-2 hover:rotate-0 transition-transform duration-500 interactive-target">
-                            <img src="/assets/hero.png" alt="Hoychoy Cafe Splash Screen" className="w-full h-auto object-cover" />
+                            <img src="/assets/hoychoy-hero-new.png" alt="Hoychoy Cafe Splash Screen" className="w-full h-auto object-cover" />
                         </div>
                     </div>
                 </div>
