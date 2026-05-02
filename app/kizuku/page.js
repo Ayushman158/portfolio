@@ -189,7 +189,7 @@ export default function KizukuPage() {
               { src: '/kizuku/screens/Today action.png',  rotate: '-1deg',  y: '0px',   shadow: '0 28px 64px rgba(44,82,40,0.2)',  scale: 1 },
               { src: '/kizuku/screens/Garden-1.png',       rotate: '6deg',   y: '22px',  shadow: '0 16px 48px rgba(44,82,40,0.12)', scale: 0.88 },
             ].map((s, i) => (
-              <div key={i} className="flex-none rounded-[2rem] overflow-hidden"
+              <div key={i} className="flex-none rounded-xl md:rounded-[1.25rem] overflow-hidden"
                 style={{ width: 'clamp(110px, 20vw, 185px)', transform: `rotate(${s.rotate}) translateY(${s.y}) scale(${s.scale})`, boxShadow: s.shadow, border: '1px solid rgba(0,0,0,0.06)' }}>
                 <img src={s.src} alt="" className="w-full h-auto block" loading="eager" />
               </div>
