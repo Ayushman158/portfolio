@@ -505,52 +505,49 @@ export default function KizukuPage() {
       {/* ══════════════════════════════════════════════════
           ANIMATIONS
       ══════════════════════════════════════════════════ */}
-      <section id="sec-animation" className="py-20 md:py-32 px-6" style={{ backgroundColor: '#1C2B1A' }}>
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-16 md:gap-24 relative items-start">
-          
-          {/* Left Column: Sticky Video */}
-          <div className="w-full md:w-1/2 md:sticky md:top-32 kz-reveal z-10">
-            <div className="mb-10">
-              <SectionLabel color="rgba(242,237,224,0.45)">animations</SectionLabel>
-              <h2 className="text-3xl md:text-4xl font-bold mb-3" style={{ color: '#F2EDE0' }}>
-                every animation has a reason<br />
-                <span style={{ color: 'rgba(242,237,224,0.35)' }}>that can be stated in one sentence.</span>
-              </h2>
-              <p className="text-base mb-8" style={{ color: 'rgba(242,237,224,0.55)' }}>if it can't be explained, it was removed. each animation maps to a japanese principle.</p>
-            </div>
-            
-            <div className="rounded-[2.5rem] overflow-hidden relative" style={{ backgroundColor: '#0F1A0E', boxShadow: '0 24px 60px rgba(0,0,0,0.4)', border: '1px solid rgba(242,237,224,0.05)' }}>
-              <video
-                className="w-full h-auto block"
-                src="/kizuku/tree-animation.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-              />
-            </div>
+      <section id="sec-animation" className="py-20 md:py-28 px-6" style={{ backgroundColor: '#1C2B1A' }}>
+        <div className="max-w-5xl mx-auto">
+          <div className="kz-reveal mb-10">
+            <SectionLabel color="rgba(242,237,224,0.45)">animations</SectionLabel>
+            <h2 className="text-3xl md:text-4xl font-bold mb-3" style={{ color: '#F2EDE0' }}>
+              every animation has a reason<br />
+              <span style={{ color: 'rgba(242,237,224,0.35)' }}>that can be stated in one sentence.</span>
+            </h2>
+            <p className="text-base" style={{ color: 'rgba(242,237,224,0.55)' }}>if it can't be explained, it was removed. each animation maps to a japanese principle.</p>
           </div>
-          
-          {/* Right Column: Scrolling Text Blocks */}
-          <div className="w-full md:w-1/2 pt-10 md:pt-[30vh] pb-[10vh] flex flex-col gap-24 md:gap-40">
+
+          {/* Video player */}
+          <div className="kz-reveal mb-10 rounded-[2.5rem] overflow-hidden relative"
+            style={{ backgroundColor: '#0F1A0E', boxShadow: '0 24px 60px rgba(0,0,0,0.4)' }}>
+            <video
+              className="w-full h-auto block"
+              src="/kizuku/tree-animation.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+            />
+          </div>
+
+          {/* Animation principles table */}
+          <div className="kz-reveal grid md:grid-cols-2 gap-4">
             {[
               { anim: 'loading — two breathing circles', spec: '4s duration',           principle: 'Ma', reason: 'intentional pause. the loading is not dead time. it is part of the ritual.' },
               { anim: 'home tree — breathing scale',     spec: '0.98→1.0, 4s loop',    principle: 'Ma', reason: 'the tree is alive. if it breathes, the user cares about it.' },
               { anim: 'quiz — staggered option reveal',  spec: '60ms per option',       principle: 'Mushin', reason: 'user finishes reading before options appear. turns assessment into conversation.' },
               { anim: 'growth — tree first, text after', spec: 'tree + 1.2s delay',    principle: 'Zanshin', reason: 'feeling before naming. the tree grows first. then words confirm what was already felt.' },
-            ].map((a, i) => (
-              <div key={a.anim} className="kz-reveal rounded-[2rem] p-8 md:p-10" style={{ backgroundColor: 'rgba(242,237,224,0.03)', border: '1px solid rgba(242,237,224,0.06)', backdropFilter: 'blur(10px)' }}>
-                <div className="flex items-start justify-between gap-3 mb-6">
-                  <p className="text-sm md:text-base font-semibold" style={{ color: 'rgba(242,237,224,0.9)' }}>{a.anim}</p>
-                  <span className="flex-none text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest"
-                    style={{ backgroundColor: '#ECD85815', color: '#ECD858' }}>{a.principle}</span>
+            ].map((a) => (
+              <div key={a.anim} className="rounded-2xl p-6" style={{ backgroundColor: 'rgba(242,237,224,0.04)', border: '1px solid rgba(242,237,224,0.08)' }}>
+                <div className="flex items-start justify-between gap-3 mb-4">
+                  <p className="text-sm font-semibold" style={{ color: 'rgba(242,237,224,0.8)' }}>{a.anim}</p>
+                  <span className="flex-none text-[9px] px-2 py-0.5 rounded-full font-medium uppercase tracking-widest"
+                    style={{ backgroundColor: '#ECD85820', color: '#ECD858' }}>{a.principle}</span>
                 </div>
-                <p className="text-xs font-mono mb-4" style={{ color: 'rgba(242,237,224,0.4)' }}>{a.spec}</p>
-                <p className="text-base md:text-lg leading-relaxed" style={{ color: 'rgba(242,237,224,0.6)' }}>{a.reason}</p>
+                <p className="text-[10px] font-mono mb-2" style={{ color: 'rgba(242,237,224,0.35)' }}>{a.spec}</p>
+                <p className="text-xs leading-relaxed" style={{ color: 'rgba(242,237,224,0.5)' }}>{a.reason}</p>
               </div>
             ))}
           </div>
-          
         </div>
       </section>
 
