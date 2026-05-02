@@ -106,11 +106,6 @@ export default function KizukuPage() {
     return () => { ScrollTrigger.getAll().forEach((t) => t.kill()); };
   }, []);
 
-  const toggleVideo = useCallback(() => {
-    if (!videoRef.current) return;
-    if (videoPlaying) { videoRef.current.pause(); setVideoPlaying(false); }
-    else { videoRef.current.play(); setVideoPlaying(true); }
-  }, [videoPlaying]);
 
   return (
     <main className="min-h-screen overflow-x-hidden" style={{ backgroundColor: '#FFFFFF', color: T.heading, fontFamily: "'Satoshi', sans-serif" }}>
