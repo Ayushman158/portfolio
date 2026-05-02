@@ -244,28 +244,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col border-t border-slate-200">
-            {/* Project Row 1 — Hoychoy */}
-            <Link href="/case-study" className="group flex flex-col md:flex-row gap-8 py-8 md:py-12 border-b border-slate-200 interactive-target md:items-center">
-              <div className="w-full md:w-[45%] aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 shrink-0 bg-slate-50 relative z-20">
-                <img src="/assets/hoychoy-thumb.png" alt="Hoychoy Cafe" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out" />
-              </div>
-              <div className="flex-1 flex flex-col md:flex-row md:items-center justify-between relative z-20">
-                <div className="mb-4 md:mb-0 pr-4">
-                  <h3 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors mb-4 flex items-center gap-3">
-                    Hoychoy Cafe
-                    <i className="ph ph-arrow-up-right text-2xl md:text-3xl opacity-0 -translate-x-4 translate-y-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300"></i>
-                  </h3>
-                  <p className="text-slate-500 text-lg md:text-xl leading-relaxed">End-to-end hyperlocal delivery web application.</p>
-                </div>
-                <div className="flex items-center gap-4 shrink-0 mt-6 md:mt-0 md:justify-end">
-                  <span className="text-xs font-mono uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">UX Design</span>
-                  <span className="text-slate-300 hidden md:block">•</span>
-                  <span className="text-xs font-mono uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">2025</span>
-                </div>
-              </div>
-            </Link>
-
-            {/* Project Row 2 — Kizuku */}
+            {/* Project Row 1 — Kizuku */}
             <Link href="/kizuku" className="group flex flex-col md:flex-row gap-8 py-8 md:py-12 border-b border-slate-200 interactive-target md:items-center">
               <div className="w-full md:w-[45%] aspect-[4/3] rounded-2xl overflow-hidden shrink-0 relative z-20 flex items-center justify-center"
                 style={{ background: 'linear-gradient(145deg, #1C3A19 0%, #2C5228 55%, #3D6B38 100%)' }}>
@@ -289,7 +268,7 @@ export default function Home() {
               <div className="flex-1 flex flex-col md:flex-row md:items-center justify-between relative z-20">
                 <div className="mb-4 md:mb-0 pr-4">
                   <div className="flex items-center gap-2 mb-3">
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-amber-600 bg-amber-50 border border-amber-100 px-2.5 py-1 rounded-full">In Progress</span>
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#2C5228] bg-[#FAFAFA] border border-[#2C5228]/20 px-2.5 py-1 rounded-full">New Project</span>
                   </div>
                   <h3 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 group-hover:text-[#2C5228] transition-colors mb-4 flex items-center gap-3">
                     Kizuku
@@ -301,6 +280,27 @@ export default function Home() {
                   <span className="text-xs font-mono uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">UX Design</span>
                   <span className="text-slate-300 hidden md:block">•</span>
                   <span className="text-xs font-mono uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">Branding</span>
+                  <span className="text-slate-300 hidden md:block">•</span>
+                  <span className="text-xs font-mono uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">2026</span>
+                </div>
+              </div>
+            </Link>
+
+            {/* Project Row 2 — Hoychoy */}
+            <Link href="/case-study" className="group flex flex-col md:flex-row gap-8 py-8 md:py-12 border-b border-slate-200 interactive-target md:items-center">
+              <div className="w-full md:w-[45%] aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 shrink-0 bg-slate-50 relative z-20">
+                <img src="/assets/hoychoy-thumb.png" alt="Hoychoy Cafe" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out" />
+              </div>
+              <div className="flex-1 flex flex-col md:flex-row md:items-center justify-between relative z-20">
+                <div className="mb-4 md:mb-0 pr-4">
+                  <h3 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors mb-4 flex items-center gap-3">
+                    Hoychoy Cafe
+                    <i className="ph ph-arrow-up-right text-2xl md:text-3xl opacity-0 -translate-x-4 translate-y-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300"></i>
+                  </h3>
+                  <p className="text-slate-500 text-lg md:text-xl leading-relaxed">End-to-end hyperlocal delivery web application.</p>
+                </div>
+                <div className="flex items-center gap-4 shrink-0 mt-6 md:mt-0 md:justify-end flex-wrap">
+                  <span className="text-xs font-mono uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">UX Design</span>
                   <span className="text-slate-300 hidden md:block">•</span>
                   <span className="text-xs font-mono uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">2025</span>
                 </div>

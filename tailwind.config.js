@@ -6,7 +6,12 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        caveat: ['var(--font-caveat)', 'cursive'],
+        'reenie-beanie': ['var(--font-reenie-beanie)', 'cursive'],
+      },
+    },
   },
   plugins: [],
 }

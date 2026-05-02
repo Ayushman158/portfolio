@@ -1,5 +1,5 @@
 import './globals.css'
-import { Inter, Reenie_Beanie } from 'next/font/google'
+import { Inter, Reenie_Beanie, Caveat } from 'next/font/google'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -10,6 +10,11 @@ const reenieBeanie = Reenie_Beanie({
   weight: '400',
   subsets: ['latin'],
   variable: '--font-reenie-beanie'
+})
+
+const caveat = Caveat({
+  subsets: ['latin'],
+  variable: '--font-caveat'
 })
 
 export const metadata = {
@@ -41,7 +46,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} ${reenieBeanie.variable}`}>
+    <html lang="en" className={`${inter.variable} ${reenieBeanie.variable} ${caveat.variable}`}>
       <head>
         <script src="https://unpkg.com/@phosphor-icons/web"></script>
       </head>

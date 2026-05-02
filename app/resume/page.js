@@ -176,7 +176,7 @@ export default function Resume() {
 
                                 <div>
                                     <h3 className="text-base font-bold text-slate-900 mb-1">Sangam Academy</h3>
-                                    <p className="text-sm font-semibold text-slate-600 mb-1">June 2018</p>
+                                    <p className="text-sm font-semibold text-slate-600 mb-1">June 2016</p>
                                     <p className="text-sm text-slate-700">Class X, SSC</p>
                                 </div>
                             </div>

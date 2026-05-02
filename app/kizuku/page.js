@@ -83,8 +83,16 @@ export default function KizukuPage() {
     // Reveals
     gsap.utils.toArray('.kz-reveal').forEach((el) => {
       gsap.fromTo(el,
-        { opacity: 0, y: 28 },
-        { opacity: 1, y: 0, duration: 0.85, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 91%' } }
+        { opacity: 0, y: 35 },
+        { opacity: 1, y: 0, duration: 1.0, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 90%' } }
+      );
+    });
+
+    // Image Scale Reveals (Premium Editorial Feel)
+    gsap.utils.toArray('.kz-img-scale img').forEach((img) => {
+      gsap.fromTo(img,
+        { scale: 1.08 },
+        { scale: 1, duration: 1.4, ease: 'power3.out', scrollTrigger: { trigger: img, start: 'top 95%' } }
       );
     });
 
@@ -259,10 +267,9 @@ export default function KizukuPage() {
               <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
                 <iframe
                   style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
-                  src="https://embed.figma.com/design/80dVRiAfseQp409VZtvZZ6/Kizuku?node-id=160-994&embed-host=share"
+                  src="https://embed.figma.com/proto/80dVRiAfseQp409VZtvZZ6/Kizuku?node-id=160-994&scaling=scale-down&content-scaling=fixed&embed-host=share&hide-ui=1"
                   allowFullScreen
                   title="Kizuku prototype"
-                  loading="lazy"
                 />
               </div>
             </div>
@@ -399,16 +406,16 @@ export default function KizukuPage() {
             </h2>
           </div>
 
-          {/* Logo formation — K → KK (mirrored) + bamboo = mark, plus all 5 icon expressions */}
-          <div className="kz-reveal mb-12 rounded-3xl overflow-hidden"
+          {/* Logo floral painting */}
+          <div className="kz-reveal kz-img-scale mb-12 rounded-3xl overflow-hidden"
             style={{ boxShadow: '0 4px 32px rgba(44,82,40,0.08)', border: '1px solid rgba(44,82,40,0.06)' }}>
-            <img src="/kizuku/logo-formation.png" alt="K mirrored + bamboo = Kizuku mark, five icon colour expressions" className="w-full h-auto block" loading="lazy" />
+            <img src="/kizuku/logo-painting.png" alt="Hand-painted logo floral exploration" className="w-full h-auto block" loading="lazy" />
           </div>
 
           {/* Colour palette */}
-          <div className="kz-reveal mb-12">
+          <div className="kz-reveal kz-img-scale mb-12">
             <SectionLabel>colour system — each has a reason</SectionLabel>
-            <div className="rounded-2xl overflow-hidden mb-5" style={{ boxShadow: '0 2px 20px rgba(44,82,40,0.07)', border: '1px solid rgba(44,82,40,0.06)' }}>
+            <div className="kz-img-scale rounded-2xl overflow-hidden mb-5" style={{ boxShadow: '0 2px 20px rgba(44,82,40,0.07)', border: '1px solid rgba(44,82,40,0.06)' }}>
               <img src="/kizuku/watercolour-wash.jpg" alt="Watercolour exploration — discovering the colour temperature and emotional palette" className="w-full h-auto block" loading="lazy" />
             </div>
             <p className="text-xs italic mb-5" style={{ color: T.caption }}>the colour temperature was discovered through watercolour, not chosen from a swatch</p>
@@ -626,7 +633,7 @@ export default function KizukuPage() {
               the full case study covers the complete creative process — the painting that became the design brief, four naming rejections, competitive analysis, and 18 illustrations built hand to AI to digital.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <a href="/kizuku/Kizuku-Creative-Process.pdf" download="Kizuku-Creative-Process.pdf"
+              <a href="/kizuku/Kizuku-Creative-Process.pdf" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full text-sm font-semibold tracking-wide transition-all duration-300"
                 style={{ backgroundColor: T.heading, color: '#F2EDE0' }}
                 onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#2C5228'; }}
@@ -634,7 +641,7 @@ export default function KizukuPage() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-                download case study
+                open case study
               </a>
               <span className="text-xs uppercase tracking-widest" style={{ color: T.caption }}>pdf · 30 pages</span>
             </div>
