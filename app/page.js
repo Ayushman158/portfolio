@@ -249,13 +249,13 @@ export default function Home() {
               <div className="w-full md:w-[45%] aspect-[4/3] rounded-2xl overflow-hidden shrink-0 relative z-20 flex items-center justify-center"
                 style={{ background: 'linear-gradient(145deg, #1C3A19 0%, #2C5228 55%, #3D6B38 100%)' }}>
                 {/* Three floating phones */}
-                <div className="flex items-end justify-center gap-3 w-full px-6 pt-6 pb-0 h-full">
+                <div className="flex items-end justify-center gap-2 md:gap-3 w-full px-6 pt-6 pb-6 md:pb-0 h-full">
                   {[
                     { src: '/kizuku/screens/Worry Input.png',  rotate: '-7deg', y: '18px',  scale: 0.82 },
                     { src: '/kizuku/screens/Today action.png', rotate: '-1deg', y: '0px',   scale: 0.94 },
                     { src: '/kizuku/screens/Garden-1.png',      rotate: '6deg',  y: '14px',  scale: 0.82 },
                   ].map((s, i) => (
-                    <div key={i} className="flex-none rounded-[1.8rem] overflow-hidden transition-transform duration-700 group-hover:scale-[1.04]"
+                    <div key={i} className="flex-none rounded-xl md:rounded-[1.8rem] overflow-hidden transition-transform duration-700 group-hover:scale-[1.04]"
                       style={{ width: 'clamp(75px, 14vw, 120px)', transform: `rotate(${s.rotate}) translateY(${s.y}) scale(${s.scale})`, boxShadow: '0 12px 40px rgba(0,0,0,0.35)', border: '1px solid rgba(255,255,255,0.1)' }}>
                       <img src={s.src} alt="" className="w-full h-auto block" loading="lazy" />
                     </div>
