@@ -1,5 +1,7 @@
 import './globals.css'
 import './phosphor.css'
+import { ThemeProvider, themeInitScript } from './components/theme'
+import Dock from './components/dock'
 import { Inter, Reenie_Beanie, Caveat } from 'next/font/google'
 
 const inter = Inter({
@@ -47,9 +49,16 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} ${reenieBeanie.variable} ${caveat.variable}`}>
-      <body className="font-sans overflow-x-hidden cursor-none">
-        {children}
+    <html lang="en" className={`${inter.variable} ${reenieBeanie.variable} ${caveat.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Sets the theme before first paint so a dark-preferring machine never flashes light. */}
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body className="font-sans overflow-x-hidden">
+        <ThemeProvider>
+          {children}
+          <Dock />
+        </ThemeProvider>
       </body>
     </html>
   )

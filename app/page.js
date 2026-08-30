@@ -1,432 +1,116 @@
-'use client';
-import { useEffect, useRef } from 'react';
-import Link from 'next/link';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+'use client'
+
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import Image from 'next/image'
+import { motion, useReducedMotion } from 'motion/react'
 import TextHighlighter from './components/text-highlighter'
 import Letter3DSwap from './components/letter-3d-swap'
+import WorkIndex from './components/work-index'
+
+const PROJECTS = [
+  { name: 'Kizuku', year: '2026', href: '/kizuku', img: '/kizuku/screens/Today action.png', w: 393, h: 852 },
+  { name: 'Hoychoy Cafe', year: '2025', href: '/case-study', img: '/assets/hoychoy-hero-new.png', w: 1200, h: 800 },
+]
+
+const PLAYGROUND = [
+  { name: 'FieldNote', year: '2026', href: '/experiments', img: '/assets/fieldnote-ss.png', w: 1200, h: 675 },
+]
+
+// No case studies yet, so these carry no link and raise no preview.
+const ALSO = [
+  { name: 'Signal — motion identity', year: '2025' },
+  { name: 'Madi Things — editorial site', year: '2025' },
+  { name: 'KL Hi-Tech — marketing site', year: '2025' },
+]
+
+function Greeting() {
+  const [hour, setHour] = useState(null)
+  useEffect(() => setHour(new Date().getHours()), [])
+
+  const part = hour == null ? 'hello' : hour < 12 ? 'good morning' : hour < 17 ? 'good afternoon' : 'good evening'
+  // Assamese and Hindi: he is from North Lakhimpur, Assam.
+  return (
+    <p className="text-faint">
+      {part}, <span lang="as">নমস্কাৰ</span>, <span lang="hi">नमस्ते</span>
+    </p>
+  )
+}
 
 export default function Home() {
-  // Cursor Refs
-  const cursorDot = useRef(null);
-  const cursorRing = useRef(null);
+  const reduceMotion = useReducedMotion()
 
-  // Magnetic Button Ref
-  const magnetBtn = useRef(null);
-  const magnetText = useRef(null);
-
-
-  useEffect(() => {
-    // Register GSAP plugins
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Respect the OS setting. Reduced motion keeps the fades (they carry meaning)
-    // and drops the travel, the bounce and the custom cursor.
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    // 1. Custom Cursor Logic
-    const xToDot = gsap.quickTo(cursorDot.current, "x", { duration: 0.1, ease: "power3" });
-    const yToDot = gsap.quickTo(cursorDot.current, "y", { duration: 0.1, ease: "power3" });
-
-    const moveCursor = (e) => {
-      xToDot(e.clientX);
-      yToDot(e.clientY);
-    };
-
-    window.addEventListener('mousemove', moveCursor);
-
-    // Interactive Elements Cursor State
-    const interactiveEls = document.querySelectorAll('a, button, .interactive-target');
-    interactiveEls.forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        gsap.to(cursorDot.current, { scale: 1.1, transformOrigin: 'top left', duration: 0.2 });
-      });
-      el.addEventListener('mouseleave', () => {
-        gsap.to(cursorDot.current, { scale: 1, transformOrigin: 'top left', duration: 0.2 });
-      });
-    });
-
-    // Random Color on Window Enter
-    const figmaColors = ['#0ea5e9', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#f43f5e'];
-    const handleMouseEnter = () => {
-      const randomColor = figmaColors[Math.floor(Math.random() * figmaColors.length)];
-      if (cursorDot.current) {
-        const path = cursorDot.current.querySelector('path');
-        const tag = cursorDot.current.querySelector('.cursor-name-tag');
-        if (path) path.setAttribute('fill', randomColor);
-        if (tag) tag.style.backgroundColor = randomColor;
-      }
-    };
-    document.addEventListener('mouseenter', handleMouseEnter);
-
-    // 2. Magnetic Button Logic for the primary CTA
-    if (magnetBtn.current) {
-      magnetBtn.current.addEventListener('mousemove', (e) => {
-        const bound = magnetBtn.current.getBoundingClientRect();
-        const centerX = bound.left + bound.width / 2;
-        const centerY = bound.top + bound.height / 2;
-        // Calculate distance from center (dampened by 0.4 for smooth resistance)
-        const distX = (e.clientX - centerX) * 0.4;
-        const distY = (e.clientY - centerY) * 0.4;
-
-        gsap.to(magnetBtn.current, { x: distX, y: distY, duration: 0.4, ease: "power2.out" });
-        if (magnetText.current) {
-          gsap.to(magnetText.current, { x: distX * 0.5, y: distY * 0.5, duration: 0.4, ease: "power2.out" });
-        }
-      });
-      magnetBtn.current.addEventListener('mouseleave', () => {
-        gsap.to(magnetBtn.current, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.3)" });
-        if (magnetText.current) gsap.to(magnetText.current, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.3)" });
-      });
-    }
-
-    // 3. Staggered Fade-in-up animations for Hero
-    gsap.fromTo('.stagger-fade',
-      { opacity: 0, y: reduceMotion ? 0 : 12 },
-      {
-        opacity: 1, y: 0,
-        duration: reduceMotion ? 0.2 : 0.45,
-        stagger: reduceMotion ? 0 : 0.05,
-        ease: "power3.out",
-        delay: reduceMotion ? 0 : 0.08,
-      }
-    );
-
-    // Dynamic Tagline Hook Animation
-    gsap.fromTo('#tagline-hook',
-      { opacity: 0, scale: reduceMotion ? 1 : 0.95, rotate: reduceMotion ? -4 : 0 },
-      {
-        opacity: 1, scale: 1, rotate: -4,
-        duration: reduceMotion ? 0.2 : 0.5,
-        ease: reduceMotion ? "none" : "back.out(1.1)",
-        delay: reduceMotion ? 0 : 0.5,
-      }
-    );
-
-    // 4. Scroll Reveal for Portfolio Cards
-    const cards = document.querySelectorAll('.card-reveal');
-    cards.forEach(card => {
-      gsap.fromTo(card,
-        { opacity: 0, y: reduceMotion ? 0 : 16 },
-        {
-          scrollTrigger: { trigger: card, start: "top 85%" },
-          opacity: 1, y: 0,
-          duration: reduceMotion ? 0.2 : 0.45,
-          ease: "power3.out",
-        }
-      );
-    });
-
-    // 5. Text Scramble Effect
-    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const targets = document.querySelectorAll('.scramble-text');
-
-    targets.forEach(target => {
-      let iterations = 0;
-      const originalText = target.getAttribute('data-value');
-
-      const interval = setInterval(() => {
-        target.innerText = originalText
-          .split("")
-          .map((letter, index) => {
-            if (index < iterations) {
-              return originalText[index];
-            }
-            // Preserve spaces
-            if (originalText[index] === " ") return " ";
-            return letters[Math.floor(Math.random() * 26)];
-          })
-          .join("");
-
-        if (iterations >= originalText.length) {
-          clearInterval(interval);
-        }
-
-        iterations += 1 / 2; // Speed of decode
-      }, 30);
-    });
-
-
-    // Cleanup
-    return () => {
-      window.removeEventListener('mousemove', moveCursor);
-      document.removeEventListener('mouseenter', handleMouseEnter);
-      ScrollTrigger.getAll().forEach(t => t.kill());
-    };
-  }, []);
+  const rise = (delay) => ({
+    initial: reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: reduceMotion ? 0.2 : 0.5, delay: reduceMotion ? 0 : delay, ease: [0.22, 1, 0.36, 1] },
+  })
 
   return (
-    <main className="min-h-screen bg-[#f8fafc] text-slate-800 selection:bg-blue-200 overflow-x-hidden relative">
+    <main className="measure min-h-screen pb-40 pt-20 sm:pt-28">
+      <motion.div {...rise(0)}>
+        <Image
+          src="/assets/avatar.png"
+          alt="Ayushman Bharadwaj"
+          width={80}
+          height={80}
+          sizes="44px"
+          priority
+          className="mb-10 h-11 w-11 rounded-full border border-rule object-contain object-bottom"
+        />
+      </motion.div>
 
-      {/* Custom Cursor Elements */}
-      <div className="hidden md:block">
-        <div ref={cursorDot} className="fixed top-0 left-0 pointer-events-none z-[9999] flex flex-col items-start drop-shadow-md">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 1L8 20.5L11 12.5L19 9.5L1 1Z" fill="#0ea5e9" stroke="white" strokeWidth="1.5" strokeLinejoin="round" />
-          </svg>
-          <div className="cursor-name-tag bg-[#0ea5e9] text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md ml-3 -mt-1 whitespace-nowrap transition-colors duration-300">
-            You
-          </div>
-        </div>
-      </div>
+      <motion.div {...rise(0.06)} className="space-y-5">
+        <Greeting />
 
-      {/* Pill Navigation */}
-      <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] sm:w-[90%] max-w-5xl stagger-fade">
-        <div className="bg-white/80 backdrop-blur-lg border border-white/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-2xl md:rounded-full relative flex flex-row items-center justify-between px-3 md:px-6 py-2 md:py-3">
-          {/* Logo Left */}
-          <Link href="/" className="flex items-center z-10 group flex-shrink-0">
-            <Image src="/assets/avatar.png" alt="Ayushman Bharadwaj" className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain object-bottom transition-transform duration-300 group-hover:scale-105" width={620} height={756} sizes="48px" />
-          </Link>
+        <p>
+          I’m{' '}
+          <Letter3DSwap
+            mainClassName="text-ink font-medium align-baseline"
+            rotateDirection="right"
+          >
+            Ayushman
+          </Letter3DSwap>
+          , an interaction designer who ships the code.
+        </p>
 
-          {/* Centered Links */}
-          <div className="flex items-center justify-center gap-3 sm:gap-6 md:gap-8 flex-1 px-2 md:px-4 shrink min-w-0">
-            <Link href="#work" className="text-[11px] sm:text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors whitespace-nowrap">
-              Work
-            </Link>
-            <Link href="/experiments" className="text-[11px] sm:text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors whitespace-nowrap">
-              Experiments
-            </Link>
-            <Link href="/resume" className="text-[11px] sm:text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors whitespace-nowrap">
-              Resume
-            </Link>
-          </div>
+        <p>
+          A year in security engineering before design, so I build for how systems actually fail.
+          Finishing an MA now, and <span className="text-ink">available for remote roles</span>.
+        </p>
 
-          {/* CTA Right */}
-          <div ref={magnetBtn} className="relative inline-block cursor-pointer z-10 flex-shrink-0">
-            <Link href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" rel="noopener noreferrer" className="px-3 sm:px-4 py-2 md:px-5 md:py-2 text-[11px] sm:text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.3)] flex items-center justify-center whitespace-nowrap transition-[background-color,transform] duration-150 ease-out active:scale-[0.97]">
-              <span ref={magnetText} className="block">Connect</span>
-            </Link>
-          </div>
-        </div>
-      </nav>
+        <p>
+          Recent work includes{' '}
+          <Link href="/kizuku" className="prose-link">Kizuku</Link>, a wellness app for people who
+          overthink the future, and{' '}
+          <Link href="/case-study" className="prose-link">Hoychoy Cafe</Link>, where a rebuilt
+          ordering flow took customers from{' '}
+          <TextHighlighter
+            className="text-ink font-medium px-1 -mx-1 rounded-[2px]"
+            highlightColor="hsl(48, 96%, 76%)"
+            transition={{ type: 'spring', duration: 0.6, bounce: 0, delay: 0.5 }}
+            inViewOptions={{ once: true, amount: 0.6 }}
+          >
+            6–8 minutes to 2–3
+          </TextHighlighter>.
+        </p>
+      </motion.div>
 
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#f8fafc] bg-architectural-grid">
-        {/* Main Content Container */}
-        <div className="w-full mx-auto px-6 md:px-12 relative z-10 flex flex-col justify-center translate-y-8 md:translate-y-12 mt-12">
-          {/* Friendly Typography */}
-          <div className="relative mix-blend-multiply w-full max-w-4xl mx-auto text-center mt-8 md:mt-12 overflow-visible">
+      <motion.div {...rise(0.12)}>
+        <WorkIndex label="Projects" items={PROJECTS} />
+        <WorkIndex label="Playground" items={PLAYGROUND} />
+        <WorkIndex label="Also shipped" items={ALSO} />
+      </motion.div>
 
-            {/* Dynamic Tagline (Handwritten Hook) */}
-            <div id="tagline-hook" className="absolute -top-10 sm:-top-12 md:-top-14 right-2 sm:right-8 md:-right-8 lg:-right-4 text-xl sm:text-3xl md:text-4xl text-blue-600 opacity-0 pointer-events-none z-20 flex flex-col items-center drop-shadow-sm max-w-[80vw]" style={{ fontFamily: 'var(--font-reenie-beanie)' }}>
-              <span className="whitespace-nowrap">from security to design.</span>
-              <svg className="w-12 h-5 sm:w-16 sm:h-6 md:w-24 md:h-8 -mt-1 text-blue-400" viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5 20 Q 50 45 95 20" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-                <path d="M80 15 L 95 20 L 85 30" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
-
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.3] md:leading-[1.2]">
-              <div className="overflow-hidden pb-1">
-                <span className="block stagger-fade text-slate-800">
-                  I design products, <br className="hidden md:block" />
-                  then I <span className="text-blue-600 font-black">ship the code</span> <span className="inline-block animate-waving-hand origin-bottom-right">👋</span>
-                </span>
-              </div>
-            </h1>
-
-            {/* Subhead — the differentiator, stated plainly */}
-            <p className="stagger-fade mt-6 md:mt-7 text-base md:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">
-              <span className="font-semibold text-slate-800">Ayushman Bharadwaj</span> — interaction designer,
-              a year in security engineering. I design for how systems fail, then build the fix.
-            </p>
-
-            {/* Proof line */}
-            <p className="stagger-fade mt-4 text-sm md:text-base text-slate-500 max-w-2xl mx-auto">
-              Hoychoy pilot: ordering went from{' '}
-              <TextHighlighter
-                className="font-semibold text-slate-800 px-1 -mx-1 rounded-[2px]"
-                highlightColor="hsl(48, 96%, 76%)"
-                transition={{ type: 'spring', duration: 0.6, bounce: 0, delay: 0.9 }}
-                inViewOptions={{ once: true, amount: 0.6 }}
-              >
-                6–8 minutes to 2–3
-              </TextHighlighter>.
-            </p>
-
-            {/* Skill Pills */}
-            <div className="flex flex-wrap justify-center gap-3 md:gap-4 mt-6 md:mt-8 stagger-fade">
-              <span className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold bg-blue-50 text-blue-600 border border-blue-100 shadow-sm">
-                UX/UI Design
-              </span>
-              <span className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold bg-purple-50 text-purple-600 border border-purple-100 shadow-sm">
-                Design Systems
-              </span>
-              <span className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold bg-orange-50 text-orange-600 border border-orange-100 shadow-sm">
-                Product engineering
-              </span>
-              <span className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100 shadow-sm">
-                Security-informed UX
-              </span>
-            </div>
-
-            <div className="mt-10 md:mt-12 stagger-fade w-full mx-auto pb-4 flex flex-col items-center gap-5">
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                <Link
-                  href="#work"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="interactive-target group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 shadow-sm cursor-pointer transition-[background-color,transform] duration-150 ease-out active:scale-[0.97]"
-                >
-                  See the work
-                  <i className="ph-bold ph-arrow-right text-base transition-transform group-hover:translate-x-1"></i>
-                </Link>
-                <Link
-                  href="mailto:ayushman15899@gmail.com"
-                  className="interactive-target group inline-flex items-center gap-2 px-6 py-3 rounded-full border border-slate-300 text-slate-700 text-sm font-semibold hover:border-slate-400 hover:text-slate-900 transition-[color,border-color,transform] duration-150 ease-out active:scale-[0.97]"
-                >
-                  <i className="ph-fill ph-envelope-simple text-base"></i>
-                  Get in touch
-                </Link>
-              </div>
-              <p className="flex items-center gap-2 text-xs font-medium text-slate-500">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping"></span>
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
-                </span>
-                Available for remote roles
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Minimal Selected Works List */}
-      <section id="work" className="py-24 md:py-32 px-6 bg-white border-t border-slate-100 relative z-10">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-16 card-reveal">
-            <h2 className="text-sm font-mono tracking-[0.2em] text-slate-400 uppercase mb-4">Selected Works</h2>
-            <p className="text-xl md:text-2xl text-slate-800 tracking-tight leading-[1.4] max-w-2xl font-medium">
-              Products I designed and built end to end.
-            </p>
-          </div>
-
-          <div className="flex flex-col border-t border-slate-200">
-            {/* Project Row 1 — Kizuku */}
-            <Link href="/kizuku" className="group flex flex-col md:flex-row gap-8 py-8 md:py-12 border-b border-slate-200 interactive-target md:items-center">
-              <div className="w-full md:w-[45%] aspect-[4/3] rounded-2xl overflow-hidden shrink-0 relative z-20 flex items-center justify-center"
-                style={{ background: 'linear-gradient(145deg, #1C3A19 0%, #2C5228 55%, #3D6B38 100%)' }}>
-                {/* Three floating phones */}
-                <div className="flex items-end justify-center gap-2 md:gap-3 w-full px-6 pt-6 pb-6 md:pb-0 h-full">
-                  {[
-                    { src: '/kizuku/screens/Worry Input.png',  rotate: '-7deg', y: '18px',  scale: 0.82 },
-                    { src: '/kizuku/screens/Today action.png', rotate: '-1deg', y: '0px',   scale: 0.94 },
-                    { src: '/kizuku/screens/Garden-1.png',      rotate: '6deg',  y: '14px',  scale: 0.82 },
-                  ].map((s, i) => (
-                    <div key={i} className="flex-none rounded-xl md:rounded-[1.8rem] overflow-hidden transition-transform duration-300 ease-out group-hover:scale-[1.04]"
-                      style={{ width: 'clamp(75px, 14vw, 120px)', transform: `rotate(${s.rotate}) translateY(${s.y}) scale(${s.scale})`, boxShadow: '0 12px 40px rgba(0,0,0,0.35)', border: '1px solid rgba(255,255,255,0.1)' }}>
-                      <Image src={s.src} alt="" width={393} height={852} sizes="120px" className="w-full h-auto block" loading="lazy" />
-                    </div>
-                  ))}
-                </div>
-                {/* Amber accent dot */}
-                <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-[#ECD858] animate-pulse" />
-              </div>
-
-              <div className="flex-1 flex flex-col md:flex-row md:items-center justify-between relative z-20">
-                <div className="mb-4 md:mb-0 pr-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#2C5228] bg-[#FAFAFA] border border-[#2C5228]/20 px-2.5 py-1 rounded-full">New Project</span>
-                  </div>
-                  <h3 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 group-hover:text-[#2C5228] transition-colors mb-4 flex items-center gap-3">
-                    <Letter3DSwap staggerFrom="first" rotateDirection="right">Kizuku</Letter3DSwap>
-                    <i className="ph ph-arrow-up-right text-2xl md:text-3xl opacity-0 -translate-x-4 translate-y-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-[opacity,transform] duration-200 ease-out"></i>
-                  </h3>
-                  <p className="text-slate-500 text-lg md:text-xl leading-relaxed">Wellness app for people who overthink the future.</p>
-                </div>
-                <div className="flex items-center gap-4 shrink-0 mt-6 md:mt-0 md:justify-end flex-wrap">
-                  <span className="text-xs font-mono uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">UX Design</span>
-                  <span className="text-slate-300 hidden md:block">•</span>
-                  <span className="text-xs font-mono uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">Branding</span>
-                  <span className="text-slate-300 hidden md:block">•</span>
-                  <span className="text-xs font-mono uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">2026</span>
-                </div>
-              </div>
-            </Link>
-
-            {/* Project Row 2 — Hoychoy */}
-            <Link href="/case-study" className="group flex flex-col md:flex-row gap-8 py-8 md:py-12 border-b border-slate-200 interactive-target md:items-center">
-              <div className="w-full md:w-[45%] aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 shrink-0 bg-slate-50 relative z-20">
-                <Image src="/assets/hoychoy-hero-new.png" alt="Hoychoy Cafe" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300 ease-out" width={1200} height={1056} sizes="(max-width: 768px) 100vw, 45vw" />
-              </div>
-              <div className="flex-1 flex flex-col md:flex-row md:items-center justify-between relative z-20">
-                <div className="mb-4 md:mb-0 pr-4">
-                  <h3 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors mb-4 flex items-center gap-3">
-                    <Letter3DSwap staggerFrom="first" rotateDirection="right">Hoychoy Cafe</Letter3DSwap>
-                    <i className="ph ph-arrow-up-right text-2xl md:text-3xl opacity-0 -translate-x-4 translate-y-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-[opacity,transform] duration-200 ease-out"></i>
-                  </h3>
-                  <p className="text-slate-500 text-lg md:text-xl leading-relaxed">End-to-end hyperlocal delivery web application.</p>
-                </div>
-                <div className="flex items-center gap-4 shrink-0 mt-6 md:mt-0 md:justify-end flex-wrap">
-                  <span className="text-xs font-mono uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">UX Design</span>
-                  <span className="text-slate-300 hidden md:block">•</span>
-                  <span className="text-xs font-mono uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">2025</span>
-                </div>
-              </div>
-            </Link>
-          </div>
-
-          {/* Also shipped — work that does not have a case study yet */}
-          <div className="mt-20 pt-10 border-t border-slate-200 card-reveal">
-            <h3 className="text-xs font-mono tracking-[0.2em] text-slate-400 uppercase mb-6">Also shipped</h3>
-            <ul className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
-              {[
-                { name: 'Signal',      note: 'Motion identity' },
-                { name: 'Madi Things', note: 'Editorial site' },
-                { name: 'KL Hi-Tech',  note: 'Marketing site' },
-              ].map((p) => (
-                <li key={p.name} className="rounded-2xl border border-slate-200 px-5 py-4 bg-white/60">
-                  <p className="text-base font-semibold text-slate-800">{p.name}</p>
-                  <p className="text-sm text-slate-500 mt-1 leading-snug">{p.note}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* AI Experiments CTA */}
-          <div className="mt-24 text-center">
-            <Link href="/experiments" className="group inline-flex items-center gap-3 text-sm md:text-lg font-medium text-slate-600 hover:text-blue-600 transition-colors interactive-target px-8 py-4 rounded-full border border-slate-200 hover:border-blue-200 hover:bg-blue-50/50">
-              Explore AI Experiments
-              <i className="ph ph-arrow-right transition-transform group-hover:translate-x-1"></i>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="relative z-10 py-16 overflow-hidden bg-slate-50 border-t border-slate-100">
-        {/* Subtle Radial Gradient Background */}
-        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at center top, rgba(14, 165, 233, 0.08), transparent 70%)' }}></div>
-
-        <div className="max-w-4xl mx-auto px-6 flex flex-col items-center justify-center relative z-10">
-          {/* Avatar Logo */}
-          <Link href="/" className="mb-6 flex items-center justify-center w-14 h-14 rounded-full border border-slate-200 bg-white shadow-sm overflow-hidden interactive-target hover:scale-[1.05] transition-transform">
-            <Image src="/assets/avatar.png" alt="Ayushman Bharadwaj" className="w-full h-full object-contain object-bottom" width={620} height={756} sizes="48px" />
-          </Link>
-
-          {/* Social Links */}
-          <div className="flex items-center gap-4 mb-8">
-            <Link href="mailto:ayushman15899@gmail.com" className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-400 hover:text-blue-500 hover:border-blue-200 hover:shadow-md transition-[color,border-color,box-shadow,transform] duration-200 ease-out active:scale-[0.94] interactive-target">
-              <i className="ph-fill ph-envelope-simple text-lg"></i>
-            </Link>
-            <Link href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-400 hover:text-blue-700 hover:border-blue-200 hover:shadow-md transition-[color,border-color,box-shadow,transform] duration-200 ease-out active:scale-[0.94] interactive-target">
-              <i className="ph-fill ph-linkedin-logo text-lg"></i>
-            </Link>
-            <Link href="https://x.com/AyushmanBharad" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-400 hover:text-sky-500 hover:border-sky-200 hover:shadow-md transition-[color,border-color,box-shadow,transform] duration-200 ease-out active:scale-[0.94] interactive-target">
-              <i className="ph-fill ph-twitter-logo text-lg"></i>
-            </Link>
-          </div>
-
-          {/* Copyright */}
-          <p className="text-slate-400 text-[10px] md:text-xs font-mono tracking-[0.2em] uppercase">
-            © {new Date().getFullYear()} Ayushman. All rights reserved.
-          </p>
-        </div>
-      </footer>
-
+      <motion.section {...rise(0.18)} className="mt-16">
+        <h2 className="text-faint text-[0.95rem] mb-3">Connect</h2>
+        <p>
+          I’m looking for remote design-engineering work. The fastest way to reach me is{' '}
+          <a href="mailto:ayushman15899@gmail.com" className="prose-link">email</a>. I’m also on{' '}
+          <a href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" rel="noopener noreferrer" className="prose-link">LinkedIn</a>{' '}
+          and <a href="https://x.com/AyushmanBharad" target="_blank" rel="noopener noreferrer" className="prose-link">X</a>.
+        </p>
+      </motion.section>
     </main>
-  );
+  )
 }
