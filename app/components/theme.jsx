@@ -15,7 +15,7 @@ export const themeInitScript = `
   var s=localStorage.getItem('theme');
   var d=s?s:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
   document.documentElement.dataset.theme=d;
-  if(location.pathname!=='/')document.documentElement.dataset.lightOnly='true';
+  if(location.pathname.indexOf('/kizuku')===0)document.documentElement.dataset.lightOnly='true';
   var seen=sessionStorage.getItem('splashSeen')==='1';
   var still=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(seen||still)document.documentElement.dataset.splashSkip='true';
@@ -26,10 +26,10 @@ export function ThemeProvider({ children }) {
   const pathname = usePathname()
   const [theme, setTheme] = useState('light')
 
-  // Only the home page has been migrated to the token system. The other routes
-  // still carry hardcoded light colours, so they are pinned light rather than
-  // rendered half-dark. Remove data-light-only as each one is migrated.
-  const themable = pathname === '/'
+  // Every route follows the token system except /kizuku, which presents the
+  // client's own green brand world and is authored against a light ground.
+  // Pinning it light keeps that intact rather than half-inverting it.
+  const themable = pathname !== '/kizuku'
 
   useEffect(() => {
     const stored = typeof localStorage !== 'undefined' && localStorage.getItem('theme')

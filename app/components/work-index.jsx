@@ -66,7 +66,20 @@ export default function WorkIndex({ label, items }) {
 
           return (
             <li key={item.name}>
-              {item.href ? (
+              {item.href && item.external ? (
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="index-row"
+                  onMouseEnter={() => setActive(item.name)}
+                  onMouseLeave={() => setActive(null)}
+                  onFocus={() => setActive(item.name)}
+                  onBlur={() => setActive(null)}
+                >
+                  {Row}
+                </a>
+              ) : item.href ? (
                 <Link
                   href={item.href}
                   className="index-row"

@@ -1,191 +1,125 @@
-'use client';
-import Link from 'next/link';
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
+'use client'
+
 import Image from 'next/image'
+import { motion, useReducedMotion } from 'motion/react'
+
+// Content preserved verbatim from the previous resume page.
+const ROLES = [
+  {
+    org: 'Dopamine Ventures',
+    title: 'Manager, Product & Websites',
+    dates: 'June 2024 → July 2025',
+    points: [
+      'Led UX and system design for early-stage products, focusing on clarity in flows, interactions, and scalable architecture',
+      'Designed complex scheduling systems handling availability logic, conflicts, manual overrides, and edge cases',
+      'Conducted user research and developed personas to guide experience and feature strategy',
+      'Defined end-to-end journeys across onboarding, scheduling, and client engagement ecosystems',
+      'Translated UX decisions into structured PRDs and aligned design, engineering, and business for build-ready execution',
+    ],
+  },
+  {
+    org: 'Ernst & Young',
+    title: 'Cybersecurity Analyst',
+    dates: 'July 2022 → Aug 2023',
+    points: [
+      'Performed SAST/DAST and VAPT on web and mobile applications, identifying critical usability-impacting security risks.',
+      'Conducted API and web application testing, strengthening understanding of system behavior, edge cases, and failure states.',
+      'Reviewed firewall and OS configurations, reinforcing a mindset of defensive design and risk-aware systems thinking.',
+    ],
+  },
+]
+
+const EDUCATION = [
+  { school: 'UPES, Dehradun', dates: 'June 2024 → July 2025', detail: 'M.des — Interaction Design' },
+  { school: 'SMIT, Sikkim', dates: 'June 2022', detail: 'B.Tech — Computer Science Engineering' },
+  { school: 'Sai RNS Academy', dates: 'June 2018', detail: 'Class XII, Higher Secondary, PCM' },
+  { school: 'Sangam Academy', dates: 'June 2016', detail: 'Class X, SSC' },
+]
+
+const SKILLS = ['Figma', 'Antigravity', 'Illustrator', 'After Effects', 'UX Research', 'Usability Design', 'Design Thinking']
 
 export default function Resume() {
-    // Cursor Ref
-    const cursorDot = useRef(null);
+  const reduceMotion = useReducedMotion()
 
-    useEffect(() => {
-        // 1. Custom Cursor Logic
-        const xToDot = gsap.quickTo(cursorDot.current, "x", { duration: 0.1, ease: "power3" });
-        const yToDot = gsap.quickTo(cursorDot.current, "y", { duration: 0.1, ease: "power3" });
+  const rise = (delay) => ({
+    initial: reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: reduceMotion ? 0.2 : 0.5, delay: reduceMotion ? 0 : delay, ease: [0.22, 1, 0.36, 1] },
+  })
 
-        const moveCursor = (e) => {
-            xToDot(e.clientX);
-            yToDot(e.clientY);
-        };
+  return (
+    <main className="measure min-h-screen pb-40 pt-20 sm:pt-28">
+      <motion.div {...rise(0)}>
+        <Image
+          src="/assets/resume-photo.jpg"
+          alt="Ayushman Bharadwaj"
+          width={1024}
+          height={1024}
+          sizes="72px"
+          priority
+          className="mb-10 h-[72px] w-[72px] rounded-full border border-rule object-cover"
+        />
+      </motion.div>
 
-        window.addEventListener('mousemove', moveCursor);
+      <motion.div {...rise(0.06)} className="space-y-5">
+        <h1 className="text-faint text-[0.95rem]">Resume</h1>
+        <p>
+          <span className="text-ink font-medium">Ayushman Bharadwaj</span> — UX/UI designer. I turn
+          complex problems into clear, build-ready systems, and align design, tech and business
+          around what matters most: the user.
+        </p>
+        <p className="text-[0.95rem]">
+          <a href="tel:+917002400184" className="prose-link">+91 7002400184</a>
+          <span className="text-faint"> · </span>
+          <a href="mailto:ayushman15899@gmail.com" className="prose-link">ayushman15899@gmail.com</a>
+          <span className="text-faint"> · </span>
+          <a href="https://linkedin.com/in/ayushman-bharadwaj-660759289" target="_blank" rel="noopener noreferrer" className="prose-link">LinkedIn</a>
+        </p>
+      </motion.div>
 
-        // Interactive Elements Cursor State
-        const interactiveEls = document.querySelectorAll('a, button, .interactive-target');
-        interactiveEls.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                gsap.to(cursorDot.current, { scale: 1.1, transformOrigin: 'top left', duration: 0.2 });
-            });
-            el.addEventListener('mouseleave', () => {
-                gsap.to(cursorDot.current, { scale: 1, transformOrigin: 'top left', duration: 0.2 });
-            });
-        });
+      <motion.section {...rise(0.12)} className="mt-16">
+        <h2 className="text-faint text-[0.95rem] mb-2">Experience</h2>
+        <div className="border-t border-rule">
+          {ROLES.map((r) => (
+            <article key={r.org} className="border-b border-rule py-6">
+              <div className="flex flex-wrap items-baseline justify-between gap-x-4">
+                <h3 className="text-ink font-medium">
+                  {r.org} <span className="text-muted font-normal">— {r.title}</span>
+                </h3>
+                <span className="tnum text-faint text-[0.9rem]">{r.dates}</span>
+              </div>
+              <ul className="mt-3 space-y-2">
+                {r.points.map((p, i) => (
+                  <li key={i} className="grid grid-cols-[1.25rem_1fr]">
+                    <span aria-hidden="true" className="text-faint">—</span>
+                    <span>{p}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </motion.section>
 
-        // Cleanup
-        return () => {
-            window.removeEventListener('mousemove', moveCursor);
-        };
-    }, []);
+      <motion.section {...rise(0.16)} className="mt-16">
+        <h2 className="text-faint text-[0.95rem] mb-2">Education</h2>
+        <ul className="border-t border-rule">
+          {EDUCATION.map((e) => (
+            <li key={e.school} className="border-b border-rule py-4">
+              <div className="flex flex-wrap items-baseline justify-between gap-x-4">
+                <span className="text-ink font-medium">{e.school}</span>
+                <span className="tnum text-faint text-[0.9rem]">{e.dates}</span>
+              </div>
+              <p className="text-[0.95rem]">{e.detail}</p>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-    return (
-        <main className="min-h-screen bg-white text-slate-800 font-sans md:py-24 py-16 px-6 sm:px-12 selection:bg-[#3b469b]/20 relative">
-
-            {/* Custom Cursor Elements */}
-            <div className="hidden md:block">
-                <div ref={cursorDot} className="fixed top-0 left-0 pointer-events-none z-[9999] flex flex-col items-start drop-shadow-md">
-                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 1L8 20.5L11 12.5L19 9.5L1 1Z" fill="#3b469b" stroke="white" strokeWidth="1.5" strokeLinejoin="round" />
-                    </svg>
-                    <div className="cursor-name-tag bg-[#3b469b] text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md ml-3 -mt-1 whitespace-nowrap transition-colors duration-300">
-                        You
-                    </div>
-                </div>
-            </div>
-
-            {/* Top Navigation Wrapper for consistency (optional if you want it to feel like part of the site, but this page is standalone per the design) */}
-            <div className="max-w-4xl mx-auto md:mb-12 mb-8 fade-in-up">
-                <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-[#3b469b] transition-colors">
-                    <i className="ph ph-arrow-left"></i> Back to Portfolio
-                </Link>
-            </div>
-
-            <div className="max-w-4xl mx-auto flex flex-col gap-16">
-
-                {/* Header Section */}
-                <header className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 stagger-fade">
-
-                    {/* Avatar Image Container */}
-                    <div className="relative w-48 h-48 sm:w-64 sm:h-64 shrink-0 flex items-center justify-center">
-                        <Image src="/assets/resume-photo.jpg"
-                            alt="Ayushman Bharadwaj"
-                            className="relative w-full h-full object-contain object-bottom transition-transform duration-300 ease-out hover:scale-[1.05]" width={1024} height={1024} sizes="256px" />
-                    </div>
-
-                    {/* Intro Content */}
-                    <div className="flex flex-col items-center md:items-start text-center md:text-left pt-2 md:pt-4">
-                        <span className="text-lg md:text-xl font-medium text-slate-500 mb-1">UX/UI designer</span>
-                        <h1 className="text-4xl md:text-6xl font-black text-[#3b469b] leading-[1.1] mb-6 tracking-tight">
-                            Ayushman<br />Bharadwaj
-                        </h1>
-                        <p className="text-base md:text-lg text-slate-600 max-w-md leading-relaxed">
-                            I'm a UX-focused design engineer who turns complex problems into clear, build-ready systems.<br />
-                            From personas to product requirements, I align design, tech, and business around what matters most — the user.
-                        </p>
-                    </div>
-                </header>
-
-                {/* Contact Strip */}
-                <div className="w-full text-center md:text-left text-xs sm:text-sm font-medium text-slate-500 pb-8 border-b border-slate-200 stagger-fade">
-                    <span>+91-7002400184</span>
-                    <span className="mx-2 md:mx-4">•</span>
-                    <a href="mailto:ayushman15899@gmail.com" className="hover:text-[#3b469b] hover:underline underline-offset-4 transition-colors">ayushman15899@gmail.com</a>
-                    <span className="mx-2 md:mx-4">•</span>
-                    <a href="https://linkedin.com/in/ayushman-bharadwaj-660759289" target="_blank" rel="noopener noreferrer" className="hover:text-[#3b469b] hover:underline underline-offset-4 transition-colors break-all">linkedin.com/in/ayushman-bharadwaj-660759289</a>
-                </div>
-
-                {/* Two Column Layout (Experience + Skills VS Education + QR) */}
-                <div className="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-16 fade-in-up">
-
-                    {/* LEFT COLUMN */}
-                    <div className="flex flex-col gap-12">
-
-                        {/* Work Experience */}
-                        <section>
-                            <h2 className="text-2xl font-bold text-[#3b469b] mb-8">Work Experience</h2>
-
-                            <div className="flex flex-col gap-8">
-                                {/* Role 1 */}
-                                <div>
-                                    <h3 className="text-lg font-bold text-slate-900 mb-1">Dopamine Ventures - Manager, Product & Websites</h3>
-                                    <p className="text-sm font-semibold text-slate-600 mb-4">June 2024 → July 2025</p>
-                                    <ul className="text-base text-slate-700 leading-relaxed space-y-3 pl-4 list-disc marker:text-slate-300">
-                                        <li>Led UX and system design for early-stage products, focusing on clarity in flows, interactions, and scalable architecture</li>
-                                        <li>Designed complex scheduling systems handling availability logic, conflicts, manual overrides, and edge cases</li>
-                                        <li>Conducted user research and developed personas to guide experience and feature strategy</li>
-                                        <li>Defined end-to-end journeys across onboarding, scheduling, and client engagement ecosystems</li>
-                                        <li>Translated UX decisions into structured PRDs and aligned design, engineering, and business for build-ready execution</li>
-                                    </ul>
-                                </div>
-
-                                {/* Role 2 */}
-                                <div>
-                                    <h3 className="text-lg font-bold text-slate-900 mb-1">Ernst & Young - Cybersecurity Analyst</h3>
-                                    <p className="text-sm font-semibold text-slate-600 mb-4">July 2022 → Aug 2023</p>
-                                    <ul className="text-base text-slate-700 leading-relaxed space-y-3 pl-4 list-disc marker:text-slate-300">
-                                        <li>Performed SAST/DAST and VAPT on web and mobile applications, identifying critical usability-impacting security risks.</li>
-                                        <li>Conducted API and web application testing, strengthening understanding of system behavior, edge cases, and failure states.</li>
-                                        <li>Reviewed firewall and OS configurations, reinforcing a mindset of defensive design and risk-aware systems thinking.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </section>
-
-                        {/* Skills */}
-                        <section className="mt-4">
-                            <h2 className="text-2xl font-bold text-[#3b469b] mb-6">Skills</h2>
-
-                            {/* Tool Icons & Skills */}
-                            <div className="flex flex-wrap gap-3 mb-6">
-                                <span className="px-4 py-2 border-2 border-slate-300 rounded-full text-xs font-semibold text-slate-600 bg-white">Figma</span>
-                                <span className="px-4 py-2 border-2 border-slate-300 rounded-full text-xs font-semibold text-slate-600 bg-white">Antigravity</span>
-                                <span className="px-4 py-2 border-2 border-slate-300 rounded-full text-xs font-semibold text-slate-600 bg-white">Illustrator</span>
-                                <span className="px-4 py-2 border-2 border-slate-300 rounded-full text-xs font-semibold text-slate-600 bg-white">After Effects</span>
-                                <span className="px-4 py-2 border-2 border-slate-300 rounded-full text-xs font-semibold text-slate-600 bg-white">UX Research</span>
-                                <span className="px-4 py-2 border-2 border-slate-300 rounded-full text-xs font-semibold text-slate-600 bg-white">Usability Design</span>
-                                <span className="px-4 py-2 border-2 border-slate-300 rounded-full text-xs font-semibold text-slate-600 bg-white">Design Thinking</span>
-                            </div>
-                        </section>
-                    </div>
-
-                    {/* RIGHT COLUMN */}
-                    <div className="flex flex-col gap-16 md:border-l border-slate-100 md:pl-10">
-
-                        {/* Education */}
-                        <section>
-                            <h2 className="text-2xl font-bold text-[#3b469b] mb-8">Education</h2>
-
-                            <div className="flex flex-col gap-6">
-                                <div>
-                                    <h3 className="text-base font-bold text-slate-900 mb-1">UPES, Dehradun</h3>
-                                    <p className="text-sm font-semibold text-slate-600 mb-1">June 2024 → July 2025</p>
-                                    <p className="text-sm text-slate-700">M.des — Interaction Design</p>
-                                </div>
-
-                                <div>
-                                    <h3 className="text-base font-bold text-slate-900 mb-1">SMIT, Sikkim</h3>
-                                    <p className="text-sm font-semibold text-slate-600 mb-1">June 2022</p>
-                                    <p className="text-sm text-slate-700">B.Tech — Computer Science<br />Engineering</p>
-                                </div>
-
-                                <div>
-                                    <h3 className="text-base font-bold text-slate-900 mb-1">Sai RNS Academy</h3>
-                                    <p className="text-sm font-semibold text-slate-600 mb-1">June 2018</p>
-                                    <p className="text-sm text-slate-700">Class XII, Higher Secondary, PCM</p>
-                                </div>
-
-                                <div>
-                                    <h3 className="text-base font-bold text-slate-900 mb-1">Sangam Academy</h3>
-                                    <p className="text-sm font-semibold text-slate-600 mb-1">June 2016</p>
-                                    <p className="text-sm text-slate-700">Class X, SSC</p>
-                                </div>
-                            </div>
-                        </section>
-
-
-                    </div>
-                </div>
-
-            </div>
-        </main>
-    );
+      <motion.section {...rise(0.2)} className="mt-16">
+        <h2 className="text-faint text-[0.95rem] mb-3">Skills</h2>
+        <p>{SKILLS.join(' · ')}</p>
+      </motion.section>
+    </main>
+  )
 }

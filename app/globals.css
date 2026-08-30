@@ -66,7 +66,9 @@
     /* The custom dot cursor belongs to the pages that still draw one. The rebuilt
        home page uses the cursor-following work preview instead, and needs the
        real pointer. Reduced motion hands the pointer back everywhere. */
-    @media (hover: hover) and (pointer: fine) {
+    /* min-width matches the custom cursor's own `hidden md:block`: without it a
+       desktop window under 768px hides the real pointer and draws no replacement. */
+    @media (hover: hover) and (pointer: fine) and (min-width: 768px) {
 
         html[data-light-only]:not([data-system-cursor]),
         html[data-light-only]:not([data-system-cursor]) body,
