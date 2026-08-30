@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image'
 
 export default function Home() {
   // Cursor Refs
@@ -153,7 +154,7 @@ export default function Home() {
         <div className="bg-white/80 backdrop-blur-lg border border-white/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-2xl md:rounded-full relative flex flex-row items-center justify-between px-3 md:px-6 py-2 md:py-3">
           {/* Logo Left */}
           <Link href="/" className="flex items-center z-10 group flex-shrink-0">
-            <img src="/assets/avatar.png" alt="Ayushman Bharadwaj" className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain object-bottom transition-transform duration-300 group-hover:scale-105" />
+            <Image src="/assets/avatar.png" alt="Ayushman Bharadwaj" className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain object-bottom transition-transform duration-300 group-hover:scale-105" width={620} height={756} sizes="48px" />
           </Link>
 
           {/* Centered Links */}
@@ -187,7 +188,7 @@ export default function Home() {
 
             {/* Dynamic Tagline (Handwritten Hook) */}
             <div id="tagline-hook" className="absolute -top-10 sm:-top-12 md:-top-14 right-2 sm:right-8 md:-right-8 lg:-right-4 text-xl sm:text-3xl md:text-4xl text-blue-600 opacity-0 pointer-events-none z-20 flex flex-col items-center drop-shadow-sm max-w-[80vw]" style={{ fontFamily: 'var(--font-reenie-beanie)' }}>
-              <span className="whitespace-nowrap">Designing products that ship.</span>
+              <span className="whitespace-nowrap">from security to design.</span>
               <svg className="w-12 h-5 sm:w-16 sm:h-6 md:w-24 md:h-8 -mt-1 text-blue-400" viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5 20 Q 50 45 95 20" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
                 <path d="M80 15 L 95 20 L 85 30" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
@@ -197,11 +198,23 @@ export default function Home() {
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.3] md:leading-[1.2]">
               <div className="overflow-hidden pb-1">
                 <span className="block stagger-fade text-slate-800">
-                  Hi, I am Ayushman Bharadwaj. <br className="hidden md:block" />
-                  I am an <span className="text-blue-600 font-black">interaction designer</span> <span className="inline-block animate-waving-hand origin-bottom-right">👋</span>
+                  I design products, <br className="hidden md:block" />
+                  then I <span className="text-blue-600 font-black">ship the code</span> <span className="inline-block animate-waving-hand origin-bottom-right">👋</span>
                 </span>
               </div>
             </h1>
+
+            {/* Subhead — the differentiator, stated plainly */}
+            <p className="stagger-fade mt-6 md:mt-7 text-base md:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">
+              I am <span className="font-semibold text-slate-800">Ayushman Bharadwaj</span>, an interaction designer
+              with a year in security engineering behind me — so I design for how systems actually fail, then build the thing myself.
+            </p>
+
+            {/* Proof line */}
+            <p className="stagger-fade mt-4 text-sm md:text-base text-slate-500 max-w-2xl mx-auto">
+              Most recently: a cafe ordering flow that took customers from{' '}
+              <span className="font-semibold text-slate-700">6–8 minutes down to 2–3</span> in a two-week pilot.
+            </p>
 
             {/* Skill Pills */}
             <div className="flex flex-wrap justify-center gap-3 md:gap-4 mt-6 md:mt-8 stagger-fade">
@@ -212,22 +225,41 @@ export default function Home() {
                 Design Systems
               </span>
               <span className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold bg-orange-50 text-orange-600 border border-orange-100 shadow-sm">
-                Vibe Coding
+                Product engineering
+              </span>
+              <span className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100 shadow-sm">
+                Security-informed UX
               </span>
             </div>
 
-            <div className="mt-16 flex justify-center stagger-fade w-full mx-auto pb-4">
-              <Link
-                href="#work"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="interactive-target text-xs font-mono uppercase tracking-[0.2em] text-slate-400 hover:text-blue-600 transition-colors flex flex-col items-center gap-2 group mx-auto cursor-pointer"
-              >
-                <span>Scroll down</span>
-                <i className="ph ph-arrow-down text-lg animate-bounce group-hover:text-blue-600"></i>
-              </Link>
+            <div className="mt-10 md:mt-12 stagger-fade w-full mx-auto pb-4 flex flex-col items-center gap-5">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <Link
+                  href="#work"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="interactive-target group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition-colors shadow-sm cursor-pointer"
+                >
+                  See the work
+                  <i className="ph-bold ph-arrow-right text-base transition-transform group-hover:translate-x-1"></i>
+                </Link>
+                <Link
+                  href="mailto:ayushman15899@gmail.com"
+                  className="interactive-target group inline-flex items-center gap-2 px-6 py-3 rounded-full border border-slate-300 text-slate-700 text-sm font-semibold hover:border-slate-400 hover:text-slate-900 transition-colors"
+                >
+                  <i className="ph-fill ph-envelope-simple text-base"></i>
+                  Get in touch
+                </Link>
+              </div>
+              <p className="flex items-center gap-2 text-xs font-medium text-slate-500">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping"></span>
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+                </span>
+                Available for remote roles
+              </p>
             </div>
           </div>
         </div>
@@ -257,7 +289,7 @@ export default function Home() {
                   ].map((s, i) => (
                     <div key={i} className="flex-none rounded-xl md:rounded-[1.8rem] overflow-hidden transition-transform duration-700 group-hover:scale-[1.04]"
                       style={{ width: 'clamp(75px, 14vw, 120px)', transform: `rotate(${s.rotate}) translateY(${s.y}) scale(${s.scale})`, boxShadow: '0 12px 40px rgba(0,0,0,0.35)', border: '1px solid rgba(255,255,255,0.1)' }}>
-                      <img src={s.src} alt="" className="w-full h-auto block" loading="lazy" />
+                      <Image src={s.src} alt="" width={393} height={852} sizes="120px" className="w-full h-auto block" loading="lazy" />
                     </div>
                   ))}
                 </div>
@@ -289,7 +321,7 @@ export default function Home() {
             {/* Project Row 2 — Hoychoy */}
             <Link href="/case-study" className="group flex flex-col md:flex-row gap-8 py-8 md:py-12 border-b border-slate-200 interactive-target md:items-center">
               <div className="w-full md:w-[45%] aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 shrink-0 bg-slate-50 relative z-20">
-                <img src="/assets/hoychoy-hero-new.png" alt="Hoychoy Cafe" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out" />
+                <Image src="/assets/hoychoy-hero-new.png" alt="Hoychoy Cafe" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out" width={1200} height={1056} sizes="(max-width: 768px) 100vw, 45vw" />
               </div>
               <div className="flex-1 flex flex-col md:flex-row md:items-center justify-between relative z-20">
                 <div className="mb-4 md:mb-0 pr-4">
@@ -306,6 +338,23 @@ export default function Home() {
                 </div>
               </div>
             </Link>
+          </div>
+
+          {/* Also shipped — work that does not have a case study yet */}
+          <div className="mt-20 pt-10 border-t border-slate-200 card-reveal">
+            <h3 className="text-xs font-mono tracking-[0.2em] text-slate-400 uppercase mb-6">Also shipped</h3>
+            <ul className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+              {[
+                { name: 'Signal',     note: 'Motion identity and title system' },
+                { name: 'Madi Things', note: 'Editorial site for a product studio' },
+                { name: 'KL Hi-Tech',  note: 'Marketing site and handover' },
+              ].map((p) => (
+                <li key={p.name} className="rounded-2xl border border-slate-200 px-5 py-4 bg-white/60">
+                  <p className="text-base font-semibold text-slate-800">{p.name}</p>
+                  <p className="text-sm text-slate-500 mt-1 leading-snug">{p.note}</p>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* AI Experiments CTA */}
@@ -326,7 +375,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-6 flex flex-col items-center justify-center relative z-10">
           {/* Avatar Logo */}
           <Link href="/" className="mb-6 flex items-center justify-center w-14 h-14 rounded-full border border-slate-200 bg-white shadow-sm overflow-hidden interactive-target hover:scale-[1.05] transition-transform">
-            <img src="/assets/avatar.png" alt="Ayushman Bharadwaj" className="w-full h-full object-contain object-bottom" />
+            <Image src="/assets/avatar.png" alt="Ayushman Bharadwaj" className="w-full h-full object-contain object-bottom" width={620} height={756} sizes="48px" />
           </Link>
 
           {/* Social Links */}

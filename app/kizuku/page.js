@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image'
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -16,9 +17,9 @@ const LOOP_SCREENS = [
 ];
 
 const PERSONAS = [
-  { type: 'optimizer', tree: 'spiral tree',  color: '#ECD858', bg: '#FEFCE8', textDark: '#1C2B1A', img: '/kizuku/screen-optimiser.png',    treeImg: '/kizuku/optimizer-tree.png', quote: '"is this the most efficient use of my time right now?"' },
-  { type: 'seeker',    tree: 'crystal tree', color: '#A8CEDE', bg: '#EFF8FC', textDark: '#1C2B1A', img: '/kizuku/screen-questionnaire.png', treeImg: '/kizuku/seeker-tree.png',   quote: '"what if this is not the life i was supposed to build?"' },
-  { type: 'planner',   tree: 'strata tree',  color: '#A8CA9C', bg: '#EFFAF0', textDark: '#1C2B1A', img: '/kizuku/screen-reflection.png',    treeImg: '/kizuku/planner-tree.png',   quote: '"i need to make sure i am not making a mistake i cannot undo."' },
+  { type: 'optimizer', tree: 'spiral tree',  color: '#ECD858', bg: '#FEFCE8', textDark: '#1C2B1A', img: '/kizuku/screen-optimiser.png',    treeImg: '/kizuku/optimizer-tree.png', treeW: 541, treeH: 615, quote: '"is this the most efficient use of my time right now?"' },
+  { type: 'seeker',    tree: 'crystal tree', color: '#A8CEDE', bg: '#EFF8FC', textDark: '#1C2B1A', img: '/kizuku/screen-questionnaire.png', treeImg: '/kizuku/seeker-tree.png',   treeW: 192, treeH: 230,   quote: '"what if this is not the life i was supposed to build?"' },
+  { type: 'planner',   tree: 'strata tree',  color: '#A8CA9C', bg: '#EFFAF0', textDark: '#1C2B1A', img: '/kizuku/screen-reflection.png',    treeImg: '/kizuku/planner-tree.png',  treeW: 185, treeH: 229,   quote: '"i need to make sure i am not making a mistake i cannot undo."' },
 ];
 
 // Contrast-safe text tokens (all ≥ 4.5:1 on white #FFFFFF)
@@ -189,7 +190,7 @@ export default function KizukuPage() {
             ].map((s, i) => (
               <div key={i} className="flex-none rounded-xl md:rounded-[1.25rem] overflow-hidden"
                 style={{ width: 'clamp(110px, 20vw, 185px)', transform: `rotate(${s.rotate}) translateY(${s.y}) scale(${s.scale})`, boxShadow: s.shadow, border: '1px solid rgba(0,0,0,0.06)' }}>
-                <img src={s.src} alt="" className="w-full h-auto block" loading="eager" />
+                <Image src={s.src} alt="" width={393} height={852} sizes="185px" className="w-full h-auto block" priority />
               </div>
             ))}
           </div>
@@ -223,7 +224,7 @@ export default function KizukuPage() {
               <div key={s.label} className="flex flex-col items-center gap-2.5">
                 <div className="w-full rounded-xl md:rounded-[1.5rem] overflow-hidden"
                   style={{ boxShadow: '0 8px 32px rgba(44,82,40,0.1)', border: '1px solid rgba(44,82,40,0.07)' }}>
-                  <img src={s.src} alt={s.label} className="w-full h-auto block" loading="lazy" />
+                  <Image src={s.src} alt={s.label} width={393} height={852} sizes="(max-width: 768px) 33vw, 20vw" className="w-full h-auto block" loading="lazy" />
                 </div>
                 <div className="text-center px-1">
                   <p className="text-xs font-semibold mb-0.5" style={{ color: T.body }}>{s.label}</p>
@@ -269,6 +270,7 @@ export default function KizukuPage() {
                   src="https://embed.figma.com/proto/80dVRiAfseQp409VZtvZZ6/Kizuku?node-id=160-994&scaling=scale-down-width&content-scaling=fixed&embed-host=share&hide-ui=1"
                   allowFullScreen
                   allow="fullscreen"
+                  loading="lazy"
                   title="Kizuku prototype"
                 />
               </div>
@@ -385,8 +387,9 @@ export default function KizukuPage() {
                   </p>
                 </div>
                 <div className="flex items-center justify-center p-8 md:border-l" style={{ borderColor: 'rgba(44,82,40,0.1)' }}>
-                  <img src={PERSONAS[activePersona].treeImg} alt={PERSONAS[activePersona].tree}
-                    className="w-36 h-auto object-contain" loading="lazy" />
+                  <Image src={PERSONAS[activePersona].treeImg} alt={PERSONAS[activePersona].tree}
+                    width={PERSONAS[activePersona].treeW} height={PERSONAS[activePersona].treeH}
+                    sizes="144px" className="w-36 h-auto object-contain" loading="lazy" />
                 </div>
               </div>
             </div>
@@ -409,14 +412,14 @@ export default function KizukuPage() {
           {/* Logo floral painting */}
           <div className="kz-reveal kz-img-scale mb-12 -mx-6 md:mx-0 rounded-none md:rounded-3xl overflow-hidden"
             style={{ boxShadow: '0 4px 32px rgba(44,82,40,0.08)', border: '1px solid rgba(44,82,40,0.06)' }}>
-            <img src="/kizuku/logo-formation.png" alt="Hand-painted logo floral exploration" className="w-full h-auto block" loading="lazy" />
+            <Image src="/kizuku/logo-formation.png" alt="Hand-painted logo floral exploration" className="w-full h-auto block" loading="lazy" width={908} height={693} sizes="(max-width: 768px) 100vw, 720px" />
           </div>
 
           {/* Colour palette */}
           <div className="kz-reveal kz-img-scale mb-12">
             <SectionLabel>colour system — each has a reason</SectionLabel>
             <div className="kz-img-scale rounded-2xl overflow-hidden mb-5" style={{ boxShadow: '0 2px 20px rgba(44,82,40,0.07)', border: '1px solid rgba(44,82,40,0.06)' }}>
-              <img src="/kizuku/watercolour-wash.jpg" alt="Watercolour exploration — discovering the colour temperature and emotional palette" className="w-full h-auto block" loading="lazy" />
+              <Image src="/kizuku/watercolour-wash.jpg" alt="Watercolour exploration — discovering the colour temperature and emotional palette" className="w-full h-auto block" loading="lazy" width={1200} height={900} sizes="(max-width: 768px) 100vw, 960px" />
             </div>
             <p className="text-xs italic mb-5" style={{ color: T.caption }}>the colour temperature was discovered through watercolour, not chosen from a swatch</p>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -491,7 +494,7 @@ export default function KizukuPage() {
               { img: '/kizuku/strata-tree-growth.png',   caption: 'planner (strata) — wide, ancient, patient — builds mass before height' },
             ].map((f) => (
               <div key={f.caption} className="rounded-2xl overflow-hidden" style={{ border: '1px solid rgba(44,82,40,0.08)', boxShadow: '0 2px 16px rgba(44,82,40,0.06)' }}>
-                <img src={f.img} alt={f.caption} className="w-full h-auto block" loading="lazy" />
+                <Image src={f.img} alt={f.caption} width={929} height={300} sizes="(max-width: 768px) 100vw, 960px" className="w-full h-auto block" loading="lazy" />
                 <div className="px-5 py-3" style={{ backgroundColor: '#FAFAFA', borderTop: '1px solid rgba(44,82,40,0.06)' }}>
                   <p className="text-xs italic" style={{ color: T.caption }}>{f.caption}</p>
                 </div>
@@ -634,7 +637,7 @@ export default function KizukuPage() {
       <footer className="py-12 px-6 md:px-12" style={{ borderTop: `1px solid ${T.heading}0D` }}>
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex items-center gap-4">
-            <img src="/kizuku/Home/logo.png" alt="Kizuku" className="h-8 w-auto" style={{ opacity: 0.5 }} />
+            <Image src="/kizuku/Home/logo.png" alt="Kizuku" className="h-8 w-auto" style={{ opacity: 0.5 }} width={114} height={114} sizes="(max-width: 768px) 60vw, 320px" />
             <div>
               <p className="text-xs font-medium" style={{ color: T.body }}>kizuku · ongoing project</p>
               <p className="text-[10px]" style={{ color: T.caption }}>iOS app in development · UI screens being refined</p>

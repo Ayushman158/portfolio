@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import Image from 'next/image'
 
 export default function Resume() {
     // Cursor Ref
@@ -65,11 +66,9 @@ export default function Resume() {
 
                     {/* Avatar Image Container */}
                     <div className="relative w-48 h-48 sm:w-64 sm:h-64 shrink-0 flex items-center justify-center">
-                        <img
-                            src="/assets/resume-photo.jpg"
+                        <Image src="/assets/resume-photo.jpg"
                             alt="Ayushman Bharadwaj"
-                            className="relative w-full h-full object-contain object-bottom transition-transform duration-700 hover:scale-[1.05]"
-                        />
+                            className="relative w-full h-full object-contain object-bottom transition-transform duration-700 hover:scale-[1.05]" width={1024} height={1024} sizes="256px" />
                     </div>
 
                     {/* Intro Content */}

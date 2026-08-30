@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image'
 
 export default function CaseStudy() {
     const cursorDot = useRef(null);
@@ -108,7 +109,7 @@ export default function CaseStudy() {
                     </div>
                     <div className="flex-1 w-full flex justify-center md:justify-end relative">
                         <div className="w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl border border-slate-200 rotate-2 hover:rotate-0 transition-transform duration-500 interactive-target">
-                            <img src="/assets/hoychoy-hero-new.png" alt="Hoychoy Cafe Splash Screen" className="w-full h-auto object-cover" />
+                            <Image src="/assets/hoychoy-hero-new.png" alt="Hoychoy Cafe Splash Screen" className="w-full h-auto object-cover" width={1200} height={1056} sizes="(max-width: 768px) 100vw, 45vw" />
                         </div>
                     </div>
                 </div>
@@ -434,7 +435,7 @@ export default function CaseStudy() {
                     {/* Looping Recording */}
                     <div className="bg-slate-200 rounded-[2.5rem] p-4 md:p-8 shadow-inner overflow-hidden flex justify-center mb-24 max-w-5xl mx-auto">
                         <div className="w-full rounded-2xl overflow-hidden shadow-xl border border-slate-300 relative group bg-white">
-                            <img src="/assets/recording.webp" alt="Full app flow: Menu, Cart, Checkout, Confirmation" className="w-full h-auto object-cover" />
+                            <Image src="/assets/recording.webp" alt="Full app flow: Menu, Cart, Checkout, Confirmation" className="w-full h-auto object-cover" width={1200} height={738} sizes="(max-width: 1024px) 100vw, 960px" unoptimized />
                         </div>
                     </div>
 
@@ -445,19 +446,19 @@ export default function CaseStudy() {
                         </h3>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 pb-12">
                             <div className="relative group mx-auto max-w-[320px] md:max-w-none">
-                                <img src="/assets/cs-menu-active.png" alt="Menu with real-time availability and Veg/Non-Veg filters" className="w-full h-auto rounded-[2rem] shadow-xl border-4 border-slate-100" />
+                                <Image src="/assets/cs-menu-reopen.png" alt="Menu with real-time availability and Veg/Non-Veg filters" className="w-full h-auto rounded-[2rem] shadow-xl border-4 border-slate-100" width={1170} height={2532} sizes="(max-width: 768px) 100vw, 960px" />
                                 <div className="absolute sm:-right-8 -right-4 top-16 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl shadow-xl border border-slate-200 rotate-3 z-10 font-bold text-blue-600 max-w-[200px]" style={{ fontFamily: 'var(--font-caveat), cursive', fontSize: '1.5rem', lineHeight: '1.2' }}>
                                     Real-time filtering & availability checks.
                                 </div>
                             </div>
                             <div className="relative group mx-auto max-w-[320px] md:max-w-none mt-12 md:mt-0">
-                                <img src="/assets/cs-checkout-scroll.png" alt="Checkout form: address capture, order type, and kitchen notes" className="w-full h-auto rounded-[2rem] shadow-xl border-4 border-slate-100" />
+                                <Image src="/assets/cs-checkout-scroll.png" alt="Checkout form: address capture, order type, and kitchen notes" className="w-full h-auto rounded-[2rem] shadow-xl border-4 border-slate-100" width={1170} height={2532} sizes="(max-width: 768px) 100vw, 960px" />
                                 <div className="absolute sm:-left-12 -left-4 top-1/2 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl shadow-xl border border-slate-200 -rotate-2 z-10 font-bold text-blue-600 max-w-[200px]" style={{ fontFamily: 'var(--font-caveat), cursive', fontSize: '1.5rem', lineHeight: '1.2' }}>
                                     Structured data capture ends WhatsApp chaos.
                                 </div>
                             </div>
                             <div className="relative group mx-auto max-w-[320px] md:max-w-none mt-12 md:mt-0">
-                                <img src="/assets/cs-checkout-payment.png" alt="PhonePe payment: exact order total pre-filled via UPI deep link" className="w-full h-auto rounded-[2rem] shadow-xl border-4 border-slate-100" />
+                                <Image src="/assets/cs-checkout-payment.png" alt="PhonePe payment: exact order total pre-filled via UPI deep link" className="w-full h-auto rounded-[2rem] shadow-xl border-4 border-slate-100" width={1170} height={4641} sizes="(max-width: 768px) 100vw, 960px" />
                                 <div className="absolute sm:-right-8 -right-4 bottom-32 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl shadow-xl border border-slate-200 -rotate-3 z-10 font-bold text-blue-600 max-w-[200px]" style={{ fontFamily: 'var(--font-caveat), cursive', fontSize: '1.5rem', lineHeight: '1.2' }}>
                                     Exact total pre-filled. Zero manual entry, zero mismatch.
                                 </div>
@@ -472,13 +473,13 @@ export default function CaseStudy() {
                         </h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 max-w-4xl mx-auto">
                             <div className="relative group mx-auto max-w-[320px] md:max-w-none">
-                                <img src="/assets/cs-admin-panel.png" alt="Admin Panel: restaurant status toggle and closing message" className="w-full h-auto rounded-[2rem] shadow-xl border-4 border-white" />
+                                <Image src="/assets/cs-admin-panel.png" alt="Admin Panel: restaurant status toggle and closing message" className="w-full h-auto rounded-[2rem] shadow-xl border-4 border-white" width={1170} height={2532} sizes="(max-width: 768px) 100vw, 960px" />
                                 <div className="absolute sm:-left-12 -left-4 top-24 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl shadow-xl border border-slate-200 rotate-2 z-10 font-bold text-amber-600 max-w-[220px]" style={{ fontFamily: 'var(--font-caveat), cursive', fontSize: '1.5rem', lineHeight: '1.2' }}>
                                     Zero-dependency toggle for the owner.
                                 </div>
                             </div>
                             <div className="relative group mx-auto max-w-[320px] md:max-w-none mt-12 md:mt-0">
-                                <img src="/assets/cs-admin-orders.png" alt="Admin panel: menu availability management and coupon control" className="w-full h-auto rounded-[2rem] shadow-xl border-4 border-emerald-50" />
+                                <Image src="/assets/cs-admin-orders.png" alt="Admin panel: menu availability management and coupon control" className="w-full h-auto rounded-[2rem] shadow-xl border-4 border-emerald-50" width={1170} height={2532} sizes="(max-width: 768px) 100vw, 960px" />
                                 <div className="absolute sm:-right-16 -right-4 top-1/3 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl shadow-xl border border-slate-200 -rotate-2 z-10 font-bold text-emerald-600 max-w-[240px]" style={{ fontFamily: 'var(--font-caveat), cursive', fontSize: '1.5rem', lineHeight: '1.2' }}>
                                     Live item availability & coupon control—no dev needed.
                                 </div>

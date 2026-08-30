@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image'
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -124,7 +125,7 @@ export default function Experiments() {
 
                         {/* Image Reveal */}
                         <div className="w-full md:w-[45%] rounded-2xl overflow-hidden border border-slate-200 shadow-sm relative z-10 group-hover:shadow-lg transition-transform group-hover:scale-[1.02] aspect-video">
-                            <img src="/assets/fieldnote-ss.png" alt="FieldNote App Preview" className="w-full h-full object-cover object-left-top" />
+                            <Image src="/assets/fieldnote-ss.png" alt="FieldNote App Preview" className="w-full h-full object-cover object-left-top" width={1200} height={634} sizes="(max-width: 768px) 100vw, 45vw" />
                         </div>
                     </a>
 

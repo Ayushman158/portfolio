@@ -1,4 +1,5 @@
 import './globals.css'
+import './phosphor.css'
 import { Inter, Reenie_Beanie, Caveat } from 'next/font/google'
 
 const inter = Inter({
@@ -47,9 +48,6 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${reenieBeanie.variable} ${caveat.variable}`}>
-      <head>
-        <script src="https://unpkg.com/@phosphor-icons/web"></script>
-      </head>
       <body className="font-sans overflow-x-hidden cursor-none">
         {children}
       </body>
