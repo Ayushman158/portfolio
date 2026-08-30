@@ -148,6 +148,45 @@
         text-decoration: underline;
     }
 
+    /* Flowing gradient emphasis. Both stops pass contrast on their own, so the
+       text is legible at every frame, unlike a highlight behind the type. */
+    .gradient-text {
+        background-image: linear-gradient(100deg,
+                var(--ink) 0%, var(--ink) 32%,
+                var(--accent) 50%,
+                var(--ink) 68%, var(--ink) 100%);
+        background-size: 260% 100%;
+        background-position: 100% 0;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-weight: 500;
+        animation: gradient-sweep 7s var(--ease-in-out) infinite;
+    }
+
+    @keyframes gradient-sweep {
+
+        0%,
+        18% {
+            background-position: 100% 0;
+        }
+
+        62%,
+        100% {
+            background-position: 0% 0;
+        }
+    }
+
+    /* Never leave transparent text with no paint behind it. */
+    @media (prefers-reduced-motion: reduce) {
+        .gradient-text {
+            animation: none;
+            background-image: none;
+            -webkit-text-fill-color: var(--ink);
+            color: var(--ink);
+        }
+    }
+
     /* Kept for the routes that have not been migrated yet. */
     .glass-panel {
         @apply bg-white/70 backdrop-blur-md border border-white/50 shadow-lg rounded-2xl;

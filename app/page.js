@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion, useReducedMotion } from 'motion/react'
-import TextHighlighter from './components/text-highlighter'
+import GradientText from './components/gradient-text'
 import Letter3DSwap from './components/letter-3d-swap'
 import WorkIndex from './components/work-index'
 
 const PROJECTS = [
-  { name: 'Kizuku', year: '2026', href: '/kizuku', img: '/kizuku/screens/Today action.png', w: 393, h: 852 },
+  { name: 'Kizuku', year: '2026', href: '/kizuku', video: '/kizuku/tree-animation.mp4' },
   { name: 'Hoychoy Cafe', year: '2025', href: '/case-study', img: '/assets/hoychoy-hero-new.png', w: 1200, h: 800 },
 ]
 
@@ -17,13 +17,8 @@ const PLAYGROUND = [
   { name: 'FieldNote', year: '2026', href: '/experiments', img: '/assets/fieldnote-ss.png', w: 1200, h: 675 },
 ]
 
-// No case studies yet, so these carry no link and raise no preview.
-const ALSO = [
-  { name: 'Signal — motion identity', year: '2025' },
-  { name: 'Madi Things — editorial site', year: '2025' },
-  { name: 'KL Hi-Tech — marketing site', year: '2025' },
-]
-
+// Signal, Madi Things and KL Hi-Tech are not live yet, so they are held back
+// rather than listed as work a visitor cannot reach.
 function Greeting() {
   const [hour, setHour] = useState(null)
   useEffect(() => setHour(new Date().getHours()), [])
@@ -52,11 +47,11 @@ export default function Home() {
         <Image
           src="/assets/avatar.png"
           alt="Ayushman Bharadwaj"
-          width={80}
-          height={80}
-          sizes="44px"
+          width={620}
+          height={756}
+          sizes="72px"
           priority
-          className="mb-10 h-11 w-11 rounded-full border border-rule object-contain object-bottom"
+          className="mb-12 h-auto w-[72px]"
         />
       </motion.div>
 
@@ -76,7 +71,7 @@ export default function Home() {
 
         <p>
           A year in security engineering before design, so I build for how systems actually fail.
-          Finishing an MA now, and <span className="text-ink">available for remote roles</span>.
+          Finishing my masters in interaction design, and <span className="text-ink">available for remote roles</span>.
         </p>
 
         <p>
@@ -85,21 +80,13 @@ export default function Home() {
           overthink the future, and{' '}
           <Link href="/case-study" className="prose-link">Hoychoy Cafe</Link>, where a rebuilt
           ordering flow took customers from{' '}
-          <TextHighlighter
-            className="text-ink font-medium px-1 -mx-1 rounded-[2px]"
-            highlightColor="hsl(48, 96%, 76%)"
-            transition={{ type: 'spring', duration: 0.6, bounce: 0, delay: 0.5 }}
-            inViewOptions={{ once: true, amount: 0.6 }}
-          >
-            6–8 minutes to 2–3
-          </TextHighlighter>.
+          <GradientText>6–8 minutes to 2–3</GradientText>.
         </p>
       </motion.div>
 
       <motion.div {...rise(0.12)}>
         <WorkIndex label="Projects" items={PROJECTS} />
         <WorkIndex label="Playground" items={PLAYGROUND} />
-        <WorkIndex label="Also shipped" items={ALSO} />
       </motion.div>
 
       <motion.section {...rise(0.18)} className="mt-16">
