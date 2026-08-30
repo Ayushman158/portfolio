@@ -136,16 +136,41 @@
         color: var(--ink);
     }
 
-    /* Emphasis inside prose: brighter than body, no underline until hover. */
+    /* Emphasis inside prose: brighter than body, underline drawn on hover.
+       The rule sweeps in from the left and leaves to the right, which is the
+       fancycomponents underline behaviour rebuilt as a CSS transition: it is
+       composited, and it retargets mid-sweep instead of blocking until the
+       previous pass finishes. */
     .prose-link {
+        position: relative;
         color: var(--ink);
         text-decoration: none;
         transition: color var(--duration-quick) ease;
     }
 
+    .prose-link::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -0.14em;
+        height: 1px;
+        background: currentColor;
+        transform: scaleX(0);
+        transform-origin: right center;
+        /* leaving is quicker than arriving: arriving orients, leaving gets out of the way */
+        transition: transform 200ms var(--ease-out);
+    }
+
     .prose-link:hover {
         color: var(--accent);
-        text-decoration: underline;
+    }
+
+    .prose-link:hover::after,
+    .prose-link:focus-visible::after {
+        transform: scaleX(1);
+        transform-origin: left center;
+        transition-duration: var(--duration-fast);
     }
 
     /* Flowing gradient emphasis. Both stops pass contrast on their own, so the

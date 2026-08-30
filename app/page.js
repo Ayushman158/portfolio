@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion, useReducedMotion } from 'motion/react'
 import GradientText from './components/gradient-text'
-import Letter3DSwap from './components/letter-3d-swap'
+import LetterSwap from './components/letter-swap'
 import WorkIndex from './components/work-index'
 
 const PROJECTS = [
@@ -60,12 +60,7 @@ export default function Home() {
 
         <p>
           I’m{' '}
-          <Letter3DSwap
-            mainClassName="text-ink font-medium align-baseline"
-            rotateDirection="right"
-          >
-            Ayushman
-          </Letter3DSwap>
+          <LetterSwap className="text-ink font-medium">Ayushman</LetterSwap>
           , an interaction designer who ships the code.
         </p>
 
