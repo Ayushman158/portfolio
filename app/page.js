@@ -3,16 +3,31 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import dynamic from 'next/dynamic'
 import { motion, useReducedMotion } from 'motion/react'
 import GradientText from './components/gradient-text'
 import LetterSwap from './components/letter-swap'
 import WorkIndex from './components/work-index'
+import { FigmaMark, IllustratorMark, AfterEffectsMark, AntigravityMark } from './components/tool-marks'
 import VerticalCutReveal, { useSplashDone } from './components/vertical-cut-reveal'
 
 const PROJECTS = [
   { name: 'Kizuku', year: '2026', href: '/kizuku', video: '/kizuku/tree-animation.mp4' },
   { name: 'Hoychoy Cafe', year: '2025', href: '/case-study', img: '/assets/hoychoy-hero-new.png', w: 1200, h: 800 },
 ]
+
+// matter-js is ~30 kB gzipped and only matters once this section is reached, so
+// it is split out of the initial bundle entirely rather than shipped with the fold.
+const SkillsGravity = dynamic(() => import('./components/skills-gravity'), { ssr: false })
+
+const TOOLS = [
+  { label: 'Figma', mark: <FigmaMark /> },
+  { label: 'Illustrator', mark: <IllustratorMark /> },
+  { label: 'After Effects', mark: <AfterEffectsMark /> },
+  { label: 'Antigravity', mark: <AntigravityMark /> },
+]
+
+const METHODS = ['UX Research', 'Usability Design', 'Design Thinking', 'Design Systems']
 
 const PLAYGROUND = [
   { name: 'FieldNote', year: '2026', href: '/experiments', img: '/assets/fieldnote-ss.png', w: 1200, h: 675 },
@@ -97,6 +112,28 @@ export default function Home() {
       </motion.div>
 
       <motion.section {...rise(0.18)} className="mt-16">
+        <h2 className="text-faint text-[0.95rem] mb-3">Skills</h2>
+        <p>{METHODS.join(' · ')}</p>
+
+        {reduceMotion ? (
+          // No physics under reduced motion: the same tools, standing still.
+          <ul className="mt-6 flex flex-wrap gap-2">
+            {TOOLS.map((t) => (
+              <li
+                key={t.label}
+                className="flex items-center gap-2 rounded-full border border-rule bg-raised px-3 py-2 text-[0.9rem]"
+              >
+                {t.mark}
+                {t.label}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <SkillsGravity items={TOOLS} />
+        )}
+      </motion.section>
+
+      <motion.section {...rise(0.22)} className="mt-16">
         <h2 className="text-faint text-[0.95rem] mb-3">Connect</h2>
         <p>
           I’m looking for remote design-engineering work. The fastest way to reach me is{' '}
