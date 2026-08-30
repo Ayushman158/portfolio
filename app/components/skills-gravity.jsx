@@ -79,18 +79,41 @@ export default function SkillsGravity({ items }) {
     }
 
     // Only simulate while the section is actually on screen.
+    // Device tilt steers gravity, so the pile slides the way the phone leans.
+    //
+    // Deliberately no permission request. iOS 13+ gates orientation behind
+    // DeviceOrientationEvent.requestPermission() called from a user gesture, and
+    // a motion-access prompt on a portfolio is friction and mild suspicion spent
+    // on a decorative effect. Where the events flow freely they are used; where
+    // they do not, the pile stays bottom-heavy and drag-to-throw still works.
+    // Nobody is shown a prompt and nobody is told they are missing anything.
+    const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v))
+    const onTilt = (e) => {
+      if (!running || e.gamma == null || e.beta == null) return
+      const rad = Math.PI / 180
+      engine.gravity.x = clamp(Math.sin(e.gamma * rad), -1, 1)
+      // Upright (beta ~90) pulls straight down; flat on a table pulls barely at
+      // all, which is what actually happens when "down" points into the screen.
+      engine.gravity.y = clamp(Math.sin(e.beta * rad), 0.2, 1)
+    }
+
     let running = false
     const start = () => {
       if (running) return
       running = true
       Runner.run(runner, engine)
       frame = requestAnimationFrame(sync)
+      window.addEventListener('deviceorientation', onTilt)
     }
     const stop = () => {
       if (!running) return
       running = false
       Runner.stop(runner)
       cancelAnimationFrame(frame)
+      window.removeEventListener('deviceorientation', onTilt)
+      // Hand the pile back to plain downward gravity when the section leaves.
+      engine.gravity.x = 0
+      engine.gravity.y = 1
     }
 
     const io = new IntersectionObserver(
