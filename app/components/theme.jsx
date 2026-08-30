@@ -84,8 +84,9 @@ export function ThemeToggle({ className = '' }) {
 }
 
 /**
- * Live local time. Grounds the page in a real place, which matters when the
- * pitch is remote work from North Lakhimpur.
+ * Live local time. Note this is the only location signal left on the site — the
+ * copy no longer states where Ayushman is or what arrangement he wants, so the
+ * dock's IST readout is what tells a visitor his timezone.
  */
 export function LocalClock({ className = '' }) {
   const [now, setNow] = useState(null)

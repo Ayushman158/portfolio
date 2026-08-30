@@ -93,7 +93,7 @@ export default function Home() {
 
         <p>
           A year in security engineering before design, so I build for how systems actually fail.
-          Finishing my masters in interaction design, and <span className="text-ink">available for remote roles</span>.
+          Finishing my masters in interaction design.
         </p>
 
         <p>
@@ -136,7 +136,7 @@ export default function Home() {
       <motion.section {...rise(0.22)} className="mt-16">
         <h2 className="text-faint text-[0.95rem] mb-3">Connect</h2>
         <p>
-          I’m looking for remote design-engineering work. The fastest way to reach me is{' '}
+          I’m looking for design-engineering work. The fastest way to reach me is{' '}
           <a href="mailto:ayushman15899@gmail.com" className="prose-link">email</a>. I’m also on{' '}
           <a href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" rel="noopener noreferrer" className="prose-link">LinkedIn</a>{' '}
           and <a href="https://x.com/AyushmanBharad" target="_blank" rel="noopener noreferrer" className="prose-link">X</a>.
