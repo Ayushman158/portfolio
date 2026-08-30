@@ -7,6 +7,7 @@ import { motion, useReducedMotion } from 'motion/react'
 import GradientText from './components/gradient-text'
 import LetterSwap from './components/letter-swap'
 import WorkIndex from './components/work-index'
+import VerticalCutReveal, { useSplashDone } from './components/vertical-cut-reveal'
 
 const PROJECTS = [
   { name: 'Kizuku', year: '2026', href: '/kizuku', video: '/kizuku/tree-animation.mp4' },
@@ -21,13 +22,24 @@ const PLAYGROUND = [
 // rather than listed as work a visitor cannot reach.
 function Greeting() {
   const [hour, setHour] = useState(null)
+  const splashDone = useSplashDone()
   useEffect(() => setHour(new Date().getHours()), [])
 
   const part = hour == null ? 'hello' : hour < 12 ? 'good morning' : hour < 17 ? 'good afternoon' : 'good evening'
-  // Assamese and Hindi: he is from North Lakhimpur, Assam.
+
+  // Assamese and Hindi: he is from North Lakhimpur, Assam. The reveal waits for
+  // the splash so it is not played underneath it.
   return (
     <p className="text-faint">
-      {part}, <span lang="as">নমস্কাৰ</span>, <span lang="hi">नमस्ते</span>
+      <VerticalCutReveal
+        start={splashDone && hour != null}
+        delay={0.05}
+        segments={[
+          { text: `${part},`, lang: 'en' },
+          { text: 'নমস্কাৰ,', lang: 'as' },
+          { text: 'नमस्ते', lang: 'hi' },
+        ]}
+      />
     </p>
   )
 }
