@@ -5,6 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image'
 import TextHighlighter from './components/text-highlighter'
+import Letter3DSwap from './components/letter-3d-swap'
 
 export default function Home() {
   // Cursor Refs
@@ -331,7 +332,7 @@ export default function Home() {
                     <span className="text-[10px] font-mono uppercase tracking-widest text-[#2C5228] bg-[#FAFAFA] border border-[#2C5228]/20 px-2.5 py-1 rounded-full">New Project</span>
                   </div>
                   <h3 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 group-hover:text-[#2C5228] transition-colors mb-4 flex items-center gap-3">
-                    Kizuku
+                    <Letter3DSwap staggerFrom="first" rotateDirection="right">Kizuku</Letter3DSwap>
                     <i className="ph ph-arrow-up-right text-2xl md:text-3xl opacity-0 -translate-x-4 translate-y-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-[opacity,transform] duration-200 ease-out"></i>
                   </h3>
                   <p className="text-slate-500 text-lg md:text-xl leading-relaxed">Wellness app for people who overthink the future.</p>
@@ -354,7 +355,7 @@ export default function Home() {
               <div className="flex-1 flex flex-col md:flex-row md:items-center justify-between relative z-20">
                 <div className="mb-4 md:mb-0 pr-4">
                   <h3 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors mb-4 flex items-center gap-3">
-                    Hoychoy Cafe
+                    <Letter3DSwap staggerFrom="first" rotateDirection="right">Hoychoy Cafe</Letter3DSwap>
                     <i className="ph ph-arrow-up-right text-2xl md:text-3xl opacity-0 -translate-x-4 translate-y-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-[opacity,transform] duration-200 ease-out"></i>
                   </h3>
                   <p className="text-slate-500 text-lg md:text-xl leading-relaxed">End-to-end hyperlocal delivery web application.</p>
