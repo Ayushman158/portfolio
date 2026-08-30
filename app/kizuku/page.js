@@ -31,7 +31,7 @@ const T = {
 };
 
 const TOP_DECISIONS = [
-  { n: '01', title: 'the only wellness app for future anxiety', body: 'no competitor addresses this user. the market treats anxiety as a spectrum disorder. kizuku is the first product designed specifically for excessive forward simulation.' },
+  { n: '01', title: 'built for future anxiety, not general stress', body: 'the apps i reviewed treat anxiety as one broad spectrum. none of them addressed excessive forward simulation on its own. that gap is what kizuku is designed for.' },
   { n: '02', title: 'three-layer ai action system', body: 'tags assign context → hard rules constrain generation → persona filter shapes output. every layer documented. fully auditable.' },
   { n: '03', title: 'growth tied to emotional labour, not time', body: 'forest grows a tree when you sit still. kizuku grows one when you face something hard. same mechanic. completely different meaning.' },
   { n: '04', title: 'no streaks — explicit ethical reasoning', body: 'streaks create performance anxiety in a user who already has it. missing a day does not shrink the tree. designed out, not overlooked.' },
@@ -291,7 +291,7 @@ export default function KizukuPage() {
           <div className="kz-reveal mb-12">
             <SectionLabel>research</SectionLabel>
             <h2 className="text-3xl md:text-4xl font-bold mb-3" style={{ color: T.heading }}>
-              an unaddressed market.<br />a precisely defined user.
+              an underserved market.<br />a precisely defined user.
             </h2>
             <p className="text-base max-w-lg" style={{ color: T.secondary, lineHeight: 1.7 }}>
               future anxiety is distinct from clinical anxiety — it's a cognitive pattern, not a disorder. every existing wellness app either treats general stress or gamifies self-care. none address this user.
@@ -300,9 +300,9 @@ export default function KizukuPage() {
 
           <div className="grid md:grid-cols-3 gap-5 mb-12 kz-cards">
             {[
-              { stat: '01', text: 'future anxiety is a cognitive pattern, not a clinical disorder — no existing app targets it specifically.' },
-              { stat: '02', text: 'disproportionately present in high-achieving urban young adults — india\'s overlooked wellness market.' },
-              { stat: '03', text: 'every competitor either treats general stress or gamifies self-care. the specific fear of the future is unaddressed.' },
+              { stat: '01', text: 'future anxiety is a cognitive pattern, not a clinical disorder — none of the apps i reviewed target it specifically.' },
+              { stat: '02', text: 'common among high-achieving urban young adults — an underserved segment of india\'s wellness market.' },
+              { stat: '03', text: 'the apps i reviewed either treat general stress or gamify self-care. none focused on fear of the future on its own.' },
             ].map((r) => (
               <div key={r.stat} className="kz-card rounded-2xl p-7"
                 style={{ backgroundColor: '#FFFFFF', border: '1px solid rgba(44,82,40,0.1)', boxShadow: '0 2px 16px rgba(44,82,40,0.05)' }}>
@@ -344,7 +344,7 @@ export default function KizukuPage() {
                 </div>
               </div>
               <p className="text-[10px] text-center mt-3 italic" style={{ color: T.caption }}>
-                warm + active quadrant — unoccupied by every competitor
+                warm + active quadrant — empty across the apps i mapped
               </p>
             </div>
 
@@ -427,7 +427,7 @@ export default function KizukuPage() {
             <p className="text-xs italic mb-5" style={{ color: T.caption }}>the colour temperature was discovered through watercolour, not chosen from a swatch</p>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {[
-                { name: 'parchment', hex: '#F2EDE0', reason: 'every competitor uses white or dark. parchment signals warmth before a word is read.' },
+                { name: 'parchment', hex: '#F2EDE0', reason: 'the apps i reviewed all use white or dark. parchment signals warmth before a word is read.' },
                 { name: 'forest',    hex: '#2C5228', reason: 'colour of growth, not of calm. avoided the blue-grey wellness register.' },
                 { name: 'amber',     hex: '#ECD858', reason: 'the kizuku moment — visible in the logo leaf tips. warm without aggression.' },
                 { name: 'sky',       hex: '#A8CEDE', reason: 'seeker persona. unusual, beautiful — requires observation not control.' },
@@ -454,7 +454,7 @@ export default function KizukuPage() {
             <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: '#1C2B1A' }}>
               <div className="p-8 md:p-10">
                 <p className="text-xs uppercase tracking-widest mb-7" style={{ color: '#ECD858' }}>
-                  single typeface · unoccupied territory — no competitor uses this register
+                  single typeface · a register none of the apps i mapped use
                 </p>
                 <div className="space-y-4">
                   {[
