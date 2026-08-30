@@ -230,6 +230,40 @@
     }
 }
 
+/* First-load splash. Styled outside @layer so it is present from the very first
+   paint, before any component has hydrated. */
+#splash {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: grid;
+    place-items: center;
+    background: var(--ground);
+    opacity: 1;
+    transition: opacity 260ms var(--ease-out);
+}
+
+#splash[data-leaving] {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Hold the page still underneath while the splash is up. */
+html[data-splash] body {
+    overflow: hidden;
+}
+
+/* Repeat visit in this session, or reduced motion: never paint it at all. */
+html[data-splash-skip] #splash {
+    display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #splash {
+        display: none;
+    }
+}
+
 /* Hover states gated to real pointers. On touch, :hover sticks after a tap. */
 @media (hover: none),
 (pointer: coarse) {
