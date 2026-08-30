@@ -8,7 +8,7 @@ import { motion, useReducedMotion } from 'motion/react'
 import GradientText from './components/gradient-text'
 import LetterSwap from './components/letter-swap'
 import WorkIndex from './components/work-index'
-import { FigmaMark, IllustratorMark, FramerMark, ClaudeMark, CodexMark, AntigravityMark } from './components/tool-marks'
+import { FigmaMark, FramerMark, IllustratorMark, ClaudeMark, CodexMark } from './components/tool-marks'
 import VerticalCutReveal, { useSplashDone } from './components/vertical-cut-reveal'
 
 const PROJECTS = [
@@ -26,7 +26,6 @@ const TOOLS = [
   { label: 'Illustrator', mark: <IllustratorMark /> },
   { label: 'Claude', mark: <ClaudeMark /> },
   { label: 'Codex', mark: <CodexMark /> },
-  { label: 'Antigravity', mark: <AntigravityMark /> },
 ]
 
 const METHODS = ['UX Research', 'Usability Design', 'Design Thinking', 'Design Systems']
