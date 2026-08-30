@@ -263,14 +263,42 @@
     z-index: 60;
     display: grid;
     place-items: center;
+    padding: 1.5rem;
     background: var(--ground);
-    opacity: 1;
-    transition: opacity 260ms var(--ease-out);
+    /* The exit is a lift, not a fade: it reads as a cover coming off the page
+       rather than the page dissolving in. transform is composited, and the exit
+       is quicker than the entrance. */
+    transform: translateY(0);
+    transition: transform 420ms var(--ease-out), opacity 420ms var(--ease-out);
 }
 
 #splash[data-leaving] {
+    transform: translateY(-100%);
     opacity: 0;
     pointer-events: none;
+}
+
+.splash-inner {
+    width: 100%;
+    max-width: 34rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+.splash-mark {
+    display: block;
+    opacity: 0.75;
+}
+
+/* The claim, at the size the page itself no longer carries it. */
+.splash-claim {
+    color: var(--ink);
+    font-size: clamp(1.75rem, 5.2vw, 3rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
 }
 
 /* Hold the page still underneath while the splash is up. */
