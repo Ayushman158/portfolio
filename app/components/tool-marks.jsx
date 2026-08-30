@@ -5,9 +5,11 @@
  * lettermark convention — "Ai" and "Ae" in the app's brand colours is how Adobe
  * actually ships those icons, so this is the real mark rather than a stand-in.
  *
- * Antigravity has no mark I could source accurately, so it carries a monogram in
- * the site's own ink. Flagged rather than faked: an invented logo for a real
- * product is worse than an honest initial.
+ * Claude, Codex, Framer and Antigravity carry lettermarks in their brand colour
+ * rather than reconstructed logos. Each of those marks is distinctive enough
+ * that an approximation reads as wrong rather than as shorthand, and a wrong
+ * logo on a portfolio is worse than an honest initial. Every tile carries the
+ * full tool name in an sr-only label at the call site.
  */
 
 const Tile = ({ bg, fg, children }) => (
@@ -31,7 +33,9 @@ export const FigmaMark = () => (
 )
 
 export const IllustratorMark = () => <Tile bg="#330000" fg="#FF9A00">Ai</Tile>
-export const AfterEffectsMark = () => <Tile bg="#00005B" fg="#9999FF">Ae</Tile>
+export const ClaudeMark = () => <Tile bg="#D97757" fg="#FFFFFF">C</Tile>
+export const CodexMark = () => <Tile bg="#0D0D0D" fg="#FFFFFF">Cx</Tile>
+export const FramerMark = () => <Tile bg="#0055FF" fg="#FFFFFF">F</Tile>
 export const AntigravityMark = () => (
   <span
     aria-hidden="true"

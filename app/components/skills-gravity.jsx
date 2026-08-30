@@ -47,7 +47,7 @@ export default function SkillsGravity({ items }) {
     const bodies = tileRefs.current.filter(Boolean).map((el, i) => {
       const r = el.offsetWidth / 2
       const body = Bodies.circle(
-        W * (0.18 + 0.21 * i) + (Math.random() * 20 - 10),
+        W * (0.12 + (0.76 / Math.max(1, tileRefs.current.filter(Boolean).length - 1)) * i) + (Math.random() * 16 - 8),
         -80 - i * 90,
         r,
         { restitution: 0.45, friction: 0.28, frictionAir: 0.012, density: 0.0012 }
@@ -110,6 +110,10 @@ export default function SkillsGravity({ items }) {
   return (
     <div
       ref={wellRef}
+      // The tools are named in server-rendered text above; these are their marks.
+      // Decorative, so the whole well is hidden from assistive tech rather than
+      // read out a second time.
+      aria-hidden="true"
       className="relative mt-6 h-[260px] w-full overflow-hidden rounded-lg border border-rule bg-raised"
     >
       {items.map((item, i) => (
@@ -118,13 +122,16 @@ export default function SkillsGravity({ items }) {
           ref={(el) => (tileRefs.current[i] = el)}
           title={item.label}
           className="absolute left-0 top-0 flex h-14 w-14 select-none items-center justify-center rounded-full border border-rule bg-ground shadow-sm will-change-transform"
-          // Resting row along the floor of the well. Physics overwrites this on
-          // its first frame; until then — and if the engine never starts at all,
-          // because the chunk failed or the tab is throttled — the tools read as
-          // a deliberate row rather than a stack in the corner.
-          style={{ cursor: 'grab', transform: `translate3d(${12 + i * 70}px, 190px, 0)` }}
+          // Resting layout along the floor of the well, wrapping at four so it
+          // still fits the 327px well on a 375px screen. Physics overwrites this
+          // on its first frame; until then — and if the engine never starts at
+          // all, because the chunk failed or the tab is throttled — the tools
+          // read as a deliberate arrangement rather than a stack in the corner.
+          style={{
+            cursor: 'grab',
+            transform: `translate3d(${12 + (i % 4) * 62}px, ${190 - Math.floor(i / 4) * 66}px, 0)`,
+          }}
         >
-          <span className="sr-only">{item.label}</span>
           {item.mark}
         </div>
       ))}

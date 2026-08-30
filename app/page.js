@@ -8,7 +8,7 @@ import { motion, useReducedMotion } from 'motion/react'
 import GradientText from './components/gradient-text'
 import LetterSwap from './components/letter-swap'
 import WorkIndex from './components/work-index'
-import { FigmaMark, IllustratorMark, AfterEffectsMark, AntigravityMark } from './components/tool-marks'
+import { FigmaMark, IllustratorMark, FramerMark, ClaudeMark, CodexMark, AntigravityMark } from './components/tool-marks'
 import VerticalCutReveal, { useSplashDone } from './components/vertical-cut-reveal'
 
 const PROJECTS = [
@@ -22,8 +22,10 @@ const SkillsGravity = dynamic(() => import('./components/skills-gravity'), { ssr
 
 const TOOLS = [
   { label: 'Figma', mark: <FigmaMark /> },
+  { label: 'Framer', mark: <FramerMark /> },
   { label: 'Illustrator', mark: <IllustratorMark /> },
-  { label: 'After Effects', mark: <AfterEffectsMark /> },
+  { label: 'Claude', mark: <ClaudeMark /> },
+  { label: 'Codex', mark: <CodexMark /> },
   { label: 'Antigravity', mark: <AntigravityMark /> },
 ]
 
@@ -115,22 +117,13 @@ export default function Home() {
         <h2 className="text-faint text-[0.95rem] mb-3">Skills</h2>
         <p>{METHODS.join(' · ')}</p>
 
-        {reduceMotion ? (
-          // No physics under reduced motion: the same tools, standing still.
-          <ul className="mt-6 flex flex-wrap gap-2">
-            {TOOLS.map((t) => (
-              <li
-                key={t.label}
-                className="flex items-center gap-2 rounded-full border border-rule bg-raised px-3 py-2 text-[0.9rem]"
-              >
-                {t.mark}
-                {t.label}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <SkillsGravity items={TOOLS} />
-        )}
+        {/* Named in server-rendered text. The well below is client-only, so
+            without this the tools appear in no crawler, no keyword scan and no
+            no-JS view — and a mark without a label is unreadable regardless. */}
+        <p className="mt-2">{TOOLS.map((t) => t.label).join(' · ')}</p>
+
+        {/* Decorative: the marks for the tools named above. */}
+        {!reduceMotion && <SkillsGravity items={TOOLS} />}
       </motion.section>
 
       <motion.section {...rise(0.22)} className="mt-16">
