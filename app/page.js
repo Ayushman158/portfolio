@@ -4,6 +4,7 @@ import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image'
+import TextHighlighter from './components/text-highlighter'
 
 export default function Home() {
   // Cursor Refs
@@ -233,7 +234,14 @@ export default function Home() {
             {/* Proof line */}
             <p className="stagger-fade mt-4 text-sm md:text-base text-slate-500 max-w-2xl mx-auto">
               Hoychoy pilot: ordering went from{' '}
-              <span className="font-semibold text-slate-700">6–8 minutes to 2–3</span>.
+              <TextHighlighter
+                className="font-semibold text-slate-800 px-1 -mx-1 rounded-[2px]"
+                highlightColor="hsl(48, 96%, 76%)"
+                transition={{ type: 'spring', duration: 0.6, bounce: 0, delay: 0.9 }}
+                inViewOptions={{ once: true, amount: 0.6 }}
+              >
+                6–8 minutes to 2–3
+              </TextHighlighter>.
             </p>
 
             {/* Skill Pills */}
