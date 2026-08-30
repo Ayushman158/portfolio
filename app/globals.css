@@ -13,6 +13,10 @@
         --faint: #736E65;
         --rule: #E4E0D8;
         --accent: #1D4ED8;
+        /* Warm emphasis. Ink stays solid on top of these, so contrast never
+           depends on where the sweep happens to be: 13.4:1 on paper. */
+        --warm-a: #FED7AA;
+        --warm-b: #FDBA74;
 
         --measure: 41rem;
         /* ~660px: 68ch at 17px, inside the 65-75ch band */
@@ -39,6 +43,9 @@
         --faint: #8B857B;
         --rule: #2B2926;
         --accent: #8FB0FF;
+        /* Deep on dark rather than pale, so off-white ink still reads: 8.2:1. */
+        --warm-a: #7C2D12;
+        --warm-b: #9A3412;
 
         color-scheme: dark;
     }
@@ -173,42 +180,58 @@
         transition-duration: var(--duration-fast);
     }
 
-    /* Flowing gradient emphasis. Both stops pass contrast on their own, so the
-       text is legible at every frame, unlike a highlight behind the type. */
+    /* Warm highlight that draws in once, then keeps flowing. Two rules matter
+       here. The text stays solid ink and the animation only moves what is
+       behind it — the earlier version made the type transparent and clipped a
+       gradient to it, which is what failed contrast. And the background sits on
+       the element with box-decoration-break: clone rather than on an absolutely
+       positioned pseudo, so when the phrase wraps each line box gets its own
+       marker instead of one rectangle drawn across both. */
     .gradient-text {
-        background-image: linear-gradient(100deg,
-                var(--ink) 0%, var(--ink) 32%,
-                var(--accent) 50%,
-                var(--ink) 68%, var(--ink) 100%);
-        background-size: 260% 100%;
-        background-position: 100% 0;
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
+        color: var(--ink);
         font-weight: 500;
-        animation: gradient-sweep 7s var(--ease-in-out) infinite;
+        padding-inline: 0.22em;
+        margin-inline: -0.22em;
+        border-radius: 2px;
+        background-image: linear-gradient(100deg,
+                var(--warm-a) 0%, var(--warm-b) 38%,
+                var(--warm-a) 62%, var(--warm-b) 100%);
+        background-repeat: no-repeat;
+        background-position: 100% 0;
+        background-size: 0% 100%;
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+        animation:
+            highlight-draw 520ms var(--ease-out) 700ms forwards,
+            highlight-flow 7s var(--ease-in-out) 1220ms infinite;
     }
 
-    @keyframes gradient-sweep {
+    @keyframes highlight-draw {
+        to {
+            background-size: 240% 100%;
+        }
+    }
+
+    @keyframes highlight-flow {
 
         0%,
-        18% {
+        14% {
             background-position: 100% 0;
         }
 
-        62%,
+        60%,
         100% {
             background-position: 0% 0;
         }
     }
 
-    /* Never leave transparent text with no paint behind it. */
+    /* Reduced motion keeps the highlight — it carries the emphasis — but it
+       arrives drawn and never moves. */
     @media (prefers-reduced-motion: reduce) {
         .gradient-text {
             animation: none;
-            background-image: none;
-            -webkit-text-fill-color: var(--ink);
-            color: var(--ink);
+            background-size: 240% 100%;
+            background-position: 0 0;
         }
     }
 
