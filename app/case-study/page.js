@@ -43,11 +43,14 @@ export default function CaseStudy() {
         };
         document.addEventListener('mouseenter', handleMouseEnter);
 
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduceMotion) document.documentElement.dataset.systemCursor = 'true';
+
         const fadeSections = document.querySelectorAll('.fade-in-up');
         fadeSections.forEach((section) => {
             gsap.fromTo(section,
-                { opacity: 0, y: 30 },
-                { scrollTrigger: { trigger: section, start: "top 85%" }, opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
+                { opacity: 0, y: reduceMotion ? 0 : 16 },
+                { scrollTrigger: { trigger: section, start: "top 85%" }, opacity: 1, y: 0, duration: reduceMotion ? 0.2 : 0.45, ease: "power3.out" }
             );
         });
 
@@ -80,7 +83,7 @@ export default function CaseStudy() {
                         Ayushman<span className="text-blue-500">.</span>
                     </Link>
                     <div className="flex items-center gap-6">
-                        <Link href="/#work" className="px-5 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-full shadow-sm hover:bg-slate-50 transition-all flex items-center gap-2 interactive-target">
+                        <Link href="/#work" className="px-5 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-full shadow-sm hover:bg-slate-50 flex items-center gap-2 interactive-target transition-[background-color,transform] duration-150 ease-out active:scale-[0.97]">
                             <i className="ph ph-arrow-left"></i> Back to Portfolio
                         </Link>
                     </div>
@@ -108,7 +111,7 @@ export default function CaseStudy() {
                         </Link>
                     </div>
                     <div className="flex-1 w-full flex justify-center md:justify-end relative">
-                        <div className="w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl border border-slate-200 rotate-2 hover:rotate-0 transition-transform duration-500 interactive-target">
+                        <div className="w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl border border-slate-200 rotate-2 hover:rotate-0 transition-transform duration-300 ease-out interactive-target">
                             <Image src="/assets/hoychoy-hero-new.png" alt="Hoychoy Cafe Splash Screen" className="w-full h-auto object-cover" width={1200} height={1056} sizes="(max-width: 768px) 100vw, 45vw" />
                         </div>
                     </div>

@@ -68,7 +68,7 @@ export default function Resume() {
                     <div className="relative w-48 h-48 sm:w-64 sm:h-64 shrink-0 flex items-center justify-center">
                         <Image src="/assets/resume-photo.jpg"
                             alt="Ayushman Bharadwaj"
-                            className="relative w-full h-full object-contain object-bottom transition-transform duration-700 hover:scale-[1.05]" width={1024} height={1024} sizes="256px" />
+                            className="relative w-full h-full object-contain object-bottom transition-transform duration-300 ease-out hover:scale-[1.05]" width={1024} height={1024} sizes="256px" />
                     </div>
 
                     {/* Intro Content */}

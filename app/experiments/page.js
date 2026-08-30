@@ -104,7 +104,7 @@ export default function Experiments() {
                 <div className="flex flex-col border-t border-slate-200 fade-in-up pt-12" style={{ animationDelay: '0.2s' }}>
 
                     {/* Experiment: FieldNote */}
-                    <a href="https://fieldnote-ten.vercel.app/" target="_blank" rel="noopener noreferrer" className="group flex flex-col md:flex-row items-center gap-12 p-8 md:p-12 border border-slate-200 rounded-3xl bg-white hover:border-blue-200 hover:shadow-xl transition-all interactive-target hover:-translate-y-2 relative overflow-hidden">
+                    <a href="https://fieldnote-ten.vercel.app/" target="_blank" rel="noopener noreferrer" className="group flex flex-col md:flex-row items-center gap-12 p-8 md:p-12 border border-slate-200 rounded-3xl bg-white hover:border-blue-200 hover:shadow-xl interactive-target hover:-translate-y-2 transition-[border-color,box-shadow,transform] duration-200 ease-out relative overflow-hidden">
 
                         {/* Hover Gradient Overlay */}
                         <div className="absolute inset-0 bg-gradient-to-tr from-blue-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
@@ -112,7 +112,7 @@ export default function Experiments() {
                         <div className="flex-1 relative z-10 w-full">
                             <h3 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 mb-4 flex items-center gap-3 group-hover:text-blue-600 transition-colors">
                                 FieldNote
-                                <i className="ph ph-arrow-up-right text-2xl text-blue-500 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all"></i>
+                                <i className="ph ph-arrow-up-right text-2xl text-blue-500 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-[opacity,transform] duration-200 ease-out"></i>
                             </h3>
                             <p className="text-slate-500 text-lg md:text-xl leading-relaxed mb-6">An AI-powered UX research assistant that automatically transcribes user interviews and synthesizes actionable insights using Gemini 1.5 Pro.</p>
 

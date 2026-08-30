@@ -19,6 +19,10 @@ export default function Home() {
     // Register GSAP plugins
     gsap.registerPlugin(ScrollTrigger);
 
+    // Respect the OS setting. Reduced motion keeps the fades (they carry meaning)
+    // and drops the travel, the bounce and the custom cursor.
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     // 1. Custom Cursor Logic
     const xToDot = gsap.quickTo(cursorDot.current, "x", { duration: 0.1, ease: "power3" });
     const yToDot = gsap.quickTo(cursorDot.current, "y", { duration: 0.1, ease: "power3" });
@@ -77,22 +81,38 @@ export default function Home() {
 
     // 3. Staggered Fade-in-up animations for Hero
     gsap.fromTo('.stagger-fade',
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: "power3.out", delay: 0.2 }
+      { opacity: 0, y: reduceMotion ? 0 : 12 },
+      {
+        opacity: 1, y: 0,
+        duration: reduceMotion ? 0.2 : 0.45,
+        stagger: reduceMotion ? 0 : 0.05,
+        ease: "power3.out",
+        delay: reduceMotion ? 0 : 0.08,
+      }
     );
 
     // Dynamic Tagline Hook Animation
     gsap.fromTo('#tagline-hook',
-      { opacity: 0, scale: 0.8, rotate: 0 },
-      { opacity: 1, scale: 1, rotate: -4, duration: 1.2, ease: "back.out(1.7)", delay: 1.2 }
+      { opacity: 0, scale: reduceMotion ? 1 : 0.95, rotate: reduceMotion ? -4 : 0 },
+      {
+        opacity: 1, scale: 1, rotate: -4,
+        duration: reduceMotion ? 0.2 : 0.5,
+        ease: reduceMotion ? "none" : "back.out(1.1)",
+        delay: reduceMotion ? 0 : 0.5,
+      }
     );
 
     // 4. Scroll Reveal for Portfolio Cards
     const cards = document.querySelectorAll('.card-reveal');
     cards.forEach(card => {
       gsap.fromTo(card,
-        { opacity: 0, y: 50 },
-        { scrollTrigger: { trigger: card, start: "top 85%" }, opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
+        { opacity: 0, y: reduceMotion ? 0 : 16 },
+        {
+          scrollTrigger: { trigger: card, start: "top 85%" },
+          opacity: 1, y: 0,
+          duration: reduceMotion ? 0.2 : 0.45,
+          ease: "power3.out",
+        }
       );
     });
 
@@ -172,7 +192,7 @@ export default function Home() {
 
           {/* CTA Right */}
           <div ref={magnetBtn} className="relative inline-block cursor-pointer z-10 flex-shrink-0">
-            <Link href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" rel="noopener noreferrer" className="px-3 sm:px-4 py-2 md:px-5 md:py-2 text-[11px] sm:text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 transition-colors rounded-full shadow-[0_0_15px_rgba(59,130,246,0.3)] flex items-center justify-center whitespace-nowrap">
+            <Link href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" rel="noopener noreferrer" className="px-3 sm:px-4 py-2 md:px-5 md:py-2 text-[11px] sm:text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.3)] flex items-center justify-center whitespace-nowrap transition-[background-color,transform] duration-150 ease-out active:scale-[0.97]">
               <span ref={magnetText} className="block">Connect</span>
             </Link>
           </div>
@@ -206,14 +226,14 @@ export default function Home() {
 
             {/* Subhead — the differentiator, stated plainly */}
             <p className="stagger-fade mt-6 md:mt-7 text-base md:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">
-              I am <span className="font-semibold text-slate-800">Ayushman Bharadwaj</span>, an interaction designer
-              with a year in security engineering behind me — so I design for how systems actually fail, then build the thing myself.
+              <span className="font-semibold text-slate-800">Ayushman Bharadwaj</span> — interaction designer,
+              a year in security engineering. I design for how systems fail, then build the fix.
             </p>
 
             {/* Proof line */}
             <p className="stagger-fade mt-4 text-sm md:text-base text-slate-500 max-w-2xl mx-auto">
-              Most recently: a cafe ordering flow that took customers from{' '}
-              <span className="font-semibold text-slate-700">6–8 minutes down to 2–3</span> in a two-week pilot.
+              Hoychoy pilot: ordering went from{' '}
+              <span className="font-semibold text-slate-700">6–8 minutes to 2–3</span>.
             </p>
 
             {/* Skill Pills */}
@@ -240,14 +260,14 @@ export default function Home() {
                     e.preventDefault();
                     document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="interactive-target group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition-colors shadow-sm cursor-pointer"
+                  className="interactive-target group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 shadow-sm cursor-pointer transition-[background-color,transform] duration-150 ease-out active:scale-[0.97]"
                 >
                   See the work
                   <i className="ph-bold ph-arrow-right text-base transition-transform group-hover:translate-x-1"></i>
                 </Link>
                 <Link
                   href="mailto:ayushman15899@gmail.com"
-                  className="interactive-target group inline-flex items-center gap-2 px-6 py-3 rounded-full border border-slate-300 text-slate-700 text-sm font-semibold hover:border-slate-400 hover:text-slate-900 transition-colors"
+                  className="interactive-target group inline-flex items-center gap-2 px-6 py-3 rounded-full border border-slate-300 text-slate-700 text-sm font-semibold hover:border-slate-400 hover:text-slate-900 transition-[color,border-color,transform] duration-150 ease-out active:scale-[0.97]"
                 >
                   <i className="ph-fill ph-envelope-simple text-base"></i>
                   Get in touch
@@ -271,7 +291,7 @@ export default function Home() {
           <div className="mb-16 card-reveal">
             <h2 className="text-sm font-mono tracking-[0.2em] text-slate-400 uppercase mb-4">Selected Works</h2>
             <p className="text-xl md:text-2xl text-slate-800 tracking-tight leading-[1.4] max-w-2xl font-medium">
-              End-to-end engineered products demonstrating design thinking and technical execution.
+              Products I designed and built end to end.
             </p>
           </div>
 
@@ -287,7 +307,7 @@ export default function Home() {
                     { src: '/kizuku/screens/Today action.png', rotate: '-1deg', y: '0px',   scale: 0.94 },
                     { src: '/kizuku/screens/Garden-1.png',      rotate: '6deg',  y: '14px',  scale: 0.82 },
                   ].map((s, i) => (
-                    <div key={i} className="flex-none rounded-xl md:rounded-[1.8rem] overflow-hidden transition-transform duration-700 group-hover:scale-[1.04]"
+                    <div key={i} className="flex-none rounded-xl md:rounded-[1.8rem] overflow-hidden transition-transform duration-300 ease-out group-hover:scale-[1.04]"
                       style={{ width: 'clamp(75px, 14vw, 120px)', transform: `rotate(${s.rotate}) translateY(${s.y}) scale(${s.scale})`, boxShadow: '0 12px 40px rgba(0,0,0,0.35)', border: '1px solid rgba(255,255,255,0.1)' }}>
                       <Image src={s.src} alt="" width={393} height={852} sizes="120px" className="w-full h-auto block" loading="lazy" />
                     </div>
@@ -304,7 +324,7 @@ export default function Home() {
                   </div>
                   <h3 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 group-hover:text-[#2C5228] transition-colors mb-4 flex items-center gap-3">
                     Kizuku
-                    <i className="ph ph-arrow-up-right text-2xl md:text-3xl opacity-0 -translate-x-4 translate-y-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300"></i>
+                    <i className="ph ph-arrow-up-right text-2xl md:text-3xl opacity-0 -translate-x-4 translate-y-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-[opacity,transform] duration-200 ease-out"></i>
                   </h3>
                   <p className="text-slate-500 text-lg md:text-xl leading-relaxed">Wellness app for people who overthink the future.</p>
                 </div>
@@ -321,13 +341,13 @@ export default function Home() {
             {/* Project Row 2 — Hoychoy */}
             <Link href="/case-study" className="group flex flex-col md:flex-row gap-8 py-8 md:py-12 border-b border-slate-200 interactive-target md:items-center">
               <div className="w-full md:w-[45%] aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 shrink-0 bg-slate-50 relative z-20">
-                <Image src="/assets/hoychoy-hero-new.png" alt="Hoychoy Cafe" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out" width={1200} height={1056} sizes="(max-width: 768px) 100vw, 45vw" />
+                <Image src="/assets/hoychoy-hero-new.png" alt="Hoychoy Cafe" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300 ease-out" width={1200} height={1056} sizes="(max-width: 768px) 100vw, 45vw" />
               </div>
               <div className="flex-1 flex flex-col md:flex-row md:items-center justify-between relative z-20">
                 <div className="mb-4 md:mb-0 pr-4">
                   <h3 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors mb-4 flex items-center gap-3">
                     Hoychoy Cafe
-                    <i className="ph ph-arrow-up-right text-2xl md:text-3xl opacity-0 -translate-x-4 translate-y-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300"></i>
+                    <i className="ph ph-arrow-up-right text-2xl md:text-3xl opacity-0 -translate-x-4 translate-y-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-[opacity,transform] duration-200 ease-out"></i>
                   </h3>
                   <p className="text-slate-500 text-lg md:text-xl leading-relaxed">End-to-end hyperlocal delivery web application.</p>
                 </div>
@@ -345,9 +365,9 @@ export default function Home() {
             <h3 className="text-xs font-mono tracking-[0.2em] text-slate-400 uppercase mb-6">Also shipped</h3>
             <ul className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
               {[
-                { name: 'Signal',     note: 'Motion identity and title system' },
-                { name: 'Madi Things', note: 'Editorial site for a product studio' },
-                { name: 'KL Hi-Tech',  note: 'Marketing site and handover' },
+                { name: 'Signal',      note: 'Motion identity' },
+                { name: 'Madi Things', note: 'Editorial site' },
+                { name: 'KL Hi-Tech',  note: 'Marketing site' },
               ].map((p) => (
                 <li key={p.name} className="rounded-2xl border border-slate-200 px-5 py-4 bg-white/60">
                   <p className="text-base font-semibold text-slate-800">{p.name}</p>
@@ -380,13 +400,13 @@ export default function Home() {
 
           {/* Social Links */}
           <div className="flex items-center gap-4 mb-8">
-            <Link href="mailto:ayushman15899@gmail.com" className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-400 hover:text-blue-500 hover:border-blue-200 hover:shadow-md transition-all interactive-target">
+            <Link href="mailto:ayushman15899@gmail.com" className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-400 hover:text-blue-500 hover:border-blue-200 hover:shadow-md transition-[color,border-color,box-shadow,transform] duration-200 ease-out active:scale-[0.94] interactive-target">
               <i className="ph-fill ph-envelope-simple text-lg"></i>
             </Link>
-            <Link href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-400 hover:text-blue-700 hover:border-blue-200 hover:shadow-md transition-all interactive-target">
+            <Link href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-400 hover:text-blue-700 hover:border-blue-200 hover:shadow-md transition-[color,border-color,box-shadow,transform] duration-200 ease-out active:scale-[0.94] interactive-target">
               <i className="ph-fill ph-linkedin-logo text-lg"></i>
             </Link>
-            <Link href="https://x.com/AyushmanBharad" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-400 hover:text-sky-500 hover:border-sky-200 hover:shadow-md transition-all interactive-target">
+            <Link href="https://x.com/AyushmanBharad" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-400 hover:text-sky-500 hover:border-sky-200 hover:shadow-md transition-[color,border-color,box-shadow,transform] duration-200 ease-out active:scale-[0.94] interactive-target">
               <i className="ph-fill ph-twitter-logo text-lg"></i>
             </Link>
           </div>

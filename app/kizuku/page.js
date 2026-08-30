@@ -70,6 +70,9 @@ export default function KizukuPage() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) document.documentElement.dataset.systemCursor = 'true';
+
     // Cursor
     const cursor = cursorRef.current;
     if (cursor) {
@@ -82,24 +85,24 @@ export default function KizukuPage() {
     // Reveals
     gsap.utils.toArray('.kz-reveal').forEach((el) => {
       gsap.fromTo(el,
-        { opacity: 0, y: 35 },
-        { opacity: 1, y: 0, duration: 1.0, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 90%' } }
+        { opacity: 0, y: reduceMotion ? 0 : 16 },
+        { opacity: 1, y: 0, duration: reduceMotion ? 0.2 : 0.45, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 90%' } }
       );
     });
 
     // Image Scale Reveals (Premium Editorial Feel)
     gsap.utils.toArray('.kz-img-scale img').forEach((img) => {
       gsap.fromTo(img,
-        { scale: 1.08 },
-        { scale: 1, duration: 1.4, ease: 'power3.out', scrollTrigger: { trigger: img, start: 'top 95%' } }
+        { scale: reduceMotion ? 1 : 1.04 },
+        { scale: 1, duration: reduceMotion ? 0 : 0.6, ease: 'power3.out', scrollTrigger: { trigger: img, start: 'top 95%' } }
       );
     });
 
     // Card staggers
     gsap.utils.toArray('.kz-cards').forEach((group) => {
       gsap.fromTo(group.querySelectorAll('.kz-card'),
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', stagger: 0.07, scrollTrigger: { trigger: group, start: 'top 88%' } }
+        { opacity: 0, y: reduceMotion ? 0 : 12 },
+        { opacity: 1, y: 0, duration: reduceMotion ? 0.2 : 0.4, ease: 'power3.out', stagger: reduceMotion ? 0 : 0.05, scrollTrigger: { trigger: group, start: 'top 88%' } }
       );
     });
 
@@ -128,7 +131,7 @@ export default function KizukuPage() {
               Ayushman<span className="text-blue-500">.</span>
             </Link>
             <div className="flex items-center gap-6">
-              <Link href="/#work" className="px-5 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-full shadow-sm hover:bg-slate-50 transition-all flex items-center gap-2 interactive-target">
+              <Link href="/#work" className="px-5 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-full shadow-sm hover:bg-slate-50 flex items-center gap-2 interactive-target transition-[background-color,transform] duration-150 ease-out active:scale-[0.97]">
                 <i className="ph ph-arrow-left"></i> Back to Portfolio
               </Link>
             </div>
@@ -366,7 +369,7 @@ export default function KizukuPage() {
             <div className="flex flex-wrap gap-2 mb-5">
               {PERSONAS.map((p, i) => (
                 <button key={p.type} onClick={() => setActivePersona(i)}
-                  className="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-widest transition-all duration-300"
+                  className="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-widest transition-[background-color,color,transform] duration-200 ease-out active:scale-[0.97]"
                   style={{
                     backgroundColor: activePersona === i ? p.color : 'transparent',
                     color: activePersona === i ? p.textDark : T.secondary,
@@ -376,7 +379,7 @@ export default function KizukuPage() {
                 </button>
               ))}
             </div>
-            <div className="rounded-2xl overflow-hidden transition-all duration-400"
+            <div className="rounded-2xl overflow-hidden transition-[background-color,border-color] duration-200 ease-out"
               style={{ border: '1px solid rgba(44,82,40,0.1)', backgroundColor: PERSONAS[activePersona].bg }}>
               <div className="grid md:grid-cols-3 gap-0">
                 <div className="md:col-span-2 p-8">
@@ -616,7 +619,7 @@ export default function KizukuPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <a href="/kizuku/Kizuku-Creative-Process.pdf" target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full text-sm font-semibold tracking-wide transition-all duration-300"
+                className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full text-sm font-semibold tracking-wide transition-[background-color,box-shadow,transform] duration-200 ease-out active:scale-[0.97]"
                 style={{ backgroundColor: T.heading, color: '#F2EDE0' }}
                 onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#2C5228'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = T.heading; }}>
