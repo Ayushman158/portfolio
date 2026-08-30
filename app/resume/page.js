@@ -30,7 +30,7 @@ const ROLES = [
 ]
 
 const EDUCATION = [
-  { school: 'UPES, Dehradun', dates: 'June 2024 → mid 2027 (expected)', detail: 'M.des — Interaction Design' },
+  { school: 'UPES, Dehradun', dates: '2025 → mid 2027 (expected)', detail: 'M.des — Interaction Design' },
   { school: 'SMIT, Sikkim', dates: 'June 2022', detail: 'B.Tech — Computer Science Engineering' },
   { school: 'Sai RNS Academy', dates: 'June 2018', detail: 'Class XII, Higher Secondary, PCM' },
   { school: 'Sangam Academy', dates: 'June 2016', detail: 'Class X, SSC' },
