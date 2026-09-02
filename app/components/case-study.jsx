@@ -81,18 +81,27 @@ export function BeforeAfter({ rows }) {
   )
 }
 
-/** Screenshot with its caption underneath, in a responsive row. */
-export function Shots({ items, cols = 'grid-cols-2 sm:grid-cols-3' }) {
+/**
+ * Screenshots with captions, in a responsive row. On desktop the row leaves the
+ * reading measure: five phone screens at 192px each told nobody anything, and
+ * these are a sequence, so a single filmstrip of five reads as the flow rather
+ * than as a 3-then-2 grid.
+ */
+export function Shots({ items, cols = 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-5' }) {
   return (
-    <div className={`grid ${cols} gap-x-4 gap-y-8`}>
-      {items.map(([src, caption]) => (
+    <div className={`track-full grid ${cols} gap-x-4 gap-y-8`}>
+      {items.map(([src, caption, crop]) => (
         <figure key={src} className="m-0">
+          {/* One capture is a 1170x4641 scroll — left at its natural height it
+              hangs 450px below its neighbours and strands its own caption. The
+              third slot names where to crop it to a phone's shape instead, so
+              the row stays a row and the part the caption is about stays in. */}
           <img
             src={src}
             alt={caption}
             loading="lazy"
-            className="w-full h-auto rounded-xl"
-            style={{ border: '1px solid var(--rule)' }}
+            className={`w-full h-auto rounded-xl${crop ? ' aspect-[430/932] object-cover' : ''}`}
+            style={{ border: '1px solid var(--rule)', objectPosition: crop || undefined }}
           />
           <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem', lineHeight: 1.45 }}>
             {caption}

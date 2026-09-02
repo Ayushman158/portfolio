@@ -6,6 +6,11 @@ import Image from 'next/image'
 import { motion, useMotionValue, useSpring, useReducedMotion } from 'motion/react'
 import Letter3DSwap from './letter-3d-swap'
 
+/* The preview's size lives here rather than in a class, because the placement
+   maths needs the same numbers to keep it inside the window. */
+const CARD_W = 340
+const CARD_H = 255
+
 /**
  * Hairline index of work: number, name, year. The one authored moment on the
  * page — hovering a row raises a preview that trails the cursor with spring
@@ -35,10 +40,18 @@ export default function WorkIndex({ label, items }) {
 
   const showPreview = canHover && !reduceMotion
 
+  // The card used to be placed at cursor + 24 unconditionally, so on a narrow
+  // desktop window — or hovering the right end of a row — it hung past the edge
+  // and was clipped by the body's overflow-x. It now flips to the other side of
+  // the cursor when it would not fit, and stays inside the window vertically.
   const onMove = (e) => {
     if (!showPreview) return
-    x.set(e.clientX + 24)
-    y.set(e.clientY - 90)
+    const gap = 24
+    const edge = 16
+    const right = e.clientX + gap
+    const fitsRight = right + CARD_W <= window.innerWidth - edge
+    x.set(fitsRight ? right : Math.max(edge, e.clientX - gap - CARD_W))
+    y.set(Math.min(Math.max(e.clientY - CARD_H / 2, edge), window.innerHeight - CARD_H - edge))
   }
 
   const found = items.find((i) => i.name === active)
@@ -117,7 +130,10 @@ export default function WorkIndex({ label, items }) {
           transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
         >
           {activeItem?.media && (
-            <div className="w-[280px] aspect-[4/3] overflow-hidden rounded-lg border border-rule bg-raised shadow-[0_18px_50px_-20px_rgba(0,0,0,0.45)]">
+            <div
+              className="overflow-hidden rounded-lg border border-rule bg-raised shadow-[0_18px_50px_-20px_rgba(0,0,0,0.45)]"
+              style={{ width: CARD_W, height: CARD_H }}
+            >
               {activeItem.video ? (
                 <video
                   key={activeItem.video}
@@ -135,7 +151,7 @@ export default function WorkIndex({ label, items }) {
                   alt=""
                   width={activeItem.w}
                   height={activeItem.h}
-                  sizes="280px"
+                  sizes="340px"
                   className="h-full w-full object-cover"
                 />
               )}

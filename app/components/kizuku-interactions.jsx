@@ -23,6 +23,18 @@ const GARDEN = 'linear-gradient(180deg, #D3E3C6 0%, #C2D9B2 46%, #B8D4AC 100%)';
 /* the gesture's real logic, lifted from the product */
 const FREE_RADIUS = 96;
 
+/* Stage geometry. The can used to be pinned to the stage's right edge, which
+   meant the distance it had to travel changed with the panel width — and once
+   these three sat in the reading measure at 192px each, the can started only
+   13px from the seed, so a "drag it onto the seed" demo needed no drag at all.
+   Anchoring it to the seed instead puts the gap at REACH.dx, the product's own
+   constant, at every width. */
+const SEED_LEFT = 34;
+const SEED_W = 82;
+const CAN_W = 100;
+const REACH = { dx: -155, dy: -18 };
+const CAN_LEFT = SEED_LEFT + SEED_W / 2 - REACH.dx - CAN_W / 2;
+
 function damp(value) {
   const d = Math.abs(value);
   if (d <= FREE_RADIUS) return value;
@@ -43,7 +55,7 @@ function decideRelease({ dx, dy, vx, vy, reach }) {
 
 function Panel({ principle, title, reason, children, readouts }) {
   return (
-    <div className="rounded-2xl p-5 md:p-6 flex flex-col" style={{ backgroundColor: CARD, border: EDGE }}>
+    <div className="rounded-2xl p-5 md:p-6 lg:p-7 flex flex-col" style={{ backgroundColor: CARD, border: EDGE }}>
       <div className="flex items-start justify-between gap-3 mb-3">
         <p className="text-sm font-semibold" style={{ color: INK }}>{title}</p>
         <span
@@ -53,13 +65,13 @@ function Panel({ principle, title, reason, children, readouts }) {
           {principle}
         </span>
       </div>
-      <p className="text-xs leading-relaxed mb-5" style={{ color: MUTED }}>{reason}</p>
+      <p className="text-xs lg:text-[13px] leading-relaxed mb-5" style={{ color: MUTED }}>{reason}</p>
       {children}
       <div className="grid grid-cols-3 gap-2 mt-4">
         {readouts.map(([k, v]) => (
-          <div key={k} className="rounded-lg px-2.5 py-1.5" style={{ backgroundColor: 'var(--ground)' }}>
-            <div className="text-[9px] uppercase tracking-[0.18em]" style={{ color: FAINT }}>{k}</div>
-            <div className="text-[13px] font-medium tabular-nums" style={{ color: INK }}>{v}</div>
+          <div key={k} className="rounded-lg px-2.5 py-1.5 lg:px-3 lg:py-2" style={{ backgroundColor: 'var(--ground)' }}>
+            <div className="text-[9px] lg:text-[10px] uppercase tracking-[0.18em]" style={{ color: FAINT }}>{k}</div>
+            <div className="text-[13px] lg:text-[14px] font-medium tabular-nums" style={{ color: INK }}>{v}</div>
           </div>
         ))}
       </div>
@@ -81,7 +93,7 @@ function Watering() {
   const grab = useRef(null);
   const history = useRef([]);
   const pouring = useRef(false);
-  const reach = { dx: -155, dy: -18 };
+  const reach = REACH;
 
   const settle = () => {
     animate(x, 0, { type: 'spring', bounce: 0, duration: 0.4 });
@@ -140,13 +152,13 @@ function Watering() {
       reason="one-to-one until 96px, then it compresses instead of hitting a wall. release is judged on where the can looks, not where the finger went — watch the two numbers diverge."
       readouts={[['finger', `${readout.finger}px`], ['can', `${readout.can}px`], ['release', readout.verdict]]}
     >
-      <div className="relative rounded-xl overflow-hidden select-none" style={{ background: GARDEN, height: 230, touchAction: 'none' }}>
+      <div className="relative rounded-xl overflow-hidden select-none h-[230px] lg:h-[264px]" style={{ background: GARDEN, touchAction: 'none' }}>
         <img
           src="/kizuku/plants/optimiser-seed.png"
           alt=""
           draggable={false}
           className="absolute pointer-events-none"
-          style={{ left: 34, bottom: 30, width: 82, height: 108, objectFit: 'contain' }}
+          style={{ left: SEED_LEFT, bottom: 30, width: SEED_W, height: 108, objectFit: 'contain' }}
         />
         <motion.img
           src="/kizuku/plants/kizuku-watering-can.svg"
@@ -157,10 +169,15 @@ function Watering() {
           onPointerUp={onUp}
           onPointerCancel={onUp}
           className="absolute cursor-grab active:cursor-grabbing"
-          style={{ right: 14, bottom: 52, width: 100, height: 105, x, y, rotate }}
+          style={{ left: CAN_LEFT, bottom: 52, width: CAN_W, height: 105, x, y, rotate }}
         />
         {drops > 0 && !reduced ? (
-          <div key={drops} className="absolute pointer-events-none" style={{ right: 96, bottom: 88 }}>
+          /* the drops ride the can, so they leave the spout wherever it was let go */
+          <motion.div
+            key={drops}
+            className="absolute pointer-events-none"
+            style={{ left: CAN_LEFT + 18, bottom: 96, x, y }}
+          >
             {[0, 1, 2].map((i) => (
               <span
                 key={i}
@@ -168,7 +185,7 @@ function Watering() {
                 style={{ width: 5, height: 8, background: '#EDF4EA', animation: `kz-drop 520ms ${i * 110}ms cubic-bezier(0.55,0,1,0.45) forwards` }}
               />
             ))}
-          </div>
+          </motion.div>
         ) : null}
       </div>
     </Panel>
@@ -212,7 +229,7 @@ function Hold() {
       reason="the one button in the product where you promise to do the thing. pressing is slow because you are deciding; releasing is fast because the system is only responding. let go early and it unwinds from wherever it reached."
       readouts={[['progress', `${pct}%`], ['press', '1s linear'], ['release', '200ms']]}
     >
-      <div className="rounded-xl flex items-center justify-center px-6" style={{ background: GARDEN, height: 230 }}>
+      <div className="rounded-xl flex items-center justify-center px-6 h-[230px] lg:h-[264px]" style={{ background: GARDEN }}>
         <motion.button
           onPointerDown={start}
           onPointerUp={cancel}
@@ -261,7 +278,7 @@ function Growth() {
       reason="both stages stand on one ground line with the origin at the base, so it grows upward instead of inflating from the middle. the spring barely overshoots: overshoot belongs to momentum the user supplied, and there is no gesture here."
       readouts={[['spring', 'bounce .08'], ['response', '0.9s'], ['origin', 'bottom']]}
     >
-      <div className="relative rounded-xl overflow-hidden flex items-end justify-center" style={{ background: 'linear-gradient(180deg, #EDF2E4 0%, #DDDBA5 100%)', height: 230 }}>
+      <div className="relative rounded-xl overflow-hidden flex items-end justify-center h-[230px] lg:h-[264px]" style={{ background: 'linear-gradient(180deg, #EDF2E4 0%, #DDDBA5 100%)' }}>
         <div className="relative" style={{ width: 180, height: 196 }}>
           <motion.img
             src="/kizuku/plants/optimiser-seed.png"
@@ -295,7 +312,7 @@ function Growth() {
 
 export default function KizukuInteractions() {
   return (
-    <div className="grid md:grid-cols-3 gap-4">
+    <div className="track-full grid md:grid-cols-3 gap-4 lg:gap-5">
       <Watering />
       <Hold />
       <Growth />

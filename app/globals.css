@@ -129,6 +129,36 @@
         padding-inline: 1.5rem;
     }
 
+    /* ---- Wider tracks, for the things that are not prose ----------------
+       The reading measure is right for text and does not change. What was
+       wrong on desktop is that figures, screenshot grids and the interaction
+       demos were squeezed into it too: on a 1512px display the three demos
+       rendered 192px wide each while 856px of the window sat empty, and the
+       watering gesture — which needs 155px of travel — had nowhere to go.
+
+       These break a child of .measure out symmetrically. `50%` is the centre
+       of the measure's content box, which is also the centre of the window,
+       so the track stays centred at any width. Nothing applies below 60rem,
+       so phones and tablets are untouched. The 3rem gutter is wide enough to
+       absorb a classic scrollbar, so `100vw` cannot overflow. */
+    @media (min-width: 60rem) {
+
+        .track-wide {
+            --track: 58rem;
+        }
+
+        .track-full {
+            --track: 74rem;
+        }
+
+        .track-wide,
+        .track-full {
+            --track-w: min(var(--track), calc(100vw - 3rem));
+            width: var(--track-w);
+            margin-inline: calc(50% - var(--track-w) / 2);
+        }
+    }
+
     /* Hairline index row: name left, year right. Replaces the card grid. */
     .index-row {
         display: grid;

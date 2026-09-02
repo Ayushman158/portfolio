@@ -45,7 +45,7 @@ const DECISIONS = [
 const SHOTS = [
   ['/assets/cs-menu-reopen.png', 'the menu, with real-time availability'],
   ['/assets/cs-checkout-scroll.png', 'one scrollable checkout'],
-  ['/assets/cs-checkout-payment.png', 'UPI deep link, no screenshot to send'],
+  ['/assets/cs-checkout-payment.png', 'UPI deep link, no screenshot to send', 'bottom'],
   ['/assets/cs-admin-orders.png', 'orders in one place'],
   ['/assets/cs-admin-panel.png', 'the dashboard the owner actually runs'],
 ]
@@ -60,7 +60,7 @@ export default function Hoychoy() {
   })
 
   return (
-    <main className="measure min-h-screen pb-40 pt-20 sm:pt-28">
+    <main className="measure min-h-screen pb-40 pt-20 sm:pt-28 lg:pt-36">
       <motion.div {...rise(0)}><Back /></motion.div>
 
       <motion.header {...rise(0.06)} className="mt-10 space-y-5">

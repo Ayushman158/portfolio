@@ -25,7 +25,7 @@ export default function Experiments() {
   })
 
   return (
-    <main className="measure min-h-screen pb-40 pt-20 sm:pt-28">
+    <main className="measure min-h-screen pb-40 pt-20 sm:pt-28 lg:pt-36">
       <motion.div {...rise(0)} className="space-y-5">
         <h1 className="text-faint text-[0.95rem]">Experiments</h1>
         <p>

@@ -48,7 +48,7 @@ export default function Resume() {
   })
 
   return (
-    <main className="measure min-h-screen pb-40 pt-20 sm:pt-28">
+    <main className="measure min-h-screen pb-40 pt-20 sm:pt-28 lg:pt-36">
       <motion.div {...rise(0)}>
         <Image
           src="/assets/resume-photo.jpg"

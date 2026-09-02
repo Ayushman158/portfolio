@@ -47,7 +47,7 @@ export default function Kizuku() {
   })
 
   return (
-    <main className="measure min-h-screen pb-40 pt-20 sm:pt-28">
+    <main className="measure min-h-screen pb-40 pt-20 sm:pt-28 lg:pt-36">
       <motion.div {...rise(0)}>
         <Back />
       </motion.div>
@@ -118,7 +118,7 @@ export default function Kizuku() {
           grow, the copy you read and the surface it sits on.
         </p>
 
-        <div className="mt-8 grid sm:grid-cols-[1fr_180px] gap-8 items-start">
+        <div className="track-wide mt-8 grid sm:grid-cols-[1fr_200px] lg:grid-cols-[1fr_300px] gap-8 lg:gap-14 items-start">
           <div>
           {TYPES.map((t) => (
             <div key={t.type} className="index-row" style={{ gridTemplateColumns: '1fr', gap: '0.35rem' }}>
