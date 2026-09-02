@@ -175,6 +175,22 @@
         color: var(--ink);
     }
 
+    /* Capability tag on a shipped-work card. Uppercase micro-type at a wide
+       track is the one place the site raises its voice without changing face —
+       the same idiom as the readouts on the Kizuku demos. */
+    .chip {
+        display: inline-block;
+        font-size: 0.68rem;
+        line-height: 1.5;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--faint);
+        padding: 0.15rem 0.55rem;
+        border: 1px solid var(--rule);
+        border-radius: 99px;
+        white-space: nowrap;
+    }
+
     /* Emphasis inside prose: brighter than body, underline drawn on hover.
        The rule sweeps in from the left and leaves to the right, which is the
        fancycomponents underline behaviour rebuilt as a CSS transition: it is

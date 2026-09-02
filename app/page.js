@@ -1,20 +1,48 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import { motion, useReducedMotion } from 'motion/react'
 import GradientText from './components/gradient-text'
 import LetterSwap from './components/letter-swap'
 import WorkIndex from './components/work-index'
+import Shipped from './components/shipped'
 import { FigmaMark, FramerMark, IllustratorMark, ClaudeMark, CodexMark } from './components/tool-marks'
 import VerticalCutReveal, { useSplashDone } from './components/vertical-cut-reveal'
 
-const PROJECTS = [
-  { name: 'Banyan Tree', year: '2026', href: '/banyan', img: '/banyan/canopy.jpg', w: 1800, h: 1125 },
+// Live, client-run, and reachable by anyone — so these are shown, not listed.
+const SHIPPED = [
+  {
+    name: 'Banyan Tree',
+    href: '/banyan',
+    site: 'himanshugarg.in',
+    url: 'https://www.himanshugarg.in/',
+    shot: '/shipped/banyan.jpg',
+    alt: 'The Banyan Tree homepage: twelve categories of symptom over a banyan canopy',
+    what: 'An atlas of root-cause healing for a health practice. The metaphor is the navigation.',
+    tags: ['Concept', 'Interface', 'Front end', 'Handover'],
+  },
+  {
+    name: 'Hoychoy Cafe',
+    href: '/case-study',
+    site: 'hoychoycafe.com',
+    url: 'https://www.hoychoycafe.com/',
+    shot: '/shipped/hoychoy.jpg',
+    alt: 'The Hoychoy Cafe menu, with live availability and prices',
+    what: (
+      <>
+        A café’s WhatsApp ordering rebuilt as a service. Ordering went from{' '}
+        <GradientText>6–8 minutes to 2–3</GradientText>.
+      </>
+    ),
+    tags: ['Research', 'Service design', 'Interface', 'Build'],
+  },
+]
+
+// Not live yet, so named rather than shown.
+const BUILDING = [
   { name: 'Kizuku', year: '2026', href: '/kizuku', video: '/kizuku/tree-animation.mp4' },
-  { name: 'Hoychoy Cafe', year: '2025', href: '/case-study', img: '/assets/hoychoy-hero-new.png', w: 1200, h: 800 },
 ]
 
 // matter-js is ~30 kB gzipped and only matters once this section is reached, so
@@ -98,20 +126,11 @@ export default function Home() {
           Finishing my masters in interaction design.
         </p>
 
-        <p>
-          Recent work includes{' '}
-          <Link href="/banyan" className="prose-link">Banyan Tree</Link>, an atlas of root-cause
-          healing built and handed over to a health practice, and{' '}
-          <Link href="/kizuku" className="prose-link">Kizuku</Link>, a wellness app for people who
-          overthink the future. Before those,{' '}
-          <Link href="/case-study" className="prose-link">Hoychoy Cafe</Link>, where a rebuilt
-          ordering flow took customers from{' '}
-          <GradientText>6–8 minutes to 2–3</GradientText>.
-        </p>
       </motion.div>
 
       <motion.div {...rise(0.12)}>
-        <WorkIndex label="Projects" items={PROJECTS} />
+        <Shipped items={SHIPPED} />
+        <WorkIndex label="In progress" items={BUILDING} />
         <WorkIndex label="Playground" items={PLAYGROUND} />
       </motion.div>
 
