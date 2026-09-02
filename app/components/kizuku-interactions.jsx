@@ -170,7 +170,6 @@ function Watering() {
           </div>
         ) : null}
       </div>
-      <style>{`@keyframes kz-drop{0%{opacity:0;transform:translate(0,0) scaleY(.7)}15%{opacity:.9}75%{opacity:.85}100%{opacity:0;transform:translate(-14px,58px) scaleY(1.1)}}`}</style>
     </Panel>
   );
 }

@@ -356,3 +356,33 @@ html[data-splash-skip] #splash {
         transform: none !important;
     }
 }
+
+/* Kizuku growth loop — 13 keyed frames in one sprite, stepped in CSS so it
+   runs off the main thread. Replaces a 3.9 MB white-background video. */
+@keyframes kz-grow-sprite {
+  to { background-position: -2470px 0; }
+}
+
+.kz-grow-sprite {
+  width: 190px;
+  height: 261px;
+  background-image: url(/kizuku/growth-sprite.png);
+  background-repeat: no-repeat;
+  animation: kz-grow-sprite 1.6s steps(13) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kz-grow-sprite {
+    animation: none;
+    background-position: -2280px 0;
+  }
+}
+
+/* Watering demo — droplets leaving the spout. Defined here rather than in a
+   JSX <style> tag, which hydrates inconsistently and threw a mismatch. */
+@keyframes kz-drop {
+  0%   { opacity: 0;    transform: translate(0, 0) scaleY(0.7); }
+  15%  { opacity: 0.9; }
+  75%  { opacity: 0.85; }
+  100% { opacity: 0;    transform: translate(-14px, 58px) scaleY(1.1); }
+}

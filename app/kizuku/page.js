@@ -284,6 +284,40 @@ export default function KizukuPage() {
       </section>
 
       {/* ══════════════════════════════════════════════════
+          ANIMATIONS
+      ══════════════════════════════════════════════════ */}
+      <section id="sec-animation" className="py-20 md:py-28 px-6" style={{ backgroundColor: '#1C2B1A' }}>
+        <div className="max-w-5xl mx-auto">
+          <div className="kz-reveal mb-10">
+            <SectionLabel color="rgba(242,237,224,0.45)">interactions — try them</SectionLabel>
+            <h2 className="text-3xl md:text-4xl font-bold mb-3" style={{ color: '#F2EDE0' }}>
+              every animation has a reason<br />
+              <span style={{ color: 'rgba(242,237,224,0.35)' }}>that can be stated in one sentence.</span>
+            </h2>
+            <p className="text-base" style={{ color: 'rgba(242,237,224,0.55)' }}>if it can't be explained, it was removed. three of them are below — drag, hold and replay them. every number is measured from the shipped code.</p>
+          </div>
+
+          {/* The clip this came from is 3.9 MB of plant on a white ground —
+              a bright slab on a dark section. Same 13 frames, keyed to
+              transparency and strung into one 111 KB sprite: a single
+              request, stepped in CSS, off the main thread. */}
+          <div className="kz-reveal mb-10 flex justify-center">
+            <div
+              className="kz-grow-sprite"
+              aria-label="The optimiser's seed opening into its plant"
+              role="img"
+            />
+          </div>
+
+          {/* The four rows that used to sit here described animations the
+              reader could not touch. These are the same interactions, running. */}
+          <div className="kz-reveal">
+            <KizukuInteractions />
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════
           RESEARCH
       ══════════════════════════════════════════════════ */}
       <section id="sec-research" className="py-20 md:py-28 px-6"
@@ -509,40 +543,6 @@ export default function KizukuPage() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════
-          ANIMATIONS
-      ══════════════════════════════════════════════════ */}
-      <section id="sec-animation" className="py-20 md:py-28 px-6" style={{ backgroundColor: '#1C2B1A' }}>
-        <div className="max-w-5xl mx-auto">
-          <div className="kz-reveal mb-10">
-            <SectionLabel color="rgba(242,237,224,0.45)">animations</SectionLabel>
-            <h2 className="text-3xl md:text-4xl font-bold mb-3" style={{ color: '#F2EDE0' }}>
-              every animation has a reason<br />
-              <span style={{ color: 'rgba(242,237,224,0.35)' }}>that can be stated in one sentence.</span>
-            </h2>
-            <p className="text-base" style={{ color: 'rgba(242,237,224,0.55)' }}>if it can't be explained, it was removed. three of them are below — drag, hold and replay them. every number is measured from the shipped code.</p>
-          </div>
-
-          {/* Video player */}
-          <div className="kz-reveal mb-10 rounded-[2.5rem] overflow-hidden relative"
-            style={{ backgroundColor: '#0F1A0E', boxShadow: '0 24px 60px rgba(0,0,0,0.4)' }}>
-            <video
-              className="w-full h-auto block"
-              src="/kizuku/tree-animation.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-            />
-          </div>
-
-          {/* The four rows that used to sit here described animations the
-              reader could not touch. These are the same interactions, running. */}
-          <div className="kz-reveal">
-            <KizukuInteractions />
-          </div>
-        </div>
-      </section>
 
       {/* ══════════════════════════════════════════════════
           KEY DECISIONS
