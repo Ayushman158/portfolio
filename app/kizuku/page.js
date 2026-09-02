@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import Link from 'next/link';
+import KizukuInteractions from '../components/kizuku-interactions';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image'
@@ -131,9 +132,6 @@ export default function KizukuPage() {
               Ayushman<span className="text-blue-500">.</span>
             </Link>
             <div className="flex items-center gap-6">
-              <Link href="/kizuku/interactions" className="px-5 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-full shadow-sm hover:bg-slate-50 flex items-center gap-2 interactive-target transition-[background-color,transform] duration-150 ease-out active:scale-[0.97]">
-                Interactions
-              </Link>
               <Link href="/#work" className="px-5 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-full shadow-sm hover:bg-slate-50 flex items-center gap-2 interactive-target transition-[background-color,transform] duration-150 ease-out active:scale-[0.97]">
                 <i className="ph ph-arrow-left"></i> Back to Portfolio
               </Link>
@@ -522,7 +520,7 @@ export default function KizukuPage() {
               every animation has a reason<br />
               <span style={{ color: 'rgba(242,237,224,0.35)' }}>that can be stated in one sentence.</span>
             </h2>
-            <p className="text-base" style={{ color: 'rgba(242,237,224,0.55)' }}>if it can't be explained, it was removed. each animation maps to a japanese principle.</p>
+            <p className="text-base" style={{ color: 'rgba(242,237,224,0.55)' }}>if it can't be explained, it was removed. three of them are below — drag, hold and replay them. every number is measured from the shipped code.</p>
           </div>
 
           {/* Video player */}
@@ -538,24 +536,10 @@ export default function KizukuPage() {
             />
           </div>
 
-          {/* Animation principles table */}
-          <div className="kz-reveal grid md:grid-cols-2 gap-4">
-            {[
-              { anim: 'loading — two breathing circles', spec: '4s duration',           principle: 'Ma', reason: 'intentional pause. the loading is not dead time. it is part of the ritual.' },
-              { anim: 'home tree — breathing scale',     spec: '0.98→1.0, 4s loop',    principle: 'Ma', reason: 'the tree is alive. if it breathes, the user cares about it.' },
-              { anim: 'quiz — staggered option reveal',  spec: '60ms per option',       principle: 'Mushin', reason: 'user finishes reading before options appear. turns assessment into conversation.' },
-              { anim: 'growth — tree first, text after', spec: 'tree + 1.2s delay',    principle: 'Zanshin', reason: 'feeling before naming. the tree grows first. then words confirm what was already felt.' },
-            ].map((a) => (
-              <div key={a.anim} className="rounded-2xl p-6" style={{ backgroundColor: 'rgba(242,237,224,0.04)', border: '1px solid rgba(242,237,224,0.08)' }}>
-                <div className="flex items-start justify-between gap-3 mb-4">
-                  <p className="text-sm font-semibold" style={{ color: 'rgba(242,237,224,0.8)' }}>{a.anim}</p>
-                  <span className="flex-none text-[9px] px-2 py-0.5 rounded-full font-medium uppercase tracking-widest"
-                    style={{ backgroundColor: '#ECD85820', color: '#ECD858' }}>{a.principle}</span>
-                </div>
-                <p className="text-[10px] font-mono mb-2" style={{ color: 'rgba(242,237,224,0.35)' }}>{a.spec}</p>
-                <p className="text-xs leading-relaxed" style={{ color: 'rgba(242,237,224,0.5)' }}>{a.reason}</p>
-              </div>
-            ))}
+          {/* The four rows that used to sit here described animations the
+              reader could not touch. These are the same interactions, running. */}
+          <div className="kz-reveal">
+            <KizukuInteractions />
           </div>
         </div>
       </section>
