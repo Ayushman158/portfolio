@@ -32,7 +32,7 @@ const T = {
 
 const TOP_DECISIONS = [
   { n: '01', title: 'built for future anxiety, not general stress', body: 'the apps i reviewed treat anxiety as one broad spectrum. none of them addressed excessive forward simulation on its own. that gap is what kizuku is designed for.' },
-  { n: '02', title: 'three-layer ai action system', body: 'tags assign context → hard rules constrain generation → persona filter shapes output. every layer documented. fully auditable.' },
+  { n: '02', title: 'action generation, specified before it was built', body: 'tags assign context → hard rules bound what can be asked → a persona filter shapes tone. the spec is documented and auditable. the prototype ships six authored actions against it; the generation layer is the next build.' },
   { n: '03', title: 'growth tied to emotional labour, not time', body: 'forest grows a tree when you sit still. kizuku grows one when you face something hard. same mechanic. completely different meaning.' },
   { n: '04', title: 'no streaks — explicit ethical reasoning', body: 'streaks create performance anxiety in a user who already has it. missing a day does not shrink the tree. designed out, not overlooked.' },
   { n: '05', title: 'copy decisions at word level', body: '"start quiz" vs "find my tree type →" — one word changes whether the user feels assessed or invited. every line documented with before/after.' },
@@ -131,6 +131,9 @@ export default function KizukuPage() {
               Ayushman<span className="text-blue-500">.</span>
             </Link>
             <div className="flex items-center gap-6">
+              <Link href="/kizuku/interactions" className="px-5 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-full shadow-sm hover:bg-slate-50 flex items-center gap-2 interactive-target transition-[background-color,transform] duration-150 ease-out active:scale-[0.97]">
+                Interactions
+              </Link>
               <Link href="/#work" className="px-5 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-full shadow-sm hover:bg-slate-50 flex items-center gap-2 interactive-target transition-[background-color,transform] duration-150 ease-out active:scale-[0.97]">
                 <i className="ph ph-arrow-left"></i> Back to Portfolio
               </Link>
