@@ -301,68 +301,6 @@
     }
 }
 
-/* First-load splash. Styled outside @layer so it is present from the very first
-   paint, before any component has hydrated. */
-#splash {
-    position: fixed;
-    inset: 0;
-    z-index: 60;
-    display: grid;
-    place-items: center;
-    padding: 1.5rem;
-    background: var(--ground);
-    /* The exit is a lift, not a fade: it reads as a cover coming off the page
-       rather than the page dissolving in. transform is composited, and the exit
-       is quicker than the entrance. */
-    transform: translateY(0);
-    transition: transform 420ms var(--ease-out), opacity 420ms var(--ease-out);
-}
-
-#splash[data-leaving] {
-    transform: translateY(-100%);
-    opacity: 0;
-    pointer-events: none;
-}
-
-.splash-inner {
-    width: 100%;
-    max-width: 34rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.75rem;
-}
-
-.splash-mark {
-    display: block;
-    opacity: 0.75;
-}
-
-/* The claim, at the size the page itself no longer carries it. */
-.splash-claim {
-    color: var(--ink);
-    font-size: clamp(1.75rem, 5.2vw, 3rem);
-    font-weight: 800;
-    line-height: 1.15;
-    letter-spacing: -0.03em;
-    text-wrap: balance;
-}
-
-/* Hold the page still underneath while the splash is up. */
-html[data-splash] body {
-    overflow: hidden;
-}
-
-/* Repeat visit in this session, or reduced motion: never paint it at all. */
-html[data-splash-skip] #splash {
-    display: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    #splash {
-        display: none;
-    }
-}
-
 /* Hover states gated to real pointers. On touch, :hover sticks after a tap. */
 @media (hover: none),
 (pointer: coarse) {

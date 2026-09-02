@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useReducedMotion } from 'motion/react'
+import ScrambleText from './scramble-text'
 
 /**
  * Shipped client work, shown rather than listed.
@@ -25,10 +26,12 @@ export default function Shipped({ label = 'Shipped', items }) {
     <section className="mt-16">
       {/* The label rides the track, not the measure: a heading that does not
           share a left edge with the thing it names reads as an accident. */}
-      <h2 className="track-wide text-faint text-[0.95rem] mb-4">{label}</h2>
+      <h2 className="track-wide text-faint text-[0.95rem] mb-4">
+        <ScrambleText>{label}</ScrambleText>
+      </h2>
 
       <div className="track-wide grid gap-x-5 gap-y-10 sm:grid-cols-2">
-        {items.map((p) => (
+        {items.map((p, i) => (
           /* One card, one hover response, two destinations. The shot and the
              name used to react separately — hovering the shot scaled it while
              the name sat still, hovering the name underlined it while the shot
@@ -66,7 +69,10 @@ export default function Shipped({ label = 'Shipped', items }) {
                 className="prose-link shrink-0"
                 style={{ fontSize: '0.9rem' }}
               >
-                {p.site}
+                {/* The address is the "go and look" affordance, and a string of
+                    characters resolving into a domain is the one place on the
+                    page where the effect means something. */}
+                <ScrambleText delay={140 + i * 90}>{p.site}</ScrambleText>
               </a>
             </div>
 

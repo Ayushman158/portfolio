@@ -2,7 +2,6 @@ import './globals.css'
 import './phosphor.css'
 import { ThemeProvider, themeInitScript } from './components/theme'
 import Dock from './components/dock'
-import Splash from './components/splash'
 import { Inter, Reenie_Beanie, Caveat } from 'next/font/google'
 
 const inter = Inter({
@@ -57,7 +56,6 @@ export default function RootLayout({ children }) {
       </head>
       <body className="font-sans overflow-x-hidden">
         <ThemeProvider>
-          <Splash />
           {children}
           <Dock />
         </ThemeProvider>

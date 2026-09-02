@@ -19,7 +19,7 @@ import { motion, useReducedMotion } from 'motion/react'
  * Other changes from upstream: staggerDuration defaults to 60ms rather than
  * 200ms, which at four words was 600ms of stagger alone; motion runs on a
  * transform string rather than the `y` shorthand; reduced motion renders plain
- * text; and `start` lets the caller hold the reveal until the splash is gone.
+ * text; and `start` lets the caller hold the reveal until its cue arrives.
  */
 export default function VerticalCutReveal({
   children,
@@ -80,26 +80,3 @@ export default function VerticalCutReveal({
   )
 }
 
-/**
- * True once the splash is gone, so an entrance is not spent underneath it.
- * Resolves immediately when no splash is running.
- */
-export function useSplashDone() {
-  const [done, setDone] = useState(true)
-
-  useEffect(() => {
-    const el = document.documentElement
-    if (!el.hasAttribute('data-splash')) return
-    setDone(false)
-    const obs = new MutationObserver(() => {
-      if (!el.hasAttribute('data-splash')) {
-        setDone(true)
-        obs.disconnect()
-      }
-    })
-    obs.observe(el, { attributes: true, attributeFilter: ['data-splash'] })
-    return () => obs.disconnect()
-  }, [])
-
-  return done
-}

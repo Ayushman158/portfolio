@@ -7,9 +7,10 @@ import { motion, useReducedMotion } from 'motion/react'
 import GradientText from './components/gradient-text'
 import LetterSwap from './components/letter-swap'
 import WorkIndex from './components/work-index'
+import ScrambleText from './components/scramble-text'
 import Shipped from './components/shipped'
 import { FigmaMark, FramerMark, IllustratorMark, ClaudeMark, CodexMark } from './components/tool-marks'
-import VerticalCutReveal, { useSplashDone } from './components/vertical-cut-reveal'
+import VerticalCutReveal from './components/vertical-cut-reveal'
 
 // Live, client-run, and reachable by anyone — so these are shown, not listed.
 const SHIPPED = [
@@ -67,17 +68,16 @@ const PLAYGROUND = [
 // rather than listed as work a visitor cannot reach.
 function Greeting() {
   const [hour, setHour] = useState(null)
-  const splashDone = useSplashDone()
   useEffect(() => setHour(new Date().getHours()), [])
 
   const part = hour == null ? 'hello' : hour < 12 ? 'good morning' : hour < 17 ? 'good afternoon' : 'good evening'
 
-  // Assamese and Hindi: he is from North Lakhimpur, Assam. The reveal waits for
-  // the splash so it is not played underneath it.
+  // Assamese and Hindi: he is from North Lakhimpur, Assam. The reveal waits
+  // for the clock so it does not play against a placeholder greeting.
   return (
     <p className="text-faint">
       <VerticalCutReveal
-        start={splashDone && hour != null}
+        start={hour != null}
         delay={0.05}
         segments={[
           { text: `${part},`, lang: 'en' },
@@ -138,7 +138,7 @@ export default function Home() {
       </motion.div>
 
       <motion.section {...rise(0.18)} className="mt-16">
-        <h2 className="text-faint text-[0.95rem] mb-3">Skills</h2>
+        <h2 className="text-faint text-[0.95rem] mb-3"><ScrambleText>Skills</ScrambleText></h2>
         <p>{METHODS.join(' · ')}</p>
 
         {/* Named in server-rendered text. The well below is client-only, so
@@ -151,7 +151,7 @@ export default function Home() {
       </motion.section>
 
       <motion.section {...rise(0.22)} className="mt-16">
-        <h2 className="text-faint text-[0.95rem] mb-3">Connect</h2>
+        <h2 className="text-faint text-[0.95rem] mb-3"><ScrambleText>Connect</ScrambleText></h2>
         <p>
           I’m looking for design-engineering work. The fastest way to reach me is{' '}
           <a href="mailto:ayushman15899@gmail.com" className="prose-link">email</a>. I’m also on{' '}

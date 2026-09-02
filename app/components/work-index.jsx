@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion, useMotionValue, useSpring, useReducedMotion } from 'motion/react'
 import Letter3DSwap from './letter-3d-swap'
+import ScrambleText from './scramble-text'
 
 /* The preview's size lives here rather than in a class, because the placement
    maths needs the same numbers to keep it inside the window. */
@@ -59,7 +60,9 @@ export default function WorkIndex({ label, items }) {
 
   return (
     <section className="mt-16" onMouseMove={onMove}>
-      <h2 className="text-faint text-[0.95rem] mb-2">{label}</h2>
+      <h2 className="text-faint text-[0.95rem] mb-2">
+        <ScrambleText>{label}</ScrambleText>
+      </h2>
 
       <ul ref={listRef} className="border-t border-rule">
         {items.map((item, i) => {

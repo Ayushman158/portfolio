@@ -14,9 +14,6 @@ export const themeInitScript = `
   var s=localStorage.getItem('theme');
   var d=s?s:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
   document.documentElement.dataset.theme=d;
-  var seen=sessionStorage.getItem('splashSeen')==='1';
-  var still=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(seen||still)document.documentElement.dataset.splashSkip='true';
 }catch(e){}})();
 `
 
