@@ -7,16 +7,17 @@ import { animate, motion, useMotionValue, useReducedMotion, useTransform } from 
  * The three interactions from the Kizuku app, rebuilt for the browser.
  *
  * Same constants and the same release logic as the React Native source, so
- * this demonstrates the section's claim rather than restating it. Styled for
- * the dark ground it sits on.
+ * this demonstrates the section's claim rather than restating it. Styled from the site's
+ * tokens, so they follow the theme rather than pinning their own palette.
  */
 
-const INK = '#F2EDE0';
-const MUTED = 'rgba(242,237,224,0.55)';
-const FAINT = 'rgba(242,237,224,0.35)';
-const CARD = 'rgba(242,237,224,0.04)';
-const EDGE = '1px solid rgba(242,237,224,0.08)';
-const ACCENT = '#ECD858';
+// the site's tokens, so these follow the theme instead of pinning a palette
+const INK = 'var(--ink)';
+const MUTED = 'var(--muted)';
+const FAINT = 'var(--faint)';
+const CARD = 'var(--raised)';
+const EDGE = '1px solid var(--rule)';
+const ACCENT = 'var(--ink)';
 const GARDEN = 'linear-gradient(180deg, #D3E3C6 0%, #C2D9B2 46%, #B8D4AC 100%)';
 
 /* the gesture's real logic, lifted from the product */
@@ -44,10 +45,10 @@ function Panel({ principle, title, reason, children, readouts }) {
   return (
     <div className="rounded-2xl p-5 md:p-6 flex flex-col" style={{ backgroundColor: CARD, border: EDGE }}>
       <div className="flex items-start justify-between gap-3 mb-3">
-        <p className="text-sm font-semibold" style={{ color: 'rgba(242,237,224,0.8)' }}>{title}</p>
+        <p className="text-sm font-semibold" style={{ color: INK }}>{title}</p>
         <span
           className="flex-none text-[9px] px-2 py-0.5 rounded-full font-medium uppercase tracking-widest"
-          style={{ backgroundColor: `${ACCENT}20`, color: ACCENT }}
+          style={{ backgroundColor: 'var(--ground)', color: FAINT, border: EDGE }}
         >
           {principle}
         </span>
@@ -56,7 +57,7 @@ function Panel({ principle, title, reason, children, readouts }) {
       {children}
       <div className="grid grid-cols-3 gap-2 mt-4">
         {readouts.map(([k, v]) => (
-          <div key={k} className="rounded-lg px-2.5 py-1.5" style={{ backgroundColor: 'rgba(242,237,224,0.05)' }}>
+          <div key={k} className="rounded-lg px-2.5 py-1.5" style={{ backgroundColor: 'var(--ground)' }}>
             <div className="text-[9px] uppercase tracking-[0.18em]" style={{ color: FAINT }}>{k}</div>
             <div className="text-[13px] font-medium tabular-nums" style={{ color: INK }}>{v}</div>
           </div>
