@@ -66,7 +66,10 @@ function Panel({ principle, title, reason, children, readouts }) {
         </span>
       </div>
       <p className="text-xs lg:text-[13px] leading-relaxed mb-5" style={{ color: MUTED }}>{reason}</p>
-      {children}
+      {/* The reason runs to three lines in one panel and five in another, so
+          anchoring the stages to the bottom is what keeps them on one line
+          across the row — the panels are equal height already. */}
+      <div className="mt-auto">{children}</div>
       <div className="grid grid-cols-3 gap-2 mt-4">
         {readouts.map(([k, v]) => (
           <div key={k} className="rounded-lg px-2.5 py-1.5 lg:px-3 lg:py-2" style={{ backgroundColor: 'var(--ground)' }}>
@@ -302,7 +305,7 @@ function Growth() {
         >
           replay
         </button>
-        <p className="absolute left-0 right-0 bottom-3 text-center text-[12px]" style={{ color: '#3D5239' }}>
+        <p className="absolute left-4 top-3 text-[12px]" style={{ color: '#3D5239' }}>
           {grown ? 'something grew.' : 'planting…'}
         </p>
       </div>
