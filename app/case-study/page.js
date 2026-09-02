@@ -149,6 +149,7 @@ export default function Hoychoy() {
           The café runs on it today at{' '}
           <a href="https://www.hoychoycafe.com/" target="_blank" rel="noopener noreferrer" className="prose-link">hoychoycafe.com</a>.
           Back to <Link href="/#work" className="prose-link">the work index</Link>, or read{' '}
+          <Link href="/banyan" className="prose-link">Banyan Tree</Link> and{' '}
           <Link href="/kizuku" className="prose-link">Kizuku</Link>.
         </p>
       </motion.section>

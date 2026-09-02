@@ -82,6 +82,32 @@ export function BeforeAfter({ rows }) {
 }
 
 /**
+ * One wide figure, for a shot that carries an argument rather than illustrating
+ * one. Breaks the reading measure on desktop like the screenshot rows do.
+ */
+export function Figure({ src, alt, caption, track = 'track-full', className = '' }) {
+  // No `m-0` on the figure: it is a utility, so it would win over the track's
+  // margin-inline and the figure would overflow instead of breaking out.
+  // Preflight already zeroes figure margins.
+  return (
+    <figure className={`${track} ${className}`}>
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        className="w-full h-auto rounded-xl"
+        style={{ border: '1px solid var(--rule)' }}
+      />
+      {caption && (
+        <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem', lineHeight: 1.45 }}>
+          {caption}
+        </figcaption>
+      )}
+    </figure>
+  )
+}
+
+/**
  * Screenshots with captions, in a responsive row. On desktop the row leaves the
  * reading measure: five phone screens at 192px each told nobody anything, and
  * these are a sequence, so a single filmstrip of five reads as the flow rather

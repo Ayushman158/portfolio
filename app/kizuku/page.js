@@ -182,7 +182,9 @@ export default function Kizuku() {
           The complete process — the painting that became the brief, four rejected names, the competitive
           analysis and all eighteen illustrations — is in the{' '}
           <a href="/kizuku/Kizuku-Creative-Process.pdf" target="_blank" rel="noopener noreferrer" className="prose-link">full case study</a>.
-          Back to <Link href="/#work" className="prose-link">the work index</Link>.
+          Back to <Link href="/#work" className="prose-link">the work index</Link>, or read{' '}
+          <Link href="/banyan" className="prose-link">Banyan Tree</Link> and{' '}
+          <Link href="/case-study" className="prose-link">Hoychoy Cafe</Link>.
         </p>
       </motion.section>
     </main>

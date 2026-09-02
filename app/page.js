@@ -12,6 +12,7 @@ import { FigmaMark, FramerMark, IllustratorMark, ClaudeMark, CodexMark } from '.
 import VerticalCutReveal, { useSplashDone } from './components/vertical-cut-reveal'
 
 const PROJECTS = [
+  { name: 'Banyan Tree', year: '2026', href: '/banyan', img: '/banyan/canopy.jpg', w: 1800, h: 1125 },
   { name: 'Kizuku', year: '2026', href: '/kizuku', video: '/kizuku/tree-animation.mp4' },
   { name: 'Hoychoy Cafe', year: '2025', href: '/case-study', img: '/assets/hoychoy-hero-new.png', w: 1200, h: 800 },
 ]
@@ -99,8 +100,10 @@ export default function Home() {
 
         <p>
           Recent work includes{' '}
+          <Link href="/banyan" className="prose-link">Banyan Tree</Link>, an atlas of root-cause
+          healing built and handed over to a health practice, and{' '}
           <Link href="/kizuku" className="prose-link">Kizuku</Link>, a wellness app for people who
-          overthink the future, and{' '}
+          overthink the future. Before those,{' '}
           <Link href="/case-study" className="prose-link">Hoychoy Cafe</Link>, where a rebuilt
           ordering flow took customers from{' '}
           <GradientText>6–8 minutes to 2–3</GradientText>.
