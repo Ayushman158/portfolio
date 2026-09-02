@@ -27,12 +27,14 @@ const DECISIONS = [
   ['Copy decided at word level', '"Start quiz" against "find my tree type" — one word decides whether the user feels assessed or invited. Every line documented with its before and after.'],
 ]
 
+// Captured from the running build, not from the Figma comps — this is what
+// the app actually looks like today, Satoshi and all.
 const SCREENS = [
-  ['/kizuku/screens/Loading.png', 'the loading is the ritual, not dead time'],
-  ['/kizuku/screens/Worry Input.png', 'write anything. this stays on the device.'],
-  ['/kizuku/screens/Today action.png', 'one thing. right now. no options.'],
-  ['/kizuku/screens/Reflection.png', 'what happened when you actually did it?'],
-  ['/kizuku/screens/Garden-1.png', 'day 8. something grew.'],
+  ['/kizuku/app/garden.png', 'the garden. the plant is the day-8 optimiser.'],
+  ['/kizuku/app/worry.png', 'write anything. this stays on the device.'],
+  ['/kizuku/app/thinking.png', 'the orb, while the action is chosen'],
+  ['/kizuku/app/action.png', 'one thing. hold the button to commit.'],
+  ['/kizuku/app/growth.png', 'the seed opening, mid-sequence'],
 ]
 
 export default function Kizuku() {
@@ -116,7 +118,8 @@ export default function Kizuku() {
           grow, the copy you read and the surface it sits on.
         </p>
 
-        <div className="mt-8">
+        <div className="mt-8 grid sm:grid-cols-[1fr_180px] gap-8 items-start">
+          <div>
           {TYPES.map((t) => (
             <div key={t.type} className="index-row" style={{ gridTemplateColumns: '1fr', gap: '0.35rem' }}>
               <div className="flex items-baseline justify-between gap-4">
@@ -126,6 +129,14 @@ export default function Kizuku() {
               <p className="text-faint" style={{ fontSize: '0.95rem' }}>“{t.quote}”</p>
             </div>
           ))}
+          </div>
+          <figure className="m-0">
+            <img src="/kizuku/app/reveal.png" alt="The seeker's type reveal" loading="lazy"
+              className="w-full h-auto rounded-xl" style={{ border: '1px solid var(--rule)' }} />
+            <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem', lineHeight: 1.45 }}>
+              the seeker's reveal — the type owns the surface
+            </figcaption>
+          </figure>
         </div>
       </motion.section>
 
@@ -135,7 +146,7 @@ export default function Kizuku() {
       <motion.section {...rise(0.22)}>
         <Heading>The daily loop.</Heading>
         <p className="mb-8">
-          Five screens, one a day. The tab bar leaves after the garden and comes back at the growth, so
+          Five screens, one a day, captured from the running build. The tab bar leaves after the garden and comes back at the growth, so
           there is nothing to tab out to in the middle of the ritual.
         </p>
 
