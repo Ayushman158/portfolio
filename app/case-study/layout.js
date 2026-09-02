@@ -1,12 +1,11 @@
 export const metadata = {
     title: 'Hoychoy Cafe Case Study | Ayushman Bharadwaj',
-    description: 'Detailed UX case study and frontend breakdown for the Hoychoy Cafe web application.',
+    description: 'Rebuilding a café’s WhatsApp ordering as a service: 6–8 minutes per order down to 2–3.',
 }
 
+// No background or text colour here. The page reads from the site's tokens so
+// it follows the theme — pinning a light panel is what made the dark theme
+// unreadable on this route.
 export default function CaseStudyLayout({ children }) {
-    return (
-        <div className="bg-[#f8fafc] min-h-screen text-slate-800 selection:bg-blue-200">
-            {children}
-        </div>
-    )
+    return children
 }

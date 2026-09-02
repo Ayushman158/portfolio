@@ -1,7 +1,6 @@
 'use client'
 
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
-import { usePathname } from 'next/navigation'
 
 const ThemeContext = createContext({ theme: 'light', toggle: () => {}, themable: false })
 export const useTheme = () => useContext(ThemeContext)
@@ -15,7 +14,6 @@ export const themeInitScript = `
   var s=localStorage.getItem('theme');
   var d=s?s:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
   document.documentElement.dataset.theme=d;
-  if(location.pathname.indexOf('/kizuku')===0)document.documentElement.dataset.lightOnly='true';
   var seen=sessionStorage.getItem('splashSeen')==='1';
   var still=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(seen||still)document.documentElement.dataset.splashSkip='true';
@@ -23,13 +21,13 @@ export const themeInitScript = `
 `
 
 export function ThemeProvider({ children }) {
-  const pathname = usePathname()
   const [theme, setTheme] = useState('light')
 
-  // Every route follows the token system except /kizuku, which presents the
-  // client's own green brand world and is authored against a light ground.
-  // Pinning it light keeps that intact rather than half-inverting it.
-  const themable = pathname !== '/kizuku'
+  // Every route follows the token system. /kizuku used to be exempt because it
+  // was authored as the product's green brand world on a fixed light ground;
+  // it is now written in the site's tokens like everything else, so the
+  // exemption went with it.
+  const themable = true
 
   useEffect(() => {
     const stored = typeof localStorage !== 'undefined' && localStorage.getItem('theme')
@@ -39,9 +37,8 @@ export function ThemeProvider({ children }) {
   }, [])
 
   useEffect(() => {
-    if (themable) delete document.documentElement.dataset.lightOnly
-    else document.documentElement.dataset.lightOnly = 'true'
-  }, [themable])
+    delete document.documentElement.dataset.lightOnly
+  }, [])
 
   const toggle = useCallback(() => {
     setTheme((prev) => {

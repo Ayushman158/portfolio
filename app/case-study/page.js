@@ -1,554 +1,157 @@
-'use client';
-import { useEffect, useRef } from 'react';
-import Link from 'next/link';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Image from 'next/image'
+'use client'
 
-export default function CaseStudy() {
-    const cursorDot = useRef(null);
+import Link from 'next/link'
+import { motion, useReducedMotion } from 'motion/react'
+import { Back, BeforeAfter, Decisions, Facts, Heading, Rule, Shots } from '../components/case-study'
 
-    useEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
+const FACTS = [
+  ['Role', 'UX lead and product owner'],
+  ['Scope', 'Research, service design, interface, build'],
+  ['Timeline', '6 weeks'],
+  ['Status', 'Live at hoychoycafe.com'],
+]
 
-        // The custom cursor was removed with the redesign; keep the refs inert.
-        const xToDot = () => {};
-        const yToDot = () => {};
+// The owner's own figures, from 50+ threads and his log. The tildes were on
+// the originals — those numbers were estimated, not instrumented.
+const RESULTS = [
+  ['Handling time per order', '6–8 min', '2–3 min'],
+  ['Clarification messages at rush hour', '~12–15', '2–3'],
+  ['Payment mismatches per week', '~8–10', '1–2'],
+  ['Steps the owner relays by hand', '5', '1'],
+  ['Order visibility', 'Fragmented', 'Centralised'],
+]
 
-        const moveCursor = (e) => {
-            xToDot(e.clientX);
-            yToDot(e.clientY);
-        };
+const SIGNALS = [
+  '“Bro payment sent check once”',
+  '“Address same as last time”',
+  '“Add extra gravy pls”',
+]
 
-        window.addEventListener('mousemove', moveCursor);
+const SHIPPED = [
+  ['Branded mobile ordering', 'A structured menu with real-time availability, reached by QR or link. No login, no download, nothing to install at the door.'],
+  ['Checkout that enforces itself', 'Cart, kitchen notes, GPS capture and a UPI deep link in one scrollable form. Required fields are enforced in the UI, so an incomplete order cannot reach the owner.'],
+  ['An automated relay', 'Orders land in a dashboard and fire a Telegram alert to the kitchen. The owner comes out of the relay chain entirely.'],
+]
 
-        const interactiveEls = document.querySelectorAll('a, button, .interactive-target');
-        interactiveEls.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                
-            });
-            el.addEventListener('mouseleave', () => {
-                
-            });
-        });
+const DECISIONS = [
+  ['No accounts, ever', 'WhatsApp needed zero setup, so any signup gate would have killed conversion outright. Account creation adds two to three minutes of friction to a ₹200 order. Sessions carry the cart instead.'],
+  ['Web, not an app store', 'Installs add review delays and maintenance. Mobile web gives the same experience with no download barrier, on every phone that walks in.'],
+  ['WhatsApp kept as trust, not as the channel', 'Customers had built habits around a WhatsApp confirmation. Removing it entirely would have read as the order vanishing, so it stays as a one-way receipt while the ordering moves.'],
+  ['Telegram for the kitchen, not WhatsApp', 'Business notifications get buried in personal chat noise and the API is unreliable. Telegram delivers structured, persistent, actionable alerts to the people cooking.'],
+  ['One dashboard as the record', 'Without it the owner recalled orders from memory or scrolled back through chat. A central record made shift handoffs possible for the first time.'],
+  ['Minimal fields by default', 'Every field earns its place, because each one is a reason to abandon a ₹200 order on a phone in a queue.'],
+]
 
-        const figmaColors = ['#0ea5e9', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#f43f5e'];
-        const handleMouseEnter = () => {
-            const randomColor = figmaColors[Math.floor(Math.random() * figmaColors.length)];
-        };
-        document.addEventListener('mouseenter', handleMouseEnter);
+const SHOTS = [
+  ['/assets/cs-menu-reopen.png', 'the menu, with real-time availability'],
+  ['/assets/cs-checkout-scroll.png', 'one scrollable checkout'],
+  ['/assets/cs-checkout-payment.png', 'UPI deep link, no screenshot to send'],
+  ['/assets/cs-admin-orders.png', 'orders in one place'],
+  ['/assets/cs-admin-panel.png', 'the dashboard the owner actually runs'],
+]
 
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (reduceMotion) document.documentElement.dataset.systemCursor = 'true';
+export default function Hoychoy() {
+  const reduceMotion = useReducedMotion()
 
-        const fadeSections = document.querySelectorAll('.fade-in-up');
-        fadeSections.forEach((section) => {
-            gsap.fromTo(section,
-                { opacity: 0, y: reduceMotion ? 0 : 16 },
-                { scrollTrigger: { trigger: section, start: "top 85%" }, opacity: 1, y: 0, duration: reduceMotion ? 0.2 : 0.45, ease: "power3.out" }
-            );
-        });
+  const rise = (delay) => ({
+    initial: reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: reduceMotion ? 0.2 : 0.5, delay: reduceMotion ? 0 : delay, ease: [0.22, 1, 0.36, 1] },
+  })
 
-        return () => {
-            window.removeEventListener('mousemove', moveCursor);
-            document.removeEventListener('mouseenter', handleMouseEnter);
-            ScrollTrigger.getAll().forEach(t => t.kill());
-        };
-    }, []);
+  return (
+    <main className="measure min-h-screen pb-40 pt-20 sm:pt-28">
+      <motion.div {...rise(0)}><Back /></motion.div>
 
-    return (
-        <main className="min-h-screen bg-ground text-ink overflow-x-hidden relative pb-32">
+      <motion.header {...rise(0.06)} className="mt-10 space-y-5">
+        <p className="text-faint" style={{ fontSize: '0.95rem' }}>Hoychoy Cafe · 2025</p>
 
-            {/* Hero */}
-            <section className="pt-48 pb-16 px-6 fade-in-up bg-ground w-full min-h-[85vh] flex flex-col justify-center border-b border-rule">
-                <div className="max-w-7xl mx-auto w-full relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
-                    <div className="flex-1">
-                        <div className="flex flex-wrap gap-2 mb-8">
-                            <span className="px-3 py-1 bg-blue-50 border border-blue-100 text-xs font-bold uppercase tracking-widest text-blue-600 rounded">UX Case Study</span>
-                            <span className="px-3 py-1 bg-purple-50 border border-purple-100 text-xs font-bold uppercase tracking-widest text-purple-600 rounded">UX Lead & Product Owner</span>
-                            <span className="px-3 py-1 bg-raised border border-rule text-xs font-bold uppercase tracking-widest text-muted rounded">6 Weeks</span>
-                        </div>
-                        <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-ink mb-8 leading-[1]">
-                            Structured<br /><span className="text-faint">Ordering.</span>
-                        </h1>
-                        <p className="text-2xl md:text-3xl text-faint font-medium leading-tight max-w-2xl mb-12">
-                            Transforming conversational, manual WhatsApp ordering into a structured, low-friction system for a hyperlocal café in Golaghat, Assam.
-                        </p>
-                        <Link href="https://www.hoychoycafe.com/" target="_blank" rel="noopener noreferrer" className="interactive-target group relative inline-flex items-center justify-center gap-3 px-8 py-5 bg-ink text-ground rounded-full text-lg font-bold hover:bg-blue-600 transition-colors">
-                            View Live Project
-                            <i className="ph ph-arrow-up-right text-2xl group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
-                        </Link>
-                    </div>
-                    <div className="flex-1 w-full flex justify-center md:justify-end relative">
-                        <div className="w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl border border-rule rotate-2 hover:rotate-0 transition-transform duration-300 ease-out interactive-target">
-                            <Image src="/assets/hoychoy-hero-new.png" alt="Hoychoy Cafe Splash Screen" className="w-full h-auto object-cover" width={1200} height={1056} sizes="(max-width: 768px) 100vw, 45vw" />
-                        </div>
-                    </div>
-                </div>
-            </section>
+        <h1 style={{ color: 'var(--ink)', fontSize: '2rem', lineHeight: 1.2, fontWeight: 500, letterSpacing: '-0.02em' }}>
+          A café was taking orders in WhatsApp. Ordering took 6–8 minutes.
+        </h1>
 
-            {/* Context & Role */}
-            <section className="bg-ground py-20 px-6 w-full border-b border-rule fade-in-up">
-                <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="bg-[#fcfbf9] rounded-3xl p-8 md:p-10 border border-[#e5e5e5]">
-                        <span className="text-xs font-bold uppercase tracking-widest text-faint block mb-4">Project Constraints</span>
-                        <p className="text-lg text-muted leading-relaxed font-medium">
-                            This was a 6-week client project with no direct access to end customers. All insights came from analyzing 50+ real WhatsApp order threads and working closely with the owner through structured sessions. The product had to ship fast, run on low-end Android devices, and require zero end-user onboarding.
-                        </p>
-                    </div>
-                    <div className="bg-blue-50 rounded-3xl p-8 md:p-10 border border-blue-100">
-                        <span className="text-xs font-bold uppercase tracking-widest text-blue-400 block mb-4">My Role</span>
-                        <p className="text-lg text-muted leading-relaxed font-medium">
-                            I owned the full lifecycle—problem framing, UX architecture, visual design, and end-to-end development using AI-assisted (vibe coding) rapid build methodology. I managed the client relationship, ran the 2-week pilot with the owner, and shipped the product to production.
-                        </p>
-                    </div>
-                </div>
-            </section>
+        <p>
+          It now takes two to three. I rebuilt the ordering as a service rather than a screen: a mobile web
+          menu, a checkout that refuses to produce an incomplete order, and an automated relay that takes
+          the owner out of the middle.
+        </p>
 
-            {/* 1. The Problem — merged: Workflow Issue + Critical Insight + Service Blueprint */}
-            <section className="bg-slate-900 text-white py-32 px-6 w-full fade-in-up">
-                <div className="max-w-6xl mx-auto">
-                    <h2 className="text-5xl md:text-7xl font-bold tracking-tight mb-16">1. The Problem</h2>
+        <p>
+          This was not a UI redesign. The interface was never the problem — the workflow was.
+        </p>
+      </motion.header>
 
-                    {/* Problem Framing */}
-                    <div className="bg-slate-800/80 rounded-3xl p-8 md:p-10 border border-slate-700/50 mb-16 max-w-4xl">
-                        <h3 className="text-sm font-bold uppercase tracking-widest text-slate-400 mb-4">Problem Framing</h3>
-                        <p className="text-xl md:text-2xl text-slate-200 font-medium leading-relaxed mb-6">
-                            Hoychoy Café ran all orders through WhatsApp. Customers browsed a PDF, typed their address, and sent a UPI screenshot. The owner then manually decoded, clarified, verified, and relayed each order to the kitchen—solo, during rush hour, with a dozen threads open simultaneously.
-                        </p>
-                        <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-6">
-                            <span className="text-blue-400 font-bold uppercase tracking-widest text-xs block mb-2">Core Insight</span>
-                            <p className="text-lg text-blue-100 font-medium">
-                                The problem wasn&apos;t WhatsApp. It was the absence of any structured system behind it. Fix the system, not the channel.
-                            </p>
-                        </div>
-                    </div>
+      <motion.div {...rise(0.1)}><Facts rows={FACTS} /></motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start mb-24">
-                        <div className="space-y-8">
-                            <p className="text-xl text-slate-300 leading-relaxed font-medium">
-                                The system worked until peak hours exposed its fragility. The owner manually clarified missing details, verified payments, and relayed orders to the kitchen. <strong>This wasn&apos;t a UI issue. It was a workflow issue.</strong>
-                            </p>
+      <motion.p {...rise(0.14)} className="mt-8">
+        <a href="https://www.hoychoycafe.com/" target="_blank" rel="noopener noreferrer" className="prose-link">
+          hoychoycafe.com
+        </a>
+      </motion.p>
 
-                            {/* Real User Signals */}
-                            <div>
-                                <h3 className="text-sm font-bold uppercase tracking-widest text-slate-400 mb-6">Real Signals — from 50+ WhatsApp threads</h3>
-                                <div className="flex flex-col gap-3">
-                                    <div className="bg-emerald-900/30 border border-emerald-800/40 p-4 rounded-2xl rounded-tl-sm self-start max-w-sm shadow-sm">
-                                        <p className="text-slate-300 font-medium font-mono text-sm">&quot;Bro payment sent check once&quot;</p>
-                                    </div>
-                                    <div className="bg-emerald-900/30 border border-emerald-800/40 p-4 rounded-2xl rounded-tl-sm self-start max-w-sm shadow-sm">
-                                        <p className="text-slate-300 font-medium font-mono text-sm">&quot;Address same as last time&quot;</p>
-                                    </div>
-                                    <div className="bg-emerald-900/30 border border-emerald-800/40 p-4 rounded-2xl rounded-tl-sm self-start max-w-sm shadow-sm">
-                                        <p className="text-slate-300 font-medium font-mono text-sm">&quot;Add extra gravy pls&quot;</p>
-                                    </div>
-                                    <div className="bg-slate-700/50 border border-slate-600/50 p-4 rounded-2xl rounded-tr-sm self-end max-w-sm shadow-sm mt-2">
-                                        <p className="text-slate-400 font-medium text-sm">Owner: <span className="italic text-slate-500">Scrambling to match screenshots to addresses while 6 other messages arrive.</span></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+      <Rule />
 
-                        {/* Metrics */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                            <div className="bg-slate-800/50 p-8 rounded-3xl border border-slate-700/50 h-full flex flex-col justify-center">
-                                <h3 className="text-6xl font-black text-red-400 tracking-tighter mb-4">50%</h3>
-                                <p className="text-slate-400 text-lg uppercase tracking-widest font-bold">Of Peak Time</p>
-                                <p className="text-slate-500 mt-2 text-sm">spent exclusively clarifying incomplete orders—not taking new ones.</p>
-                            </div>
-                            <div className="bg-slate-800/50 p-8 rounded-3xl border border-slate-700/50 h-full flex flex-col justify-center">
-                                <h3 className="text-6xl font-black text-amber-400 tracking-tighter mb-4">50+</h3>
-                                <p className="text-slate-400 text-lg uppercase tracking-widest font-bold">Threads Analyzed</p>
-                                <p className="text-slate-500 mt-2 text-sm">revealing payment mismatch and lost orders as the two dominant failure modes.</p>
-                            </div>
-                        </div>
-                    </div>
+      {/* the outcome, before anything else */}
+      <motion.section {...rise(0.18)}>
+        <Heading>What changed.</Heading>
+        <p>
+          The owner's figures, from his own logs and 50+ order threads. The before column was estimated
+          rather than instrumented, which is why it carries tildes — I have kept them.
+        </p>
+        <BeforeAfter rows={RESULTS} />
+      </motion.section>
 
-                    {/* Service Blueprint — Before / After */}
-                    <h3 className="text-2xl font-bold text-slate-300 mb-8">Service Flow: Before vs. After</h3>
+      <Rule />
 
-                    <div className="bg-slate-800/40 rounded-2xl p-8 md:p-12 border border-slate-700/50 mb-8 relative overflow-x-auto">
-                        <div className="absolute top-0 right-0 bg-red-900/60 text-red-300 px-4 py-2 rounded-bl-2xl rounded-tr-xl font-bold text-sm uppercase tracking-widest border-b border-l border-red-800/30">Before</div>
-                        <div className="min-w-[800px] grid grid-cols-4 gap-4 text-sm mt-4 font-medium">
-                            <div className="font-bold text-slate-500 uppercase tracking-widest border-b border-slate-700 pb-2">Layer</div>
-                            <div className="font-bold text-slate-500 uppercase tracking-widest border-b border-slate-700 pb-2">Menu Discovery</div>
-                            <div className="font-bold text-slate-500 uppercase tracking-widest border-b border-slate-700 pb-2">Ordering & Payment</div>
-                            <div className="font-bold text-slate-500 uppercase tracking-widest border-b border-slate-700 pb-2">Coordination</div>
+      {/* the problem */}
+      <motion.section {...rise(0.2)}>
+        <Heading>Half of peak hours went on clarifying orders.</Heading>
+        <p className="mb-4">
+          Not taking new ones — clarifying incomplete ones. I read more than fifty WhatsApp threads from
+          service and two failure modes dominated: payments that could not be matched to an order, and
+          orders lost in the scroll.
+        </p>
 
-                            <div className="py-4 font-bold text-slate-500 uppercase tracking-widest text-xs flex items-center gap-2">Customer Actions</div>
-                            <div className="bg-[#fff9c4]/10 border border-[#fff59d]/20 rounded p-3 text-slate-300">Views PDF menu</div>
-                            <div className="bg-[#fff9c4]/10 border border-[#fff59d]/20 rounded p-3 text-slate-300">Sends chat order & UPI screenshot</div>
-                            <div className="bg-[#fff9c4]/10 border border-[#fff59d]/20 rounded p-3 text-slate-300">Manually types address</div>
+        <div className="my-8">
+          {SIGNALS.map((s) => (
+            <p key={s} className="index-row" style={{ gridTemplateColumns: '1fr', color: 'var(--ink)' }}>{s}</p>
+          ))}
+        </div>
 
-                            <div className="py-4 font-bold text-slate-500 uppercase tracking-widest text-xs flex items-center gap-2">Frontstage</div>
-                            <div className="bg-emerald-900/20 border border-emerald-800/30 rounded p-3 col-span-3 text-center text-emerald-300">WhatsApp Chat Interface</div>
+        <p>
+          Each of those is a message the owner has to answer while six more arrive, matching payment
+          screenshots to addresses from memory, then relaying the result to the kitchen by voice.
+        </p>
+      </motion.section>
 
-                            <div className="py-4 font-bold text-slate-500 uppercase tracking-widest text-xs flex items-center gap-2">Backstage (Owner)</div>
-                            <div className="bg-red-900/20 border border-red-800/30 rounded p-3 col-span-2 text-red-300 font-bold">Reads, clarifies missing details, verifies payment screenshots</div>
-                            <div className="bg-red-900/20 border border-red-800/30 rounded p-3 text-red-300 font-bold">Manually relays to kitchen</div>
+      <Rule />
 
-                            <div className="py-4 font-bold text-slate-500 uppercase tracking-widest text-xs flex items-center gap-2">Support Systems</div>
-                            <div className="bg-slate-800/50 border border-slate-700/50 rounded p-3 text-slate-400">PDF File</div>
-                            <div className="bg-slate-800/50 border border-slate-700/50 rounded p-3 text-slate-400">UPI App / Phone Gallery</div>
-                            <div className="bg-slate-800/50 border border-slate-700/50 rounded p-3 text-slate-400">Verbal Instructions</div>
-                        </div>
-                    </div>
+      {/* what shipped */}
+      <motion.section {...rise(0.22)}>
+        <Heading>What shipped.</Heading>
+        <Decisions items={SHIPPED} />
 
-                    <div className="bg-slate-800/40 rounded-2xl p-8 md:p-12 border border-slate-700/50 overflow-x-auto relative">
-                        <div className="absolute top-0 right-0 bg-emerald-900/60 text-emerald-300 px-4 py-2 rounded-bl-2xl rounded-tr-xl font-bold text-sm uppercase tracking-widest border-b border-l border-emerald-800/30">After</div>
-                        <div className="min-w-[800px] grid grid-cols-4 gap-4 text-sm mt-4 font-medium">
-                            <div className="font-bold text-slate-500 uppercase tracking-widest border-b border-slate-700 pb-2">Layer</div>
-                            <div className="font-bold text-slate-500 uppercase tracking-widest border-b border-slate-700 pb-2">Menu Discovery</div>
-                            <div className="font-bold text-slate-500 uppercase tracking-widest border-b border-slate-700 pb-2">Checkout</div>
-                            <div className="font-bold text-slate-500 uppercase tracking-widest border-b border-slate-700 pb-2">Fulfillment</div>
+        <div className="mt-12">
+          <Shots items={SHOTS} />
+        </div>
+      </motion.section>
 
-                            <div className="py-4 font-bold text-slate-500 uppercase tracking-widest text-xs flex items-center gap-2">Customer Actions</div>
-                            <div className="bg-[#fff9c4]/10 border border-[#fff59d]/20 rounded p-3 text-slate-300">Scans QR / Clicks link & browses menu</div>
-                            <div className="bg-[#fff9c4]/10 border border-[#fff59d]/20 rounded p-3 text-slate-300">Adds to cart & pays via UPI</div>
-                            <div className="bg-[#fff9c4]/10 border border-[#fff59d]/20 rounded p-3 text-slate-300">Receives WhatsApp confirmation</div>
+      <Rule />
 
-                            <div className="py-4 font-bold text-slate-500 uppercase tracking-widest text-xs flex items-center gap-2">Frontstage</div>
-                            <div className="bg-sky-900/20 border border-sky-800/30 rounded p-3 col-span-2 text-sky-300 font-bold">Mobile web ordering & auto-formatted order summary</div>
-                            <div className="bg-emerald-900/20 border border-emerald-800/30 rounded p-3 text-emerald-300">WhatsApp (confirmation only)</div>
+      {/* the arguments */}
+      <motion.section {...rise(0.24)}>
+        <Heading>Six decisions I would defend.</Heading>
+        <Decisions items={DECISIONS} />
+      </motion.section>
 
-                            <div className="py-4 font-bold text-slate-500 uppercase tracking-widest text-xs flex items-center gap-2">Backstage</div>
-                            <div className="bg-slate-800/50 border border-slate-700/50 rounded p-3 text-slate-500 text-center italic">Fully Automated</div>
-                            <div className="bg-emerald-900/20 border border-emerald-800/30 rounded p-3 text-emerald-300 font-bold">Order stored in Dashboard</div>
-                            <div className="bg-emerald-900/20 border border-emerald-800/30 rounded p-3 text-emerald-300 font-bold">Telegram alert → Kitchen</div>
-
-                            <div className="py-4 font-bold text-slate-500 uppercase tracking-widest text-xs flex items-center gap-2">Support Systems</div>
-                            <div className="bg-slate-800/50 border border-slate-700/50 rounded p-3 text-slate-400">Web App Database</div>
-                            <div className="bg-slate-800/50 border border-slate-700/50 rounded p-3 text-slate-400 flex gap-2"><span className="bg-[#5f259f] text-white px-2 rounded font-bold uppercase text-[10px] flex items-center shadow-sm">PhonePe</span></div>
-                            <div className="bg-slate-800/50 border border-slate-700/50 rounded p-3 text-slate-400 flex gap-2"><span className="bg-[#229ED9] text-white px-2 rounded font-bold uppercase text-[10px] flex items-center shadow-sm">Telegram API</span></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* 2. Information Architecture */}
-            <section className="bg-ground py-32 px-6 w-full text-ink border-b border-rule fade-in-up">
-                <div className="max-w-6xl mx-auto">
-                    <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-8">2. Information Architecture</h2>
-                    <p className="text-xl md:text-2xl text-muted mb-16 max-w-3xl leading-relaxed font-medium">
-                        A flat, linear architecture built for extreme speed. No dead ends, no complex navigation trees—a direct funnel from discovery to payment to confirmation.
-                    </p>
-
-                    <div className="bg-[#fcfbf9] rounded-3xl p-8 md:p-12 border border-[#e5e5e5] shadow-sm overflow-x-auto relative" style={{ backgroundImage: 'radial-gradient(#d4d4d4 1px, transparent 0)', backgroundSize: '24px 24px' }}>
-                        <div className="min-w-[800px] flex flex-col items-center gap-4 font-medium text-sm">
-
-                            <div className="flex gap-16">
-                                <div className="bg-[#fff9c4] shadow-sm border border-[#fff59d] px-6 py-4 rounded-xl text-ink font-bold text-center w-52 relative z-10 hover:-translate-y-1 transition-transform">
-                                    <i className="ph-fill ph-qr-code text-3xl mb-2 text-faint block"></i>
-                                    Table QR Code
-                                </div>
-                                <div className="bg-[#fff9c4] shadow-sm border border-[#fff59d] px-6 py-4 rounded-xl text-ink font-bold text-center w-52 relative z-10 hover:-translate-y-1 transition-transform">
-                                    <i className="ph-fill ph-instagram-logo text-3xl mb-2 text-pink-500 block"></i>
-                                    Instagram Bio Link
-                                </div>
-                            </div>
-
-                            <div className="flex gap-[160px] text-faint">
-                                <i className="ph-bold ph-arrow-down text-2xl"></i>
-                                <i className="ph-bold ph-arrow-down text-2xl"></i>
-                            </div>
-
-                            <div className="bg-[#e0f2fe] shadow-sm border border-[#bae6fd] px-8 py-5 rounded-2xl text-sky-900 font-bold text-lg text-center w-[480px] z-10 hover:-translate-y-1 transition-transform">
-                                <i className="ph-fill ph-house text-3xl mb-2 text-sky-500 block"></i>
-                                Main Menu (Single Page)
-                            </div>
-
-                            <i className="ph-bold ph-arrow-down text-2xl text-faint"></i>
-
-                            <div className="flex gap-12 items-start relative pb-4">
-                                <div className="flex flex-col items-center gap-4 mt-8">
-                                    <div className="bg-ground shadow-sm border border-rule px-6 py-3 rounded-xl text-muted text-center w-48 hover:-translate-y-1 transition-transform font-bold text-muted">
-                                        Category Filters
-                                    </div>
-                                    <div className="bg-ground shadow-sm border border-rule px-6 py-3 rounded-xl text-muted text-center w-48 hover:-translate-y-1 transition-transform font-bold text-muted">
-                                        Search Bar
-                                    </div>
-                                    <div className="bg-ground shadow-sm border border-rule px-6 py-3 rounded-xl text-muted text-center w-48 hover:-translate-y-1 transition-transform font-bold text-muted">
-                                        Product Modal
-                                    </div>
-                                </div>
-
-                                <div className="flex items-center gap-2 mt-12">
-                                    <span className="text-xs uppercase tracking-widest font-bold text-faint">Interacts</span>
-                                    <i className="ph-bold ph-arrow-right text-2xl text-faint"></i>
-                                </div>
-
-                                <div className="flex flex-col items-center gap-6">
-                                    <div className="bg-[#eefcf3] shadow-sm border border-[#bbf7d0] px-8 py-5 rounded-3xl text-green-900 font-bold text-center w-72 z-10 hover:-translate-y-1 transition-transform text-lg">
-                                        <i className="ph-fill ph-shopping-cart text-3xl mb-2 text-green-500 block"></i>
-                                        Slide-out Cart
-                                    </div>
-
-                                    <i className="ph-bold ph-arrow-down text-2xl text-faint -mt-2"></i>
-
-                                    <div className="bg-ground shadow-sm border border-rule p-8 rounded-3xl text-ink w-[360px] text-left relative overflow-hidden z-10 hover:-translate-y-1 transition-transform">
-                                        <div className="absolute top-0 left-0 w-1.5 h-full bg-blue-500"></div>
-                                        <h4 className="font-bold text-sm mb-4 uppercase tracking-widest text-faint">Checkout Modal</h4>
-                                        <ul className="space-y-4 font-bold text-muted">
-                                            <li className="flex items-center gap-3"><i className="ph-bold ph-check text-blue-500 text-lg"></i> Contact Details & Address</li>
-                                            <li className="flex items-center gap-3"><i className="ph-bold ph-check text-blue-500 text-lg"></i> Order Type (Delivery/Pickup)</li>
-                                            <li className="flex items-center gap-3"><i className="ph-bold ph-check text-blue-500 text-lg"></i> Kitchen Notes</li>
-                                        </ul>
-                                    </div>
-
-                                    <i className="ph-bold ph-arrow-down text-2xl text-faint -mt-2"></i>
-
-                                    <div className="flex gap-6">
-                                        <div className="bg-[#f3e8ff] shadow-sm border border-[#e9d5ff] px-6 py-4 rounded-xl text-purple-900 font-bold text-center w-48 relative z-10 hover:-translate-y-1 transition-transform">
-                                            <i className="ph-fill ph-currency-inr text-3xl mb-2 text-purple-500 block"></i>
-                                            UPI Deep Link
-                                        </div>
-                                        <div className="bg-[#fef2f2] shadow-sm border border-[#fecaca] px-6 py-4 rounded-xl text-red-900 font-bold text-center w-48 relative z-10 hover:-translate-y-1 transition-transform">
-                                            <i className="ph-fill ph-paper-plane-tilt text-3xl mb-2 text-red-500 block"></i>
-                                            Telegram Alert
-                                        </div>
-                                    </div>
-
-                                    <i className="ph-bold ph-arrow-down text-2xl text-faint -mt-2"></i>
-
-                                    <div className="bg-slate-800 shadow-md border border-slate-700 px-8 py-5 rounded-3xl text-white font-bold text-center w-full z-10">
-                                        <i className="ph-fill ph-check-circle text-3xl mb-2 text-green-400 block"></i>
-                                        WhatsApp Confirmation
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* 3. The Solution & UX Decisions */}
-            <section className="bg-ground py-32 px-6 w-full border-t border-rule fade-in-up">
-                <div className="max-w-6xl mx-auto space-y-24">
-
-                    {/* Solution + UX Decisions side-by-side */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
-
-                        {/* The Solution */}
-                        <div>
-                            <div className="w-16 h-1 bg-blue-500 mb-8"></div>
-                            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-ink mb-10">3. The Solution</h2>
-                            <div className="space-y-8">
-                                <div>
-                                    <h4 className="text-xl font-bold text-ink mb-2">1. Branded Web Interface</h4>
-                                    <p className="text-faint leading-relaxed">Mobile-first structured menu with real-time item availability. No login, no download, no friction at the door.</p>
-                                </div>
-                                <div>
-                                    <h4 className="text-xl font-bold text-ink mb-2">2. Structured Checkout</h4>
-                                    <p className="text-faint leading-relaxed">Cart, kitchen notes, GPS location capture, and a UPI deep link—all in a single scrollable form. Every required field is enforced at the UI level, so the owner never receives an incomplete order.</p>
-                                </div>
-                                <div>
-                                    <h4 className="text-xl font-bold text-ink mb-2">3. Automated Communication Layer</h4>
-                                    <p className="text-faint leading-relaxed">Orders route straight to a central Dashboard and trigger a Telegram alert to the kitchen. The owner is removed from the relay chain entirely.</p>
-                                </div>
-                            </div>
-                            <p className="mt-10 text-xl font-bold text-blue-600 italic">&quot;This was not a UI redesign. It was a systems redesign.&quot;</p>
-                        </div>
-
-                        {/* UX Decisions — expanded with tradeoffs */}
-                        <div>
-                            <div className="w-16 h-1 bg-rule mb-8"></div>
-                            <h2 className="text-3xl font-bold tracking-tight text-ink mb-10">UX Decisions</h2>
-                            <div className="space-y-4">
-                                <div className="bg-ground border border-rule rounded-2xl p-6 shadow-sm">
-                                    <h4 className="font-bold text-ink mb-2">No login barrier</h4>
-                                    <p className="text-faint text-sm leading-relaxed">WhatsApp needed zero setup, so any signup gate would kill conversion instantly. Requiring account creation adds 2–3 minutes of friction for a ₹200 order. A session-based approach captured everything the business needed without asking the customer for anything upfront.</p>
-                                </div>
-                                <div className="bg-ground border border-rule rounded-2xl p-6 shadow-sm">
-                                    <h4 className="font-bold text-ink mb-2">Web-first, not a native app</h4>
-                                    <p className="text-faint text-sm leading-relaxed">App store installs add review delays and require maintenance overhead. A mobile web app delivers identical UX with zero download barrier, works on every device from day one, and can be updated instantly without a release cycle.</p>
-                                </div>
-                                <div className="bg-ground border border-rule rounded-2xl p-6 shadow-sm">
-                                    <h4 className="font-bold text-ink mb-2">WhatsApp kept as a trust layer, not an ordering channel</h4>
-                                    <p className="text-faint text-sm leading-relaxed">Customers had built habits around WhatsApp confirmation. Cutting it entirely would have created anxiety. Keeping it as a one-way confirmation signal preserved that trust without reintroducing the chaos of conversational ordering.</p>
-                                </div>
-                                <div className="bg-ground border border-rule rounded-2xl p-6 shadow-sm">
-                                    <h4 className="font-bold text-ink mb-2">Telegram for internal ops, not WhatsApp</h4>
-                                    <p className="text-faint text-sm leading-relaxed">WhatsApp business notifications get buried in personal chat noise and lack a reliable API. Telegram&apos;s bot API delivers structured, persistent, actionable alerts directly to the kitchen channel—even when the owner is away from the counter.</p>
-                                </div>
-                                <div className="bg-ground border border-rule rounded-2xl p-6 shadow-sm">
-                                    <h4 className="font-bold text-ink mb-2">Central dashboard as single source of truth</h4>
-                                    <p className="text-faint text-sm leading-relaxed">Without a central record, the owner recalled orders from memory or scrolled back through chat history. The dashboard eliminated this entirely, made shift handoffs possible, and created a searchable order history for the first time.</p>
-                                </div>
-                                <div className="bg-ground border border-rule rounded-2xl p-6 shadow-sm">
-                                    <h4 className="font-bold text-ink mb-2">Minimal fields by default</h4>
-                                    <p className="text-faint text-sm leading-relaxed">Users order on mobile networks during lunch breaks. Every extra field is an abandonment risk. We counted required inputs, cut anything not strictly needed for fulfillment, and converted every typing task into a tapping task wherever the data allowed it.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Iteration: Checkout Redesign */}
-                    <div>
-                        <h2 className="text-3xl font-bold tracking-tight text-ink mb-6">Iteration: The Checkout</h2>
-                        <div className="bg-ground border border-rule p-6 rounded-2xl shadow-sm">
-                            <p className="text-muted font-medium leading-relaxed">
-                                <strong>Step 1:</strong> Structured address capture with GPS or a Google Maps link, plus kitchen notes—replacing the ambiguous WhatsApp text field entirely. Every input enforced at the UI level.
-                                <br /><br />
-                                <strong>Step 2:</strong> A hardcoded PhonePe deep link with the exact order total pre-filled. No manual amount entry, no screenshot verification, no payment mismatch possible.
-                                <br /><br />
-                                <strong>Why it matters:</strong> Converting a typing task into a tapping task removed the owner&apos;s most time-consuming verification step and eliminated the largest source of order errors.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* 4. The Shipped Product */}
-            <section className="bg-ground py-32 px-6 w-full border-t border-rule fade-in-up">
-                <div className="max-w-6xl mx-auto">
-                    <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-ink mb-16 text-center">4. The Shipped Product</h2>
-
-                    {/* Looping Recording */}
-                    <div className="bg-raised rounded-[2.5rem] p-4 md:p-8 shadow-inner overflow-hidden flex justify-center mb-24 max-w-5xl mx-auto">
-                        <div className="w-full rounded-2xl overflow-hidden shadow-xl border border-rule relative group bg-ground">
-                            <Image src="/assets/recording.webp" alt="Full app flow: Menu, Cart, Checkout, Confirmation" className="w-full h-auto object-cover" width={1200} height={738} sizes="(max-width: 1024px) 100vw, 960px" unoptimized />
-                        </div>
-                    </div>
-
-                    {/* Customer Flow */}
-                    <div className="mb-24">
-                        <h3 className="text-2xl font-bold text-ink mb-12 flex items-center gap-3">
-                            <i className="ph-fill ph-device-mobile text-blue-600"></i> Customer Flow
-                        </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 pb-12">
-                            <div className="relative group mx-auto max-w-[320px] md:max-w-none">
-                                <Image src="/assets/cs-menu-reopen.png" alt="Menu with real-time availability and Veg/Non-Veg filters" className="w-full h-auto rounded-[2rem] shadow-xl border-4 border-rule" width={1170} height={2532} sizes="(max-width: 768px) 100vw, 960px" />
-                                <div className="absolute sm:-right-8 -right-4 top-16 bg-ground/95 backdrop-blur-md px-5 py-3 rounded-2xl shadow-xl border border-rule rotate-3 z-10 font-bold text-blue-600 max-w-[200px]" style={{ fontFamily: 'var(--font-caveat), cursive', fontSize: '1.5rem', lineHeight: '1.2' }}>
-                                    Real-time filtering & availability checks.
-                                </div>
-                            </div>
-                            <div className="relative group mx-auto max-w-[320px] md:max-w-none mt-12 md:mt-0">
-                                <Image src="/assets/cs-checkout-scroll.png" alt="Checkout form: address capture, order type, and kitchen notes" className="w-full h-auto rounded-[2rem] shadow-xl border-4 border-rule" width={1170} height={2532} sizes="(max-width: 768px) 100vw, 960px" />
-                                <div className="absolute sm:-left-12 -left-4 top-1/2 bg-ground/95 backdrop-blur-md px-5 py-3 rounded-2xl shadow-xl border border-rule -rotate-2 z-10 font-bold text-blue-600 max-w-[200px]" style={{ fontFamily: 'var(--font-caveat), cursive', fontSize: '1.5rem', lineHeight: '1.2' }}>
-                                    Structured data capture ends WhatsApp chaos.
-                                </div>
-                            </div>
-                            <div className="relative group mx-auto max-w-[320px] md:max-w-none mt-12 md:mt-0">
-                                <Image src="/assets/cs-checkout-payment.png" alt="PhonePe payment: exact order total pre-filled via UPI deep link" className="w-full h-auto rounded-[2rem] shadow-xl border-4 border-rule" width={1170} height={4641} sizes="(max-width: 768px) 100vw, 960px" />
-                                <div className="absolute sm:-right-8 -right-4 bottom-32 bg-ground/95 backdrop-blur-md px-5 py-3 rounded-2xl shadow-xl border border-rule -rotate-3 z-10 font-bold text-blue-600 max-w-[200px]" style={{ fontFamily: 'var(--font-caveat), cursive', fontSize: '1.5rem', lineHeight: '1.2' }}>
-                                    Exact total pre-filled. Zero manual entry, zero mismatch.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Backend / Operations */}
-                    <div className="bg-raised p-8 md:p-16 rounded-[3rem] border border-rule w-[100vw] relative left-1/2 -translate-x-1/2 shadow-inner">
-                        <h3 className="text-2xl font-bold text-ink mb-12 flex items-center justify-center gap-3">
-                            <i className="ph-fill ph-cpu text-amber-500"></i> Backend & Operations
-                        </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 max-w-4xl mx-auto">
-                            <div className="relative group mx-auto max-w-[320px] md:max-w-none">
-                                <Image src="/assets/cs-admin-panel.png" alt="Admin Panel: restaurant status toggle and closing message" className="w-full h-auto rounded-[2rem] shadow-xl border-4 border-white" width={1170} height={2532} sizes="(max-width: 768px) 100vw, 960px" />
-                                <div className="absolute sm:-left-12 -left-4 top-24 bg-ground/95 backdrop-blur-md px-5 py-3 rounded-2xl shadow-xl border border-rule rotate-2 z-10 font-bold text-amber-600 max-w-[220px]" style={{ fontFamily: 'var(--font-caveat), cursive', fontSize: '1.5rem', lineHeight: '1.2' }}>
-                                    Zero-dependency toggle for the owner.
-                                </div>
-                            </div>
-                            <div className="relative group mx-auto max-w-[320px] md:max-w-none mt-12 md:mt-0">
-                                <Image src="/assets/cs-admin-orders.png" alt="Admin panel: menu availability management and coupon control" className="w-full h-auto rounded-[2rem] shadow-xl border-4 border-emerald-50" width={1170} height={2532} sizes="(max-width: 768px) 100vw, 960px" />
-                                <div className="absolute sm:-right-16 -right-4 top-1/3 bg-ground/95 backdrop-blur-md px-5 py-3 rounded-2xl shadow-xl border border-rule -rotate-2 z-10 font-bold text-emerald-600 max-w-[240px]" style={{ fontFamily: 'var(--font-caveat), cursive', fontSize: '1.5rem', lineHeight: '1.2' }}>
-                                    Live item availability & coupon control—no dev needed.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* 5. Impact */}
-            <section className="bg-ground py-32 px-6 w-full border-t border-rule fade-in-up">
-                <div className="max-w-6xl mx-auto">
-                    <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-ink mb-8 text-center">5. Impact <span className="text-faint font-light text-2xl md:text-3xl block mt-2">(2-Week Pilot)</span></h2>
-
-                    <div className="bg-ground rounded-3xl border border-rule shadow-sm overflow-hidden mb-12">
-                        <table className="w-full text-left border-collapse">
-                            <thead>
-                                <tr className="bg-raised border-b border-rule text-sm uppercase tracking-widest text-faint">
-                                    <th className="p-4 md:p-6 font-bold">Metric</th>
-                                    <th className="p-4 md:p-6 font-bold border-l border-rule">Before</th>
-                                    <th className="p-4 md:p-6 font-bold border-l border-rule text-blue-600">After</th>
-                                </tr>
-                            </thead>
-                            <tbody className="text-[17px] md:text-lg font-medium text-muted divide-y divide-rule">
-                                <tr>
-                                    <td className="p-4 md:p-6">Avg handling time (per order)</td>
-                                    <td className="p-4 md:p-6 border-l border-rule text-red-500">6–8 min</td>
-                                    <td className="p-4 md:p-6 border-l border-rule text-green-600 font-bold">2–3 min</td>
-                                </tr>
-                                <tr>
-                                    <td className="p-4 md:p-6">Clarification messages (Rush Hour)</td>
-                                    <td className="p-4 md:p-6 border-l border-rule text-red-500">~12–15 messages</td>
-                                    <td className="p-4 md:p-6 border-l border-rule text-green-600 font-bold">2–3 messages</td>
-                                </tr>
-                                <tr>
-                                    <td className="p-4 md:p-6">Payment mismatches (Weekly)</td>
-                                    <td className="p-4 md:p-6 border-l border-rule text-red-500">~8–10 mismatches</td>
-                                    <td className="p-4 md:p-6 border-l border-rule text-green-600 font-bold">1–2 mismatches</td>
-                                </tr>
-                                <tr>
-                                    <td className="p-4 md:p-6">Owner relay dependency</td>
-                                    <td className="p-4 md:p-6 border-l border-rule text-red-500">5 manual steps</td>
-                                    <td className="p-4 md:p-6 border-l border-rule text-green-600 font-bold">1 oversight step</td>
-                                </tr>
-                                <tr>
-                                    <td className="p-4 md:p-6">Order visibility</td>
-                                    <td className="p-4 md:p-6 border-l border-rule text-red-500">Fragmented</td>
-                                    <td className="p-4 md:p-6 border-l border-rule text-green-600 font-bold">Centralized</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div className="text-center space-y-4 max-w-3xl mx-auto">
-                        <p className="text-2xl text-ink font-bold">The café shifted from conversation-driven operations to system-driven operations.</p>
-                        <div className="flex flex-wrap justify-center gap-4 text-sm font-bold uppercase tracking-widest text-blue-600 pt-4">
-                            <span className="bg-blue-50 px-4 py-2 rounded-full border border-blue-100 shadow-sm">Peak-hour stress reduced</span>
-                            <span className="bg-blue-50 px-4 py-2 rounded-full border border-blue-100 shadow-sm">Order reliability improved</span>
-                            <span className="bg-blue-50 px-4 py-2 rounded-full border border-blue-100 shadow-sm">Operational clarity increased</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* 6. What's Next */}
-            <section className="bg-slate-900 text-white py-32 px-6 w-full fade-in-up">
-                <div className="max-w-6xl mx-auto">
-                    <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">6. What&apos;s Next</h2>
-                    <p className="text-xl text-slate-400 mb-16 max-w-3xl font-medium leading-relaxed">
-                        The current system solves the core ordering problem. These are the natural extensions that would compound that value—none were in scope, but all would be defensible next investments.
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div className="bg-slate-800/50 border border-slate-700/50 rounded-3xl p-8">
-                            <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-6">
-                                <i className="ph-fill ph-map-pin text-blue-400 text-2xl"></i>
-                            </div>
-                            <h3 className="text-xl font-bold text-white mb-3">Real-time Order Tracking</h3>
-                            <p className="text-slate-400 leading-relaxed text-sm">Customers get a WhatsApp confirmation but have no visibility into preparation status. A 3-state tracker (Received → Preparing → Out for Delivery) would cut &quot;where&apos;s my order?&quot; messages—currently the most common post-order query.</p>
-                        </div>
-                        <div className="bg-slate-800/50 border border-slate-700/50 rounded-3xl p-8">
-                            <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-6">
-                                <i className="ph-fill ph-clock text-amber-400 text-2xl"></i>
-                            </div>
-                            <h3 className="text-xl font-bold text-white mb-3">Estimated Delivery Time</h3>
-                            <p className="text-slate-400 leading-relaxed text-sm">Delivery fee is calculated by distance, but delivery time isn&apos;t surfaced. An ETA based on kitchen queue depth plus distance would set clearer expectations and eliminate the anxiety that drives post-order messages before they become support requests.</p>
-                        </div>
-                        <div className="bg-slate-800/50 border border-slate-700/50 rounded-3xl p-8">
-                            <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-6">
-                                <i className="ph-fill ph-arrow-clockwise text-emerald-400 text-2xl"></i>
-                            </div>
-                            <h3 className="text-xl font-bold text-white mb-3">Repeat Order & Saved Preferences</h3>
-                            <p className="text-slate-400 leading-relaxed text-sm">Many customers order the same items on a weekly cycle. A &quot;reorder last&quot; shortcut with a saved delivery address would collapse the entire checkout to 2 taps for returning customers—the highest-value cohort for a hyperlocal café.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-        </main>
-    );
+      <motion.section {...rise(0.26)} className="mt-14">
+        <p>
+          The café runs on it today at{' '}
+          <a href="https://www.hoychoycafe.com/" target="_blank" rel="noopener noreferrer" className="prose-link">hoychoycafe.com</a>.
+          Back to <Link href="/#work" className="prose-link">the work index</Link>, or read{' '}
+          <Link href="/kizuku" className="prose-link">Kizuku</Link>.
+        </p>
+      </motion.section>
+    </main>
+  )
 }

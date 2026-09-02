@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
 import KizukuInteractions from '../components/kizuku-interactions'
+import { Back, Decisions, Facts, Heading, Rule, Shots } from '../components/case-study'
 
 // Carried over from the long version — the substance, without the scaffolding.
 const FACTS = [
@@ -34,18 +35,6 @@ const SCREENS = [
   ['/kizuku/screens/Garden-1.png', 'day 8. something grew.'],
 ]
 
-function Rule() {
-  return <div className="my-14" style={{ height: 1, background: 'var(--rule)' }} />
-}
-
-function Heading({ children }) {
-  return (
-    <h2 className="mb-4" style={{ color: 'var(--ink)', fontSize: '1.35rem', lineHeight: 1.3, fontWeight: 500, letterSpacing: '-0.01em' }}>
-      {children}
-    </h2>
-  )
-}
-
 export default function Kizuku() {
   const reduceMotion = useReducedMotion()
 
@@ -58,7 +47,7 @@ export default function Kizuku() {
   return (
     <main className="measure min-h-screen pb-40 pt-20 sm:pt-28">
       <motion.div {...rise(0)}>
-        <Link href="/#work" className="prose-link text-[0.95rem]">← Work</Link>
+        <Back />
       </motion.div>
 
       {/* ─── what it is, in the first screen ─────────────────────────────── */}
@@ -80,14 +69,7 @@ export default function Kizuku() {
         </p>
       </motion.header>
 
-      <motion.dl {...rise(0.1)} className="mt-10">
-        {FACTS.map(([k, v]) => (
-          <div key={k} className="index-row">
-            <dt className="text-faint">{k}</dt>
-            <dd style={{ color: 'var(--ink)', textAlign: 'right' }}>{v}</dd>
-          </div>
-        ))}
-      </motion.dl>
+      <motion.div {...rise(0.1)}><Facts rows={FACTS} /></motion.div>
 
       <motion.p {...rise(0.14)} className="mt-8">
         <a href="https://www.figma.com/proto/80dVRiAfseQp409VZtvZZ6/Kizuku?node-id=160-994&t=xcyzJ9w5g52hdI6V-1" target="_blank" rel="noopener noreferrer" className="prose-link">Figma prototype</a>
@@ -157,20 +139,7 @@ export default function Kizuku() {
           there is nothing to tab out to in the middle of the ritual.
         </p>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-8">
-          {SCREENS.map(([src, caption]) => (
-            <figure key={src} className="m-0">
-              <img
-                src={src}
-                alt={caption}
-                loading="lazy"
-                className="w-full h-auto rounded-xl"
-                style={{ border: '1px solid var(--rule)' }}
-              />
-              <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem', lineHeight: 1.45 }}>{caption}</figcaption>
-            </figure>
-          ))}
-        </div>
+        <Shots items={SCREENS} />
       </motion.section>
 
       <Rule />
@@ -194,21 +163,7 @@ export default function Kizuku() {
       {/* ─── the arguments ───────────────────────────────────────────────── */}
       <motion.section {...rise(0.26)}>
         <Heading>Five decisions I would defend.</Heading>
-        <div className="mt-6">
-          {DECISIONS.map(([title, body], i) => (
-            <div key={title} className="py-5" style={{ borderBottom: '1px solid var(--rule)' }}>
-              <div className="flex gap-4">
-                <span className="text-faint tabular-nums" style={{ fontSize: '0.9rem', paddingTop: '0.15rem' }}>
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <div>
-                  <p style={{ color: 'var(--ink)' }}>{title}</p>
-                  <p className="text-faint mt-1" style={{ fontSize: '0.95rem' }}>{body}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        <Decisions items={DECISIONS} />
       </motion.section>
 
       <motion.section {...rise(0.28)} className="mt-14">
