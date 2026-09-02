@@ -108,18 +108,21 @@ export default function Home() {
           height={756}
           sizes="72px"
           priority
-          className="mb-12 h-auto w-[72px]"
+          className="mb-7 h-auto w-[72px]"
         />
       </motion.div>
 
       <motion.div {...rise(0.06)} className="space-y-5">
         <Greeting />
 
-        <p>
-          I’m{' '}
-          <LetterSwap className="text-ink font-medium">Ayushman</LetterSwap>
-          , an interaction designer who ships the code.
-        </p>
+        {/* The one sentence the whole page exists to deliver, at the size the
+            case studies give their own openings. It was set at 17px — the same
+            as everything else — so the page had no element larger than body
+            copy and nothing for a scanner to land on. */}
+        <h1 style={{ color: 'var(--ink)', fontSize: '2rem', lineHeight: 1.2, fontWeight: 500, letterSpacing: '-0.02em' }}>
+          I’m <LetterSwap className="font-medium">Ayushman</LetterSwap>, an interaction designer who
+          ships the code.
+        </h1>
 
         <p>
           A year in security engineering before design, so I build for how systems actually fail.

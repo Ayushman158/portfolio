@@ -137,7 +137,7 @@ export default function SkillsGravity({ items }) {
       // Decorative, so the whole well is hidden from assistive tech rather than
       // read out a second time.
       aria-hidden="true"
-      className="relative mt-6 h-[260px] w-full overflow-hidden rounded-lg border border-rule bg-raised"
+      className="relative mt-6 h-[200px] w-full overflow-hidden rounded-lg border border-rule bg-raised"
     >
       {items.map((item, i) => (
         <div

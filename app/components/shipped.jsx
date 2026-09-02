@@ -29,11 +29,15 @@ export default function Shipped({ label = 'Shipped', items }) {
 
       <div className="track-wide grid gap-x-5 gap-y-10 sm:grid-cols-2">
         {items.map((p) => (
-          <article key={p.name}>
+          /* One card, one hover response, two destinations. The shot and the
+             name used to react separately — hovering the shot scaled it while
+             the name sat still, hovering the name underlined it while the shot
+             sat still — which read as two unrelated controls stacked up. */
+          <article key={p.name} className="group">
             <Link
               href={p.href}
               aria-label={`${p.name} — read the case study`}
-              className="group block overflow-hidden rounded-xl"
+              className="block overflow-hidden rounded-xl"
               style={{ border: '1px solid var(--rule)', background: 'var(--raised)' }}
             >
               <Image
@@ -49,7 +53,12 @@ export default function Shipped({ label = 'Shipped', items }) {
             </Link>
 
             <div className="mt-3 flex items-baseline justify-between gap-4">
-              <Link href={p.href} className="prose-link">{p.name}</Link>
+              <Link
+                href={p.href}
+                className="text-muted transition-colors duration-150 ease-out group-hover:text-ink focus-visible:text-ink"
+              >
+                {p.name}
+              </Link>
               <a
                 href={p.url}
                 target="_blank"
