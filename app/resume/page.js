@@ -64,9 +64,9 @@ export default function Resume() {
       <motion.div {...rise(0.06)} className="space-y-5">
         <h1 className="text-faint text-[0.95rem]">Resume</h1>
         <p>
-          <span className="text-ink font-medium">Ayushman Bharadwaj</span> — UX/UI designer. I turn
-          complex problems into clear, build-ready systems, and align design, tech and business
-          around what matters most: the user.
+          <span className="text-ink font-medium">Ayushman Bharadwaj</span> — interaction designer who
+          ships the code. I turn complex problems into clear, build-ready systems and then build them,
+          aligning design, tech and business around what matters most: the user.
         </p>
         <p className="text-[0.95rem]">
           <a href="tel:+917002400184" className="prose-link">+91 7002400184</a>
