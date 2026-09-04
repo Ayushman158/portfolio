@@ -43,7 +43,7 @@ const SHIPPED = [
 
 // Not live yet, so named rather than shown.
 const BUILDING = [
-  { name: 'Kizuku', year: '2026', href: '/kizuku', video: '/kizuku/tree-animation.mp4' },
+  { name: 'Kizuku', year: '2026', href: '/kizuku', img: '/kizuku/tree-poster.jpg', w: 680, h: 510 },
 ]
 
 // matter-js is ~30 kB gzipped and only matters once this section is reached, so
