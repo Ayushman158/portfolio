@@ -76,7 +76,7 @@ export default function Kizuku() {
       <motion.p {...rise(0.14)} className="mt-8">
         <a href="https://www.figma.com/proto/80dVRiAfseQp409VZtvZZ6/Kizuku?node-id=160-994&t=xcyzJ9w5g52hdI6V-1" target="_blank" rel="noopener noreferrer" className="prose-link">Figma prototype</a>
         {' · '}
-        <a href="/kizuku/Kizuku-Creative-Process.pdf" target="_blank" rel="noopener noreferrer" className="prose-link">Full process, 4 stages (PDF)</a>
+        <Link href="/kizuku/process" className="prose-link">Full process, 4 stages</Link>
       </motion.p>
 
       <Rule />
@@ -181,7 +181,7 @@ export default function Kizuku() {
         <p>
           The complete process — the painting that became the brief, four rejected names, the competitive
           analysis and all eighteen illustrations — is in the{' '}
-          <a href="/kizuku/Kizuku-Creative-Process.pdf" target="_blank" rel="noopener noreferrer" className="prose-link">full case study</a>.
+          <Link href="/kizuku/process" className="prose-link">full process</Link>.
           Back to <Link href="/#work" className="prose-link">the work index</Link>, or read{' '}
           <Link href="/banyan" className="prose-link">Banyan Tree</Link> and{' '}
           <Link href="/case-study" className="prose-link">Hoychoy Cafe</Link>.
