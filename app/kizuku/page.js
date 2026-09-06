@@ -41,11 +41,11 @@ const DECISIONS = [
 // Captured from the running build, not from the Figma comps — this is what
 // the app actually looks like today, Satoshi and all.
 const SCREENS = [
-  ['/kizuku/app/garden.png', 'the garden. the plant is the day-8 optimiser.'],
-  ['/kizuku/app/worry.png', 'write anything. this stays on the device.'],
-  ['/kizuku/app/thinking.png', 'the orb, while the action is chosen'],
-  ['/kizuku/app/action.png', 'one thing. hold the button to commit.'],
-  ['/kizuku/app/growth.png', 'the seed opening, mid-sequence'],
+  ['/kizuku/app/garden.jpg', 'the garden. the planner’s tree at three actions.'],
+  ['/kizuku/app/worry.jpg', 'one worry. it is read once and never stored.'],
+  ['/kizuku/app/action.jpg', '“putting off the file” came back as start.'],
+  ['/kizuku/app/reflection.jpg', 'what happened. this becomes the journal page.'],
+  ['/kizuku/app/growth.jpg', 'the tree at its next stage.'],
 ]
 
 export default function Kizuku() {
@@ -157,8 +157,9 @@ export default function Kizuku() {
       <motion.section {...rise(0.22)}>
         <Heading>The daily loop.</Heading>
         <p className="mb-8">
-          Five screens, one a day, captured from the running build. The tab bar leaves after the garden and comes back at the growth, so
-          there is nothing to tab out to in the middle of the ritual.
+          Five screens, one a day, captured from the app running on an iPhone. The tab bar leaves after the
+          garden and comes back at the growth, so there is nothing to tab out to in the middle of the
+          ritual. The action in the third shot is the one that worry actually produced.
         </p>
 
         <Shots items={SCREENS} />

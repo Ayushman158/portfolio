@@ -61,7 +61,7 @@ const TOOLS = [
 const METHODS = ['UX Research', 'Usability Design', 'Design Thinking', 'Design Systems']
 
 const PLAYGROUND = [
-  { name: 'Motion studies', year: '2026', href: '/motion' },
+  { name: 'Motion studies', year: '2026', href: '/motion', img: '/assets/motion-studies.png', w: 1360, h: 1020 },
   { name: 'FieldNote', year: '2026', href: '/experiments', img: '/assets/fieldnote-ss.png', w: 1200, h: 675 },
 ]
 
