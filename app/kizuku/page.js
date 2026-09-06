@@ -72,13 +72,9 @@ export default function Kizuku() {
         </h1>
 
         <p>
-          It turns one worry into one grounded action, every day, and grows a tree from the doing rather
-          than from the time served. I did the research, the brand, the design system and the iOS build.
-        </p>
-
-        <p>
-          The daily loop runs end to end — onboarding, the ritual, and the growth moment — and the three
-          interactions below are pulled straight out of it.
+          You give it one worry. It gives you one small thing to do today, and your tree grows when you
+          do it — from the doing, not from the days. Research, brand, design system and the iOS build are
+          all mine, and the whole loop runs on a phone.
         </p>
       </motion.header>
 
@@ -92,16 +88,29 @@ export default function Kizuku() {
 
       <Rule />
 
+      {/* ─── the loop ────────────────────────────────────────────────────── */}
+      <motion.section {...rise(0.22)}>
+        <Heading>One worry in, one action out.</Heading>
+        <p className="mb-8">
+          The whole app, in five screens — shot on an iPhone. The action in the middle is the one that
+          worry really produced: “putting off the file” came back as <em>start</em>. The tab bar leaves
+          after the garden and returns at the growth, so there is nothing to wander off to mid-ritual.
+        </p>
+
+        <Shots items={SCREENS} />
+      </motion.section>
+
+      <Rule />
+
       {/* ─── the interesting part, second ────────────────────────────────── */}
       <motion.section {...rise(0.18)}>
         <Heading>Every animation has a reason that fits in one sentence.</Heading>
         <p className="mb-3">
-          If it could not be explained, it was removed. Three of them are here — drag the can, hold the
-          button, replay the growth. Every number is measured from the shipped React Native code, and the
-          release logic is the same function.
+          If it could not be explained, it was removed. Three are playable below. Every number in them is
+          the number the shipped React Native code uses, and the release logic is the same function.
         </p>
         <p className="text-faint mb-8" style={{ fontSize: '0.95rem' }}>
-          Rebuilt for the browser with Motion. They want a pointer or a thumb.
+          Rebuilt for the browser with Motion — they want a pointer or a thumb.
         </p>
 
         <KizukuInteractions />
@@ -120,13 +129,13 @@ export default function Kizuku() {
       <motion.section {...rise(0.2)}>
         <Heading>An underserved market, a precisely defined user.</Heading>
         <p className="mb-4">
-          Future anxiety is a cognitive pattern rather than a disorder — mentally simulating what could go
-          wrong before anything has happened. Every wellness app I reviewed either treats general stress or
-          gamifies self-care. None addressed forward simulation on its own.
+          Future anxiety is a pattern, not a disorder: rehearsing what could go wrong before anything has
+          happened. Every wellness app I reviewed treats general stress or gamifies self-care. None
+          addressed forward simulation on its own.
         </p>
         <p>
-          The quiz sorts you into one of three types in three questions, and the type owns the plant you
-          grow, the copy you read and the surface it sits on.
+          Three questions sort you into a type, and the type decides your tree, your copy, the surface it
+          sits on — and which actions you are ever offered.
         </p>
 
         <div className="track-wide mt-8 grid sm:grid-cols-[1fr_200px] lg:grid-cols-[1fr_300px] gap-8 lg:gap-14 items-start">
@@ -142,7 +151,7 @@ export default function Kizuku() {
           ))}
           </div>
           <figure className="m-0">
-            <img src="/kizuku/app/reveal.png" alt="The seeker's type reveal" loading="lazy"
+            <img src="/kizuku/app/reveal.jpg" alt="The seeker's type reveal" loading="lazy"
               className="w-full h-auto rounded-xl" style={{ border: '1px solid var(--rule)' }} />
             <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem', lineHeight: 1.45 }}>
               the seeker's reveal — the type owns the surface
@@ -153,33 +162,15 @@ export default function Kizuku() {
 
       <Rule />
 
-      {/* ─── the loop ────────────────────────────────────────────────────── */}
-      <motion.section {...rise(0.22)}>
-        <Heading>The daily loop.</Heading>
-        <p className="mb-8">
-          Five screens, one a day, captured from the app running on an iPhone. The tab bar leaves after the
-          garden and comes back at the growth, so there is nothing to tab out to in the middle of the
-          ritual. The action in the third shot is the one that worry actually produced.
-        </p>
-
-        <Shots items={SCREENS} />
-      </motion.section>
-
-      <Rule />
-
       {/* ─── the system ──────────────────────────────────────────────────── */}
       <motion.section {...rise(0.24)}>
         <Heading>The system underneath.</Heading>
         <p className="mb-4">
-          Three faces, each with one job: Newsreader sets what the app says to you, Satoshi sets what the
-          interface says about itself, and Caveat is reserved for the journal, because those words are
-          yours and not ours. All lowercase — a register none of the apps I mapped use. Three tree types
-          across eighteen illustrations, so the personality is visible from the seed. The logo was
-          discovered rather than designed: it came out of a watercolour wash made during research.
-        </p>
-        <p>
-          Colour, type, spacing, motion and components are documented as tokens the build consumes
-          directly, rather than as a picture of a design system.
+          Three faces, each with one job: Newsreader for what the app says to you, Satoshi for what the
+          interface says about itself, Caveat kept for the journal, because those words are the user’s.
+          All lowercase — a register none of the apps I mapped use. Eighteen illustrations, so each tree’s
+          personality is visible from the seed. Colour, type, spacing and motion are tokens the build
+          consumes directly, not a picture of a design system.
         </p>
       </motion.section>
 
@@ -188,15 +179,10 @@ export default function Kizuku() {
       {/* ─── what only the device knew ───────────────────────────────────── */}
       <motion.section {...rise(0.25)}>
         <Heading>Five bugs a browser could not have found.</Heading>
-        <p className="mb-4">
-          Every check I had run until then was a browser at 402&nbsp;&times;&nbsp;874, which is a picture of
-          a phone rather than a phone. The first run on real hardware found five faults in an hour, and
-          four of them were in code I had already reviewed and believed.
-        </p>
         <p className="mb-8">
-          None of them are exotic. They are what a simulated viewport cannot tell you: that a global exists
-          but its properties do not, that a keyboard takes half the screen, that a safe area is not free,
-          that an anti-aliased edge remembers the colour behind it.
+          Every check until then was a browser at 402&nbsp;&times;&nbsp;874, which is a picture of a phone
+          rather than a phone. The first hour on real hardware found five faults — four in code I had
+          already reviewed and believed.
         </p>
 
         <Decisions items={DEVICE} />
