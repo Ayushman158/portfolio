@@ -43,7 +43,7 @@ const DECISIONS = [
 const SCREENS = [
   ['/kizuku/app/garden.jpg', 'the garden. the planner’s tree at three actions.'],
   ['/kizuku/app/worry.jpg', 'one worry. it is read once and never stored.'],
-  ['/kizuku/app/action.jpg', 'the same worry, as a planner: start.'],
+  ['/kizuku/app/action.jpg', '“putting off the file” came back as start.'],
   ['/kizuku/app/reflection.jpg', 'what happened. this becomes the journal page.'],
   ['/kizuku/app/growth.jpg', 'the tree at its next stage.'],
 ]
@@ -92,29 +92,9 @@ export default function Kizuku() {
       <motion.section {...rise(0.22)}>
         <Heading>One worry in, one action out.</Heading>
         <p className="mb-8">
-          Eighteen seconds, recorded off an iPhone, unedited apart from the pauses between taps. The worry
-          is typed live and the action that comes back — <em>reframe</em> — is the one the app actually
-          chose for a seeker. A planner writing the same sentence is offered something else.
-        </p>
-
-        {/* Muted, looping and short enough to read as a moving screenshot. Reduced
-            motion gets the poster and a play button instead of movement it did not ask for. */}
-        <div className="flex justify-center">
-          <video
-            src="/kizuku/reel.mp4"
-            poster="/kizuku/reel-poster.jpg"
-            autoPlay={!reduceMotion}
-            controls={reduceMotion}
-            loop
-            muted
-            playsInline
-            preload="metadata"
-            aria-label="The Kizuku daily loop: the garden, writing a worry, and the action that comes back"
-            style={{ width: '100%', maxWidth: 260, borderRadius: 22, border: '1px solid var(--rule)' }}
-          />
-        </div>
-        <p className="text-faint mt-3 mb-10 text-center" style={{ fontSize: '0.9rem' }}>
-          the loop, on device
+          The whole app, in five screens — shot on an iPhone. The action in the middle is the one that
+          worry really produced: “putting off the file” came back as <em>start</em>. The tab bar leaves
+          after the garden and returns at the growth, so there is nothing to wander off to mid-ritual.
         </p>
 
         <Shots items={SCREENS} />
