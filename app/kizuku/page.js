@@ -10,7 +10,7 @@ const FACTS = [
   ['Role', 'Sole designer and developer'],
   ['Scope', 'Research, brand, design system, iOS build'],
   ['Stack', 'React Native · Expo · Figma'],
-  ['Status', 'In development — the daily loop runs end to end'],
+  ['Status', 'In development — the loop runs end to end on device'],
 ]
 
 const TYPES = [
@@ -19,9 +19,20 @@ const TYPES = [
   { type: 'planner', tree: 'strata tree', quote: 'i need to make sure i am not making a mistake i cannot undo.' },
 ]
 
+// Found the first time the app ran on a phone rather than in a browser
+// pretending to be one. Kept because the specifics are the point.
+const DEVICE = [
+  ['A crash on the very first launch', 'A dev-only shortcut read window.location during render. React Native defines a global window, so the guard around it passed — but location does not exist there, and it would have thrown before anything drew.'],
+  ['The primary button under the keyboard', 'The worry screen focuses its input on entry, so the keyboard is up from the first frame, covering the only button. A KeyboardAvoidingView was already there and doing nothing: padding shrinks the container, but the slip has a minimum height, so nothing inside could yield.'],
+  ['Two reference edges in one layout', 'The garden was measured downward from the top and the prompt card upward from the bottom. That holds until the container changes height — and the safe area takes about 93pt out of it, so the card climbed into the plant.'],
+  ['A white halo on every tree', 'Cutting the illustrations off the white board they were drawn on left the board’s colour in the anti-aliased rim with partial transparency. Invisible on white, a fringe on parchment. About half the edge pixels; now under one percent.'],
+  ['The garden assembling itself', 'Nothing was preloaded, so the screen arrived first and the landscape and the plant a beat later. What a returning user actually saw was a watering can alone on an empty field.'],
+]
+
 const DECISIONS = [
   ['Built for future anxiety, not general stress', 'The apps I reviewed treat anxiety as one broad spectrum. None addressed excessive forward simulation on its own. That gap is what Kizuku is designed for.'],
-  ['Action generation, specified before it was built', 'Tags assign context, hard rules bound what can be asked, a persona filter shapes tone. The spec is documented; the prototype ships six authored actions against it, and the generation layer is the next build.'],
+  ['The type had to actually decide something', 'For a while it did not. The quiz set colours and artwork, and the action was then picked by summing the character codes of your worry — personality was not an input at all. Actions now carry the types they serve, selection rotates least-recently-used inside your own pool, and what you wrote is read once, in memory, to prefer one action over another. It is still never stored.'],
+  ['Six stages, landing on thirty', 'Growth used to finish after a single action, so the metaphor the whole loop builds toward was spent on day one. Three trees at six stages each. The curve opens fast — the second stage arrives immediately, so nobody waits to see that this responds to them — then lengthens to put the last stage at the thirty-day milestone the brand already committed to.'],
   ['Growth tied to emotional labour, not time', 'Forest grows a tree when you sit still. Kizuku grows one when you face something hard. Same mechanic, completely different meaning.'],
   ['No streaks, with the reasoning written down', 'Streaks create performance anxiety in someone who already has it. Missing a day does not shrink the tree. Designed out, not overlooked.'],
   ['Copy decided at word level', '"Start quiz" against "find my tree type" — one word decides whether the user feels assessed or invited. Every line documented with its before and after.'],
@@ -159,9 +170,11 @@ export default function Kizuku() {
       <motion.section {...rise(0.24)}>
         <Heading>The system underneath.</Heading>
         <p className="mb-4">
-          Satoshi throughout, every weight, all lowercase — a register none of the apps I mapped use. Three
-          tree types across eighteen illustrations, so the personality is visible from the seed. The logo
-          was discovered rather than designed: it came out of a watercolour wash made during research.
+          Three faces, each with one job: Newsreader sets what the app says to you, Satoshi sets what the
+          interface says about itself, and Caveat is reserved for the journal, because those words are
+          yours and not ours. All lowercase — a register none of the apps I mapped use. Three tree types
+          across eighteen illustrations, so the personality is visible from the seed. The logo was
+          discovered rather than designed: it came out of a watercolour wash made during research.
         </p>
         <p>
           Colour, type, spacing, motion and components are documented as tokens the build consumes
@@ -171,9 +184,28 @@ export default function Kizuku() {
 
       <Rule />
 
+      {/* ─── what only the device knew ───────────────────────────────────── */}
+      <motion.section {...rise(0.25)}>
+        <Heading>Five bugs a browser could not have found.</Heading>
+        <p className="mb-4">
+          Every check I had run until then was a browser at 402&nbsp;&times;&nbsp;874, which is a picture of
+          a phone rather than a phone. The first run on real hardware found five faults in an hour, and
+          four of them were in code I had already reviewed and believed.
+        </p>
+        <p className="mb-8">
+          None of them are exotic. They are what a simulated viewport cannot tell you: that a global exists
+          but its properties do not, that a keyboard takes half the screen, that a safe area is not free,
+          that an anti-aliased edge remembers the colour behind it.
+        </p>
+
+        <Decisions items={DEVICE} />
+      </motion.section>
+
+      <Rule />
+
       {/* ─── the arguments ───────────────────────────────────────────────── */}
       <motion.section {...rise(0.26)}>
-        <Heading>Five decisions I would defend.</Heading>
+        <Heading>Six decisions I would defend.</Heading>
         <Decisions items={DECISIONS} />
       </motion.section>
 
