@@ -221,8 +221,13 @@ export default function Deck() {
           )
         })}
 
+        {/* Sits below the hand, not across it. Floated top-right it overlapped
+            three sleeves, and because the cards carry an explicit z-index (0-3)
+            while this was z-index:auto, they painted over the text — the note
+            was legible only where no card happened to be. z-10 keeps it above
+            them whatever the layout does next. */}
         <motion.p
-          className="pointer-events-none absolute -top-2 right-0 font-reenie-beanie text-2xl text-accent sm:text-3xl"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-10 text-center font-reenie-beanie text-2xl text-accent sm:text-3xl"
           initial={{ opacity: 0, y: NOTE.liftY, rotate: 0 }}
           animate={{
             opacity: stage >= 3 ? 1 : 0,
