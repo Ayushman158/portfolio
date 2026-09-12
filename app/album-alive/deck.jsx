@@ -46,7 +46,7 @@ const QR = {
   steps: [
     'Scan this with your phone camera',
     'Allow the camera when the site asks',
-    'Point it at the sleeves below, on this screen',
+    'Point it at a sleeve below — fill the frame with one',
   ],
 }
 
@@ -74,12 +74,24 @@ const NOTE = {
   tilt:   -3,    // deg, so it reads as written rather than set
 }
 
-/* The two cards dealt forward */
+/* The two cards dealt forward.
+ *
+ * These are scan targets before they are decoration, so they are sized for the
+ * tracker rather than for the column. MindAR has to match the whole sleeve at
+ * once: when the card is small on screen the phone has to come so close that
+ * the frame holds only part of the artwork, which is the exact condition under
+ * which detection fails. Bigger on screen means the visitor can sit back and
+ * still fill the frame.
+ *
+ * 400px is the ceiling, not a preference — the sources are 800px wide, so
+ * anything larger upscales and goes soft, and a soft target tracks worse than
+ * a small sharp one. */
 const DEALT = {
   spring:       { type: 'spring', stiffness: 280, damping: 30 },
   initialScale: 0.92,
   offsetY:      18,
   stagger:      0.09,   // seconds between the two landing
+  maxWidth:     '25rem', // 400px — the 2x-DPR ceiling for an 800px source
 }
 
 export default function Deck() {
@@ -206,7 +218,9 @@ export default function Deck() {
 
       {/* ── 3. Two on the table ──────────────────────────── */}
       <div className="mt-8">
-        <div className="flex items-start justify-center gap-4 sm:gap-6">
+        {/* Breaks the editorial measure on purpose: this pair is the
+            instrument, and 41rem cannot hold two targets at a scannable size. */}
+        <div className="relative left-1/2 flex w-[min(94vw,54rem)] -translate-x-1/2 items-start justify-center gap-4 sm:gap-8">
           {dealt.map((card, i) => (
             <motion.div
               key={card.id}
@@ -223,9 +237,9 @@ export default function Deck() {
                 alt={`${card.title} by ${card.artist} — scan this sleeve`}
                 width={800}
                 height={1200}
-                sizes="(max-width: 640px) 42vw, 200px"
+                sizes={`(max-width: 640px) 42vw, ${DEALT.maxWidth}`}
                 priority
-                className="w-[150px] rounded-[4px] border border-rule shadow-[0_18px_44px_-18px_rgba(0,0,0,0.55)] sm:w-[200px]"
+                className="w-[min(42vw,25rem)] rounded-[4px] border border-rule shadow-[0_18px_44px_-18px_rgba(0,0,0,0.55)]"
               />
               <p className="mt-2 text-center font-caveat text-lg text-faint">{card.title}</p>
             </motion.div>
@@ -238,7 +252,7 @@ export default function Deck() {
           animate={{ opacity: stage >= 6 ? 1 : 0, y: stage >= 6 ? 0 : NOTE.liftY }}
           transition={NOTE.spring}
         >
-          hold both in frame — it tracks two at once
+          fill the frame with one — or hold both, it tracks two at once
         </motion.p>
       </div>
     </div>
