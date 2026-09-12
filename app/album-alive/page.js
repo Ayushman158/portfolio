@@ -74,7 +74,7 @@ export default function AlbumAlive() {
       <motion.section {...rise(0.28)} className="mt-16">
         <h2 className="text-faint text-[0.95rem] mb-3">Elsewhere</h2>
         <p>
-          <a href="https://web-ar-project.vercel.app/" target="_blank" rel="noopener noreferrer" className="prose-link">Live experience</a>
+          <a href="https://vinylplayer-blond.vercel.app/" target="_blank" rel="noopener noreferrer" className="prose-link">Live experience</a>
           <span className="text-faint"> · </span>
           <a href="https://github.com/Ayushman158/WebAR-Vinyl" target="_blank" rel="noopener noreferrer" className="prose-link">Source on GitHub</a>
           <span className="text-faint"> · </span>

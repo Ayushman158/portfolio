@@ -186,7 +186,7 @@ export default function Deck() {
           <p className="font-reenie-beanie text-3xl text-accent">try it from here →</p>
 
           <a
-            href="https://web-ar-project.vercel.app/"
+            href="https://vinylplayer-blond.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
             className="mt-3 inline-flex rounded-md border border-rule bg-ground p-3 text-ink transition-[transform,border-color] duration-150 ease-out hover:border-faint active:scale-[0.97]"
