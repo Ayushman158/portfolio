@@ -34,6 +34,7 @@ const DECISIONS = [
   ['The type had to actually decide something', 'For a while it did not. The quiz set colours and artwork, and the action was then picked by summing the character codes of your worry — personality was not an input at all. Actions now carry the types they serve, selection rotates least-recently-used inside your own pool, and what you wrote is read once, in memory, to prefer one action over another. It is still never stored.'],
   ['Six stages, landing on thirty', 'Growth used to finish after a single action, so the metaphor the whole loop builds toward was spent on day one. Three trees at six stages each. The curve opens fast — the second stage arrives immediately, so nobody waits to see that this responds to them — then lengthens to put the last stage at the thirty-day milestone the brand already committed to.'],
   ['Growth tied to emotional labour, not time', 'Forest grows a tree when you sit still. Kizuku grows one when you face something hard. Same mechanic, completely different meaning.'],
+  ['The app has to earn the third question', 'It used to arrive on the fourth screen — “what are you most honestly afraid of?”, about forty seconds in, with the button disabled until you picked one of three intimate answers. Finch runs twelve screens of identity before its first emotional question. A screen of plain promises now comes first — no account, the worry is read once and never stored, no streaks — and the fear question can be declined.'],
   ['No streaks, with the reasoning written down', 'Streaks create performance anxiety in someone who already has it. Missing a day does not shrink the tree. Designed out, not overlooked.'],
   ['Copy decided at word level', '"Start quiz" against "find my tree type" — one word decides whether the user feels assessed or invited. Every line documented with its before and after.'],
 ]
@@ -192,7 +193,7 @@ export default function Kizuku() {
 
       {/* ─── the arguments ───────────────────────────────────────────────── */}
       <motion.section {...rise(0.26)}>
-        <Heading>Six decisions I would defend.</Heading>
+        <Heading>Seven decisions I would defend.</Heading>
         <Decisions items={DECISIONS} />
       </motion.section>
 
