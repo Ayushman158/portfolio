@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
 import { Back, Decisions, Facts, Heading, Rule, Shots } from '../components/case-study'
+import { Cards, Findings, Iterations, LoadCurve, Matrix, Morning, Numbers, ORANGE, Screens, Tested, Verdicts } from './visuals'
 
 /*
  * Signal, rebuilt from the research case study. The words are Ayushman's; the
@@ -38,28 +39,54 @@ const MORNING = [
 ]
 
 const METHODS = [
-  ['7 semi-structured interviews', 'Daily commuters across the Dwarka, Noida and Gurgaon corridors. 45–60 minutes each, think-aloud. Recruited through personal networks and corridor WhatsApp groups.'],
-  ['2 observational sessions', 'Rajiv Chowk and HUDA City Centre, peak hours only. Phone use, decision-checking sequences and stress behaviour at the interchange.'],
-  ['DMRC ridership data, FY 2024–25', 'Station-level entry and exit volumes; office commuting is 52% of ridership.'],
-  ['Benchmarking five systems', 'TfL, Tokyo Metro, Singapore SMRT, Berlin BVG and Delhi. The others publish commuter data through open APIs. Delhi collects the same data and surfaces none of it.'],
-  ['Cognitive journey mapping', 'Twelve journeys mapped end to end from transcripts and observation notes — decision points, stress triggers and failure modes at each moment.'],
-  ['App timing study', 'Time-to-information across five transit apps, evaluated against Nielsen Norman heuristics. DMRC Sarthi scored lowest for habitual commuters.'],
+  ['7 semi-structured interviews', 'Dwarka, Noida and Gurgaon commuters. 45–60 minutes, think-aloud.'],
+  ['2 peak-hour observations', 'Rajiv Chowk and HUDA City Centre — phone checks and stress at the interchange.'],
+  ['DMRC ridership, FY 2024–25', 'Station-level entries and exits; office commuting is 52% of ridership.'],
+  ['Five systems benchmarked', 'TfL, Tokyo Metro, Singapore SMRT, Berlin BVG and Delhi.'],
+  ['12 journeys mapped', 'Decision points, stress triggers and failure modes, moment by moment.'],
+  ['App timing study', 'Time-to-information across five apps. DMRC Sarthi scored lowest for habitual commuters.'],
 ]
 
 const FINDINGS = [
-  ['Four apps, no intelligence', 'Commuters with two or more transfers run Google Maps, the DMRC app, WhatsApp groups and the clock at once to approximate what one integrated signal could give them. None of them gives a departure verdict.'],
-  ['INA is the blind transfer', 'Crowding on the connecting line, the corridor walk time and the next Violet Line train are all unknown until you are standing there. “I start checking my phone as soon as we leave Rajiv Chowk.”'],
-  ['The buffer is anxiety management, not planning', '7 of 7 participants add a buffer every day, and they reported losing an average of 34 minutes a day to missing information. What commuters call planning ahead is that cost, paid every morning.'],
-  ['Safety routes before speed', '4 of 7 participants, all women, choose routes by perceived safety — lighting, crowd density, CISF presence — and accept longer journeys to reduce uncertainty. Scoped out of this version; see below.'],
-  ['Support ends at the exit gate', 'Information stops at the metro exit and mode choice is driven by what is visibly available. 89% of riders prefer paid autos over free buses — for predictability, not cost (WRI India 2023, n=7,200).'],
-  ['Delhi collects the data. It doesn’t share it.', 'DMRC records tap-in and tap-out for every journey and publishes no real-time feed — no GTFS-RT, no crowding signal. That constraint shaped the product.'],
+  { stat: '4 apps', viz: ['pills', { items: ['Google Maps', 'DMRC', 'WhatsApp', 'the clock'] }], title: 'Four apps, no intelligence', body: 'Commuters with two or more transfers juggle all four to approximate one signal. None gives a departure verdict.' },
+  { stat: 'INA', title: 'The blind transfer', body: 'Crowding, the corridor walk and the next train are unknown until you are standing there. “I start checking my phone as soon as we leave Rajiv Chowk.”' },
+  { stat: '7 of 7', viz: ['dots', { k: 7, n: 7 }], title: 'The buffer is anxiety management', body: 'Every participant adds a buffer every day. They reported losing an average of 34 minutes a day to missing information.' },
+  { stat: '4 of 7', viz: ['dots', { k: 4, n: 7 }], title: 'Safety routes before speed', body: 'Four participants, all women, choose routes by lighting, crowding and CISF presence. Scoped out of this version.' },
+  { stat: '89%', viz: ['bar', { pct: 89 }], title: 'Support ends at the exit gate', body: 'Of riders prefer paid autos over free buses — for predictability, not cost (WRI India 2023, n=7,200).' },
+  { stat: '0', title: 'Live feeds DMRC publishes', body: 'Every tap-in and tap-out is recorded; no GTFS-RT, no crowding signal is shared. That constraint shaped the product.' },
+]
+
+const COMPETITORS = {
+  columns: ['Departure intelligence', 'Transfer viability', 'First-mile pre-fill', 'Proactive alerts', 'Corridor-specific'],
+  rows: [
+    ['Google Maps', [[1, 'Reactive only'], [0, 'None'], [0, 'None'], [0, 'None'], [0, 'Generic']]],
+    ['DMRC Sarthi', [[1, 'Timetable lookup'], [0, 'None'], [0, 'None'], [0, 'None'], [0, 'Generic']]],
+    ['Moovit', [[1, 'Reactive, per journey'], [0, 'None'], [0, 'None'], [1, 'Generic delays'], [0, 'Generic']]],
+    ['Citymapper (London)', [[2, 'Proactive departure'], [1, 'Limited'], [0, 'None'], [1, 'Disruption alerts'], [1, 'Route-level']]],
+    ['WhatsApp groups', [[1, 'Crowdsourced, delayed'], [1, 'Anecdotal'], [0, 'None'], [1, 'Manual posts'], [2, 'Very corridor-specific']]],
+    ['Signal (concept)', [[2, 'Verdict before leaving'], [2, 'INA verdict before boarding'], [2, 'Rapido pre-filled'], [2, 'Night before + morning'], [2, 'Yellow Line only']], true],
+  ],
+}
+
+const SCREENS = [
+  ['/signal/screens/onboard-confidence.webp', 'Onboarding opens on the number the product lives by.'],
+  ['/signal/screens/onboard-pattern.webp', 'Pattern intelligence, not live tracking — 90 days of corridor data.'],
+  ['/signal/screens/first-mile.webp', 'Setup asks how you reach the metro, with a walking fallback.'],
+  ['/signal/screens/departure.webp', 'The departure signal: leave by 8:28, and why.'],
+  ['/signal/screens/live-first-mile.webp', 'Live, first mile: the Rapido leg, and which coach to board.'],
+  ['/signal/screens/live-metro.webp', 'Live, on the train: on track for a 9:29 arrival.'],
 ]
 
 const STATES = [
-  ['Viable', 'You’ll make it.', '4 min walk · 7 min available'],
-  ['Tight', 'Move briskly.', '6 min walk · 7 min available'],
-  ['Risky', 'Next service.', 'window overrun · next at 9:04'],
-  ['Missed', 'Rebook.', 'a clean fallback, no alarm'],
+  ['Viable', 'You’ll make it.', '4 min walk · 7 min available', '#1F8A5B'],
+  ['Tight', 'Move briskly.', '6 min walk · 7 min available', '#D08A00'],
+  ['Risky', 'Next service.', 'window overrun · next at 9:04', ORANGE],
+  ['Missed', 'Rebook.', 'a clean fallback, no alarm', 'var(--faint)'],
+]
+
+const TESTED = [
+  ['Completed onboarding', 4, 5, 80],
+  ['Read the “Viable” verdict correctly, in under 3 seconds', 4, 5],
 ]
 
 const REJECTED = [
@@ -109,22 +136,33 @@ export default function Signal() {
       <motion.div {...rise(0)}><Back /></motion.div>
 
       <motion.header {...rise(0.06)} className="mt-10 space-y-5">
-        <p className="text-faint" style={{ fontSize: '0.95rem' }}>Signal · 2026</p>
+        <p className="text-faint" style={{ fontSize: '0.95rem' }}>Signal · 2026 · Research</p>
         <h1 style={{ color: 'var(--ink)', fontSize: '2rem', lineHeight: 1.2, fontWeight: 500, letterSpacing: '-0.02em' }}>
           A familiar commute should not start with doubt.
         </h1>
         <p>
           A Delhi Metro companion for the Yellow Line corridor. One screen replaces four apps, and one
-          verdict tells you whether your INA transfer will hold — before you board the train.
-        </p>
-        <p>
-          The project is research-led: seven commuters, two peak-hour observations, five usability
-          sessions, and a confidence model built around the fact that DMRC publishes no live data.
+          verdict tells you when to leave — before you need to.
         </p>
       </motion.header>
 
-      <motion.div {...rise(0.1)}><Facts rows={FACTS} /></motion.div>
-      <motion.p {...rise(0.12)} className="mt-8">
+      {/* The product first. A research case study still has to show what the
+          research turned into before it asks anyone to read the method. */}
+      <motion.figure {...rise(0.1)} className="track-full mt-12">
+        <img
+          src="/research/signal.jpg"
+          alt="Three Signal screens: a lock-screen departure card, the leave-by-8:28 verdict, and a live Yellow Line journey"
+          width={1600}
+          height={900}
+          className="block h-auto w-full rounded-xl"
+        />
+      </motion.figure>
+
+      <motion.div {...rise(0.12)} className="mt-10">
+        <Numbers items={[['7', 'commuter interviews'], ['2', 'peak-hour observations'], ['5', 'usability sessions'], ['14', 'weeks, solo']]} />
+      </motion.div>
+      <motion.div {...rise(0.14)}><Facts rows={FACTS} /></motion.div>
+      <motion.p {...rise(0.16)} className="mt-8">
         <a href={PROTOTYPE} target="_blank" rel="noopener noreferrer" className="prose-link">Try the prototype</a>
         <span className="text-faint"> · 22 screens, 9 phases, lock screen, app and watch</span>
       </motion.p>
@@ -134,96 +172,106 @@ export default function Signal() {
       <section>
         <Heading>One morning. Three decisions. No information.</Heading>
         <p className="mb-8">
-          Before designing a screen I storyboarded the problem — the moments where the system fails a
-          habitual commuter every day.
+          Before designing a screen I storyboarded the moments where the system fails a habitual
+          commuter every day.
         </p>
-        <Shots items={STORYBOARD} cols="grid-cols-1 sm:grid-cols-2" />
+        <Shots items={STORYBOARD} cols="grid-cols-2 lg:grid-cols-4" />
 
-        <p className="mt-10 mb-2 text-faint" style={{ fontSize: '0.95rem' }}>
+        <p className="mt-14 mb-4 text-faint" style={{ fontSize: '0.95rem' }}>
           Jasleen’s commute, Dwarka Sec-21 to HUDA City Centre — a real participant
         </p>
-        <div>
-          {MORNING.map(([time, place, q, what]) => (
-            <div key={time} className="index-row" style={{ gridTemplateColumns: '3.5rem 1fr', alignItems: 'start' }}>
-              <span className="tnum text-faint">{time}</span>
-              <div>
-                <p><span style={{ color: 'var(--ink)' }}>{place}</span> — “{q}”</p>
-                <p className="text-faint" style={{ fontSize: '0.9rem' }}>{what}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+        <Morning items={MORNING} />
 
-        <blockquote className="mt-10 pl-4" style={{ borderLeft: '1px solid var(--rule)' }}>
-          <p>
-            Delhi Metro commuters on multi-stage journeys lack visibility into crowding, transfer
-            viability and last-mile availability. They fall back on experience-based mental models, add
-            daily buffers, and make high-stakes commute decisions under uncertainty.
-          </p>
-        </blockquote>
+        <div className="mt-14">
+          <LoadCurve />
+        </div>
+        <p className="mt-6">
+          Load spikes at three moments — leaving, the INA transfer, and the exit. None of them is an
+          infrastructure problem; each is an information problem.
+        </p>
+        <p className="mt-3 text-faint" style={{ fontSize: '0.85rem' }}>
+          The route is simplified for the concept: one corridor, one interchange.
+        </p>
       </section>
 
       <Rule />
 
       <section>
         <Heading>Three methods, one corridor, real commuters.</Heading>
-        <Decisions items={METHODS} />
-      </section>
-
-      <section className="mt-14">
-        <Heading>Six findings.</Heading>
-        <Decisions items={FINDINGS} />
-      </section>
-
-      <section className="mt-14">
-        <Heading>Two people the research kept returning to.</Heading>
-        <div className="space-y-6">
-          <div>
-            <p style={{ color: 'var(--ink)' }}>Jasleen Kaur, 29 — the daily switcher</p>
-            <p className="mt-1">
-              Dwarka Sec-21 to HUDA City Centre, two transfers, a hard 9:30 standup. Memorises platform
-              positions, runs four apps, and leaves twenty minutes early every day.
-            </p>
-            <p className="mt-2 text-faint">“I leave 20 minutes early every day. Not because I want to — because I have no choice.”</p>
-          </div>
-          <div>
-            <p style={{ color: 'var(--ink)' }}>Priya Mehta, 26 — the late-night commuter</p>
-            <p className="mt-1">
-              Noida Sec-18 to Connaught Place, often alone after 9pm. Routes by perceived safety,
-              crowdsources it over WhatsApp, and avoids stations she has no information about.
-            </p>
-            <p className="mt-2 text-faint">“I avoid Kashmere Gate at night. Not because it is unsafe — because I do not know if it is.”</p>
-          </div>
+        <div className="track-wide">
+          <Cards items={METHODS} cols="sm:grid-cols-2 lg:grid-cols-3" />
         </div>
       </section>
 
-      <Rule />
+      <section className="mt-16">
+        <Heading>Six findings.</Heading>
+        <Findings items={FINDINGS} />
+      </section>
 
-      <section>
-        <Heading>Three decision moments. One product space.</Heading>
-        <p>
-          Cognitive load spikes at three moments — deciding when to leave, the INA transfer, and the
-          exit. None of them is an infrastructure problem; each is an information problem. Of the
-          apps compared, Citymapper comes closest, with proactive departures in London. None of them —
-          Google Maps, DMRC Sarthi, Moovit, corridor WhatsApp groups — judges a Delhi transfer before you
-          board.
+      <section className="mt-16">
+        <Heading>Nobody judges the transfer before you board.</Heading>
+        <p className="mb-8">
+          Five systems benchmarked. Citymapper comes closest, with proactive departures in London —
+          on TfL’s open API. Delhi collects the same data and publishes none of it.
         </p>
-        <p className="mt-4">
+        <Matrix {...COMPETITORS} />
+        <p className="mt-8">
           So Signal is not a navigation app and not a booking agent. It is a companion: pattern
           intelligence that speaks first, shows its reasoning, and leaves every consequential decision to
           the commuter.
         </p>
-        <p className="mt-4">
+      </section>
+
+      <section className="mt-16">
+        <Heading>Two people the research kept returning to.</Heading>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div className="rounded-xl p-5" style={{ border: '1px solid var(--rule)' }}>
+            <p style={{ color: 'var(--ink)' }}>Jasleen Kaur, 29</p>
+            <p className="text-faint" style={{ fontSize: '0.9rem' }}>the daily switcher</p>
+            <p className="mt-3" style={{ fontSize: '0.95rem' }}>
+              Two transfers, a hard 9:30 standup, four apps, and twenty minutes early every day.
+            </p>
+            <p className="mt-3" style={{ color: 'var(--ink)', fontSize: '0.95rem' }}>
+              “I leave 20 minutes early every day. Not because I want to — because I have no choice.”
+            </p>
+          </div>
+          <div className="rounded-xl p-5" style={{ border: '1px solid var(--rule)' }}>
+            <p style={{ color: 'var(--ink)' }}>Priya Mehta, 26</p>
+            <p className="text-faint" style={{ fontSize: '0.9rem' }}>the late-night commuter</p>
+            <p className="mt-3" style={{ fontSize: '0.95rem' }}>
+              Often alone after 9pm. Routes by perceived safety and avoids stations she knows nothing about.
+            </p>
+            <p className="mt-3" style={{ color: 'var(--ink)', fontSize: '0.95rem' }}>
+              “I avoid Kashmere Gate at night. Not because it is unsafe — because I do not know if it is.”
+            </p>
+          </div>
+        </div>
+        <p className="mt-6">
           <span style={{ color: 'var(--ink)' }}>What this version leaves out.</span> Safety was the
-          finding with the sharpest unmet need, and it is scoped out of this version. The signals it would
-          rest on — lighting, crowding by hour, CISF presence — are exactly the data Delhi does not publish
-          (finding 06). It is not a settings toggle, and this version does not pretend to address it.
+          finding with the sharpest unmet need, and it is scoped out. The signals it would rest on —
+          lighting, crowding by hour, CISF presence — are exactly the data Delhi does not publish
+          (finding 06). This version does not pretend to address it.
         </p>
       </section>
 
       <Rule />
 
       <section>
+        <Heading>The prototype.</Heading>
+        <p className="mb-8">
+          22 screens across 9 phases and 3 surfaces — lock screen, app and watch — from a warning the
+          night before to arrival. Signal orange appears only at decision moments; the rest is ink and
+          paper.
+        </p>
+        <Screens items={SCREENS} />
+
+        <p className="mt-14 mb-4 text-faint" style={{ fontSize: '0.95rem' }}>
+          The transfer verdict, in four states — designed for the INA interchange
+        </p>
+        <Verdicts items={STATES} />
+      </section>
+
+      <section className="mt-16">
         <Heading>The morning, as a film.</Heading>
         <p className="mb-8">
           Eighty-five seconds from the night before to arrival, written in React and rendered with
@@ -245,64 +293,29 @@ export default function Signal() {
       <Rule />
 
       <section>
-        <Heading>22 screens, 9 phases, 3 surfaces.</Heading>
-        <p>
-          The information architecture covers the whole commute day, from a warning the night before to
-          arrival, across the lock screen, the app and the watch. Every screen has a defined trigger —
-          a confidence drop below 60%, a geofence, train speed and bearing — and most of the weight sits
-          on the lock screen.
-        </p>
-        <p className="mt-6 mb-2 text-faint" style={{ fontSize: '0.95rem' }}>
-          The core moment: the INA transfer verdict, in four states
-        </p>
-        <div>
-          {STATES.map(([state, verdict, detail]) => (
-            <div key={state} className="index-row" style={{ gridTemplateColumns: '5rem 1fr auto' }}>
-              <span className="text-faint">{state}</span>
-              <span style={{ color: 'var(--ink)' }}>{verdict}</span>
-              <span className="text-faint" style={{ fontSize: '0.9rem', textAlign: 'right' }}>{detail}</span>
-            </div>
-          ))}
-        </div>
-        <p className="mt-6">
-          Signal orange (#FF3E00) appears only at decision moments; 90% of every screen is ink and paper.
-          Across 250 commutes a year, that scarcity is what gives the departure time and the verdict their
-          weight.
-        </p>
+        <Heading>Six principles, each earned from research.</Heading>
+        <Cards items={PRINCIPLES} />
       </section>
 
-      <section className="mt-14">
+      <section className="mt-16">
         <Heading>What I rejected, and why.</Heading>
         <Decisions items={REJECTED} />
-      </section>
-
-      <section className="mt-14">
-        <Heading>Six principles, each earned from research.</Heading>
-        <Decisions items={PRINCIPLES} />
       </section>
 
       <Rule />
 
       <section>
         <Heading>Five participants. Every finding actioned.</Heading>
-        <p>
-          Moderated think-aloud sessions on the prototype, with habitual Yellow Line commuters on the
-          Dwarka–Gurgaon corridor. 4 of 5 completed onboarding (the target was 80%), and 4 of 5 read the
-          S4 “Viable” verdict correctly, in under three seconds.
+        <p className="mb-8">
+          Moderated think-aloud sessions with habitual commuters on the Dwarka–Gurgaon corridor.
         </p>
-        <p className="mt-4">
-          The most useful session was one participant. Anshuman’s “What does pre-fill mean exactly?” turned
-          up in five places: internal terms had leaked into the interface. One session, five fixes.
+        <Tested items={TESTED} />
+        <p className="mt-10">
+          The most useful session was one participant. Anshuman’s “What does pre-fill mean exactly?”
+          turned up in five places: internal terms had leaked into the interface.
         </p>
-        <p className="mt-8 mb-2 text-faint" style={{ fontSize: '0.95rem' }}>Before → after</p>
-        <div>
-          {ITERATIONS.map(([before, after]) => (
-            <div key={before} className="index-row" style={{ gridTemplateColumns: '1fr 1fr' }}>
-              <span className="text-faint">{before}</span>
-              <span style={{ color: 'var(--ink)' }}>{after}</span>
-            </div>
-          ))}
-        </div>
+        <p className="mt-8 mb-3 text-faint" style={{ fontSize: '0.95rem' }}>One session, five fixes</p>
+        <Iterations items={ITERATIONS} />
       </section>
 
       <Rule />
@@ -327,8 +340,7 @@ export default function Signal() {
         <p>
           <a href={PROTOTYPE} target="_blank" rel="noopener noreferrer" className="prose-link">Try the prototype</a>.
           Back to <Link href="/#work" className="prose-link">the work index</Link>, or read{' '}
-          <Link href="/album-alive" className="prose-link">ALBUM//ALIVE</Link> and{' '}
-          <Link href="/kizuku" className="prose-link">Kizuku</Link>.
+          <Link href="/kizuku" className="prose-link">Kizuku</Link>, the other research case study.
         </p>
       </section>
     </main>

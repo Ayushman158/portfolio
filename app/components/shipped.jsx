@@ -19,11 +19,11 @@ import ScrambleText from './scramble-text'
  * study, the domain opens the site. Nesting them would be invalid markup and
  * would also hide the more interesting of the two.
  */
-export default function Shipped({ label = 'Shipped', items }) {
+export default function Shipped({ label = 'Shipped', items, className = 'mt-16' }) {
   const reduceMotion = useReducedMotion()
 
   return (
-    <section className="mt-16">
+    <section className={className}>
       {/* The label rides the track, not the measure: a heading that does not
           share a left edge with the thing it names reads as an accident. */}
       <h2 className="track-wide text-faint text-[0.95rem] mb-4">
@@ -62,18 +62,24 @@ export default function Shipped({ label = 'Shipped', items }) {
               >
                 {p.name}
               </Link>
-              <a
-                href={p.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="prose-link shrink-0"
-                style={{ fontSize: '0.9rem' }}
-              >
-                {/* The address is the "go and look" affordance, and a string of
-                    characters resolving into a domain is the one place on the
-                    page where the effect means something. */}
-                <ScrambleText delay={140 + i * 90}>{p.site}</ScrambleText>
-              </a>
+              {p.url ? (
+                <a
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="prose-link shrink-0"
+                  style={{ fontSize: '0.9rem' }}
+                >
+                  {/* The address is the "go and look" affordance, and a string of
+                      characters resolving into a domain is the one place on the
+                      page where the effect means something. */}
+                  <ScrambleText delay={140 + i * 90}>{p.site}</ScrambleText>
+                </a>
+              ) : (
+                // Research work has nothing live to link to, so the slot says
+                // what the evidence is instead of pretending to be a domain.
+                <span className="text-faint shrink-0" style={{ fontSize: '0.9rem' }}>{p.site}</span>
+              )}
             </div>
 
             <p className="text-faint mt-1" style={{ fontSize: '0.95rem' }}>{p.what}</p>

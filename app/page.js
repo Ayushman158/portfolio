@@ -41,9 +41,28 @@ const SHIPPED = [
   },
 ]
 
-// Not live yet, so named rather than shown.
-const BUILDING = [
-  { name: 'Kizuku', year: '2026', href: '/kizuku', img: '/kizuku/tree-poster.jpg', w: 680, h: 510 },
+// Research-led work. Not live products, so the right-hand slot names the
+// evidence rather than a domain — but shown, not listed: the screens are the
+// argument, and a hover-only preview hid them from every phone.
+const RESEARCH = [
+  {
+    name: 'Kizuku',
+    href: '/kizuku',
+    site: 'In development',
+    shot: '/research/kizuku.jpg',
+    alt: 'Three Kizuku screens: a personality reveal, the garden, and a plant that has grown',
+    what: 'A wellness app for people who overthink the future. One worry in, one small thing to do today — and the tree grows from the doing.',
+    tags: ['Research', 'Brand', 'Design system', 'iOS build'],
+  },
+  {
+    name: 'Signal',
+    href: '/signal',
+    site: '7 interviews · 5 tests',
+    shot: '/research/signal.jpg',
+    alt: 'Three Signal screens: a lock-screen departure card, the leave-by-8:28 verdict, and a live Yellow Line journey',
+    what: 'A Delhi Metro companion that tells you when to leave, before you need to. Concept with a working prototype.',
+    tags: ['Research', 'Interaction', 'Prototype', 'Film'],
+  },
 ]
 
 // matter-js is ~30 kB gzipped and only matters once this section is reached, so
@@ -62,12 +81,11 @@ const METHODS = ['UX Research', 'Usability Design', 'Design Thinking', 'Design S
 
 const PLAYGROUND = [
   { name: 'ALBUM//ALIVE', year: '2026', href: '/album-alive', img: '/album-alive/fan.jpg', w: 1200, h: 900 },
-  { name: 'Signal', year: '2026', href: '/signal', img: '/signal/poster.jpg', w: 1280, h: 720 },
   { name: 'Motion studies', year: '2026', href: '/motion', img: '/assets/motion-studies.png', w: 1360, h: 1020 },
   { name: 'FieldNote', year: '2026', href: '/experiments', img: '/assets/fieldnote-ss.png', w: 1200, h: 675 },
 ]
 
-// Signal, Madi Things and KL Hi-Tech are not live yet, so they are held back
+// Madi Things and KL Hi-Tech are not live yet, so they are held back
 // rather than listed as work a visitor cannot reach.
 function Greeting() {
   const [hour, setHour] = useState(null)
@@ -136,7 +154,7 @@ export default function Home() {
 
       <motion.div {...rise(0.12)}>
         <Shipped items={SHIPPED} />
-        <WorkIndex label="In progress" items={BUILDING} />
+        <Shipped label="Research" items={RESEARCH} className="mt-20" />
         <WorkIndex label="Playground" items={PLAYGROUND} />
       </motion.div>
 
