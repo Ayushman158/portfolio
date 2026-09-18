@@ -343,7 +343,7 @@ export default function Signal() {
         <p>
           <a href={PROTOTYPE} target="_blank" rel="noopener noreferrer" className="prose-link">Try the prototype</a>.
           Back to <Link href="/#work" className="prose-link">the work index</Link>, or read{' '}
-          <Link href="/kizuku" className="prose-link">Kizuku</Link>, the other research case study.
+          <Link href="/kizuku" className="prose-link">Kizuku</Link>.
         </p>
       </section>
     </main>

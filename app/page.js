@@ -41,7 +41,7 @@ const SHIPPED = [
   },
 ]
 
-// Research-led work. Not live products, so the right-hand slot names the
+// Case studies of work that is not live, so the right-hand slot names the
 // evidence rather than a domain — but shown, not listed: the screens are the
 // argument, and a hover-only preview hid them from every phone.
 const RESEARCH = [
@@ -52,7 +52,7 @@ const RESEARCH = [
     shot: '/research/kizuku.jpg',
     alt: 'Three Kizuku screens: a personality reveal, the garden, and a plant that has grown',
     what: 'A wellness app for people who overthink the future. One worry in, one small thing to do today — and the tree grows from the doing.',
-    tags: ['Research', 'Brand', 'Design system', 'iOS build'],
+    tags: ['Brand', 'Design system', 'Interaction', 'iOS build'],
   },
   {
     name: 'Signal',
@@ -154,7 +154,7 @@ export default function Home() {
 
       <motion.div {...rise(0.12)}>
         <Shipped items={SHIPPED} />
-        <Shipped label="Research" items={RESEARCH} className="mt-20" />
+        <Shipped label="Case studies" items={RESEARCH} className="mt-20" />
         <WorkIndex label="Playground" items={PLAYGROUND} />
       </motion.div>
 

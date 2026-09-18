@@ -3,7 +3,8 @@
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
 import KizukuInteractions from '../components/kizuku-interactions'
-import { Back, Decisions, Facts, Heading, Rule, Shots } from '../components/case-study'
+import { Back, Cards, Decisions, Facts, Heading, Rule, Shots } from '../components/case-study'
+import { CompetitorMap, Onboarding, Palette, Plate } from './diagrams'
 
 // Carried over from the long version — the substance, without the scaffolding.
 const FACTS = [
@@ -11,6 +12,7 @@ const FACTS = [
   ['Scope', 'Research, brand, design system, iOS build'],
   ['Stack', 'React Native · Expo · Figma'],
   ['Status', 'In development — the loop runs end to end on device'],
+  ['Testing', 'Reviewed with professors — not yet tested with users'],
 ]
 
 const TYPES = [
@@ -29,13 +31,36 @@ const DEVICE = [
   ['The garden assembling itself', 'Nothing was preloaded, so the screen arrived first and the landscape and the plant a beat later. What a returning user actually saw was a watering can alone on an empty field.'],
 ]
 
+// Placed by hand from the review — a picture of positions, not a measurement.
+const APPS = [['Headspace', 47, 71, 'below'], ['Calm', 40, 63, 'left'], ['Forest', 56, 59, 'right'], ['Finch', 43, 49, 'above'], ['Reflectly', 36, 54, 'left']]
+
+const GROWTH = [
+  ['/kizuku/growth-seeker.webp', 'seeker, the crystal tree — fractures outward at every stage'],
+  ['/kizuku/growth-optimizer.webp', 'optimizer, the spiral tree — coils tighten as it matures'],
+  ['/kizuku/growth-planner.webp', 'planner, the strata tree — wide and patient, mass before height'],
+]
+
+const COLOURS = [
+  ['parchment', '#F2EDE0', 'Every competitor uses white or dark. Parchment signals warmth before a word is read.'],
+  ['forest', '#2C5228', 'The colour of growth, not of calm — away from the blue-grey wellness register.'],
+  ['amber', '#ECD858', 'The kizuku moment, in the logo’s leaf tips. Warm without aggression.'],
+  ['sky', '#A8CEDE', 'The seeker. Unusual, and asks for observation rather than control.'],
+  ['sage', '#A8CA9C', 'The planner. Slow, patient, long-lived — it rewards consistency.'],
+  ['salmon', '#E0906F', 'The moment something arrives: the thirty-day plant, the reward for showing up.'],
+]
+
+// From the app's own commit (2e40e3c): the quiz was the second screen, so the
+// fear question arrived about forty seconds in and could not be skipped.
+const ONBOARDING = {
+  before: [['welcome letter'], ['question 1 · what you do'], ['question 2 · what you do'], ['what are you most honestly afraid of? — required', true]],
+  after: [['welcome letter'], ['four promises', true], ['question 1 · what you do'], ['question 2 · what you do'], ['the fear question — can be declined', true]],
+}
+
 const DECISIONS = [
   ['Built for future anxiety, not general stress', 'The apps I reviewed treat anxiety as one broad spectrum. None addressed excessive forward simulation on its own. That gap is what Kizuku is designed for.'],
   ['The type had to actually decide something', 'For a while it did not. The quiz set colours and artwork, and the action was then picked by summing the character codes of your worry — personality was not an input at all. Actions now carry the types they serve, selection rotates least-recently-used inside your own pool, and what you wrote is read once, in memory, to prefer one action over another. It is still never stored.'],
   ['Six stages, landing on thirty', 'Growth used to finish after a single action, so the metaphor the whole loop builds toward was spent on day one. Three trees at six stages each. The curve opens fast — the second stage arrives immediately, so nobody waits to see that this responds to them — then lengthens to put the last stage at the thirty-day milestone the brand already committed to.'],
   ['Growth tied to emotional labour, not time', 'Forest grows a tree when you sit still. Kizuku grows one when you face something hard. Same mechanic, completely different meaning.'],
-  ['The app has to earn the third question', 'It used to arrive on the fourth screen — “what are you most honestly afraid of?”, about forty seconds in, with the button disabled until you picked one of three intimate answers. Finch runs twelve screens of identity before its first emotional question. A screen of plain promises now comes first — no account, the worry is read once and never stored, no streaks — and the fear question can be declined.'],
-  ['No streaks, with the reasoning written down', 'Streaks create performance anxiety in someone who already has it. Missing a day does not shrink the tree. Designed out, not overlooked.'],
   ['Copy decided at word level', '"Start quiz" against "find my tree type" — one word decides whether the user feels assessed or invited. Every line documented with its before and after.'],
 ]
 
@@ -79,7 +104,17 @@ export default function Kizuku() {
         </p>
       </motion.header>
 
-      <motion.div {...rise(0.1)}><Facts rows={FACTS} /></motion.div>
+      <motion.figure {...rise(0.1)} className="track-full mt-12">
+        <img
+          src="/research/kizuku.jpg"
+          alt="Three Kizuku screens: a personality reveal, the garden, and a plant that has grown"
+          width={1600}
+          height={900}
+          className="block h-auto w-full rounded-xl"
+        />
+      </motion.figure>
+
+      <motion.div {...rise(0.12)}><Facts rows={FACTS} /></motion.div>
 
       <motion.p {...rise(0.14)} className="mt-8">
         <a href="https://www.figma.com/proto/80dVRiAfseQp409VZtvZZ6/Kizuku?node-id=160-994&t=xcyzJ9w5g52hdI6V-1" target="_blank" rel="noopener noreferrer" className="prose-link">Figma prototype</a>
@@ -129,12 +164,15 @@ export default function Kizuku() {
       {/* ─── why it exists ───────────────────────────────────────────────── */}
       <motion.section {...rise(0.2)}>
         <Heading>An underserved market, a precisely defined user.</Heading>
-        <p className="mb-4">
-          Future anxiety is a pattern, not a disorder: rehearsing what could go wrong before anything has
-          happened. Every wellness app I reviewed treats general stress or gamifies self-care. None
-          addressed forward simulation on its own.
-        </p>
-        <p>
+        <div className="space-y-8">
+          <p>
+            Future anxiety is a pattern, not a disorder: rehearsing what could go wrong before anything has
+            happened. Every wellness app I reviewed treats general stress or gamifies self-care. None
+            addressed forward simulation on its own.
+          </p>
+          <CompetitorMap apps={APPS} us={['Kizuku', 76, 20]} />
+        </div>
+        <p className="mt-8">
           Three questions sort you into a type, and the type decides your tree, your copy, the surface it
           sits on — and which actions you are ever offered.
         </p>
@@ -159,6 +197,14 @@ export default function Kizuku() {
             </figcaption>
           </figure>
         </div>
+
+        <h3 className="mt-14 mb-2" style={{ color: 'var(--ink)' }}>Three trees, eighteen illustrations.</h3>
+        <p className="mb-6">Each tree mirrors its type from the first stage — the personality is visible in the seed.</p>
+        <div className="space-y-6">
+          {GROWTH.map(([src, caption]) => (
+            <Plate key={src} src={src} alt={`Six growth stages: ${caption}`} caption={caption} w={929} h={300} />
+          ))}
+        </div>
       </motion.section>
 
       <Rule />
@@ -173,6 +219,14 @@ export default function Kizuku() {
           personality is visible from the seed. Colour, type, spacing and motion are tokens the build
           consumes directly, not a picture of a design system.
         </p>
+
+        <h3 className="mt-12 mb-2" style={{ color: 'var(--ink)' }}>The logo was found, not drawn.</h3>
+        <p className="mb-6">A K, mirrored, and bamboo — resilient, fast-growing, it bends without breaking.</p>
+        <Plate src="/kizuku/logo-formation.webp" alt="The Kizuku mark: a K mirrored and joined with bamboo, and the app icon in five colours" w={908} h={693} />
+
+        <h3 className="mt-12 mb-2" style={{ color: 'var(--ink)' }}>Six colours, each with a reason.</h3>
+        <p className="mb-6">The temperature was found in watercolour, not picked from a swatch.</p>
+        <Palette colours={COLOURS} />
       </motion.section>
 
       <Rule />
@@ -186,14 +240,42 @@ export default function Kizuku() {
           already reviewed and believed.
         </p>
 
-        <Decisions items={DEVICE} />
+        <div className="track-wide">
+          <Cards items={DEVICE} cols="sm:grid-cols-2 lg:grid-cols-3" />
+        </div>
       </motion.section>
 
       <Rule />
 
       {/* ─── the arguments ───────────────────────────────────────────────── */}
       <motion.section {...rise(0.26)}>
-        <Heading>Seven decisions I would defend.</Heading>
+        <Heading>The app has to earn the third question.</Heading>
+        <p className="mb-6">
+          The fear question used to arrive about forty seconds in, with the button disabled until you picked
+          one of three intimate answers. Finch runs twelve screens of identity before its first emotional
+          question. Now a screen of plain promises comes first — no account, nothing leaves your phone, no
+          streaks, stop whenever — and the fear question can be declined.
+        </p>
+        <Onboarding {...ONBOARDING} />
+      </motion.section>
+
+      <motion.section {...rise(0.26)} className="mt-16">
+        <Heading>Streaks were designed out.</Heading>
+        <p>
+          Streaks create performance anxiety in someone who already has it; a broken streak becomes one
+          more thing to overthink. Missing a day does not shrink the tree.
+        </p>
+        <blockquote className="mt-6 pl-4" style={{ borderLeft: '2px solid #2C5228' }}>
+          <p style={{ color: 'var(--ink)', fontSize: '1.15rem', lineHeight: 1.4 }}>
+            The app is designed to be put down without consequence. That is a feature, not a bug.
+          </p>
+        </blockquote>
+      </motion.section>
+
+      <Rule />
+
+      <motion.section {...rise(0.26)}>
+        <Heading>Five more decisions I would defend.</Heading>
         <Decisions items={DECISIONS} />
       </motion.section>
 
