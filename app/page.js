@@ -59,7 +59,7 @@ const RESEARCH = [
     href: '/signal',
     site: '7 interviews · 5 tests',
     shot: '/research/signal.jpg',
-    alt: 'Three Signal screens: a lock-screen departure card, the leave-by-8:28 verdict, and a live Yellow Line journey',
+    alt: 'Three Signal screens: 74% likely on time, the first signal set for 8:28, and the lock-screen departure card',
     what: 'A Delhi Metro companion that tells you when to leave, before you need to. Concept with a working prototype.',
     tags: ['Research', 'Interaction', 'Prototype', 'Film'],
   },

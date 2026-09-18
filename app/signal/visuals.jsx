@@ -233,23 +233,25 @@ export function Matrix({ columns, rows }) {
 
 /**
  * The prototype, as screens. A scroll strip on a phone, a row on desktop.
- * The captures already include the device status bar, so the frame is only a
- * rounded edge and a hairline.
+ * The captures include the status bar and their own rounded corners.
  */
 export function Screens({ items }) {
   return (
     <div className="track-full -mb-2 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 lg:grid lg:overflow-visible" style={{ gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))` }}>
       {items.map(([src, caption]) => (
         <figure key={src} className="w-[62vw] max-w-[15rem] shrink-0 snap-start lg:w-auto lg:max-w-none">
-          <img
-            src={src}
-            alt={caption}
-            width={780}
-            height={1688}
-            loading="lazy"
-            className="block h-auto w-full rounded-[1.4rem]"
-            style={{ border: '1px solid var(--rule)' }}
-          />
+          {/* The same thin bezel the cover uses, so the screens read as
+              phones rather than as cards with rounded corners. */}
+          <div className="rounded-[1.9rem] p-[5px]" style={{ background: '#161616' }}>
+            <img
+              src={src}
+              alt={caption}
+              width={780}
+              height={1688}
+              loading="lazy"
+              className="block h-auto w-full"
+            />
+          </div>
           <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem', lineHeight: 1.4 }}>{caption}</figcaption>
         </figure>
       ))}

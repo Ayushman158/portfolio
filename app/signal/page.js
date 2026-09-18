@@ -68,13 +68,16 @@ const COMPETITORS = {
   ],
 }
 
+// Only screens that fit whole on one phone. The live-journey screens scroll
+// past the tab bar and the departure screen's Dismiss runs off its edge, so a
+// still of either shows a cut-off button rather than the design.
 const SCREENS = [
-  ['/signal/screens/onboard-confidence.webp', 'Onboarding opens on the number the product lives by.'],
-  ['/signal/screens/onboard-pattern.webp', 'Pattern intelligence, not live tracking — 90 days of corridor data.'],
-  ['/signal/screens/first-mile.webp', 'Setup asks how you reach the metro, with a walking fallback.'],
-  ['/signal/screens/departure.webp', 'The departure signal: leave by 8:28, and why.'],
-  ['/signal/screens/live-first-mile.webp', 'Live, first mile: the Rapido leg, and which coach to board.'],
-  ['/signal/screens/live-metro.webp', 'Live, on the train: on track for a 9:29 arrival.'],
+  ['/signal/screens/confidence.webp', 'Onboarding opens on the number the product lives by.'],
+  ['/signal/screens/pattern.webp', 'Pattern intelligence, not live tracking — 90 days of corridor data.'],
+  ['/signal/screens/lockscreen.webp', 'Glanceable on the lock screen: leave by 8:28, with Rapido one tap away.'],
+  ['/signal/screens/arrival-time.webp', 'Setup works backwards from when you need to be at your desk.'],
+  ['/signal/screens/first-mile.webp', 'How you reach the metro, with walking as the fallback.'],
+  ['/signal/screens/ready.webp', 'Your signal is ready — and honest that confidence starts low.'],
 ]
 
 const STATES = [
@@ -151,7 +154,7 @@ export default function Signal() {
       <motion.figure {...rise(0.1)} className="track-full mt-12">
         <img
           src="/research/signal.jpg"
-          alt="Three Signal screens: a lock-screen departure card, the leave-by-8:28 verdict, and a live Yellow Line journey"
+          alt="Three Signal screens: 74% likely on time, the first signal set for 8:28, and the lock-screen departure card"
           width={1600}
           height={900}
           className="block h-auto w-full rounded-xl"
