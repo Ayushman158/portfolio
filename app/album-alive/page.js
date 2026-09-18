@@ -28,7 +28,28 @@ export default function AlbumAlive() {
         </p>
       </motion.div>
 
-      <motion.section {...rise(0.1)} className="mt-14">
+      {/* The real thing first. Most people reading this are at a laptop with
+          nothing to point a camera at, so the proof comes before the invitation
+          to try it. Not autoplayed: the music is half of it, and a muted loop
+          would be a GIF of a record. */}
+      <motion.figure {...rise(0.08)} className="mt-12">
+        <video
+          src="/album-alive/scan.mp4"
+          poster="/album-alive/scan-poster.jpg"
+          controls
+          playsInline
+          preload="none"
+          width={640}
+          height={708}
+          className="mx-auto block h-auto w-full max-w-[28rem] rounded-xl"
+          style={{ border: '1px solid var(--rule)', background: '#0f0f0f', aspectRatio: '640 / 708' }}
+        />
+        <figcaption className="text-faint mt-3 text-center" style={{ fontSize: '0.85rem', lineHeight: 1.45 }}>
+          Shot on an iPad: three sleeves, three records, one take. Sound on.
+        </figcaption>
+      </motion.figure>
+
+      <motion.section {...rise(0.1)} className="mt-16">
         <Deck />
       </motion.section>
 
