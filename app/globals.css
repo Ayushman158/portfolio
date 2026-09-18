@@ -370,3 +370,31 @@
   75%  { opacity: 0.85; }
   100% { opacity: 0;    transform: translate(-14px, 58px) scaleY(1.1); }
 }
+
+/* The skip note: pinned slightly askew, and straightens when you reach for it. */
+.skip-note {
+    transform: rotate(-2.5deg);
+    transition: transform 200ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .skip-note:hover {
+        transform: rotate(0deg) translateY(-1px);
+    }
+}
+
+.skip-note:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 12px;
+}
+
+/* Sections a skip link lands on clear the top of the viewport, and take focus
+   without drawing a ring around a whole section. */
+[data-skip-target] {
+    scroll-margin-top: 2.5rem;
+}
+
+[data-skip-target]:focus {
+    outline: none;
+}

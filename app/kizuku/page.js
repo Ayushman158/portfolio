@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
 import KizukuInteractions from '../components/kizuku-interactions'
-import { Back, Cards, Decisions, Facts, Heading, Rule, Shots } from '../components/case-study'
+import { Back, Cards, Decisions, Facts, Heading, Rule, Shots, SkipTo } from '../components/case-study'
 import { CompetitorMap, Onboarding, Palette, Plate } from './diagrams'
 
 // Carried over from the long version — the substance, without the scaffolding.
@@ -113,6 +113,7 @@ export default function Kizuku() {
           className="block h-auto w-full rounded-xl"
         />
       </motion.figure>
+      <SkipTo target="trees">just here for the trees?</SkipTo>
 
       <motion.div {...rise(0.12)}><Facts rows={FACTS} /></motion.div>
 
@@ -198,7 +199,7 @@ export default function Kizuku() {
           </figure>
         </div>
 
-        <h3 className="mt-14 mb-2" style={{ color: 'var(--ink)' }}>Three trees, eighteen illustrations.</h3>
+        <h3 id="trees" tabIndex={-1} data-skip-target className="mt-14 mb-2" style={{ color: 'var(--ink)' }}>Three trees, eighteen illustrations.</h3>
         <p className="mb-6">Each tree mirrors its type from the first stage — the personality is visible in the seed.</p>
         <div className="space-y-6">
           {GROWTH.map(([src, caption]) => (

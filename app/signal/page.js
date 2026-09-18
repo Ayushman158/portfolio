@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
-import { Back, Decisions, Facts, Heading, Rule, Shots } from '../components/case-study'
+import { Back, Decisions, Facts, Heading, Rule, Shots, SkipTo } from '../components/case-study'
 import { Cards, Findings, Iterations, LoadCurve, Matrix, Morning, Numbers, ORANGE, Screens, Tested, Verdicts } from './visuals'
 
 /*
@@ -160,6 +160,7 @@ export default function Signal() {
           className="block h-auto w-full rounded-xl"
         />
       </motion.figure>
+      <SkipTo target="screens">just here for the screens?</SkipTo>
 
       <motion.div {...rise(0.12)} className="mt-10">
         <Numbers items={[['7', 'commuter interviews'], ['2', 'peak-hour observations'], ['5', 'usability sessions'], ['14', 'weeks, solo']]} />
@@ -259,7 +260,7 @@ export default function Signal() {
 
       <Rule />
 
-      <section>
+      <section id="screens" tabIndex={-1} data-skip-target>
         <Heading>The prototype.</Heading>
         <p className="mb-8">
           22 screens across 9 phases and 3 surfaces — lock screen, app and watch — from a warning the

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
-import { Back, Cards, Decisions, Facts, Heading, Numbers, Rule, Shots } from '../components/case-study'
+import { Back, Cards, Decisions, Facts, Heading, Numbers, Rule, Shots, SkipTo } from '../components/case-study'
 import { Backbone, Blueprint, Chat, Funnel, Outcomes } from './diagrams'
 
 /*
@@ -134,6 +134,7 @@ export default function Hoychoy() {
           style={{ border: '1px solid var(--rule)' }}
         />
       </motion.figure>
+      <SkipTo target="shipped">just here for the product?</SkipTo>
 
       <motion.div {...rise(0.12)}><Facts rows={FACTS} /></motion.div>
 
@@ -222,7 +223,7 @@ export default function Hoychoy() {
 
       <Rule />
 
-      <section>
+      <section id="shipped" tabIndex={-1} data-skip-target>
         <Heading>What shipped.</Heading>
         <figure className="track-wide mb-12">
           <img

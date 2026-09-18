@@ -168,3 +168,71 @@ export function Cards({ items, cols = 'sm:grid-cols-2' }) {
     </div>
   )
 }
+
+/**
+ * A way past the reading, for the people who came for the pictures — and a
+ * case study is long enough now that it should admit they exist. Hand-drawn,
+ * because it is an aside and should look like one: a note pinned under the
+ * opening image, not another button.
+ *
+ * It scrolls rather than jumps, and moves focus to the section it lands on so
+ * a keyboard user arrives where a mouse user does.
+ */
+export function SkipTo({ target, children }) {
+  const go = (e) => {
+    const el = document.getElementById(target)
+    if (!el) return
+    e.preventDefault()
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
+    el.focus({ preventScroll: true })
+    history.replaceState(null, '', `#${target}`)
+
+    // Lazy images above the target load as the page glides past them and push
+    // it down, so the smooth scroll can finish short of where it aimed. Once
+    // it settles, snap the last few pixels.
+    let done = false
+    const settle = () => {
+      if (done) return
+      done = true
+      if (Math.abs(el.getBoundingClientRect().top - 40) > 12) el.scrollIntoView({ behavior: 'auto', block: 'start' })
+    }
+    window.addEventListener('scrollend', settle, { once: true })
+    setTimeout(settle, 1200)
+  }
+
+  return (
+    <div className="track-full relative z-10 -mt-7 flex justify-end pr-4 sm:-mt-9 sm:pr-10">
+      <a
+        href={`#${target}`}
+        onClick={go}
+        className="skip-note group relative inline-block px-6 pb-3 pt-5 font-reenie-beanie"
+        style={{ color: 'var(--ink)', fontSize: '1.9rem', lineHeight: 1 }}
+      >
+        {/* A wobbly bubble with its tail up toward the image it is talking
+            about. Drawn loose on purpose; a perfect rounded rectangle would
+            read as UI. */}
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 240 86"
+          preserveAspectRatio="none"
+          className="absolute inset-0 h-full w-full"
+          style={{ overflow: 'visible' }}
+        >
+          <path
+            d="M34 18 C 70 12, 150 10, 206 15 C 228 17, 236 30, 234 48 C 232 68, 220 78, 190 79 C 140 82, 80 81, 40 78 C 14 76, 5 64, 6 46 C 7 28, 16 20, 34 18 Z M 58 17 L 50 2 L 76 16"
+            fill="var(--ground)"
+            stroke="var(--ink)"
+            strokeWidth="1.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+        <span className="relative whitespace-nowrap">
+          {children} <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-y-0.5">↓</span>
+        </span>
+      </a>
+    </div>
+  )
+}
