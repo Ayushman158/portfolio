@@ -19,6 +19,10 @@
         --warm-b: #FDBA74;
 
         --measure: 41rem;
+        /* ~400 bytes of fractal noise, drawn once by the browser and tiled.
+           Dark specks with alpha on the paper; the dark theme swaps in light
+           ones. Strength is the last number. */
+        --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.6 0 0 0 -0.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.09'/%3E%3C/svg%3E");
         /* ~660px: 68ch at 17px, inside the 65-75ch band */
 
         /* Motion. Built-in easings are too weak to read as intentional. */
@@ -43,6 +47,7 @@
         --faint: #8B857B;
         --rule: #2B2926;
         --accent: #8FB0FF;
+        --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.6 0 0 0 -0.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
         /* Deep on dark rather than pale, so off-white ink still reads: 8.2:1. */
         --warm-a: #7C2D12;
         --warm-b: #9A3412;
@@ -52,6 +57,12 @@
 
     body {
         background-color: var(--ground);
+        /* Paper grain, still. The ground gets a tooth; everything that sits on
+           it — shots, loops, cards — has its own solid background and stays
+           perfectly clean, so the moving parts read as the smoothest, highest-
+           contrast things on the page. The dark theme brings its own tile. */
+        background-image: var(--grain);
+        background-size: 160px 160px;
         color: var(--muted);
         font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
         font-size: 17px;
