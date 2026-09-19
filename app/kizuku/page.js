@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
 import KizukuInteractions from '../components/kizuku-interactions'
 import { Back, Cards, Decisions, Facts, Heading, Rule, Shots, SkipTo } from '../components/case-study'
+import KizukuHero from './hero'
 import { CompetitorMap, Onboarding, Palette, Plate } from './diagrams'
 
 // Carried over from the long version — the substance, without the scaffolding.
@@ -104,15 +105,9 @@ export default function Kizuku() {
         </p>
       </motion.header>
 
-      <motion.figure {...rise(0.1)} className="track-full mt-12">
-        <img
-          src="/research/kizuku.jpg"
-          alt="Three Kizuku screens: a personality reveal, the garden, and a plant that has grown"
-          width={1600}
-          height={900}
-          className="block h-auto w-full rounded-xl"
-        />
-      </motion.figure>
+      <motion.div {...rise(0.1)} className="track-full mt-12">
+        <KizukuHero className="rounded-xl" />
+      </motion.div>
       <SkipTo target="trees">just here for the trees?</SkipTo>
 
       <motion.div {...rise(0.12)}><Facts rows={FACTS} /></motion.div>

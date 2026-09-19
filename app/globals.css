@@ -398,3 +398,25 @@
 [data-skip-target]:focus {
     outline: none;
 }
+
+/* Geist Mono, self-hosted: Signal's prototype sets its labels and times in it,
+   and next/font 14.1 predates it. Variable, latin only, 23 KB. */
+@font-face {
+    font-family: 'Geist Mono';
+    src: url('/fonts/geist-mono-latin.woff2') format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Satoshi, self-hosted from the Kizuku app's own assets: the interface face in
+   Kizuku's hero. Newsreader, its serif, comes from next/font. */
+@font-face { font-family: 'Satoshi'; src: url('/fonts/satoshi-regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('/fonts/satoshi-medium.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('/fonts/satoshi-semibold.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+
+/* Kizuku hero: the optimiser's seed opening into its plant, once, landing on
+   the last of its thirteen frames. */
+@keyframes kz-grow-once {
+    to { background-position: -2280px 0; }
+}

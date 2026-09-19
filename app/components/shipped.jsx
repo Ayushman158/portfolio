@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { useEffect, useRef } from 'react'
 import { useReducedMotion } from 'motion/react'
 import ScrambleText from './scramble-text'
 
@@ -43,16 +44,20 @@ export default function Shipped({ label = 'Shipped', items, className = 'mt-16' 
               className="block overflow-hidden rounded-xl"
               style={{ border: '1px solid var(--rule)', background: 'var(--raised)' }}
             >
-              <Image
-                src={p.shot}
-                alt={p.alt}
-                width={1600}
-                height={900}
-                sizes="(min-width: 60rem) 460px, (min-width: 640px) 50vw, 100vw"
-                className={`aspect-video w-full object-cover object-top${
-                  reduceMotion ? '' : ' transition-transform duration-500 ease-out group-hover:scale-[1.02]'
-                }`}
-              />
+              {p.video && !reduceMotion ? (
+                <Loop src={p.video} poster={p.shot} />
+              ) : (
+                <Image
+                  src={p.shot}
+                  alt={p.alt}
+                  width={1600}
+                  height={900}
+                  sizes="(min-width: 60rem) 460px, (min-width: 640px) 50vw, 100vw"
+                  className={`aspect-video w-full object-cover object-top${
+                    reduceMotion ? '' : ' transition-transform duration-500 ease-out group-hover:scale-[1.02]'
+                  }`}
+                />
+              )}
             </Link>
 
             <div className="mt-3 flex items-baseline justify-between gap-4">
@@ -93,5 +98,40 @@ export default function Shipped({ label = 'Shipped', items, className = 'mt-16' 
         ))}
       </div>
     </section>
+  )
+}
+
+/**
+ * A few seconds of the product doing its one thing, on loop — the card's shot,
+ * moving. Muted and decorative (the link names the project), so it plays only
+ * while on screen and never for anyone who has asked for less motion; they get
+ * the poster, which is the loop's finished frame.
+ */
+function Loop({ src, poster }) {
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const v = ref.current
+    if (!v) return
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) v.play().catch(() => {})
+      else v.pause()
+    }, { threshold: 0.35 })
+    io.observe(v)
+    return () => io.disconnect()
+  }, [])
+
+  return (
+    <video
+      ref={ref}
+      src={src}
+      poster={poster}
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      aria-hidden="true"
+      className="block aspect-video w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+    />
   )
 }

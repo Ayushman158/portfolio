@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
 import { Back, Decisions, Facts, Heading, Rule, Shots, SkipTo } from '../components/case-study'
+import SignalHero from './hero'
 import { Cards, Findings, Iterations, LoadCurve, Matrix, Morning, Numbers, ORANGE, Screens, Tested, Verdicts } from './visuals'
 
 /*
@@ -151,15 +152,9 @@ export default function Signal() {
 
       {/* The product first. A research case study still has to show what the
           research turned into before it asks anyone to read the method. */}
-      <motion.figure {...rise(0.1)} className="track-full mt-12">
-        <img
-          src="/research/signal.jpg"
-          alt="Three Signal screens: 74% likely on time, the first signal set for 8:28, and the lock-screen departure card"
-          width={1600}
-          height={900}
-          className="block h-auto w-full rounded-xl"
-        />
-      </motion.figure>
+      <motion.div {...rise(0.1)} className="track-full mt-12">
+        <SignalHero className="rounded-xl" />
+      </motion.div>
       <SkipTo target="screens">just here for the screens?</SkipTo>
 
       <motion.div {...rise(0.12)} className="mt-10">
