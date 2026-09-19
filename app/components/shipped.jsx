@@ -52,7 +52,10 @@ export default function Shipped({ label = 'Shipped', items, className = 'mt-16' 
             <Link
               href={p.href}
               aria-label={`${p.name} — read the case study`}
-              className="block overflow-hidden rounded-xl"
+              // isolate: a filtered or scaling child can escape a parent's
+              // rounded overflow clip in Safari; its own stacking context
+              // keeps the corners.
+              className="block overflow-hidden rounded-xl [isolation:isolate]"
               style={{ border: '1px solid var(--rule)', background: 'var(--raised)' }}
             >
               {p.video && !reduceMotion ? (
@@ -246,7 +249,9 @@ function Loop({ src, poster, playing, repeat, onEnded }) {
   }, [playing, progress])
 
   return (
-    <div className="relative aspect-video w-full transition-transform duration-500 ease-out group-hover:scale-[1.02]">
+    // Clips its own corners too, rather than trusting the card's clip to
+    // survive the filter on the resting poster and the hover scale.
+    <div className="relative aspect-video w-full overflow-hidden rounded-[inherit] transition-transform duration-500 ease-out group-hover:scale-[1.02]">
       <video
         ref={ref}
         src={src}
