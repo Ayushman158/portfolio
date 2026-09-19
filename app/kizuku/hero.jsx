@@ -47,6 +47,7 @@ const TENDED = 6
 const PHONES = 7
 
 const TYPE_MS = 1700 // how long the worry takes to write
+const LINE = 34 // ruled line height on the worry slip, px
 
 // The type reveal, the garden and the grown plant — the loop, as screens.
 const SCREENS = ['/kizuku/app/reveal.jpg', '/kizuku/app/garden.jpg', '/kizuku/app/growth.jpg']
@@ -98,8 +99,8 @@ export default function KizukuHero({ className = '' }) {
             <>
               {/* Centred on the stage as a pair, the answer set a step lower than
                   the question so the eye reads left to right, then down. */}
-              <div className="absolute" style={{ left: 92, top: 128, width: 372 }}><Worry stage={stage} still={reduce} /></div>
-              <div className="absolute" style={{ left: 500, top: 168, width: 368 }}><Action stage={stage} /></div>
+              <div className="absolute" style={{ left: 64, top: 90, width: 410 }}><Worry stage={stage} still={reduce} /></div>
+              <div className="absolute" style={{ left: 506, top: 132, width: 392 }}><Action stage={stage} /></div>
             </>
           )}
         </motion.div>
@@ -124,8 +125,8 @@ function Worry({ stage, still, compact }) {
       animate={on ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 }}
       transition={spring}
     >
-      <p style={{ fontSize: 11, letterSpacing: '0.08em', color: MUTED }}>today</p>
-      <p className="mt-1" style={{ fontFamily: SERIF, fontWeight: 300, fontSize: compact ? 22 : 26, lineHeight: 1.2, color: INK }}>
+      <p style={{ fontSize: compact ? 11.5 : 13, letterSpacing: '0.08em', color: MUTED }}>today</p>
+      <p className="mt-1" style={{ fontFamily: SERIF, fontWeight: 300, fontSize: compact ? 23 : 31, lineHeight: 1.18, color: INK }}>
         what future worry is on your mind right now?
       </p>
       {/* A slip torn off a pad: the ragged top edge is drawn against the
@@ -134,15 +135,35 @@ function Worry({ stage, still, compact }) {
         <svg viewBox="0 0 372 12" preserveAspectRatio="none" className="block h-[12px] w-full" aria-hidden="true">
           <path d="M0 12 L0 6 L10 3 L19 7 L31 2 L42 6 L55 3 L66 8 L78 3 L90 6 L103 2 L115 7 L127 4 L140 7 L152 2 L165 6 L177 3 L190 8 L202 3 L214 6 L227 2 L239 7 L251 4 L264 7 L276 2 L289 6 L301 3 L314 8 L326 3 L338 6 L351 2 L362 6 L372 4 L372 12 Z" fill={PAPER} />
         </svg>
-        <div className="px-4 pb-4 pt-2" style={{ background: PAPER, borderRadius: '0 0 16px 16px', marginTop: -1 }}>
-          <p style={{ fontSize: compact ? 14 : 15, color: INK, minHeight: '1.5em', borderBottom: '1px solid #E7E4DA', paddingBottom: 8 }}>
+        <div style={{ background: PAPER, borderRadius: '0 0 18px 18px', marginTop: -1 }}>
+          {/* Ruled like the app's slip: three lines to write on, so the field
+              reads as a place for a real worry, not a one-line search box. */}
+          <p
+            className="px-5 pt-3"
+            style={{
+              fontSize: compact ? 15 : 17,
+              lineHeight: `${LINE}px`,
+              minHeight: LINE * 3 + 12,
+              color: INK,
+              backgroundImage: `repeating-linear-gradient(to bottom, transparent 0 ${LINE - 1}px, #E7E4DA ${LINE - 1}px ${LINE}px)`,
+              backgroundPosition: '0 12px',
+              backgroundClip: 'content-box',
+            }}
+          >
             {typed}
             {!still && stage >= 1 && stage < 3 && <Caret />}
           </p>
-          <div className="mt-2.5" style={{ height: 1, background: '#EEEBE2' }} />
+          <div className="flex items-center gap-3 px-5 py-3" style={{ borderTop: '1px solid #ECE9E0' }}>
+            <p className="flex-1" style={{ fontSize: compact ? 11.5 : 12.5, lineHeight: 1.4, color: MUTED }}>
+              be specific. the more honest you are, the better your action will be.
+            </p>
+            <span aria-hidden="true" className="grid shrink-0 place-items-center rounded-full" style={{ width: 34, height: 34, background: '#EFEDE5', color: MUTED }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="9" y="3" width="6" height="11" rx="3" /><path d="M5 11a7 7 0 0 0 14 0M12 18v3" /></svg>
+            </span>
+          </div>
         </div>
       </div>
-      <div className="mt-3 grid place-items-center" style={{ height: compact ? 40 : 44, borderRadius: 999, background: FOREST, color: '#fff', fontSize: 14, fontWeight: 500 }}>
+      <div className="mt-3.5 grid place-items-center" style={{ height: compact ? 42 : 50, borderRadius: 999, background: FOREST, color: '#fff', fontSize: compact ? 14 : 16, fontWeight: 500 }}>
         get my action →
       </div>
     </motion.div>
@@ -193,13 +214,13 @@ function Action({ stage, compact }) {
       animate={on ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 }}
       transition={spring}
     >
-      <p style={{ fontSize: 11, letterSpacing: '0.08em', color: MUTED }}>your action for today</p>
-      <p className="mt-1" style={{ fontFamily: SERIF, fontWeight: 300, fontSize: compact ? 22 : 26, lineHeight: 1.2, color: INK }}>
+      <p style={{ fontSize: compact ? 11.5 : 13, letterSpacing: '0.08em', color: MUTED }}>your action for today</p>
+      <p className="mt-1" style={{ fontFamily: SERIF, fontWeight: 300, fontSize: compact ? 23 : 31, lineHeight: 1.18, color: INK }}>
         one thing. right now.
       </p>
-      <div className="mt-4 px-5 py-4" style={{ background: PAPER, borderRadius: 16, boxShadow: '0 16px 36px -18px rgba(30,60,25,0.45)' }}>
-        <p style={{ fontSize: 11, letterSpacing: '0.06em', color: MUTED }}>✧ start</p>
-        <p className="mt-2" style={{ fontFamily: SERIF, fontSize: compact ? 15 : 17, lineHeight: 1.45, color: INK }}>
+      <div className="mt-4 px-6 py-5" style={{ background: PAPER, borderRadius: 18, boxShadow: '0 16px 36px -18px rgba(30,60,25,0.45)' }}>
+        <p style={{ fontSize: compact ? 11.5 : 13, letterSpacing: '0.06em', color: MUTED }}>✧ start</p>
+        <p className="mt-2" style={{ fontFamily: SERIF, fontSize: compact ? 16 : 20, lineHeight: 1.5, color: INK }}>
           open the file you’ve been avoiding. write a single sentence. close it again. that counts.
         </p>
       </div>
@@ -208,7 +229,7 @@ function Action({ stage, compact }) {
         initial={false}
         animate={pressed ? { scale: [1, 0.96, 1] } : { scale: 1 }}
         transition={{ duration: 0.32, ease }}
-        style={{ height: compact ? 40 : 44, borderRadius: 999, background: FOREST, color: '#fff', fontSize: 14, fontWeight: 500 }}
+        style={{ height: compact ? 42 : 50, borderRadius: 999, background: FOREST, color: '#fff', fontSize: compact ? 14 : 16, fontWeight: 500 }}
       >
         i’ll do it now →
       </motion.div>
