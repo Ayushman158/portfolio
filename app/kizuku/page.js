@@ -96,13 +96,22 @@ export default function Kizuku() {
         <p className="text-faint" style={{ fontSize: '0.95rem' }}>気づく · kizuku · 2026</p>
 
         <h1 style={{ color: 'var(--ink)', fontSize: '2rem', lineHeight: 1.2, fontWeight: 500, letterSpacing: '-0.02em' }}>
-          A wellness app for people who overthink the future.
+          I think about the future too much.
         </h1>
 
         <p>
-          You give it one worry. It gives you one small thing to do today, and your tree grows when you
-          do it — from the doing, not from the days. Research, brand, design system and the iOS build are
-          all mine, and the whole loop runs on a phone.
+          Before I decide anything I run it forward — what happens, what breaks, what it costs — and the
+          running doesn’t stop once the decision is made.
+        </p>
+        <p>
+          Kizuku is for that specific loop: not stress in general, but rehearsing a future that hasn’t
+          happened yet. You give it one worry. It gives you one small thing to do today, and your tree
+          grows when you do it — from the doing, not from the days.
+        </p>
+        <p>
+          It is an exploration as much as a product — the brand, the eighteen illustrations, the growth
+          that only moves when you do something. Research, brand, design system and the iOS build are
+          mine, and the whole loop runs on a phone.
         </p>
       </motion.header>
 
@@ -273,7 +282,7 @@ export default function Kizuku() {
       <Rule />
 
       <motion.section {...rise(0.26)}>
-        <Heading>Five more decisions I would defend.</Heading>
+        <Heading>Five more calls, and the reasoning.</Heading>
         <Decisions items={DECISIONS} />
       </motion.section>
 

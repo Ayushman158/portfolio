@@ -67,14 +67,22 @@ export default function Banyan() {
         <p className="text-faint" style={{ fontSize: '0.95rem' }}>himanshugarg.in · 2026</p>
 
         <h1 style={{ color: 'var(--ink)', fontSize: '2rem', lineHeight: 1.2, fontWeight: 500, letterSpacing: '-0.02em' }}>
-          A health practice whose whole claim is that symptoms are not causes.
+          Himanshu had the site in his head. I built it.
         </h1>
 
         <p>
-          So the site makes you go and find the cause. You pick a condition up in the canopy, the page
-          descends into the root system, and threads are drawn from your condition to the roots that
-          feed it. Twelve categories, 108 conditions, eleven root causes, one continuous move
-          downward.
+          His functional-medicine practice already worked: patients found him through referrals and
+          talked to him on WhatsApp. What he didn’t have was anywhere to send someone who wanted to know
+          what he actually does before messaging a stranger about their health. Conversion was never the
+          brief — looking as serious online as he is in the room was.
+        </p>
+
+        <p>
+          The idea was his: symptoms are not causes, so the site should make you go and find the cause.
+          You pick a condition up in the canopy, the page descends into the root system, and threads are
+          drawn from your condition to the roots that feed it. Twelve categories, 108 conditions, eleven
+          root causes, one continuous move downward. The concept is Himanshu’s; the interaction, the
+          build and the handover are mine.
         </p>
 
         <p>
@@ -159,7 +167,7 @@ export default function Banyan() {
 
       {/* ─── the arguments ───────────────────────────────────────────────── */}
       <motion.section {...rise(0.24)}>
-        <Heading>Six decisions I would defend.</Heading>
+        <Heading>Why it is built this way.</Heading>
         <Decisions items={DECISIONS} />
       </motion.section>
 

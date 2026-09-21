@@ -259,3 +259,41 @@ export function Outcomes({ items }) {
     </div>
   )
 }
+
+/**
+ * Where the minutes went. The pilot table says handling time fell and the
+ * owner's manual steps went from five to one; this is that sentence drawn —
+ * every step in the chain, and who had to be present for it. No per-step
+ * stopwatch, because nobody held one: the claim is the chain, not the clock.
+ */
+export function StepChain({ rows }) {
+  const tones = {
+    owner: { background: 'color-mix(in srgb, var(--warm-a) 55%, transparent)', border: '1px solid var(--warm-b)' },
+    auto: { background: 'color-mix(in srgb, var(--accent) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 45%, transparent)' },
+    customer: { border: '1px solid var(--rule)' },
+  }
+  return (
+    <figure className="track-wide">
+      {rows.map(({ title, note, steps }) => (
+        <div key={title} className="mt-6 first:mt-0">
+          <div className="mb-2 flex items-baseline justify-between gap-4">
+            <p className="text-faint" style={eyebrow}>{title}</p>
+            <p className="text-faint" style={small}>{note}</p>
+          </div>
+          <ol className="flex flex-wrap items-stretch gap-1.5 p-0">
+            {steps.map(([label, who], i) => (
+              <li key={label} className="flex list-none items-center gap-1.5">
+                {i > 0 && <span aria-hidden="true" className="text-faint">→</span>}
+                <span className="rounded-lg px-3 py-2" style={{ ...small, color: 'var(--ink)', ...tones[who] }}>{label}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
+      <figcaption className="text-faint mt-4 flex flex-wrap items-center gap-x-4 gap-y-1" style={small}>
+        <span className="flex items-center gap-1.5"><Swatch tone="pain" /> waits on the owner</span>
+        <span className="flex items-center gap-1.5"><Swatch tone="win" /> happens without anyone</span>
+      </figcaption>
+    </figure>
+  )
+}

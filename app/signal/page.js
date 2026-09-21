@@ -203,6 +203,7 @@ const ITERATIONS = [
 ]
 
 const LIMITS = [
+  ['I am not this user', 'I don’t commute this corridor, or any corridor — I have taken the Delhi Metro twice. Everything I know about the morning came from seven people and two mornings of watching, so where the research was thin I had no lived experience to fall back on.'],
   ['A narrow, convenient sample', 'Interviewees and testers came from personal networks and corridor WhatsApp groups. The five testers were all aged 24–31 and live on the Dwarka corridor, and one is a UX student. The findings describe this group, not Delhi’s 6.5 million daily riders.'],
   ['Small numbers', 'Seven interviews and five usability sessions are enough to find problems and direction, not to measure prevalence. Figures from the sample are written as counts for that reason.'],
   ['An unvalidated model', 'Confidence comes from static GTFS schedules, weather, the calendar and patterns — not live data, and not yet checked against real outcomes.'],
@@ -225,11 +226,23 @@ export default function Signal() {
       <motion.header {...rise(0.06)} className="mt-10 space-y-5">
         <p className="text-faint" style={{ fontSize: '0.95rem' }}>Signal · 2026 · Research</p>
         <h1 style={{ color: 'var(--ink)', fontSize: '2rem', lineHeight: 1.2, fontWeight: 500, letterSpacing: '-0.02em' }}>
-          A familiar commute should not start with doubt.
+          I designed for myself. The research took it away.
         </h1>
         <p>
-          A Delhi Metro companion for the Yellow Line corridor. One screen replaces four apps, and one
-          verdict tells you when to leave — before you need to.
+          I’m not from Delhi. On my first Metro ride I was going to the airport and got on the wrong
+          side of the line — right station, opposite direction.
+        </p>
+        <p>
+          So I started there: a first-timer who can’t tell which platform is which. Then I interviewed
+          seven people who ride the same corridor every day, and that idea didn’t survive. They don’t
+          need the map. Jasleen has run her route for two years and knows which coach puts her at the
+          exit. What she can’t tell is whether today is a normal day — and not knowing costs her twenty
+          minutes every morning, paid whether or not anything goes wrong.
+        </p>
+        <p>
+          So the project moved to her. Signal is a Delhi Metro companion for the Yellow Line corridor:
+          one screen instead of four apps, and one verdict that tells you when to leave, before you
+          need to.
         </p>
       </motion.header>
 

@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
 import { Back, Cards, Decisions, Facts, Heading, Numbers, Rule, Shots, SkipTo } from '../components/case-study'
-import { Backbone, Blueprint, Chat, Funnel, Outcomes } from './diagrams'
+import { Backbone, Blueprint, Chat, Funnel, Outcomes, StepChain } from './diagrams'
 
 /*
  * Hoychoy, with the research, the service blueprint, the information
@@ -30,6 +30,32 @@ const OUTCOMES = [
   ['Steps the owner relays by hand', '5', '1'],
 ]
 
+
+// The owner's own account of where the time went: confirming in chat, telling
+// the kitchen, then telling the customer back. Five steps needed them; one does.
+const CHAIN = [
+  {
+    title: 'before', note: 'five steps wait on the owner',
+    steps: [
+      ['Customer sends the order in chat', 'customer'],
+      ['Owner reads it and asks what’s missing', 'owner'],
+      ['Owner matches the payment screenshot', 'owner'],
+      ['Owner confirms the order', 'owner'],
+      ['Owner tells the kitchen', 'owner'],
+      ['Owner messages the customer back', 'owner'],
+    ],
+  },
+  {
+    title: 'after', note: 'one step waits on the owner',
+    steps: [
+      ['Customer orders on the web', 'customer'],
+      ['Order lands in the dashboard', 'auto'],
+      ['Telegram tells the kitchen', 'auto'],
+      ['WhatsApp confirms to the customer', 'auto'],
+      ['Owner glances at the dashboard', 'owner'],
+    ],
+  },
+]
 
 const SIGNALS = ['Bro payment sent check once', 'Address same as last time', 'Add extra gravy pls']
 
@@ -156,6 +182,13 @@ export default function Hoychoy() {
           instrumented, which is why it carries tildes — I have kept them.
         </p>
         <Outcomes items={OUTCOMES} />
+
+        <p className="mt-12 mb-4">
+          The handling time fell because the steps did. Ordering used to be a relay: confirm it in
+          chat, carry it to the kitchen, then carry the answer back to the customer — and every leg of
+          that waited on one person.
+        </p>
+        <StepChain rows={CHAIN} />
       </section>
 
       <Rule />
@@ -264,7 +297,7 @@ export default function Hoychoy() {
       <Rule />
 
       <section>
-        <Heading>Six decisions I would defend.</Heading>
+        <Heading>Six calls I would make again.</Heading>
         <Decisions items={DECISIONS} />
       </section>
 
