@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
 import { Back, Decisions, Facts, Gallery, Heading, Rule, Shots, SkipTo } from '../components/case-study'
 import SignalHero from './hero'
-import { Cards, Findings, JobStories, Ramp, Weights, Iterations, LoadCurve, Matrix, Morning, Numbers, ORANGE, Screens, Tested, Verdicts } from './visuals'
+import { Cards, Findings, JobStories, Personas, Ramp, Weights, Iterations, LoadCurve, Matrix, Morning, Numbers, ORANGE, Screens, Tested, Verdicts } from './visuals'
 
 /*
  * Signal, rebuilt from the research case study. The words are Ayushman's; the
@@ -22,6 +22,38 @@ const PROTOTYPE = 'https://dainty-capybara-dd3d7e.netlify.app/'
 // Every outside figure on this page, scoped as its source scopes it. Anything
 // without a link is my own fieldwork and says so.
 // Jobs to be done, from the interviews — the wording is the document's.
+// The persona cards, in the layout they were drawn in.
+const PERSONAS = [
+  {
+    name: 'Jasleen Kaur, 29',
+    role: 'the daily switcher',
+    avatar: '/signal/personas/jasleen.webp',
+    tint: '#E8A38C',
+    meta: [
+      ['work', 'Works in a corporate office (Gurugram)'],
+      ['home', 'Lives in West Delhi'],
+      ['study', 'Postgraduate'],
+    ],
+    quote: 'I leave 20 minutes early every day. Not because I want to — because I have no choice.',
+    goals: ['Reach work on time, stress-free', 'Smoother, more predictable transfers', 'Real-time, reliable information'],
+    pains: ['Tight transfer windows', 'Fragile timing — one delay breaks everything', 'Too many apps to plan one trip', 'No alternative when things go wrong'],
+  },
+  {
+    name: 'Priya Mehta, 26',
+    role: 'the late-night commuter — a composite, not a participant',
+    avatar: '/signal/personas/priya.webp',
+    tint: '#8CAEDC',
+    meta: [
+      ['work', 'Works in a creative or tech firm (Noida)'],
+      ['home', 'Lives in South Delhi'],
+      ['study', 'Graduate'],
+    ],
+    quote: 'I avoid Kashmere Gate at night. Not because it is unsafe — because I do not know if it is.',
+    goals: ['Feel safe commuting at night', 'Clear information about station safety', 'Confidence to explore new routes', 'Reliable last-mile options'],
+    pains: ['Unfamiliar stations and areas', 'No clear safety information', 'Uncomfortable travelling alone late', 'Few routes she trusts'],
+  },
+]
+
 const JOBS = [
   {
     id: '01', title: 'Morning departure',
@@ -258,10 +290,14 @@ export default function Signal() {
         <p className="mb-8">
           Everything went onto one synthesis board: the participants and their commutes, the insights
           pulled from each transcript, the secondary research beside them, and then the themes only the
-          two together produced. Open any of them full size to read the notes.{' '}
-          <a href="https://www.figma.com/board/WI0U6Rar6OSNFbAioAZmmo/Mobility-Research-Synthesis" target="_blank" rel="noopener noreferrer" className="prose-link">The board itself is here</a>.
+          two together produced.
         </p>
         <Gallery items={BOARDS} />
+        {/* The exports are dense by nature, so the board itself sits with them. */}
+        <p className="track-wide mt-4" style={{ fontSize: '0.95rem' }}>
+          <a href="https://www.figma.com/board/WI0U6Rar6OSNFbAioAZmmo/Mobility-Research-Synthesis" target="_blank" rel="noopener noreferrer" className="prose-link">Open the board in FigJam ↗</a>
+          <span className="text-faint"> — or click any export above to read it full size.</span>
+        </p>
       </section>
 
       <section className="mt-16">
@@ -287,28 +323,8 @@ export default function Signal() {
 
       <section className="mt-16">
         <Heading>Two people the research kept returning to.</Heading>
-        <div className="grid gap-3 sm:grid-cols-2">
-          <div className="rounded-xl p-5" style={{ border: '1px solid var(--rule)' }}>
-            <p style={{ color: 'var(--ink)' }}>Jasleen Kaur, 29</p>
-            <p className="text-faint" style={{ fontSize: '0.9rem' }}>the daily switcher</p>
-            <p className="mt-3" style={{ fontSize: '0.95rem' }}>
-              Two transfers, a hard 9:30 standup, four apps, and twenty minutes early every day.
-            </p>
-            <p className="mt-3" style={{ color: 'var(--ink)', fontSize: '0.95rem' }}>
-              “I leave 20 minutes early every day. Not because I want to — because I have no choice.”
-            </p>
-          </div>
-          <div className="rounded-xl p-5" style={{ border: '1px solid var(--rule)' }}>
-            <p style={{ color: 'var(--ink)' }}>Priya Mehta, 26</p>
-            <p className="text-faint" style={{ fontSize: '0.9rem' }}>the late-night commuter — a composite, not a participant</p>
-            <p className="mt-3" style={{ fontSize: '0.95rem' }}>
-              Often alone after 9pm. Routes by perceived safety and avoids stations she knows nothing about.
-            </p>
-            <p className="mt-3" style={{ color: 'var(--ink)', fontSize: '0.95rem' }}>
-              “I avoid Kashmere Gate at night. Not because it is unsafe — because I do not know if it is.”
-            </p>
-          </div>
-        </div>
+        <Personas items={PERSONAS} />
+
         <p className="mt-6">
           <span style={{ color: 'var(--ink)' }}>What this version leaves out.</span> Safety was the
           finding with the sharpest unmet need, and it is future scope rather than this version. The

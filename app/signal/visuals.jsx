@@ -377,3 +377,76 @@ export function Ramp({ steps }) {
     </ol>
   )
 }
+
+/**
+ * The personas, in the layout they were drawn in: the portrait, the name and
+ * role, the three facts that place them, the line they said, then goals
+ * against pain points. Ayushman's own cards, rebuilt as markup so they stay
+ * readable and selectable rather than being a flat export.
+ */
+const META_ICONS = {
+  work: 'M3 7h18v12H3zM8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2',
+  home: 'M3 10.5 12 3l9 7.5M5.5 9.5V20h13V9.5',
+  study: 'M12 4 2 9l10 5 10-5zM6 11.5V17c0 1.5 3 3 6 3s6-1.5 6-3v-5.5',
+}
+
+export function Personas({ items }) {
+  return (
+    <div className="track-full grid gap-4 lg:grid-cols-2">
+      {items.map((p) => (
+        <article key={p.name} className="rounded-2xl p-5 sm:p-6" style={{ border: '1px solid var(--rule)' }}>
+          <div className="flex gap-5">
+            {/* The drawings are ink on paper, so they keep their paper in both
+                themes — the same rule the Kizuku artwork follows. */}
+            <img
+              src={p.avatar}
+              alt=""
+              width={560}
+              height={560}
+              loading="lazy"
+              className="h-28 w-28 shrink-0 rounded-xl object-contain sm:h-32 sm:w-32"
+              style={{ background: '#FBFAF7' }}
+            />
+            <div className="min-w-0">
+              <h3 className="inline-block rounded-md px-2 py-0.5" style={{ background: `color-mix(in srgb, ${p.tint} 32%, transparent)`, color: 'var(--ink)', fontSize: '1.15rem', fontWeight: 500 }}>
+                {p.name}
+              </h3>
+              <p className="text-faint mt-1.5" style={{ fontSize: '0.95rem' }}>{p.role}</p>
+              <dl className="mt-3 space-y-1.5">
+                {p.meta.map(([kind, text]) => (
+                  <div key={text} className="flex items-start gap-2.5">
+                    <dt className="sr-only">{kind}</dt>
+                    <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="text-faint mt-[3px] shrink-0">
+                      <path d={META_ICONS[kind]} />
+                    </svg>
+                    <dd style={{ fontSize: '0.92rem', lineHeight: 1.35 }}>{text}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
+
+          <blockquote className="mt-5 rounded-xl px-4 py-3" style={{ background: `color-mix(in srgb, ${p.tint} 20%, transparent)` }}>
+            <p style={{ color: 'var(--ink)', fontSize: '0.98rem', lineHeight: 1.5 }}>“{p.quote}”</p>
+          </blockquote>
+
+          <div className="mt-5 grid gap-5 sm:grid-cols-2">
+            {[['Goals', p.goals], ['Pain points', p.pains]].map(([title, list]) => (
+              <div key={title}>
+                <p style={{ color: 'var(--ink)', fontSize: '0.95rem', borderBottom: `2px solid color-mix(in srgb, ${p.tint} 55%, transparent)`, display: 'inline-block', paddingBottom: 2 }}>{title}</p>
+                <ul className="mt-2 space-y-1.5 p-0">
+                  {list.map((t) => (
+                    <li key={t} className="text-faint flex gap-2" style={{ fontSize: '0.9rem', lineHeight: 1.45 }}>
+                      <span aria-hidden="true">·</span>
+                      <span>{t}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+  )
+}
