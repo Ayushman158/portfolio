@@ -236,3 +236,29 @@ export function SkipTo({ target, children }) {
     </div>
   )
 }
+
+/**
+ * Working artefacts — boards, maps, sheets — as equal thumbnails that open
+ * full size. Unlike Shots, which is for phone screens, these are wide and
+ * dense: the thumbnail is only an invitation, and the real thing is one click
+ * away, at a size where the notes on it can be read.
+ */
+export function Gallery({ items }) {
+  return (
+    <div className="track-wide grid gap-4 sm:grid-cols-3">
+      {items.map(([src, caption, alt]) => (
+        <figure key={src} className="m-0">
+          <a href={src} target="_blank" rel="noopener noreferrer" className="block overflow-hidden rounded-xl" style={{ border: '1px solid var(--rule)' }}>
+            <img
+              src={src}
+              alt={alt || caption}
+              loading="lazy"
+              className="block aspect-[4/3] w-full object-cover object-top transition-transform duration-500 ease-out hover:scale-[1.02]"
+            />
+          </a>
+          <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem', lineHeight: 1.45 }}>{caption}</figcaption>
+        </figure>
+      ))}
+    </div>
+  )
+}

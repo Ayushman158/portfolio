@@ -16,6 +16,7 @@ const FACTS = [
   ['Testing', 'Reviewed with professors — not yet tested with users'],
 ]
 
+
 const TYPES = [
   { type: 'optimizer', tree: 'spiral tree', quote: 'is this the most efficient use of my time right now?' },
   { type: 'seeker', tree: 'crystal tree', quote: 'what if this is not the life i was supposed to build?' },
@@ -246,6 +247,7 @@ export default function Kizuku() {
       {/* ─── the arguments ───────────────────────────────────────────────── */}
       <motion.section {...rise(0.26)}>
         <Heading>The app has to earn the third question.</Heading>
+        <p className="text-faint mb-4" style={{ fontSize: '0.95rem' }}>Progressive disclosure, applied to onboarding</p>
         <p className="mb-6">
           The fear question used to arrive about forty seconds in, with the button disabled until you picked
           one of three intimate answers. Finch runs twelve screens of identity before its first emotional

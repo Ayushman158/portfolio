@@ -185,7 +185,10 @@ function Caret() {
 // Letters at a steady pace, with the small hesitations of someone actually
 // typing a worry: a beat after spaces.
 function useTyping(text, on, still) {
-  const [n, setN] = useState(still ? text.length : 0)
+  // Starts empty on both server and client — filling it during the first
+  // render would make the two disagree and throw the page into client
+  // rendering. The effect fills it in immediately afterwards.
+  const [n, setN] = useState(0)
   useEffect(() => {
     if (still) { setN(text.length); return }
     if (!on) { setN(0); return }

@@ -303,3 +303,77 @@ export function Iterations({ items }) {
     </div>
   )
 }
+
+/**
+ * Jobs to be done, in the form the research produced them: the situation, the
+ * want, the outcome — then the screen that answers it. Kept as one card per
+ * job so the design response sits against the job that caused it.
+ */
+export function JobStories({ items }) {
+  return (
+    <div className="track-wide grid gap-3 lg:grid-cols-3">
+      {items.map(({ id, title, when, want, so, response }) => (
+        <article key={id} className="flex flex-col rounded-xl p-5" style={{ border: '1px solid var(--rule)' }}>
+          <p className="text-faint tnum" style={{ fontSize: '0.8rem' }}>{id}</p>
+          <p className="mt-2" style={{ color: 'var(--ink)' }}>{title}</p>
+          <dl className="mt-4 space-y-2" style={{ fontSize: '0.92rem', lineHeight: 1.45 }}>
+            {[['When', when], ['I want', want], ['So I can', so]].map(([k, v]) => (
+              <div key={k}>
+                <dt className="text-faint" style={{ fontSize: '0.75rem', letterSpacing: '0.04em', textTransform: 'uppercase' }}>{k}</dt>
+                <dd style={{ color: 'var(--muted)' }}>{v}</dd>
+              </div>
+            ))}
+          </dl>
+          <p className="mt-4 pt-3" style={{ borderTop: '1px solid var(--rule)', fontSize: '0.9rem', color: ORANGE }}>
+            → {response}
+          </p>
+        </article>
+      ))}
+    </div>
+  )
+}
+
+/**
+ * What the number is made of. The weights are the model's own, and the bar is
+ * the weight — so a reader can see at a glance that most of the confidence is
+ * historical crowd data, not a live feed that does not exist.
+ */
+export function Weights({ items, note }) {
+  return (
+    <div className="track-wide">
+      {items.map(([name, pct, detail]) => (
+        <div key={name} className="py-4" style={{ borderBottom: '1px solid var(--rule)' }}>
+          <div className="flex items-baseline gap-3">
+            <span className="tnum" style={{ color: 'var(--ink)', fontSize: '1.1rem', fontWeight: 500, minWidth: '3rem' }}>{pct}%</span>
+            <span style={{ color: 'var(--ink)' }}>{name}</span>
+          </div>
+          <span className="mt-2 block h-[3px] w-full overflow-hidden rounded-full" style={{ background: 'var(--rule)' }}>
+            <span className="block h-full rounded-full" style={{ width: `${pct}%`, background: ORANGE }} />
+          </span>
+          <p className="text-faint mt-2" style={{ fontSize: '0.9rem', lineHeight: 1.45 }}>{detail}</p>
+        </div>
+      ))}
+      {note && <p className="text-faint mt-4" style={{ fontSize: '0.9rem', lineHeight: 1.5 }}>{note}</p>}
+    </div>
+  )
+}
+
+/**
+ * The cold start, as a ramp: what the score is made of on day one, and what it
+ * becomes by day fourteen. The point the product is honest about — it does not
+ * know you yet — drawn rather than claimed.
+ */
+export function Ramp({ steps }) {
+  return (
+    <ol className="track-wide grid gap-3 p-0 sm:grid-cols-2 lg:grid-cols-4">
+      {steps.map(([when, title, detail], i) => (
+        <li key={when} className="list-none rounded-xl p-4" style={{ border: '1px solid var(--rule)' }}>
+          <span className="block h-[3px] w-full rounded-full" style={{ background: ORANGE, opacity: 0.25 + i * 0.25 }} />
+          <p className="tnum mt-3" style={{ color: 'var(--ink)', fontSize: '1rem', fontWeight: 500 }}>{when}</p>
+          <p className="text-faint mt-1" style={{ fontSize: '0.8rem', letterSpacing: '0.04em', textTransform: 'uppercase' }}>{title}</p>
+          <p className="text-faint mt-2" style={{ fontSize: '0.88rem', lineHeight: 1.45 }}>{detail}</p>
+        </li>
+      ))}
+    </ol>
+  )
+}

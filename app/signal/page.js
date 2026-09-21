@@ -2,14 +2,15 @@
 
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
-import { Back, Decisions, Facts, Heading, Rule, Shots, SkipTo } from '../components/case-study'
+import { Back, Decisions, Facts, Gallery, Heading, Rule, Shots, SkipTo } from '../components/case-study'
 import SignalHero from './hero'
-import { Cards, Findings, Iterations, LoadCurve, Matrix, Morning, Numbers, ORANGE, Screens, Tested, Verdicts } from './visuals'
+import { Cards, Findings, JobStories, Ramp, Weights, Iterations, LoadCurve, Matrix, Morning, Numbers, ORANGE, Screens, Tested, Verdicts } from './visuals'
 
 /*
  * Signal, rebuilt from the research case study. The words are Ayushman's; the
  * edits are for sourcing, not tone:
- *   - figures are attributed where they are claimed (89% is WRI India 2023)
+ *   - figures are attributed where they are claimed, and the sources are linked
+ *     at the foot of the page (the 89% is scoped as WRI India scopes it)
  *   - "100%" of seven people is written as 7 of 7
  *   - the +34 min figure is labelled self-reported
  *   - a count that mixed the interview and test cohorts is dropped
@@ -17,6 +18,56 @@ import { Cards, Findings, Iterations, LoadCurve, Matrix, Morning, Numbers, ORANG
  */
 
 const PROTOTYPE = 'https://dainty-capybara-dd3d7e.netlify.app/'
+
+// Every outside figure on this page, scoped as its source scopes it. Anything
+// without a link is my own fieldwork and says so.
+// Jobs to be done, from the interviews — the wording is the document's.
+const JOBS = [
+  {
+    id: '01', title: 'Morning departure',
+    when: 'I’m standing at home deciding whether to leave now or wait ten minutes',
+    want: 'one trustworthy signal about whether today’s 8:28 departure is safe',
+    so: 'commit to leaving, without the buffer I’ve added for two years',
+    response: 'S1 departure signal · 74% · “Likely on time”',
+  },
+  {
+    id: '02', title: 'The INA transfer',
+    when: 'I’m on the train approaching INA and don’t know if I’ll make the connection',
+    want: 'a verdict on whether to walk fast or wait for the next service',
+    so: 'decide calmly at the interchange instead of guessing from the platform',
+    response: 'S4 transfer moment · four states · walk bar',
+  },
+  {
+    id: '03', title: 'The night before',
+    when: 'tomorrow might be disrupted — a match at Kotla, or a foggy week',
+    want: 'an early signal the night before, so I can adjust the plan',
+    so: 'not scramble at 7:30 when it’s too late to change the first mile',
+    response: 'NB-01 · computed at 9pm · weather and calendar',
+  },
+]
+
+// The model's own weights, sources and percentages as specified.
+const WEIGHTS = [
+  ['AFC crowd patterns', 40, '90-day rolling tap-in and tap-out density at Dwarka Sec-21 and INA for this time window and day of week. Historical, not real time.'],
+  ['GTFS timetable baseline', 30, 'DMRC’s published schedule sets the departure and arrival windows; confidence starts at 100% and degrades with historical deviation.'],
+  ['IMD weather signal', 15, 'Three disruption proxies: dense fog on the elevated sections, heavy rain at station approaches, and heat events that change dwell time.'],
+  ['Calendar disruption signal', 15, 'Matches at Kotla, board exam dates, public holidays and nearby concerts — all open data, indexed 90 days ahead.'],
+]
+
+const RAMP = [
+  ['Days 1–3', 'Generic corridor', 'No personal signal: the Yellow Line average for this time and day. The screen says “Getting more accurate”.'],
+  ['Days 4–9', 'Pattern emerging', 'Departure times and dismissals are recorded, and the weights start shifting to your corridor. The sub-label goes after six journeys.'],
+  ['Days 10–13', 'Near-personal', 'Two working weeks in. Reliable for typical days; disruptions still use the corridor average.'],
+  ['Day 14+', 'Personal', 'The score reflects your route, your departure style and how you have responded to disruption. No sub-label.'],
+]
+
+// The synthesis workshop board, exported from FigJam.
+const BOARDS = [
+  ['/signal/proof/synthesis-board.jpg', 'the whole workshop: objectives, primary, secondary, synthesis'],
+  ['/signal/proof/primary-findings.jpg', 'seven participants, and what each transcript gave up'],
+  ['/signal/proof/cross-synthesis.jpg', 'five themes, the how-might-we statements, four recommendations'],
+]
+
 
 const FACTS = [
   ['Role', 'Solo — research, interaction design, prototype, film'],
@@ -52,9 +103,9 @@ const FINDINGS = [
   { stat: '4 apps', viz: ['pills', { items: ['Google Maps', 'DMRC', 'WhatsApp', 'the clock'] }], title: 'Four apps, no intelligence', body: 'Commuters with two or more transfers juggle all four to approximate one signal. None gives a departure verdict.' },
   { stat: 'INA', title: 'The blind transfer', body: 'Crowding, the corridor walk and the next train are unknown until you are standing there. “I start checking my phone as soon as we leave Rajiv Chowk.”' },
   { stat: '7 of 7', viz: ['dots', { k: 7, n: 7 }], title: 'The buffer is anxiety management', body: 'Every participant adds a buffer every day. They reported losing an average of 34 minutes a day to missing information.' },
-  { stat: '4 of 7', viz: ['dots', { k: 4, n: 7 }], title: 'Safety routes before speed', body: 'Four participants, all women, choose routes by lighting, crowding and CISF presence. Scoped out of this version.' },
-  { stat: '89%', viz: ['bar', { pct: 89 }], title: 'Support ends at the exit gate', body: 'Of riders prefer paid autos over free buses — for predictability, not cost (WRI India 2023, n=7,200).' },
-  { stat: '0', title: 'Live feeds DMRC publishes', body: 'Every tap-in and tap-out is recorded; no GTFS-RT, no crowding signal is shared. That constraint shaped the product.' },
+  { stat: '4 of 7', viz: ['dots', { k: 4, n: 7 }], title: 'Safety routes before speed', body: 'Four participants, all women, choose routes by lighting, crowding and CISF presence. Not built here; it sits in the future scope.' },
+  { stat: '89%', viz: ['bar', { pct: 89 }], title: 'Support ends at the exit gate', body: <>Of Delhi riders in <a href="https://wri-india.org/sites/default/files/Improving%20metro%20access%20in%20India_%20Working%20Paper.pdf" target="_blank" rel="noopener noreferrer" className="prose-link">WRI India’s 2023 survey</a> chose a share auto over the bus on last-mile trips where both ran — waiting, not price.</> },
+  { stat: '0', title: 'Live metro feeds to build on', body: <><a href="https://otd.delhi.gov.in/" target="_blank" rel="noopener noreferrer" className="prose-link">Delhi publishes</a> metro timetables and live bus positions, but nothing live from the trains — no positions, no crowding. That constraint shaped the product.</> },
 ]
 
 const COMPETITORS = {
@@ -203,6 +254,17 @@ export default function Signal() {
       </section>
 
       <section className="mt-16">
+        <Heading>One board, seven commutes, five themes.</Heading>
+        <p className="mb-8">
+          Everything went onto one synthesis board: the participants and their commutes, the insights
+          pulled from each transcript, the secondary research beside them, and then the themes only the
+          two together produced. Open any of them full size to read the notes.{' '}
+          <a href="https://www.figma.com/board/WI0U6Rar6OSNFbAioAZmmo/Mobility-Research-Synthesis" target="_blank" rel="noopener noreferrer" className="prose-link">The board itself is here</a>.
+        </p>
+        <Gallery items={BOARDS} />
+      </section>
+
+      <section className="mt-16">
         <Heading>Six findings.</Heading>
         <Findings items={FINDINGS} />
       </section>
@@ -211,7 +273,9 @@ export default function Signal() {
         <Heading>Nobody judges the transfer before you board.</Heading>
         <p className="mb-8">
           Five systems benchmarked. Citymapper comes closest, with proactive departures in London —
-          on TfL’s open API. Delhi collects the same data and publishes none of it.
+          on TfL’s open API. Delhi opens more than it gets credit for: timetables for the metro and
+          live positions for buses. What is missing is the live metro — and that is the part a
+          departure verdict would need.
         </p>
         <Matrix {...COMPETITORS} />
         <p className="mt-8">
@@ -236,7 +300,7 @@ export default function Signal() {
           </div>
           <div className="rounded-xl p-5" style={{ border: '1px solid var(--rule)' }}>
             <p style={{ color: 'var(--ink)' }}>Priya Mehta, 26</p>
-            <p className="text-faint" style={{ fontSize: '0.9rem' }}>the late-night commuter</p>
+            <p className="text-faint" style={{ fontSize: '0.9rem' }}>the late-night commuter — a composite, not a participant</p>
             <p className="mt-3" style={{ fontSize: '0.95rem' }}>
               Often alone after 9pm. Routes by perceived safety and avoids stations she knows nothing about.
             </p>
@@ -247,10 +311,22 @@ export default function Signal() {
         </div>
         <p className="mt-6">
           <span style={{ color: 'var(--ink)' }}>What this version leaves out.</span> Safety was the
-          finding with the sharpest unmet need, and it is scoped out. The signals it would rest on —
-          lighting, crowding by hour, CISF presence — are exactly the data Delhi does not publish
-          (finding 06). This version does not pretend to address it.
+          finding with the sharpest unmet need, and it is future scope rather than this version. The
+          signals it would rest on — lighting, crowding by hour, CISF presence — are exactly what is
+          not published (finding 06), so this version does not pretend to address it.
         </p>
+      </section>
+
+      <Rule />
+
+      <section>
+        <Heading>Three jobs the product is hired for.</Heading>
+        <p className="mb-8">
+          Written up from the interviews as job stories, so each screen answers a situation rather
+          than a feature request. A fourth job — safety routing after dark — came out of the same
+          interviews and sits in the future scope.
+        </p>
+        <JobStories items={JOBS} />
       </section>
 
       <Rule />
@@ -268,6 +344,25 @@ export default function Signal() {
           The transfer verdict, in four states — designed for the INA interchange
         </p>
         <Verdicts items={STATES} />
+      </section>
+
+      <section className="mt-16">
+        <Heading>How 74% is calculated.</Heading>
+        <p className="mb-8">
+          There is no live feed to read, so the number is a weighted score over four sources — and the
+          product says what it is made of rather than presenting it as certainty. It is specified, not
+          running: AFC aggregates are not public today, which is why the research board’s own
+          recommendation is to build v1 on static schedules and historical patterns.
+        </p>
+        <Weights
+          items={WEIGHTS}
+          note="Crowdsourced reports are a correction layer only: they can pull confidence down, never push it above the timetable baseline."
+        />
+
+        <p className="mt-10 mb-4 text-faint" style={{ fontSize: '0.95rem' }}>
+          Cold start: what the score knows about you, and when
+        </p>
+        <Ramp steps={RAMP} />
       </section>
 
       <section className="mt-16">
@@ -322,6 +417,10 @@ export default function Signal() {
       <section>
         <Heading>What this research can and can’t claim.</Heading>
         <Decisions items={LIMITS} />
+        <p className="text-faint mt-6" style={{ fontSize: '0.9rem', lineHeight: 1.55 }}>
+          Participants consented to being quoted and are named by first name, as on the board. The
+          interview notes are available on request.
+        </p>
       </section>
 
       <section className="mt-14">

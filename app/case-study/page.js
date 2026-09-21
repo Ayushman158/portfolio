@@ -30,6 +30,7 @@ const OUTCOMES = [
   ['Steps the owner relays by hand', '5', '1'],
 ]
 
+
 const SIGNALS = ['Bro payment sent check once', 'Address same as last time', 'Add extra gravy pls']
 
 const BLUEPRINT = {
@@ -174,7 +175,13 @@ export default function Hoychoy() {
           ]}
         />
         <div className="mt-6 grid gap-6 sm:grid-cols-2 sm:items-center">
+          <div>
           <Chat messages={SIGNALS} reply="Owner: matching screenshots to addresses while six more messages arrive." />
+          <p className="text-faint mt-3" style={{ fontSize: '0.85rem', lineHeight: 1.45 }}>
+            Quoted as sent, from the café’s own threads. No customer names, numbers or addresses are
+            reproduced.
+          </p>
+        </div>
           <div>
             <p>
               Two failure modes dominated the threads: payments that could not be matched to an order,
