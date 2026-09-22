@@ -61,7 +61,7 @@ const RESEARCH = [
     site: '7 interviews · 5 tests',
     shot: '/research/signal-loop.jpg',
     video: '/research/signal-loop.mp4',
-    alt: 'Signal’s departure card — leave by 8:28, 74% likely on time — then the three screens it lives on',
+    alt: 'Signal’s departure card: leave by 8:28, 74% likely on time, then the three screens it lives on',
     what: 'A Delhi Metro companion that tells you when to leave, before you need to. Concept with a working prototype.',
     tags: ['Research', 'Interaction', 'Prototype', 'Film'],
   },

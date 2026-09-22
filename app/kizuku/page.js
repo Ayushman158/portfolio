@@ -26,9 +26,9 @@ const TYPES = [
 // Found the first time the app ran on a phone rather than in a browser
 // pretending to be one. Kept because the specifics are the point.
 const DEVICE = [
-  ['A crash on the very first launch', 'A dev-only shortcut read window.location during render. React Native defines a global window, so the guard around it passed — but location does not exist there, and it would have thrown before anything drew.'],
+  ['A crash on the very first launch', 'A dev-only shortcut read window.location during render. React Native defines a global window, so the guard around it passed, but location does not exist there, and it would have thrown before anything drew.'],
   ['The primary button under the keyboard', 'The worry screen focuses its input on entry, so the keyboard is up from the first frame, covering the only button. A KeyboardAvoidingView was already there and doing nothing: padding shrinks the container, but the slip has a minimum height, so nothing inside could yield.'],
-  ['Two reference edges in one layout', 'The garden was measured downward from the top and the prompt card upward from the bottom. That holds until the container changes height — and the safe area takes about 93pt out of it, so the card climbed into the plant.'],
+  ['Two reference edges in one layout', 'The garden was measured downward from the top and the prompt card upward from the bottom. That holds until the container changes height, and the safe area takes about 93pt out of it, so the card climbed into the plant.'],
   ['A white halo on every tree', 'Cutting the illustrations off the white board they were drawn on left the board’s colour in the anti-aliased rim with partial transparency. Invisible on white, a fringe on parchment. About half the edge pixels; now under one percent.'],
   ['The garden assembling itself', 'Nothing was preloaded, so the screen arrived first and the landscape and the plant a beat later. What a returning user actually saw was a watering can alone on an empty field.'],
 ]
@@ -44,7 +44,7 @@ const GROWTH = [
 
 const COLOURS = [
   ['parchment', '#F2EDE0', 'Every competitor uses white or dark. Parchment signals warmth before a word is read.'],
-  ['forest', '#2C5228', 'The colour of growth, not of calm — away from the blue-grey wellness register.'],
+  ['forest', '#2C5228', 'The colour of growth rather than calm, away from the blue-grey wellness register.'],
   ['amber', '#ECD858', 'The kizuku moment, in the logo’s leaf tips. Warm without aggression.'],
   ['sky', '#A8CEDE', 'The seeker. Unusual, and asks for observation rather than control.'],
   ['sage', '#A8CA9C', 'The planner. Slow, patient, long-lived — it rewards consistency.'],
@@ -60,10 +60,10 @@ const ONBOARDING = {
 
 const DECISIONS = [
   ['Built for future anxiety, not general stress', 'The apps I reviewed treat anxiety as one broad spectrum. None addressed excessive forward simulation on its own. That gap is what Kizuku is designed for.'],
-  ['The type had to actually decide something', 'For a while it did not. The quiz set colours and artwork, and the action was then picked by summing the character codes of your worry — personality was not an input at all. Actions now carry the types they serve, selection rotates least-recently-used inside your own pool, and what you wrote is read once, in memory, to prefer one action over another. It is still never stored.'],
-  ['Six stages, landing on thirty', 'Growth used to finish after a single action, so the metaphor the whole loop builds toward was spent on day one. Three trees at six stages each. The curve opens fast — the second stage arrives immediately, so nobody waits to see that this responds to them — then lengthens to put the last stage at the thirty-day milestone the brand already committed to.'],
+  ['The type had to actually decide something', 'For a while it did not. The quiz set colours and artwork, and the action was then picked by summing the character codes of your worry. Personality was not an input at all. Actions now carry the types they serve, selection rotates least-recently-used inside your own pool, and what you wrote is read once, in memory, to prefer one action over another. It is still never stored.'],
+  ['Six stages, landing on thirty', 'Growth used to finish after a single action, so the metaphor the whole loop builds toward was spent on day one. Three trees at six stages each. The curve opens fast, so the second stage arrives immediately and nobody waits to see that this responds to them. Then it lengthens, to put the last stage at the thirty-day milestone the brand already committed to.'],
   ['Growth tied to emotional labour, not time', 'Forest grows a tree when you sit still. Kizuku grows one when you face something hard. Same mechanic, completely different meaning.'],
-  ['Copy decided at word level', '"Start quiz" against "find my tree type" — one word decides whether the user feels assessed or invited. Every line documented with its before and after.'],
+  ['Copy decided at word level', '"Start quiz" against "find my tree type": one word decides whether the user feels assessed or invited. Every line documented with its before and after.'],
 ]
 
 // Captured from the running build, not from the Figma comps — this is what
@@ -288,8 +288,8 @@ export default function Kizuku() {
 
       <motion.section {...rise(0.28)} className="mt-14">
         <p>
-          The complete process — the painting that became the brief, four rejected names, the competitive
-          analysis and all eighteen illustrations — is in the{' '}
+          The painting that became the brief, four rejected names, the competitive analysis and all
+          eighteen illustrations are in the{' '}
           <Link href="/kizuku/process" className="prose-link">full process</Link>.
           Back to <Link href="/#work" className="prose-link">the work index</Link>, or read{' '}
           <Link href="/banyan" className="prose-link">Banyan Tree</Link> and{' '}

@@ -130,7 +130,7 @@ export default function Banyan() {
       <motion.section {...rise(0.2)}>
         <Heading>The descent, in five screens.</Heading>
         <p className="mb-8">
-          One state machine runs the whole page — canopy, category, roots, detail — so the background,
+          One state machine runs the whole page: canopy, category, roots, detail. The background,
           the breadcrumb, the tint and the back label all follow from a single phase rather than from
           four separate screens. Escape walks you back up one level at a time.
         </p>
@@ -151,8 +151,7 @@ export default function Banyan() {
         </p>
         <p>
           Deploys are a push to <span style={{ color: 'var(--ink)' }}>main</span>; a rollback is
-          promoting the last good build. The one thing that changes weekly — client stories — he owns
-          outright, in a spreadsheet.
+          promoting the last good build. He owns the one thing that changes weekly, client stories, in a spreadsheet.
         </p>
 
         <Figure

@@ -119,7 +119,7 @@ const DECISIONS = [
 ]
 
 const NEXT = [
-  ['Real-time order tracking', 'A three-state tracker — received, preparing, out for delivery — for “where’s my order?”, the most common message after ordering.'],
+  ['Real-time order tracking', 'A three-state tracker: received, preparing, out for delivery. It answers “where’s my order?”, the most common message after ordering.'],
   ['Estimated delivery time', 'The fee is already calculated by distance; the time is not shown. An ETA from kitchen queue depth plus distance would answer the anxiety before it becomes a message.'],
   ['Reorder and saved preferences', 'Many customers order the same thing every week. “Reorder last” with a saved address would take checkout to two taps for the café’s most valuable customers.'],
 ]

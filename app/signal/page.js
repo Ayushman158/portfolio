@@ -40,7 +40,7 @@ const PERSONAS = [
   },
   {
     name: 'Priya Mehta, 26',
-    role: 'the late-night commuter — a composite, not a participant',
+    role: 'the late-night commuter, a composite rather than a participant',
     avatar: '/signal/personas/priya.webp',
     tint: '#8CAEDC',
     meta: [
@@ -124,7 +124,7 @@ const MORNING = [
 
 const METHODS = [
   ['7 semi-structured interviews', 'Dwarka, Noida and Gurgaon commuters. 45–60 minutes, think-aloud.'],
-  ['2 peak-hour observations', 'Rajiv Chowk and HUDA City Centre — phone checks and stress at the interchange.'],
+  ['2 peak-hour observations', 'Rajiv Chowk and HUDA City Centre: phone checks and stress at the interchange.'],
   ['DMRC ridership, FY 2024–25', 'Station-level entries and exits; office commuting is 52% of ridership.'],
   ['Five systems benchmarked', 'TfL, Tokyo Metro, Singapore SMRT, Berlin BVG and Delhi.'],
   ['12 journeys mapped', 'Decision points, stress triggers and failure modes, moment by moment.'],
@@ -137,7 +137,7 @@ const FINDINGS = [
   { stat: '7 of 7', viz: ['dots', { k: 7, n: 7 }], title: 'The buffer is anxiety management', body: 'Every participant adds a buffer every day. They reported losing an average of 34 minutes a day to missing information.' },
   { stat: '4 of 7', viz: ['dots', { k: 4, n: 7 }], title: 'Safety routes before speed', body: 'Four participants, all women, choose routes by lighting, crowding and CISF presence. Not built here; it sits in the future scope.' },
   { stat: '89%', viz: ['bar', { pct: 89 }], title: 'Support ends at the exit gate', body: <>Of Delhi riders in <a href="https://wri-india.org/sites/default/files/Improving%20metro%20access%20in%20India_%20Working%20Paper.pdf" target="_blank" rel="noopener noreferrer" className="prose-link">WRI India’s 2023 survey</a> chose a share auto over the bus on last-mile trips where both ran — waiting, not price.</> },
-  { stat: '0', title: 'Live metro feeds to build on', body: <><a href="https://otd.delhi.gov.in/" target="_blank" rel="noopener noreferrer" className="prose-link">Delhi publishes</a> metro timetables and live bus positions, but nothing live from the trains — no positions, no crowding. That constraint shaped the product.</> },
+  { stat: '0', title: 'Live metro feeds to build on', body: <><a href="https://otd.delhi.gov.in/" target="_blank" rel="noopener noreferrer" className="prose-link">Delhi publishes</a> metro timetables and live bus positions, but nothing live from the trains: no positions, no crowding. That constraint shaped the product.</> },
 ]
 
 const COMPETITORS = {
@@ -189,7 +189,7 @@ const PRINCIPLES = [
   ['Verdict, not data', 'Participants shown a percentage alone asked what it meant for them. Signal leads with an action; the numbers support it.'],
   ['Lock screen first', 'On a crowded Yellow Line train the phone stays in the pocket. The happy path opens the app exactly twice per commute.'],
   ['Pre-fill, never auto-book', 'Signal sets up Rapido; the commuter confirms it. Every consequential action keeps a human tap.'],
-  ['Speak first, once', 'Orange appears only at decision moments — 90% of every screen is ink and paper. Silence when nothing has changed is what makes a signal worth heeding.'],
+  ['Speak first, once', 'Orange appears only at decision moments. 90% of every screen is ink and paper. Silence when nothing has changed is what makes a signal worth heeding.'],
   ['Honest confidence', '74% is always paired with “Likely on time”. The pattern model is directionally accurate, not statistically precise, and the design never claims more.'],
   ['Dismiss is a signal', '“WFH today” and “I have a ride” both feed the model. “It doesn’t make me feel bad for dismissing it. It just wants to learn.” — Kavya (P5)'],
 ]
@@ -203,11 +203,11 @@ const ITERATIONS = [
 ]
 
 const LIMITS = [
-  ['I am not this user', 'I don’t commute this corridor, or any corridor — I have taken the Delhi Metro twice. Everything I know about the morning came from seven people and two mornings of watching, so where the research was thin I had no lived experience to fall back on.'],
+  ['I am not this user', 'I don’t commute this corridor, or any corridor. I have taken the Delhi Metro twice. Everything I know about the morning came from seven people and two mornings of watching, so where the research was thin I had no lived experience to fall back on.'],
   ['A narrow, convenient sample', 'Interviewees and testers came from personal networks and corridor WhatsApp groups. The five testers were all aged 24–31 and live on the Dwarka corridor, and one is a UX student. The findings describe this group, not Delhi’s 6.5 million daily riders.'],
   ['Small numbers', 'Seven interviews and five usability sessions are enough to find problems and direction, not to measure prevalence. Figures from the sample are written as counts for that reason.'],
-  ['An unvalidated model', 'Confidence comes from static GTFS schedules, weather, the calendar and patterns — not live data, and not yet checked against real outcomes.'],
-  ['Safety is not addressed', 'The finding with the sharpest unmet need was scoped out. Priya’s need — safety-first routing on lighting, crowding and CISF presence — goes unmet in this version.'],
+  ['An unvalidated model', 'Confidence comes from static GTFS schedules, weather, the calendar and patterns. None of it is live, and none of it has been checked against real outcomes.'],
+  ['Safety is not addressed', 'The finding with the sharpest unmet need was scoped out. Priya’s need goes unmet in this version: safety-first routing on lighting, crowding and CISF presence.'],
   ['One corridor', 'Yellow Line only, built around the INA interchange.'],
 ]
 
@@ -321,8 +321,8 @@ export default function Signal() {
       <section className="mt-16">
         <Heading>Nobody judges the transfer before you board.</Heading>
         <p className="mb-8">
-          Five systems benchmarked. Citymapper comes closest, with proactive departures in London —
-          on TfL’s open API. Delhi opens more than it gets credit for: timetables for the metro and
+          Five systems benchmarked. Citymapper comes closest, with proactive departures in London,
+          running on TfL’s open API. Delhi opens more than it gets credit for: timetables for the metro and
           live positions for buses. What is missing is the live metro — and that is the part a
           departure verdict would need.
         </p>
@@ -339,10 +339,10 @@ export default function Signal() {
         <Personas items={PERSONAS} />
 
         <p className="mt-6">
-          <span style={{ color: 'var(--ink)' }}>What this version leaves out.</span> Safety was the
-          finding with the sharpest unmet need, and it is future scope rather than this version. The
-          signals it would rest on — lighting, crowding by hour, CISF presence — are exactly what is
-          not published (finding 06), so this version does not pretend to address it.
+          Safety is the one finding I did not build for. It had the sharpest unmet need in the
+          interviews, and it sits in the future scope. It would rest on lighting, crowding by hour and
+          CISF presence, none of which is published (finding 06), so this version does not pretend to
+          address it.
         </p>
       </section>
 
@@ -352,7 +352,7 @@ export default function Signal() {
         <Heading>Three jobs the product is hired for.</Heading>
         <p className="mb-8">
           Written up from the interviews as job stories, so each screen answers a situation rather
-          than a feature request. A fourth job — safety routing after dark — came out of the same
+          than a feature request. A fourth job, safety routing after dark, came out of the same
           interviews and sits in the future scope.
         </p>
         <JobStories items={JOBS} />
