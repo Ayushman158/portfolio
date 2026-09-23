@@ -7,7 +7,6 @@ import { GridOverlay, useGridOverlay } from './grid-overlay'
 
 const LINKS = [
   { href: '/', label: 'Index' },
-  { href: '/experiments', label: 'Experiments' },
   { href: '/about', label: 'About' },
 ]
 
