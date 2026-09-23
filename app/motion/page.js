@@ -75,7 +75,7 @@ export default function MotionStudies() {
         ))}
       </motion.section>
 
-      <motion.section {...rise(0.18)} className="mt-14">
+      <motion.section {...rise(0.18)} className="mt-16">
         <p>
           The reasoning behind them, and the product they belong to, is in the{' '}
           <Link href="/kizuku" className="prose-link">Kizuku case study</Link>. Back to{' '}

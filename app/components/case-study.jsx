@@ -8,7 +8,7 @@ import Link from 'next/link'
  */
 
 export function Rule() {
-  return <div className="my-14" style={{ height: 1, background: 'var(--rule)' }} />
+  return <div className="my-16" style={{ height: 1, background: 'var(--rule)' }} />
 }
 
 export function Heading({ children }) {

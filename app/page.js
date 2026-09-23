@@ -158,7 +158,7 @@ export default function Home() {
 
       <motion.div {...rise(0.12)}>
         <Shipped items={SHIPPED} />
-        <Shipped label="Case studies" items={RESEARCH} className="mt-20" />
+        <Shipped label="Case studies" items={RESEARCH} />
         <WorkIndex label="Playground" items={PLAYGROUND} />
       </motion.div>
 

@@ -286,7 +286,7 @@ export default function Kizuku() {
         <Decisions items={DECISIONS} />
       </motion.section>
 
-      <motion.section {...rise(0.28)} className="mt-14">
+      <motion.section {...rise(0.28)} className="mt-16">
         <p>
           The painting that became the brief, four rejected names, the competitive analysis and all
           eighteen illustrations are in the{' '}

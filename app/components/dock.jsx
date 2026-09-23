@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ThemeToggle, LocalClock } from './theme'
+import { GridOverlay, useGridOverlay } from './grid-overlay'
 
 const LINKS = [
   { href: '/', label: 'Index' },
@@ -16,8 +17,11 @@ const LINKS = [
  */
 export default function Dock() {
   const pathname = usePathname()
+  const grid = useGridOverlay()
 
   return (
+    <>
+    <GridOverlay on={grid.on} />
     <div className="pointer-events-none fixed inset-x-0 bottom-0 z-50 flex justify-center px-4 pb-4 sm:pb-6">
       <nav
         aria-label="Primary"
@@ -40,9 +44,22 @@ export default function Dock() {
         })}
 
         <span className="mx-1 h-4 w-px bg-rule" aria-hidden="true" />
+        {/* Desktop only: on a phone there is one column and nothing to reveal. */}
+        <button
+          type="button"
+          onClick={grid.toggle}
+          aria-pressed={grid.on}
+          title="Show the layout grid (G)"
+          className={`hidden min-h-[44px] items-center rounded-full px-3 text-[0.8rem] transition-colors duration-150 ease-out active:scale-[0.97] sm:inline-flex ${
+            grid.on ? 'text-ink' : 'text-faint hover:text-ink'
+          }`}
+        >
+          Grid
+        </button>
         <ThemeToggle />
         <LocalClock className="hidden pr-2 text-[0.8rem] text-faint sm:inline" />
       </nav>
     </div>
+    </>
   )
 }

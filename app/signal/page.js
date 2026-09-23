@@ -452,7 +452,7 @@ export default function Signal() {
         </p>
       </section>
 
-      <section className="mt-14">
+      <section className="mt-16">
         <Heading>What the process taught me.</Heading>
         <p>
           Constraints are the design argument. No live DMRC data forced pattern intelligence, and a 74%
@@ -463,7 +463,7 @@ export default function Signal() {
         </p>
       </section>
 
-      <section className="mt-14">
+      <section className="mt-16">
         <p>
           <a href={PROTOTYPE} target="_blank" rel="noopener noreferrer" className="prose-link">Try the prototype</a>.
           Back to <Link href="/#work" className="prose-link">the work index</Link>, or read{' '}

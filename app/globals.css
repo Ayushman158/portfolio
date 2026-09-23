@@ -431,3 +431,8 @@
 @keyframes kz-grow-once {
     to { background-position: -2280px 0; }
 }
+
+/* Grid overlay: the wide and full tracks only exist from 60rem up (see
+   .track-wide above), so their lines only draw there too. */
+.grid-wide-only { display: none; }
+@media (min-width: 60rem) { .grid-wide-only { display: block; } }

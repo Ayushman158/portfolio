@@ -53,7 +53,7 @@ export default function AlbumAlive() {
         <Deck />
       </motion.section>
 
-      <motion.section {...rise(0.16)} className="mt-20">
+      <motion.section {...rise(0.16)} className="mt-16">
         <h2 className="text-faint text-[0.95rem] mb-3">The position</h2>
         <p>
           This is an AR project, not a website with a camera in it. That distinction drove

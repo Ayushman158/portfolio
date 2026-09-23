@@ -170,7 +170,7 @@ export default function Banyan() {
         <Decisions items={DECISIONS} />
       </motion.section>
 
-      <motion.section {...rise(0.26)} className="mt-14">
+      <motion.section {...rise(0.26)} className="mt-16">
         <p>
           The practice runs on it today at{' '}
           <a href="https://www.himanshugarg.in/" target="_blank" rel="noopener noreferrer" className="prose-link">himanshugarg.in</a>.

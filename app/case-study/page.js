@@ -312,7 +312,7 @@ export default function Hoychoy() {
         </div>
       </section>
 
-      <section className="mt-14">
+      <section className="mt-16">
         <p>
           The café runs on it today at{' '}
           <a href="https://www.hoychoycafe.com/" target="_blank" rel="noopener noreferrer" className="prose-link">hoychoycafe.com</a>.
