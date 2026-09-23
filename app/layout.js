@@ -22,9 +22,9 @@ const caveat = Caveat({
 
 // One positioning line, everywhere. It matches the home h1 and the Connect
 // section rather than offering a third phrasing to anyone reading the preview.
-const TITLE = 'Ayushman Bharadwaj — interaction designer who ships the code'
+const TITLE = 'Ayushman Bharadwaj — a designer who likes figuring things out'
 const DESCRIPTION =
-  'Interaction designer who ships the code. A year in security engineering before design; I build products from research to interface to production.'
+  'A designer who likes figuring things out, drawn to the space between people and technology. I take ideas from research through design to shipping.'
 
 export const metadata = {
   // Absolute base so social/OG images resolve against the live site rather than
@@ -39,7 +39,7 @@ export const metadata = {
     siteName: 'Ayushman Bharadwaj',
     // The work, not the avatar: a card in the site's own palette carrying the
     // one line the whole page is built to deliver.
-    images: [{ url: '/og.jpg', width: 1200, height: 630, alt: 'An interaction designer who ships the code.' }],
+    images: [{ url: '/og.jpg', width: 1200, height: 630, alt: 'Ayushman Bharadwaj, a designer who likes figuring things out.' }],
     locale: 'en_IN',
     type: 'website',
   },

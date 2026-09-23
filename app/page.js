@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { motion, useReducedMotion } from 'motion/react'
 import GradientText from './components/gradient-text'
@@ -143,13 +144,14 @@ export default function Home() {
             as everything else — so the page had no element larger than body
             copy and nothing for a scanner to land on. */}
         <h1 style={{ color: 'var(--ink)', fontSize: '2rem', lineHeight: 1.2, fontWeight: 500, letterSpacing: '-0.02em' }}>
-          I’m <LetterSwap className="font-medium">Ayushman</LetterSwap>, an interaction designer who
-          ships the code.
+          I’m <LetterSwap className="font-medium">Ayushman</LetterSwap>, a designer who likes figuring
+          things out.
         </h1>
 
         <p>
-          A year in security engineering before design, so I build for how systems actually fail.
-          Finishing my masters in interaction design.
+          I’m drawn to the space between people and technology: how people think and feel, what can
+          actually be built, and turning both into things that are useful, intuitive and visually
+          considered. Finishing my masters in interaction design.
         </p>
 
       </motion.div>
@@ -159,6 +161,33 @@ export default function Home() {
         <Shipped label="Case studies" items={RESEARCH} className="mt-20" />
         <WorkIndex label="Playground" items={PLAYGROUND} />
       </motion.div>
+
+      {/* In his own words, from a voice note. The move from technology to design
+          is common; what he cares about is not, so that leads and the
+          background supports it. */}
+      <motion.section {...rise(0.16)} className="mt-16">
+        <h2 className="text-faint text-[0.95rem] mb-3"><ScrambleText>About</ScrambleText></h2>
+        <div className="space-y-4">
+          <p>
+            People tell me I’m calm, and I am. When something interests me I focus on it, a little
+            obsessively.
+          </p>
+          <p>
+            I care about my peace, my family, my dog, and staying curious about what’s going on around
+            me. I also care a lot about taste: in design, in music, in objects, in the choices people
+            make. I want that in my work without it being pulled apart from function.
+          </p>
+          <p>
+            I came to design after a year in security engineering, so I’m comfortable past the
+            interface: how things work, what’s possible, and how a decision turns into something that
+            can be built. Eventually I want a one-person studio, working closely with people, making
+            things I believe in, and shipping products of my own.
+          </p>
+          <p>
+            <Link href="/about" className="prose-link">More about me, and where I’ve worked</Link>
+          </p>
+        </div>
+      </motion.section>
 
       <motion.section {...rise(0.18)} className="mt-16">
         <h2 className="text-faint text-[0.95rem] mb-3"><ScrambleText>Skills</ScrambleText></h2>
@@ -176,7 +205,8 @@ export default function Home() {
       <motion.section {...rise(0.22)} className="mt-16">
         <h2 className="text-faint text-[0.95rem] mb-3"><ScrambleText>Connect</ScrambleText></h2>
         <p>
-          I’m looking for design-engineering work. The fastest way to reach me is{' '}
+          I’m looking for UX/UI or design-engineering work, somewhere I can take an idea from research
+          through to shipping. The fastest way to reach me is{' '}
           <a href="mailto:ayushman15899@gmail.com" className="prose-link">email</a>. I’m also on{' '}
           <a href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" rel="noopener noreferrer" className="prose-link">LinkedIn</a>{' '}
           and <a href="https://x.com/AyushmanBharad" target="_blank" rel="noopener noreferrer" className="prose-link">X</a>.

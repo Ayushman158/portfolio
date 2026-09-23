@@ -7,7 +7,7 @@ import { ThemeToggle, LocalClock } from './theme'
 const LINKS = [
   { href: '/', label: 'Index' },
   { href: '/experiments', label: 'Experiments' },
-  { href: '/resume', label: 'Resume' },
+  { href: '/about', label: 'About' },
 ]
 
 /**
