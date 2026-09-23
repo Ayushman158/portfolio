@@ -34,6 +34,9 @@ export default function GoneOrStillHere() {
           The exhibition is built around extinct animals, but its point is the endangered ones. The
           game follows the same order the exhibition does: extinct, endangered, conserve.
         </p>
+        <p>
+          The exhibition is a group project. I built the game myself.
+        </p>
         <p className="text-faint">
           The exhibition isn’t open yet. When it is, it gets its own page here.
         </p>

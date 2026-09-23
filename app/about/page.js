@@ -56,13 +56,13 @@ export default function About() {
     <main className="measure min-h-screen pb-40 pt-20 sm:pt-28 lg:pt-36">
       <motion.div {...rise(0)}>
         <Image
-          src="/assets/resume-photo.jpg"
-          alt="Ayushman Bharadwaj"
-          width={1024}
-          height={1024}
-          sizes="72px"
+          src="/assets/avatar-sketch.webp"
+          alt="A pencil self-portrait of Ayushman, curly-haired and half smiling, in a yellow circle"
+          width={800}
+          height={800}
+          sizes="176px"
           priority
-          className="mb-10 h-[72px] w-[72px] rounded-full border border-rule object-cover"
+          className="mb-10 h-auto w-[176px]"
         />
       </motion.div>
 

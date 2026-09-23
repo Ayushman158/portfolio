@@ -125,14 +125,17 @@ export default function Home() {
   return (
     <main className="measure min-h-screen pb-40 pt-20 sm:pt-28 lg:pt-36">
       <motion.div {...rise(0)}>
+        {/* A self-portrait he drew, set in a yellow circle that carries it on
+            both themes: the ink never sits on the page ground, so it cannot
+            disappear in the dark one. */}
         <Image
-          src="/assets/avatar.png"
-          alt="Ayushman Bharadwaj"
-          width={620}
-          height={756}
-          sizes="72px"
+          src="/assets/avatar-sketch.webp"
+          alt="A pencil self-portrait of Ayushman, curly-haired and half smiling, in a yellow circle"
+          width={800}
+          height={800}
+          sizes="112px"
           priority
-          className="mb-7 h-auto w-[72px]"
+          className="mb-7 h-auto w-[112px]"
         />
       </motion.div>
 
