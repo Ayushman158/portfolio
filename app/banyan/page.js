@@ -66,7 +66,7 @@ export default function Banyan() {
       <motion.header {...rise(0.06)} className="mt-10 space-y-5">
         <p className="text-faint" style={{ fontSize: '0.95rem' }}>himanshugarg.in · 2026</p>
 
-        <h1 style={{ color: 'var(--ink)', fontSize: '2rem', lineHeight: 1.2, fontWeight: 500, letterSpacing: '-0.02em' }}>
+        <h1 className="display">
           Himanshu had the site in his head. I built it.
         </h1>
 

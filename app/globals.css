@@ -80,7 +80,7 @@
         background-image: var(--grain);
         background-size: 160px 160px;
         color: var(--muted);
-        font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+        font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
         font-size: 1.0625rem;
         /* 18px on the 17px root below; the reference runs 14px and is too small */
         line-height: 1.65;
@@ -147,6 +147,28 @@
 }
 
 @layer components {
+
+    /* The serif's two jobs. Instrument Serif has one weight and runs narrow, so
+       it is set larger than the sans it replaced and never faux-bolded. */
+    .display {
+        font-family: var(--font-serif), ui-serif, Georgia, serif;
+        font-weight: 400;
+        font-size: clamp(2.35rem, 1.7rem + 2.2vw, 3rem);
+        line-height: 1.06;
+        letter-spacing: -0.012em;
+        color: var(--ink);
+        text-wrap: balance;
+    }
+
+    .headline {
+        font-family: var(--font-serif), ui-serif, Georgia, serif;
+        font-weight: 400;
+        font-size: 1.85rem;
+        line-height: 1.12;
+        letter-spacing: -0.005em;
+        color: var(--ink);
+        text-wrap: balance;
+    }
 
     /* Everything on the home page sits in one measure. */
     .measure {

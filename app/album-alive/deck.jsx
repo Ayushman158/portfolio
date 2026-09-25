@@ -167,7 +167,7 @@ export default function Deck() {
             ))}
           </ol>
 
-          <p className="mt-3 font-caveat text-lg text-faint">
+          <p className="mt-3 font-reenie-beanie text-2xl leading-none text-faint">
             no app, no printing — your screen is the marker
           </p>
         </div>
@@ -269,7 +269,7 @@ export default function Deck() {
                   priority
                   className="w-[min(42vw,25rem)] rounded-[4px] border border-rule shadow-[0_18px_44px_-18px_rgba(0,0,0,0.55)]"
                 />
-                <p className="mt-2 text-center font-caveat text-lg text-faint">{card.title}</p>
+                <p className="mt-2 text-center font-reenie-beanie text-2xl leading-none text-faint">{card.title}</p>
               </motion.div>
             )
           })}

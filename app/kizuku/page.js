@@ -95,7 +95,7 @@ export default function Kizuku() {
       <motion.header {...rise(0.06)} className="mt-10 space-y-5">
         <p className="text-faint" style={{ fontSize: '0.95rem' }}>気づく · kizuku · 2026</p>
 
-        <h1 style={{ color: 'var(--ink)', fontSize: '2rem', lineHeight: 1.2, fontWeight: 500, letterSpacing: '-0.02em' }}>
+        <h1 className="display">
           I think about the future too much.
         </h1>
 

@@ -13,10 +13,7 @@ export function Rule() {
 
 export function Heading({ children }) {
   return (
-    <h2
-      className="mb-4"
-      style={{ color: 'var(--ink)', fontSize: '1.35rem', lineHeight: 1.3, fontWeight: 500, letterSpacing: '-0.01em' }}
-    >
+    <h2 className="headline mb-4">
       {children}
     </h2>
   )
@@ -144,7 +141,7 @@ export function Numbers({ items, cols = 'grid-cols-2 sm:grid-cols-4' }) {
     <div className={`grid ${cols} gap-px overflow-hidden rounded-xl`} style={{ background: 'var(--rule)', border: '1px solid var(--rule)' }}>
       {items.map(([value, text]) => (
         <div key={text} className="p-4 sm:p-5" style={{ background: 'var(--ground)' }}>
-          <p className="tnum" style={{ color: 'var(--ink)', fontSize: '2rem', lineHeight: 1, fontWeight: 500, letterSpacing: '-0.03em' }}>
+          <p className="font-serif" style={{ color: 'var(--ink)', fontSize: '2.6rem', lineHeight: 1 }}>
             {value}
           </p>
           <p className="text-faint mt-2" style={{ fontSize: '0.85rem', lineHeight: 1.4 }}>{text}</p>

@@ -140,7 +140,7 @@ export default function Hoychoy() {
       <motion.header {...rise(0.06)} className="mt-10 space-y-5">
         <p className="text-faint" style={{ fontSize: '0.95rem' }}>Hoychoy Cafe · 2025 · Service design</p>
 
-        <h1 style={{ color: 'var(--ink)', fontSize: '2rem', lineHeight: 1.2, fontWeight: 500, letterSpacing: '-0.02em' }}>
+        <h1 className="display">
           A café was taking orders in WhatsApp. Ordering took 6–8 minutes.
         </h1>
 

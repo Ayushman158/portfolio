@@ -44,7 +44,7 @@ export default function MotionStudies() {
 
       <motion.div {...rise(0.04)} className="space-y-5 mt-8">
         <p className="text-faint" style={{ fontSize: '0.95rem' }}>Motion studies · 2026</p>
-        <h1 style={{ color: 'var(--ink)', fontSize: '2rem', lineHeight: 1.2, fontWeight: 500, letterSpacing: '-0.02em' }}>
+        <h1 className="display">
           Three gestures, running the same code as the app.
         </h1>
         <p>

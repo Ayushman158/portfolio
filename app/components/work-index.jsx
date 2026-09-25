@@ -60,11 +60,14 @@ export default function WorkIndex({ label, items }) {
 
   return (
     <section className="mt-16" onMouseMove={onMove}>
-      <h2 className="text-faint text-[0.95rem] mb-2">
+      {/* On the wide track, like the case-study cards above it: stepping back
+          into the reading measure here made the left edge jump inward in the
+          middle of the work. The text sections below return to the measure. */}
+      <h2 className="track-wide text-faint text-[0.95rem] mb-2">
         <ScrambleText>{label}</ScrambleText>
       </h2>
 
-      <ul ref={listRef} className="border-t border-rule">
+      <ul ref={listRef} className="track-wide border-t border-rule">
         {items.map((item, i) => {
           const Row = (
             <>

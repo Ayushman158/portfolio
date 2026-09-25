@@ -20,7 +20,7 @@ export default function KizukuProcess() {
     <main className="min-h-screen pb-40 pt-20 sm:pt-28 lg:pt-36">
       <header className="measure space-y-5">
         <Link href="/kizuku" className="prose-link text-[0.95rem]">← Kizuku</Link>
-        <h1 style={{ color: 'var(--ink)', fontSize: '2rem', lineHeight: 1.2, fontWeight: 500, letterSpacing: '-0.02em' }}>
+        <h1 className="display">
           The full process.
         </h1>
         <p>

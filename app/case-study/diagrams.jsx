@@ -252,7 +252,7 @@ export function Outcomes({ items }) {
       {items.map(([label, before, after]) => (
         <div key={label} className="rounded-xl p-4 sm:p-5" style={{ border: '1px solid var(--rule)' }}>
           <p className="text-faint tnum line-through" style={{ fontSize: '0.95rem', textDecorationColor: 'var(--faint)' }}>{before}</p>
-          <p className="tnum mt-1" style={{ color: 'var(--ink)', fontSize: '1.9rem', fontWeight: 500, lineHeight: 1.05, letterSpacing: '-0.03em' }}>{after}</p>
+          <p className="font-serif mt-1" style={{ color: 'var(--ink)', fontSize: '2.4rem', lineHeight: 1.05 }}>{after}</p>
           <p className="text-faint mt-3" style={{ fontSize: '0.85rem', lineHeight: 1.4 }}>{label}</p>
         </div>
       ))}

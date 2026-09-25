@@ -68,7 +68,7 @@ export default function About() {
 
       <motion.div {...rise(0.06)} className="space-y-5">
         <h1 className="text-faint text-[0.95rem]">About</h1>
-        <p style={{ color: 'var(--ink)', fontSize: '1.35rem', lineHeight: 1.35, fontWeight: 500, letterSpacing: '-0.01em' }}>
+        <p className="headline">
           I’m Ayushman, a designer who likes figuring things out.
         </p>
         <p>

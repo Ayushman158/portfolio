@@ -146,8 +146,8 @@ export default function Home() {
             case studies give their own openings. It was set at 17px — the same
             as everything else — so the page had no element larger than body
             copy and nothing for a scanner to land on. */}
-        <h1 style={{ color: 'var(--ink)', fontSize: '2rem', lineHeight: 1.2, fontWeight: 500, letterSpacing: '-0.02em' }}>
-          I’m <LetterSwap className="font-medium">Ayushman</LetterSwap>, a designer who likes figuring
+        <h1 className="display">
+          I’m <LetterSwap>Ayushman</LetterSwap>, a designer who likes figuring
           things out.
         </h1>
 

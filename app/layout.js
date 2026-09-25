@@ -2,22 +2,36 @@ import './globals.css'
 import './phosphor.css'
 import { ThemeProvider, themeInitScript } from './components/theme'
 import Dock from './components/dock'
-import { Inter, Reenie_Beanie, Caveat } from 'next/font/google'
+import { Inter, Instrument_Sans, Instrument_Serif, Reenie_Beanie } from 'next/font/google'
 
+// The site's two faces: Instrument Sans for everything read, Instrument Serif
+// for the few lines that speak up (page titles, section headings, big numbers).
+const sans = Instrument_Sans({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  adjustFontFallback: false
+})
+
+const serif = Instrument_Serif({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-serif',
+  adjustFontFallback: false
+})
+
+// Inter stays only because Signal's prototype is set in it: the hero recreates
+// that product, so its screens keep the product's face. Not preloaded, since
+// the page text never uses it.
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-inter'
+  variable: '--font-inter',
+  preload: false
 })
 
 const reenieBeanie = Reenie_Beanie({
   weight: '400',
   subsets: ['latin'],
   variable: '--font-reenie-beanie'
-})
-
-const caveat = Caveat({
-  subsets: ['latin'],
-  variable: '--font-caveat'
 })
 
 // One positioning line, everywhere. It matches the home h1 and the Connect
@@ -53,7 +67,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} ${reenieBeanie.variable} ${caveat.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${sans.variable} ${serif.variable} ${inter.variable} ${reenieBeanie.variable}`} suppressHydrationWarning>
       <head>
         {/* Sets the theme before first paint so a dark-preferring machine never flashes light. */}
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
