@@ -7,7 +7,7 @@
  */
 
 const small = { fontSize: '0.8rem', lineHeight: 1.35 }
-const eyebrow = { fontSize: '0.7rem', letterSpacing: '0.08em', textTransform: 'uppercase' }
+const eyebrow = { fontSize: '0.78rem', letterSpacing: '0.08em', textTransform: 'uppercase' }
 
 /**
  * Artwork drawn on white. It stays on white in the dark theme too — the same
@@ -56,7 +56,7 @@ export function CompetitorMap({ apps, us }) {
           return (
             <span key={name} className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: `${x}%`, top: `${y}%` }}>
               <span className="block h-2 w-2 rounded-full" style={{ background: 'var(--faint)', opacity: 0.7 }} />
-              <span className={`absolute whitespace-nowrap text-faint ${at}`} style={{ fontSize: '0.72rem' }}>{name}</span>
+              <span className={`absolute whitespace-nowrap text-faint ${at}`} style={{ fontSize: '0.78rem' }}>{name}</span>
             </span>
           )
         })}
@@ -83,7 +83,7 @@ export function Palette({ colours }) {
           <div className="p-3.5">
             <p className="flex items-baseline justify-between gap-2">
               <span style={{ color: 'var(--ink)' }}>{name}</span>
-              <span className="tnum text-faint" style={{ fontSize: '0.75rem' }}>{hex}</span>
+              <span className="tnum text-faint" style={{ fontSize: '0.8rem' }}>{hex}</span>
             </p>
             <p className="text-faint mt-1.5" style={{ fontSize: '0.85rem', lineHeight: 1.4 }}>{reason}</p>
           </div>

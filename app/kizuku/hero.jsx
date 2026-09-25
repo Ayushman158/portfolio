@@ -24,7 +24,7 @@ const FIELD = 'linear-gradient(180deg, #D3E3C6 0%, #C2D9B2 46%, #B8D4AC 100%)'
 const FOREST = '#2C5228'
 const PAPER = '#FBF9F2'
 const INK = '#1F2A1C'
-const MUTED = '#7C8577'
+const MUTED = '#667060' // Kizuku's muted, one step deeper so it clears 4.5:1 on the card
 
 const WORRY = 'I keep putting off the file i need to open'
 

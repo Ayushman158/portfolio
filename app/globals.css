@@ -4,14 +4,27 @@
 
 @layer base {
 
+    /* A 17px root instead of 16: every rem on the site, captions and labels
+       included, grows by the same step. A percentage, so a reader's own
+       browser size still scales it. Media queries stay on 16px ems. */
+    html {
+        font-size: 106.25%;
+    }
+
     /* ---- Light: warm paper. Secondary tones are tinted from the ground, not grey. ---- */
     :root {
         --ground: #FBFAF7;
         --raised: #F3F1EB;
         --ink: #171614;
-        --muted: #55514A;
-        --faint: #736E65;
-        --rule: #E4E0D8;
+        /* Secondary text is body text here, so it is held well above AA:
+           muted 11:1, faint 6.7:1 on paper (6.2:1 on raised). */
+        --muted: #3D3934;
+        --faint: #5E5950;
+        --rule: #D6D1C6;
+        /* Brand colours as text: the Signal orange and Telegram blue are too
+           light to read small on paper, so text takes a deeper cut (5.5:1, 5.2:1). */
+        --signal-text: #C22E00;
+        --telegram-text: #16719E;
         --accent: #1D4ED8;
         /* Warm emphasis. Ink stays solid on top of these, so contrast never
            depends on where the sweep happens to be: 13.4:1 on paper. */
@@ -43,9 +56,12 @@
         --ground: #121110;
         --raised: #1C1A18;
         --ink: #F2EFE9;
-        --muted: #A9A49B;
-        --faint: #8B857B;
-        --rule: #2B2926;
+        /* muted 10.9:1, faint 7.4:1 on the ground */
+        --muted: #C9C4BA;
+        --faint: #A8A296;
+        --rule: #3A3733;
+        --signal-text: #FF3E00;
+        --telegram-text: #229ED9;
         --accent: #8FB0FF;
         --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.6 0 0 0 -0.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
         /* Deep on dark rather than pale, so off-white ink still reads: 8.2:1. */
@@ -65,8 +81,8 @@
         background-size: 160px 160px;
         color: var(--muted);
         font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-        font-size: 17px;
-        /* house floor; the reference runs 14px and is too small */
+        font-size: 1.0625rem;
+        /* 18px on the 17px root below; the reference runs 14px and is too small */
         line-height: 1.65;
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
@@ -191,7 +207,7 @@
        the same idiom as the readouts on the Kizuku demos. */
     .chip {
         display: inline-block;
-        font-size: 0.68rem;
+        font-size: 0.75rem;
         line-height: 1.5;
         letter-spacing: 0.12em;
         text-transform: uppercase;

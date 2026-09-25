@@ -106,19 +106,19 @@ function Notification({ stage }) {
         <div className="flex items-center gap-2">
           <AppIcon />
           <span style={{ fontSize: 13, fontWeight: 500, color: '#141414' }}>Signal</span>
-          <span className="ml-auto" style={{ fontSize: 12, color: '#9a9a9a' }}>now</span>
+          <span className="ml-auto" style={{ fontSize: 12, color: '#6F6F6F' }}>now</span>
         </div>
         <div className="mt-2 flex items-center gap-3">
           <div className="min-w-0 flex-1">
             <p style={{ fontSize: 16, fontWeight: 700, color: '#111', letterSpacing: '-0.01em' }}>Leave by 8:28 AM</p>
-            <p className="mt-0.5 truncate" style={{ fontSize: 12.5, color: '#9a9a9a' }}>74% on time · Yellow Line · Dwarka Sec-21</p>
+            <p className="mt-0.5 truncate" style={{ fontSize: 12.5, color: '#6F6F6F' }}>74% on time · Yellow Line · Dwarka Sec-21</p>
           </div>
           <Gauge on={on} />
         </div>
       </div>
       <div className="grid grid-cols-2" style={{ borderTop: '1px solid #ececec' }}>
-        <span className="py-2.5 text-center" style={{ fontSize: 13.5, fontWeight: 600, color: ORANGE }}>Open Rapido ↗</span>
-        <span className="py-2.5 text-center" style={{ fontSize: 13.5, color: '#9a9a9a', borderLeft: '1px solid #ececec' }}>Dismiss</span>
+        <span className="py-2.5 text-center" style={{ fontSize: 13.5, fontWeight: 600, color: '#D93400' }}>Open Rapido ↗</span>
+        <span className="py-2.5 text-center" style={{ fontSize: 13.5, color: '#6F6F6F', borderLeft: '1px solid #ececec' }}>Dismiss</span>
       </div>
     </motion.div>
   )

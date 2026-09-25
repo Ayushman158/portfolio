@@ -48,12 +48,12 @@ export function LoadCurve() {
             style={{
               left: pct(x),
               background: hot ? ORANGE : 'var(--raised)',
-              color: hot ? '#fff' : 'var(--ink)',
+              color: hot ? '#141414' : 'var(--ink)',
               border: hot ? 'none' : '1px solid var(--rule)',
             }}
           >
             <p style={{ fontSize: '0.8rem', fontWeight: 600, lineHeight: 1.2 }}>{n} {title}</p>
-            <p className="hidden sm:block" style={{ fontSize: '0.75rem', opacity: 0.75, lineHeight: 1.3 }}>{sub}</p>
+            <p className="hidden sm:block" style={{ fontSize: '0.8rem', lineHeight: 1.3 }}>{sub}</p>
           </div>
         ))}
 
@@ -84,7 +84,7 @@ export function LoadCurve() {
             // The last two stops sit 120 units apart, which is 55px on a phone:
             // too close for both names, so the office is left to the dot there.
             className={`absolute bottom-0 whitespace-nowrap${i === 0 ? '' : i === STATIONS.length - 1 ? ' hidden -translate-x-full sm:block' : ' -translate-x-1/2'}`}
-            style={{ left: pct(i === 0 ? 40 : x), fontSize: '0.75rem', color: hot ? ORANGE : 'var(--faint)' }}
+            style={{ left: pct(i === 0 ? 40 : x), fontSize: '0.8rem', color: hot ? 'var(--signal-text)' : 'var(--faint)' }}
           >
             {name}
           </span>
@@ -195,7 +195,7 @@ export function Matrix({ columns, rows }) {
           <tbody>
             {rows.map(([name, cells, us]) => (
               <tr key={name} style={{ borderTop: '1px solid var(--rule)', background: us ? 'var(--raised)' : undefined }}>
-                <th scope="row" className="py-3 pr-3 font-normal whitespace-nowrap" style={{ color: us ? ORANGE : 'var(--ink)' }}>{name}</th>
+                <th scope="row" className="py-3 pr-3 font-normal whitespace-nowrap" style={{ color: us ? 'var(--signal-text)' : 'var(--ink)' }}>{name}</th>
                 {cells.map(([n, text], j) => (
                   <td key={j} className="py-3 px-2 align-top">
                     <span className="flex items-start gap-2">
@@ -254,7 +254,9 @@ export function Verdicts({ items }) {
         <div key={state} className="overflow-hidden rounded-xl" style={{ border: '1px solid var(--rule)' }}>
           <div style={{ height: 4, background: color }} />
           <div className="p-4">
-            <p style={{ ...label, color }}>{state}</p>
+            {/* The state colour stays pure on the bar; as text it is pulled 30%
+                toward ink so amber and orange clear AA on both themes. */}
+            <p style={{ ...label, color: `color-mix(in srgb, ${color} 70%, var(--ink))` }}>{state}</p>
             <p className="mt-2" style={{ color: 'var(--ink)', fontSize: '1.1rem', fontWeight: 500, lineHeight: 1.2 }}>{verdict}</p>
             <p className="text-faint mt-2" style={{ fontSize: '0.8rem', lineHeight: 1.4 }}>{detail}</p>
           </div>
@@ -296,7 +298,7 @@ export function Iterations({ items }) {
       {items.map(([before, after]) => (
         <div key={before} className="grid items-center gap-2 rounded-xl p-3 sm:grid-cols-[1fr_auto_1fr] sm:gap-4" style={{ border: '1px solid var(--rule)' }}>
           <span className="text-faint line-through" style={{ fontSize: '0.95rem', textDecorationColor: 'var(--faint)' }}>{before}</span>
-          <span aria-hidden="true" className="hidden sm:inline" style={{ color: ORANGE }}>→</span>
+          <span aria-hidden="true" className="hidden sm:inline" style={{ color: 'var(--signal-text)' }}>→</span>
           <span style={{ color: 'var(--ink)', fontSize: '0.95rem' }}>{after}</span>
         </div>
       ))}
@@ -319,12 +321,12 @@ export function JobStories({ items }) {
           <dl className="mt-4 space-y-2" style={{ fontSize: '0.92rem', lineHeight: 1.45 }}>
             {[['When', when], ['I want', want], ['So I can', so]].map(([k, v]) => (
               <div key={k}>
-                <dt className="text-faint" style={{ fontSize: '0.75rem', letterSpacing: '0.04em', textTransform: 'uppercase' }}>{k}</dt>
+                <dt className="text-faint" style={{ fontSize: '0.8rem', letterSpacing: '0.04em', textTransform: 'uppercase' }}>{k}</dt>
                 <dd style={{ color: 'var(--muted)' }}>{v}</dd>
               </div>
             ))}
           </dl>
-          <p className="mt-4 pt-3" style={{ borderTop: '1px solid var(--rule)', fontSize: '0.9rem', color: ORANGE }}>
+          <p className="mt-4 pt-3" style={{ borderTop: '1px solid var(--rule)', fontSize: '0.9rem', color: 'var(--signal-text)' }}>
             → {response}
           </p>
         </article>

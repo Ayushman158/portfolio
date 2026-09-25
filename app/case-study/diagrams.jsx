@@ -10,7 +10,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
  */
 
 const small = { fontSize: '0.8rem', lineHeight: 1.35 }
-const eyebrow = { fontSize: '0.72rem', letterSpacing: '0.06em', textTransform: 'uppercase' }
+const eyebrow = { fontSize: '0.78rem', letterSpacing: '0.06em', textTransform: 'uppercase' }
 
 /** Real messages from the threads, as the owner saw them. */
 export function Chat({ messages, reply }) {
@@ -130,7 +130,7 @@ function Divider({ label }) {
   return (
     <div className="col-span-4 flex items-center gap-2 py-0.5">
       <span className="h-px flex-1" style={{ backgroundImage: 'linear-gradient(90deg, var(--faint) 50%, transparent 0)', backgroundSize: '6px 1px', opacity: 0.6 }} />
-      <span className="text-faint" style={{ fontSize: '0.7rem' }}>{label}</span>
+      <span className="text-faint" style={{ fontSize: '0.78rem' }}>{label}</span>
       <span className="h-px w-6" style={{ backgroundImage: 'linear-gradient(90deg, var(--faint) 50%, transparent 0)', backgroundSize: '6px 1px', opacity: 0.6 }} />
     </div>
   )
@@ -160,7 +160,7 @@ function Node({ children, strong, sub }) {
       }}
     >
       {children}
-      {sub && <span className="mt-1 block" style={{ ...small, opacity: 0.7 }}>{sub}</span>}
+      {sub && <span className="mt-1 block" style={small}>{sub}</span>}
     </div>
   )
 }
@@ -235,7 +235,7 @@ export function Backbone({ items }) {
               background: hot ? 'color-mix(in srgb, #229ED9 8%, var(--ground))' : 'var(--ground)',
             }}
           >
-            <p style={{ ...eyebrow, color: hot ? '#229ED9' : 'var(--faint)' }}>{role}</p>
+            <p style={{ ...eyebrow, color: hot ? 'var(--telegram-text)' : 'var(--faint)' }}>{role}</p>
             <p className="mt-2" style={{ color: 'var(--ink)', fontSize: '1.05rem', fontWeight: 500 }}>{name}</p>
             <p className="text-faint mt-2" style={{ fontSize: '0.88rem', lineHeight: 1.45 }}>{body}</p>
           </div>
