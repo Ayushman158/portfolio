@@ -14,7 +14,7 @@ export default function AlbumAlive() {
   })
 
   return (
-    <main className="measure min-h-screen pb-40 pt-20 sm:pt-28">
+    <main className="measure min-h-screen pb-28 pt-20 sm:pt-28">
       <motion.div {...rise(0)} className="space-y-5">
         <h1 className="text-faint text-[0.95rem]">ALBUM//ALIVE · 2026</h1>
         <p>

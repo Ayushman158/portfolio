@@ -134,7 +134,7 @@ export default function Hoychoy() {
   })
 
   return (
-    <main className="measure min-h-screen pb-40 pt-20 sm:pt-28 lg:pt-36">
+    <main className="measure min-h-screen pb-28 pt-20 sm:pt-28 lg:pt-36">
       <motion.div {...rise(0)}><Back /></motion.div>
 
       <motion.header {...rise(0.06)} className="mt-10 space-y-5">

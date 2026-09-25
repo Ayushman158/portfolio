@@ -17,7 +17,7 @@ const TILES = Array.from({ length: 9 }, (_, i) => ({
 
 export default function KizukuProcess() {
   return (
-    <main className="min-h-screen pb-40 pt-20 sm:pt-28 lg:pt-36">
+    <main className="min-h-screen pb-28 pt-20 sm:pt-28 lg:pt-36">
       <header className="measure space-y-5">
         <Link href="/kizuku" className="prose-link text-[0.95rem]">← Kizuku</Link>
         <h1 className="display">

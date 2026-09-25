@@ -74,8 +74,9 @@ export default function RootLayout({ children }) {
       </head>
       <body className="font-sans overflow-x-hidden">
         <ThemeProvider>
-          {children}
+          {/* First in the document, so the nav is the first thing a keyboard reaches. */}
           <Dock />
+          {children}
         </ThemeProvider>
       </body>
     </html>

@@ -113,6 +113,41 @@ function Greeting() {
   )
 }
 
+const EMAIL = 'ayushman15899@gmail.com'
+
+/**
+ * The page's one call to action. A mailto link alone fails anyone without a
+ * mail app set up, which on a borrowed or work laptop is most people, so the
+ * address can also be copied, and says so when it has been.
+ */
+function EmailActions() {
+  const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    if (!copied) return
+    const t = setTimeout(() => setCopied(false), 1800)
+    return () => clearTimeout(t)
+  }, [copied])
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(EMAIL)
+      setCopied(true)
+    } catch {
+      window.location.href = `mailto:${EMAIL}`
+    }
+  }
+
+  return (
+    <div className="mt-6 flex flex-wrap items-center gap-3">
+      <a href={`mailto:${EMAIL}`} className="btn-primary">Email me</a>
+      <button type="button" onClick={copy} className="btn-quiet">
+        <span aria-live="polite">{copied ? 'Copied' : 'Copy address'}</span>
+      </button>
+    </div>
+  )
+}
+
 export default function Home() {
   const reduceMotion = useReducedMotion()
 
@@ -123,7 +158,7 @@ export default function Home() {
   })
 
   return (
-    <main className="measure min-h-screen pb-40 pt-20 sm:pt-28 lg:pt-36">
+    <main className="measure min-h-screen pb-28 pt-20 sm:pt-28 lg:pt-36">
       {/* One left edge for the whole page. The intro, the work and the closing
           sections all start where the case-study cards start, and the text
           only narrows on the right, to a reading width. Before, the edge
@@ -194,11 +229,11 @@ export default function Home() {
           <h2 className="text-faint text-[0.95rem] mb-3"><ScrambleText>Connect</ScrambleText></h2>
           <p>
             I’m looking for UX/UI or design-engineering work, somewhere I can take an idea from research
-            through to shipping. The fastest way to reach me is{' '}
-            <a href="mailto:ayushman15899@gmail.com" className="prose-link">email</a>. I’m also on{' '}
+            through to shipping. The fastest way to reach me is email. I’m also on{' '}
             <a href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" rel="noopener noreferrer" className="prose-link">LinkedIn</a>{' '}
             and <a href="https://x.com/AyushmanBharad" target="_blank" rel="noopener noreferrer" className="prose-link">X</a>.
           </p>
+          <EmailActions />
         </motion.section>
       </div>
     </main>

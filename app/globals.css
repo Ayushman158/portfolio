@@ -474,3 +474,59 @@
    .track-wide above), so their lines only draw there too. */
 .grid-wide-only { display: none; }
 @media (min-width: 60rem) { .grid-wide-only { display: block; } }
+
+/* The top bar. Its contents sit on the page's own edges: the reading measure
+   on narrow screens, the wide track from 60rem, so Index lines up with the
+   first card and the theme toggle with the last. */
+.chrome-track {
+    width: 100%;
+    max-width: var(--measure);
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+}
+@media (min-width: 60rem) {
+    .chrome-track {
+        max-width: none;
+        padding-inline: 0;
+        width: min(58rem, calc(100vw - 3rem));
+    }
+}
+
+/* Clear at the top of the page, so the paper grain runs unbroken behind it;
+   it takes a ground only once content can pass underneath. */
+.dock {
+    border-bottom: 1px solid transparent;
+    transition: transform var(--duration-slow) var(--ease-out),
+        background-color var(--duration-fast) ease, border-color var(--duration-fast) ease;
+}
+.dock[data-scrolled] {
+    background-color: color-mix(in srgb, var(--ground) 88%, transparent);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-bottom-color: var(--rule);
+}
+.dock[data-hidden] { transform: translateY(-100%); }
+@media (prefers-reduced-motion: reduce) {
+    .dock { transition: none; }
+}
+
+/* Contact. The one filled button on the site, because it is the one action
+   the whole page leads to. */
+.btn-primary,
+.btn-quiet {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding-inline: 1.25rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    transition: background-color var(--duration-quick) ease, color var(--duration-quick) ease,
+        border-color var(--duration-quick) ease, transform var(--duration-quick) var(--ease-out);
+}
+.btn-primary { background: var(--ink); color: var(--ground); }
+.btn-primary:hover { background: color-mix(in srgb, var(--ink) 86%, var(--ground)); }
+.btn-quiet { border: 1px solid var(--rule); color: var(--ink); }
+.btn-quiet:hover { border-color: var(--faint); }
+.btn-primary:active,
+.btn-quiet:active { transform: scale(0.97); }
