@@ -124,7 +124,11 @@ export default function Home() {
 
   return (
     <main className="measure min-h-screen pb-40 pt-20 sm:pt-28 lg:pt-36">
-      <motion.div {...rise(0)}>
+      {/* One left edge for the whole page. The intro, the work and the closing
+          sections all start where the case-study cards start, and the text
+          only narrows on the right, to a reading width. Before, the edge
+          stepped in for the intro, out for the work and in again at the end. */}
+      <motion.div {...rise(0)} className="track-wide">
         {/* A self-portrait he drew, set in a yellow circle that carries it on
             both themes: the ink never sits on the page ground, so it cannot
             disappear in the dark one. */}
@@ -139,7 +143,7 @@ export default function Home() {
         />
       </motion.div>
 
-      <motion.div {...rise(0.06)} className="space-y-5">
+      <motion.div {...rise(0.06)} className="track-wide space-y-5 [&>*]:max-w-[38rem]">
         <Greeting />
 
         {/* The one sentence the whole page exists to deliver, at the size the
@@ -157,6 +161,10 @@ export default function Home() {
           considered. Finishing my masters in interaction design.
         </p>
 
+        <p>
+          <Link href="/about" className="prose-link">More about me, and where I’ve worked</Link>
+        </p>
+
       </motion.div>
 
       <motion.div {...rise(0.12)}>
@@ -165,56 +173,34 @@ export default function Home() {
         <WorkIndex label="Playground" items={PLAYGROUND} />
       </motion.div>
 
-      {/* In his own words, from a voice note. The move from technology to design
-          is common; what he cares about is not, so that leads and the
-          background supports it. */}
-      <motion.section {...rise(0.16)} className="mt-16">
-        <h2 className="text-faint text-[0.95rem] mb-3"><ScrambleText>About</ScrambleText></h2>
-        <div className="space-y-4">
-          <p>
-            People tell me I’m calm, and I am. When something interests me I focus on it, a little
-            obsessively.
-          </p>
-          <p>
-            I care about my peace, my family, my dog, and staying curious about what’s going on around
-            me. I also care a lot about taste: in design, in music, in objects, in the choices people
-            make. I want that in my work without it being pulled apart from function.
-          </p>
-          <p>
-            I came to design after a year in security engineering, so I’m comfortable past the
-            interface: how things work, what’s possible, and how a decision turns into something that
-            can be built. Eventually I want a one-person studio, working closely with people, making
-            things I believe in, and shipping products of my own.
-          </p>
-          <p>
-            <Link href="/about" className="prose-link">More about me, and where I’ve worked</Link>
-          </p>
-        </div>
-      </motion.section>
+      {/* Skills and Connect close the page side by side, on the same two
+          columns as the cards, so the end reads as one footer, not two more
+          sections in a narrow column. */}
+      <div className="track-wide mt-16 grid gap-x-5 gap-y-16 lg:grid-cols-2">
+        <motion.section {...rise(0.18)}>
+          <h2 className="text-faint text-[0.95rem] mb-3"><ScrambleText>Skills</ScrambleText></h2>
+          <p>{METHODS.join(' · ')}</p>
 
-      <motion.section {...rise(0.18)} className="mt-16">
-        <h2 className="text-faint text-[0.95rem] mb-3"><ScrambleText>Skills</ScrambleText></h2>
-        <p>{METHODS.join(' · ')}</p>
+          {/* Named in server-rendered text. The well below is client-only, so
+              without this the tools appear in no crawler, no keyword scan and no
+              no-JS view — and a mark without a label is unreadable regardless. */}
+          <p className="mt-2">{TOOLS.map((t) => t.label).join(' · ')}</p>
 
-        {/* Named in server-rendered text. The well below is client-only, so
-            without this the tools appear in no crawler, no keyword scan and no
-            no-JS view — and a mark without a label is unreadable regardless. */}
-        <p className="mt-2">{TOOLS.map((t) => t.label).join(' · ')}</p>
+          {/* Decorative: the marks for the tools named above. */}
+          {!reduceMotion && <SkillsGravity items={TOOLS} />}
+        </motion.section>
 
-        {/* Decorative: the marks for the tools named above. */}
-        {!reduceMotion && <SkillsGravity items={TOOLS} />}
-      </motion.section>
-
-      <motion.section {...rise(0.22)} className="mt-16">
-        <h2 className="text-faint text-[0.95rem] mb-3"><ScrambleText>Connect</ScrambleText></h2>
-        <p>
-          I’m looking for UX/UI or design-engineering work, somewhere I can take an idea from research
-          through to shipping. The fastest way to reach me is{' '}
-          <a href="mailto:ayushman15899@gmail.com" className="prose-link">email</a>. I’m also on{' '}
-          <a href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" rel="noopener noreferrer" className="prose-link">LinkedIn</a>{' '}
-          and <a href="https://x.com/AyushmanBharad" target="_blank" rel="noopener noreferrer" className="prose-link">X</a>.
-        </p>
-      </motion.section>
+        <motion.section {...rise(0.22)}>
+          <h2 className="text-faint text-[0.95rem] mb-3"><ScrambleText>Connect</ScrambleText></h2>
+          <p>
+            I’m looking for UX/UI or design-engineering work, somewhere I can take an idea from research
+            through to shipping. The fastest way to reach me is{' '}
+            <a href="mailto:ayushman15899@gmail.com" className="prose-link">email</a>. I’m also on{' '}
+            <a href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" rel="noopener noreferrer" className="prose-link">LinkedIn</a>{' '}
+            and <a href="https://x.com/AyushmanBharad" target="_blank" rel="noopener noreferrer" className="prose-link">X</a>.
+          </p>
+        </motion.section>
+      </div>
     </main>
   )
 }
