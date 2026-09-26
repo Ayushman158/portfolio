@@ -19,13 +19,25 @@ import Matter from 'matter-js'
  * behind four screens of scroll is pure cost. Reduced motion never mounts this
  * at all; the caller renders a static row instead.
  */
-export default function SkillsGravity({ items }) {
+/*
+ * Resting places, as fractions of the well, for the moment before physics
+ * takes over (and for good, with reduced motion): the tags along the top, the
+ * buttons along the floor. Physics overwrites these on its first frame.
+ */
+const REST_TAGS = [[0.1, 0.16], [0.4, 0.1], [0.42, 0.46], [0.66, 0.6]]
+const REST_BALLS = [[0.16, 0.5], [0.24, 0.74], [0.36, 0.7], [0.5, 0.76], [0.74, 0.22]]
+
+export default function SkillsGravity({ tools, tags, still = false }) {
   const wellRef = useRef(null)
   const tileRefs = useRef([])
+  const items = [
+    ...tags.map((t) => ({ kind: 'tag', label: t })),
+    ...tools.map((t) => ({ kind: 'ball', ...t })),
+  ]
 
   useEffect(() => {
     const well = wellRef.current
-    if (!well) return
+    if (!well || still) return
 
     const { Engine, Runner, Bodies, Composite, Mouse, MouseConstraint, Body } = Matter
 
@@ -43,16 +55,19 @@ export default function SkillsGravity({ items }) {
     ]
     Composite.add(engine.world, walls)
 
-    // One body per tile, dropped from above the well with a little spin.
-    const bodies = tileRefs.current.filter(Boolean).map((el, i) => {
-      const r = el.offsetWidth / 2
-      const body = Bodies.circle(
-        W * (0.12 + (0.76 / Math.max(1, tileRefs.current.filter(Boolean).length - 1)) * i) + (Math.random() * 16 - 8),
-        -80 - i * 90,
-        r,
-        { restitution: 0.45, friction: 0.28, frictionAir: 0.012, density: 0.0012 }
-      )
-      Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.18)
+    // One body per piece, dropped from above the well with a little spin: a
+    // circle for each button, a rounded rectangle for each paper tag.
+    const els = tileRefs.current.filter(Boolean)
+    const bodies = els.map((el, i) => {
+      el.style.left = '0px'
+      el.style.top = '0px'
+      const x = W * (0.1 + (0.8 / Math.max(1, els.length - 1)) * i) + (Math.random() * 16 - 8)
+      const y = -80 - i * 70
+      const feel = { restitution: 0.4, friction: 0.3, frictionAir: 0.014, density: 0.0012 }
+      const body = el.dataset.kind === 'tag'
+        ? Bodies.rectangle(x, y, el.offsetWidth, el.offsetHeight, { ...feel, chamfer: { radius: 3 }, angle: (Math.random() - 0.5) * 0.12 })
+        : Bodies.circle(x, y, el.offsetWidth / 2, feel)
+      Body.setAngularVelocity(body, (Math.random() - 0.5) * (el.dataset.kind === 'tag' ? 0.06 : 0.18))
       return { el, body }
     })
     Composite.add(engine.world, bodies.map((b) => b.body))
@@ -128,36 +143,38 @@ export default function SkillsGravity({ items }) {
       Composite.clear(engine.world, false)
       Engine.clear(engine)
     }
-  }, [items])
+  }, [still])
 
   return (
     <div
       ref={wellRef}
-      // The tools are named in server-rendered text above; these are their marks.
-      // Decorative, so the whole well is hidden from assistive tech rather than
-      // read out a second time.
+      // Everything in here is named in server-rendered text beside it; these
+      // are the same words and marks as things to play with, so the well is
+      // hidden from assistive tech rather than read out a second time.
       aria-hidden="true"
-      className="relative mt-6 h-[200px] w-full overflow-hidden rounded-lg border border-rule bg-raised"
+      className="skills-well relative h-[280px] w-full overflow-hidden rounded-[20px] sm:h-[320px]"
     >
-      {items.map((item, i) => (
-        <div
-          key={item.label}
-          ref={(el) => (tileRefs.current[i] = el)}
-          title={item.label}
-          className="absolute left-0 top-0 flex h-14 w-14 select-none items-center justify-center rounded-full border border-rule bg-ground shadow-sm will-change-transform"
-          // Resting layout along the floor of the well, wrapping at four so it
-          // still fits the 327px well on a 375px screen. Physics overwrites this
-          // on its first frame; until then — and if the engine never starts at
-          // all, because the chunk failed or the tab is throttled — the tools
-          // read as a deliberate arrangement rather than a stack in the corner.
-          style={{
-            cursor: 'grab',
-            transform: `translate3d(${12 + (i % 4) * 62}px, ${190 - Math.floor(i / 4) * 66}px, 0)`,
-          }}
-        >
-          {item.mark}
-        </div>
-      ))}
+      <span className="skills-groove absolute bottom-[12%] right-5 top-[12%] w-2.5 rounded-full" />
+      {items.map((item, i) => {
+        const rest = item.kind === 'tag' ? REST_TAGS[i] : REST_BALLS[i - tags.length]
+        return (
+          <div
+            key={item.label}
+            ref={(el) => (tileRefs.current[i] = el)}
+            data-kind={item.kind}
+            title={item.label}
+            className={`absolute select-none will-change-transform ${item.kind === 'tag' ? 'skill-tag' : 'skill-ball flex items-center justify-center rounded-full'}`}
+            style={{
+              cursor: still ? 'default' : 'grab',
+              left: `${(rest?.[0] ?? 0.1) * 100}%`,
+              top: `${(rest?.[1] ?? 0.5) * 100}%`,
+              ...(item.kind === 'ball' ? { '--ball': item.ball } : { transform: `rotate(${i % 2 ? 1.5 : -1.5}deg)` }),
+            }}
+          >
+            {item.kind === 'tag' ? item.label : item.mark}
+          </div>
+        )
+      })}
     </div>
   )
 }

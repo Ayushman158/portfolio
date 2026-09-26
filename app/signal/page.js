@@ -248,9 +248,9 @@ export default function Signal() {
 
       {/* The product first. A research case study still has to show what the
           research turned into before it asks anyone to read the method. */}
-      <motion.div {...rise(0.1)} className="track-full mt-12">
+      <div data-case-hero className="track-full mt-12 overflow-hidden rounded-xl">
         <SignalHero className="rounded-xl" />
-      </motion.div>
+      </div>
       <SkipTo target="screens">just here for the screens?</SkipTo>
 
       <motion.div {...rise(0.12)} className="mt-10">

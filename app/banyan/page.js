@@ -91,6 +91,18 @@ export default function Banyan() {
         </p>
       </motion.header>
 
+      {/* The live site as it opens. Not faded in: the card on the index grows
+          into this image. */}
+      <figure data-case-hero className="track-full mt-12 overflow-hidden rounded-xl" style={{ border: '1px solid var(--rule)' }}>
+        <img
+          src="/shipped/banyan.jpg"
+          alt="The Banyan Tree homepage: twelve categories of symptom over a banyan canopy"
+          width={1600}
+          height={900}
+          className="block h-auto w-full"
+        />
+      </figure>
+
       <motion.div {...rise(0.1)}><Facts rows={FACTS} /></motion.div>
 
       <motion.p {...rise(0.14)} className="mt-8">

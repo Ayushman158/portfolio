@@ -1,6 +1,6 @@
 import './globals.css'
 import './phosphor.css'
-import { ThemeProvider, themeInitScript } from './components/theme'
+import { ThemeProvider, themeInitScript, Lamp } from './components/theme'
 import Dock from './components/dock'
 import { Inter, Instrument_Sans, Instrument_Serif, Reenie_Beanie } from 'next/font/google'
 
@@ -76,6 +76,7 @@ export default function RootLayout({ children }) {
         <ThemeProvider>
           {/* First in the document, so the nav is the first thing a keyboard reaches. */}
           <Dock />
+          <Lamp />
           {children}
         </ThemeProvider>
       </body>

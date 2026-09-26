@@ -35,9 +35,9 @@ export const FigmaMark = () => (
   </svg>
 )
 
-export const FramerMark = () => (
+export const FramerMark = ({ fill = '#0055FF' }) => (
   <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M4 0h16v8h-8zM4 8h8l8 8H4zM4 16h8v8z" fill="#0055FF" />
+    <path d="M4 0h16v8h-8zM4 8h8l8 8H4zM4 16h8v8z" fill={fill} />
   </svg>
 )
 
@@ -49,3 +49,14 @@ export const ClaudeMark = () => (
 
 export const IllustratorMark = () => <Tile bg="#330000" fg="#FF9A00">Ai</Tile>
 export const CodexMark = () => <Tile bg="#0D0D0D" fg="#FFFFFF">Cx</Tile>
+
+/* The skills well draws each tool as a glossy button in the tool's own colour,
+   so the marks sit straight on the button rather than on a tile. */
+export const IllustratorGlyph = () => (
+  <span aria-hidden="true" style={{ color: '#FF9A00', fontWeight: 700, fontSize: 22, letterSpacing: '-0.02em', lineHeight: 1 }}>Ai</span>
+)
+// Codex is a terminal tool; a prompt is an honest glyph for it until the
+// official mark is available (see above).
+export const PromptGlyph = () => (
+  <span aria-hidden="true" style={{ color: '#fff', fontFamily: 'var(--font-mono, ui-monospace), ui-monospace, monospace', fontWeight: 600, fontSize: 17, letterSpacing: '-0.04em', lineHeight: 1 }}>{'>_'}</span>
+)

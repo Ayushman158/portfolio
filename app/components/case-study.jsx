@@ -1,6 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { backToCard } from './case-transition'
 
 /**
  * The furniture both case studies share, so they cannot drift apart again.
@@ -20,7 +22,9 @@ export function Heading({ children }) {
 }
 
 export function Back() {
-  return <Link href="/#work" className="prose-link text-[0.95rem]">← Work</Link>
+  const router = useRouter()
+  // Arrived from a card? The top image shrinks back into it.
+  return <Link href="/#work" onClick={(e) => backToCard(e, router)} className="prose-link text-[0.95rem]">← Work</Link>
 }
 
 /** Role, scope, stack — the four rows a recruiter reads first. */

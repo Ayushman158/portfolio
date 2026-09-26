@@ -1,6 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { openCase } from './case-transition'
 import Image from 'next/image'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { motion, useMotionValue, useReducedMotion, useTransform } from 'motion/react'
@@ -25,6 +27,7 @@ export default function Shipped({ label = 'Shipped', items, className = 'mt-16' 
   const section = useRef(null)
   const cards = useRef([])
   const turns = useTurns(section, cards, items)
+  const router = useRouter()
 
   return (
     <section ref={section} className={className}>
@@ -52,10 +55,12 @@ export default function Shipped({ label = 'Shipped', items, className = 'mt-16' 
             <Link
               href={p.href}
               aria-label={`${p.name} — read the case study`}
+              data-case-card={p.href}
+              onClick={(e) => openCase(e, router, p.href)}
               // isolate: a filtered or scaling child can escape a parent's
               // rounded overflow clip in Safari; its own stacking context
               // keeps the corners.
-              className="block overflow-hidden rounded-xl [isolation:isolate]"
+              className="relative block overflow-hidden rounded-xl [isolation:isolate]"
               style={{ border: '1px solid var(--rule)', background: 'var(--raised)' }}
             >
               {p.video && !reduceMotion ? (
@@ -78,6 +83,7 @@ export default function Shipped({ label = 'Shipped', items, className = 'mt-16' 
                   }`}
                 />
               )}
+              {p.live && <LiveBadge />}
             </Link>
 
             <div className="mt-3 flex items-baseline justify-between gap-4">
@@ -276,5 +282,49 @@ function Loop({ src, poster, playing, repeat, onEnded }) {
         style={{ width, background: 'var(--ink)', opacity: playing && !repeat ? 0.45 : 0, transition: 'opacity 300ms' }}
       />
     </div>
+  )
+}
+
+/* ─────────────────────────────────────────────────────────
+ * LIVE
+ *
+ * Whether the café is taking orders right now, read from its own ordering
+ * backend: the same status the owner flips from the admin panel, and the
+ * same one the menu reads. It says nothing until it has an answer, and
+ * nothing at all if the backend does not reply, rather than guess.
+ * ───────────────────────────────────────────────────────── */
+
+const HOYCHOY_STATUS = 'https://hoychoy-cafe-backend.onrender.com/api/app-status'
+
+function LiveBadge() {
+  const [status, setStatus] = useState(null)
+
+  useEffect(() => {
+    const ctrl = new AbortController()
+    // The backend sleeps when idle; give it a while to wake, then give up.
+    const t = setTimeout(() => ctrl.abort(), 12000)
+    fetch(HOYCHOY_STATUS, { signal: ctrl.signal })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => { if (d && typeof d.open === 'boolean') setStatus(d) })
+      .catch(() => {})
+      .finally(() => clearTimeout(t))
+    return () => { clearTimeout(t); ctrl.abort() }
+  }, [])
+
+  if (!status) return null
+
+  const back = !status.open && status.closedUntil > 0
+    ? new Date(status.closedUntil).toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Kolkata' }).toLowerCase()
+    : null
+
+  return (
+    <span
+      title="Live from the café’s own ordering system"
+      className="absolute bottom-2.5 left-2.5 z-10 flex items-center gap-2 rounded-full py-1 pl-2 pr-2.5"
+      style={{ background: 'rgba(20,19,17,.72)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', color: '#f3efe6', fontSize: '0.78rem', lineHeight: 1.3 }}
+    >
+      <span className="live-dot block h-[7px] w-[7px] rounded-full" data-open={status.open || undefined} style={{ background: status.open ? undefined : '#b0a99c' }} />
+      {status.open ? 'Taking orders now' : back ? `Closed · back at ${back}` : 'Not taking orders right now'}
+    </span>
   )
 }

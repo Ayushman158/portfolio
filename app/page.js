@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { motion, useReducedMotion } from 'motion/react'
@@ -10,7 +9,8 @@ import LetterSwap from './components/letter-swap'
 import WorkIndex from './components/work-index'
 import ScrambleText from './components/scramble-text'
 import Shipped from './components/shipped'
-import { FigmaMark, FramerMark, IllustratorMark, ClaudeMark, CodexMark } from './components/tool-marks'
+import Magnet from './components/magnet'
+import { FigmaMark, FramerMark, ClaudeMark, IllustratorGlyph, PromptGlyph } from './components/tool-marks'
 import VerticalCutReveal from './components/vertical-cut-reveal'
 
 // Live, client-run, and reachable by anyone — so these are shown, not listed.
@@ -28,6 +28,7 @@ const SHIPPED = [
   {
     name: 'Hoychoy Cafe',
     href: '/case-study',
+    live: true,
     site: 'hoychoycafe.com',
     url: 'https://www.hoychoycafe.com/',
     shot: '/shipped/hoychoy.jpg',
@@ -72,12 +73,13 @@ const RESEARCH = [
 // it is split out of the initial bundle entirely rather than shipped with the fold.
 const SkillsGravity = dynamic(() => import('./components/skills-gravity'), { ssr: false })
 
+// Each tool is a button in its own colour; the methods are paper tags.
 const TOOLS = [
-  { label: 'Figma', mark: <FigmaMark /> },
-  { label: 'Framer', mark: <FramerMark /> },
-  { label: 'Illustrator', mark: <IllustratorMark /> },
-  { label: 'Claude', mark: <ClaudeMark /> },
-  { label: 'Codex', mark: <CodexMark /> },
+  { label: 'Figma', mark: <FigmaMark />, ball: '#F7F5F0' },
+  { label: 'Framer', mark: <FramerMark fill="#fff" />, ball: '#2553F0' },
+  { label: 'Illustrator', mark: <IllustratorGlyph />, ball: '#2B0A02' },
+  { label: 'Claude', mark: <ClaudeMark />, ball: '#F3ECE0' },
+  { label: 'Codex', mark: <PromptGlyph />, ball: '#111111' },
 ]
 
 const METHODS = ['UX Research', 'Usability Design', 'Design Thinking', 'Design Systems']
@@ -123,7 +125,7 @@ const EMAIL = 'ayushman15899@gmail.com'
  * mail app set up, which on a borrowed or work laptop is most people, so the
  * address can also be copied, and says so when it has been.
  */
-function EmailActions() {
+function EmailActions({ onCopied }) {
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
@@ -136,25 +138,57 @@ function EmailActions() {
     try {
       await navigator.clipboard.writeText(EMAIL)
       setCopied(true)
+      onCopied?.()
     } catch {
       window.location.href = `mailto:${EMAIL}`
     }
   }
 
   return (
-    <div className="mt-6 flex flex-wrap items-center gap-3">
+    <div className="flex flex-wrap items-center gap-3">
       <a href={`mailto:${EMAIL}`} className="btn-primary">Email me</a>
       <button type="button" onClick={copy} className="btn-quiet">
-        <span aria-live="polite">{copied ? 'Copied' : 'Copy address'}</span>
+        <span aria-live="polite" className="inline-block min-w-[6.5rem] text-center">{copied ? 'Copied ✓' : 'Copy address'}</span>
       </button>
+    </div>
+  )
+}
+
+/**
+ * Connect, pinned to the page as a paper note. Copying the address makes the
+ * pin hop, as if the note had been tapped.
+ */
+function PinnedNote({ children }) {
+  const [hop, setHop] = useState(false)
+  const onCopied = () => {
+    setHop(true)
+    setTimeout(() => setHop(false), 170)
+  }
+  return (
+    <div className="relative mt-8 max-w-[29rem]" style={{ transform: 'rotate(-1.2deg)' }}>
+      <span
+        aria-hidden="true"
+        className="pushpin absolute left-1/2 top-[-13px] z-10 -ml-3.5 block h-7 w-7 rounded-full"
+        style={{ transform: `translateY(${hop ? -7 : 0}px)` }}
+      >
+        <span className="absolute left-1.5 top-[5px] block h-1.5 w-2.5 rounded-full" style={{ background: 'rgba(255,255,255,.45)' }} />
+      </span>
+      <div className="pin-note flex flex-col gap-5 px-7 pb-6 pt-8">
+        {children}
+        <EmailActions onCopied={onCopied} />
+      </div>
     </div>
   )
 }
 
 export default function Home() {
   const reduceMotion = useReducedMotion()
+  // Coming back from a case study, the page is already here: a card is about
+  // to shrink into place, and a page fading in underneath would swallow it.
+  const [returning] = useState(() => typeof window !== 'undefined' && window.__caseReturn === true)
+  useEffect(() => { window.__caseReturn = false }, [])
 
-  const rise = (delay) => ({
+  const rise = (delay) => returning ? { initial: false } : ({
     initial: reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 },
     animate: { opacity: 1, y: 0 },
     transition: { duration: reduceMotion ? 0.2 : 0.5, delay: reduceMotion ? 0 : delay, ease: [0.22, 1, 0.36, 1] },
@@ -166,22 +200,17 @@ export default function Home() {
           sections all start where the case-study cards start, and the text
           only narrows on the right, to a reading width. Before, the edge
           stepped in for the intro, out for the work and in again at the end. */}
-      <motion.div {...rise(0)} className="track-wide">
-        {/* A self-portrait he drew, set in a yellow circle that carries it on
-            both themes: the ink never sits on the page ground, so it cannot
-            disappear in the dark one. */}
-        <Image
-          src="/assets/avatar-sketch.webp"
-          alt="A pencil self-portrait of Ayushman, curly-haired and half smiling, in a yellow circle"
-          width={800}
-          height={800}
-          sizes="112px"
-          priority
-          className="mb-7 h-auto w-[112px]"
-        />
+      {/* The hero: words on the left, the avatar on the right as a magnet you
+          can pick up, with the lamp hanging beside it. On a phone the avatar
+          leads, as it always has. */}
+      <div className="track-wide flex flex-col lg:flex-row lg:items-start lg:justify-between lg:gap-12">
+      <motion.div {...rise(0)} className="relative h-[140px] w-[220px] flex-none lg:order-last lg:mt-1.5 lg:h-[190px]">
+        <div data-lamp-target className="absolute left-0 top-0 lg:left-12 lg:top-[46px]">
+          <Magnet />
+        </div>
       </motion.div>
 
-      <motion.div {...rise(0.06)} className="track-wide space-y-5 [&>*]:max-w-[38rem]">
+      <motion.div {...rise(0.06)} className="min-w-0 flex-1 space-y-5 lg:pt-10 [&>*]:max-w-[38rem]">
         <Greeting />
 
         {/* The one sentence the whole page exists to deliver, at the size the
@@ -204,6 +233,7 @@ export default function Home() {
         </p>
 
       </motion.div>
+      </div>
 
       <motion.div {...rise(0.12)}>
         <Shipped items={SHIPPED} />
@@ -211,32 +241,32 @@ export default function Home() {
         <WorkIndex label="Playground" items={PLAYGROUND} />
       </motion.div>
 
-      {/* Skills and Connect close the page side by side, on the same two
-          columns as the cards, so the end reads as one footer, not two more
-          sections in a narrow column. */}
-      <div className="track-wide mt-16 grid gap-x-5 gap-y-16 lg:grid-cols-2">
+      {/* Skills across the full track, as things to pick up; then Connect. */}
+      <div className="track-wide mt-16 grid gap-y-16">
         <motion.section {...rise(0.18)}>
-          <h2 className="text-faint text-[0.95rem] mb-3"><ScrambleText>Skills</ScrambleText></h2>
-          <p>{METHODS.join(' · ')}</p>
+          <div className="mb-3 flex items-baseline justify-between">
+            <h2 className="text-faint text-[0.95rem]"><ScrambleText>Skills</ScrambleText></h2>
+            {!reduceMotion && <span aria-hidden="true" className="text-faint text-[0.95rem]">Drag them around</span>}
+          </div>
 
-          {/* Named in server-rendered text. The well below is client-only, so
-              without this the tools appear in no crawler, no keyword scan and no
-              no-JS view — and a mark without a label is unreadable regardless. */}
-          <p className="mt-2">{TOOLS.map((t) => t.label).join(' · ')}</p>
+          {/* Named in server-rendered text, for crawlers, keyword scans and
+              screen readers. The well below shows the same words and marks as
+              things to throw, and is hidden from assistive tech. */}
+          <p className="sr-only">{METHODS.join(', ')}. Tools: {TOOLS.map((t) => t.label).join(', ')}.</p>
 
-          {/* Decorative: the marks for the tools named above. */}
-          {!reduceMotion && <SkillsGravity items={TOOLS} />}
+          <SkillsGravity tools={TOOLS} tags={METHODS} still={!!reduceMotion} />
         </motion.section>
 
         <motion.section {...rise(0.22)}>
           <h2 className="text-faint text-[0.95rem] mb-3"><ScrambleText>Connect</ScrambleText></h2>
-          <p>
-            I’m looking for UX/UI or design-engineering work, somewhere I can take an idea from research
-            through to shipping. The fastest way to reach me is email. I’m also on{' '}
-            <a href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" rel="noopener noreferrer" className="prose-link">LinkedIn</a>{' '}
-            and <a href="https://x.com/AyushmanBharad" target="_blank" rel="noopener noreferrer" className="prose-link">X</a>.
-          </p>
-          <EmailActions />
+          <PinnedNote>
+            <p>
+              I’m looking for UX/UI or design-engineering work, somewhere I can take an idea from research
+              through to shipping. The fastest way to reach me is email. I’m also on{' '}
+              <a href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" rel="noopener noreferrer" className="prose-link">LinkedIn</a>{' '}
+              and <a href="https://x.com/AyushmanBharad" target="_blank" rel="noopener noreferrer" className="prose-link">X</a>.
+            </p>
+          </PinnedNote>
         </motion.section>
       </div>
     </main>

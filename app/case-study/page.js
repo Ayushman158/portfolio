@@ -151,7 +151,8 @@ export default function Hoychoy() {
         </p>
       </motion.header>
 
-      <motion.figure {...rise(0.1)} className="track-full mt-12">
+      {/* Not faded in: the card on the index grows into this image. */}
+      <figure data-case-hero className="track-full mt-12 overflow-hidden rounded-xl">
         <img
           src="/shipped/hoychoy.jpg"
           alt="The Hoychoy Cafe menu, with live availability and prices"
@@ -160,7 +161,7 @@ export default function Hoychoy() {
           className="block h-auto w-full rounded-xl"
           style={{ border: '1px solid var(--rule)' }}
         />
-      </motion.figure>
+      </figure>
       <SkipTo target="shipped">just here for the product?</SkipTo>
 
       <motion.div {...rise(0.12)}><Facts rows={FACTS} /></motion.div>

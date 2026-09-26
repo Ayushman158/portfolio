@@ -105,9 +105,10 @@
     }
 
     /* ---- Browser surfaces, themed from the palette ---- */
+    /* Selected text in the avatar's yellow. */
     ::selection {
-        background: var(--accent);
-        color: var(--ground);
+        background: #f3c73e;
+        color: #1b1a17;
     }
 
     :focus-visible {
@@ -470,10 +471,6 @@
     to { background-position: -2280px 0; }
 }
 
-/* Grid overlay: the wide and full tracks only exist from 60rem up (see
-   .track-wide above), so their lines only draw there too. */
-.grid-wide-only { display: none; }
-@media (min-width: 60rem) { .grid-wide-only { display: block; } }
 
 /* The top bar. Its contents sit on the page's own edges: the reading measure
    on narrow screens, the wide track from 60rem, so Index lines up with the
@@ -530,3 +527,180 @@
 .btn-quiet:hover { border-color: var(--faint); }
 .btn-primary:active,
 .btn-quiet:active { transform: scale(0.97); }
+
+/* ---- The lamp (theme switch). It hangs from the top of the page at the
+   right edge of the wide track, over the spacer the nav keeps for it. The
+   cord and bead are ink, so they follow the theme; in the dark the bead
+   glows faintly so it can still be found. */
+.lamp-anchor { z-index: 60; }
+.lamp-glow-anchor { z-index: -1; }
+/* Over the nav's spacer: 10px inside the content edge (the edge sits 1.5rem
+   in on narrow screens, and at the track on wide ones). */
+.lamp-pivot, .lamp-glow { right: calc(1.5rem + 10px); }
+@media (min-width: 60rem) { .lamp-pivot, .lamp-glow { right: 10px; } }
+.lamp-cord {
+    background: color-mix(in srgb, var(--ink) 40%, transparent);
+}
+.lamp-pill {
+    background: var(--ink);
+    transition: box-shadow 0.6s ease;
+}
+[data-theme="dark"] .lamp-pill {
+    box-shadow: 0 0 10px 1px oklch(0.85 0.1 85 / 0.35);
+}
+.lamp-bead:focus-visible {
+    outline-offset: -8px;
+    border-radius: 999px;
+}
+/* Lit in light mode: warm light pooling below the lamp. */
+.lamp-glow {
+    top: -260px;
+    width: 680px;
+    height: 620px;
+    transform: translateX(50%);
+    background: radial-gradient(closest-side, oklch(0.9 0.08 85 / 0.34), transparent);
+    transition: opacity 0.5s ease;
+}
+[data-theme="dark"] .lamp-glow { opacity: 0; }
+
+/* The theme switch is one quiet cross-fade of the whole page, old theme to
+   new, so nothing arrives before anything else. */
+html.theme-switching::view-transition-old(root),
+html.theme-switching::view-transition-new(root) {
+    animation-duration: 0.4s;
+    animation-timing-function: ease;
+}
+.theme-switching,
+.theme-switching * {
+    transition: none !important;
+}
+
+/* A card grows into its case study: the card's media and the case study's
+   top image share this name, and the browser morphs one into the other. */
+::view-transition-group(case-hero) {
+    animation-duration: 0.6s;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.2, 1);
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 0.35s;
+}
+
+/* ---- The avatar as a fridge magnet: glossy, liftable, dimmer at night. */
+.magnet {
+    box-shadow: 0 1px 1px rgba(40, 30, 20, 0.28), 0 3px 6px rgba(40, 30, 20, 0.18);
+}
+.magnet[data-lifted] {
+    box-shadow: 0 16px 26px rgba(40, 30, 20, 0.2), 0 4px 8px rgba(40, 30, 20, 0.14);
+}
+[data-theme="dark"] .magnet { box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5), 0 3px 6px rgba(0, 0, 0, 0.4); }
+[data-theme="dark"] .magnet[data-lifted] { box-shadow: 0 16px 26px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.35); }
+.magnet-gloss {
+    background: radial-gradient(ellipse 60% 42% at 34% 22%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 70%);
+    transition: opacity 0.6s ease;
+}
+[data-theme="dark"] .magnet-gloss { opacity: 0.35; }
+.magnet-img { transition: filter 0.7s ease; }
+[data-theme="dark"] .magnet-img { filter: brightness(0.82) saturate(0.9); }
+
+/* ---- Connect, pinned up as a paper note. It re-points --ink and --ground,
+   so the buttons and links inside take the paper's colours untouched. */
+.pin-note {
+    --ground: #fffdf6;
+    --ink: #2a2620;
+    background: var(--ground);
+    color: var(--ink);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 12px 26px rgba(40, 30, 20, 0.08);
+    transition: background-color 0.6s ease, color 0.6s ease;
+}
+[data-theme="dark"] .pin-note {
+    --ground: #2b2721;
+    --ink: #e6dfd2;
+    --rule: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 26px rgba(0, 0, 0, 0.3);
+}
+.pushpin {
+    background: oklch(0.6 0.14 32);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3), 0 3px 6px rgba(40, 20, 10, 0.25),
+        inset 0 -3px 5px rgba(0, 0, 0, 0.2), inset 0 2px 2px rgba(255, 255, 255, 0.35);
+    transition: transform 0.35s cubic-bezier(0.3, 2, 0.5, 1);
+}
+
+/* ---- Live badge on the Hoychoy card. */
+@keyframes live-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(74, 170, 110, 0.45); }
+    70% { box-shadow: 0 0 0 6px rgba(74, 170, 110, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(74, 170, 110, 0); }
+}
+.live-dot[data-open] { background: #4aaa6e; animation: live-pulse 2s infinite; }
+@media (prefers-reduced-motion: reduce) {
+    .live-dot[data-open] { animation: none; }
+    .pushpin { transition: none; }
+}
+
+/* ---- The About bookshelf. */
+.shelf-wood { background: #6b4f33; transition: background-color 0.6s ease; }
+[data-theme="dark"] .shelf-wood { background: #4a3a28; }
+.shelf-board { box-shadow: 0 2px 3px rgba(40, 30, 20, 0.12), 0 8px 18px rgba(40, 30, 20, 0.08); }
+[data-theme="dark"] .shelf-board { box-shadow: 0 0 18px 0 oklch(0.85 0.1 85 / 0.08); }
+.book {
+    box-shadow: inset 3px 0 0 rgba(255, 255, 255, 0.14), inset -3px 0 0 rgba(0, 0, 0, 0.16), 0 1px 0 rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+.book-spine {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font: 400 12.5px/1 var(--font-serif), serif;
+    letter-spacing: 0.02em;
+    color: #fbf6ea;
+    white-space: nowrap;
+}
+@media (prefers-reduced-motion: reduce) {
+    .book { transition: none; }
+}
+
+/* ---- Skills: a warm tray of things to pick up. Tools are glossy buttons in
+   their own colour; methods are paper tags. */
+.skills-well {
+    background: linear-gradient(160deg, #f1efea, #eae7df);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04), inset 0 -24px 48px rgba(0, 0, 0, 0.025);
+}
+[data-theme="dark"] .skills-well {
+    background: linear-gradient(160deg, #1f1d1a, #181614);
+    border-color: rgba(255, 255, 255, 0.06);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+.skills-groove {
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.07), rgba(255, 255, 255, 0.55) 55%, rgba(0, 0, 0, 0.04));
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+[data-theme="dark"] .skills-groove {
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.35), rgba(255, 255, 255, 0.06) 55%, rgba(0, 0, 0, 0.2));
+}
+.skill-ball {
+    width: 60px;
+    height: 60px;
+    background:
+        radial-gradient(circle at 34% 26%, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 42%),
+        var(--ball);
+    box-shadow: inset 0 -6px 12px rgba(0, 0, 0, 0.2), inset 0 2px 3px rgba(255, 255, 255, 0.45),
+        0 8px 16px rgba(40, 30, 20, 0.16), 0 1px 2px rgba(40, 30, 20, 0.18);
+}
+[data-theme="dark"] .skill-ball {
+    box-shadow: inset 0 -6px 12px rgba(0, 0, 0, 0.3), inset 0 2px 3px rgba(255, 255, 255, 0.3),
+        0 8px 16px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+.skill-tag {
+    padding: 0.35rem 0.95rem 0.45rem;
+    white-space: nowrap;
+    font: 400 1.3rem/1.1 var(--font-serif), ui-serif, Georgia, serif;
+    color: #1b1a17;
+    background: #fffdf8;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 6px 14px rgba(40, 30, 20, 0.1);
+}
+[data-theme="dark"] .skill-tag {
+    color: #e6dfd2;
+    background: #2b2721;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 6px 14px rgba(0, 0, 0, 0.35);
+}

@@ -117,9 +117,10 @@ export default function Kizuku() {
         </p>
       </motion.header>
 
-      <motion.div {...rise(0.1)} className="track-full mt-12">
+      {/* Not faded in: the card on the index grows into this. */}
+      <div data-case-hero className="track-full mt-12 overflow-hidden rounded-xl">
         <KizukuHero className="rounded-xl" />
-      </motion.div>
+      </div>
       <SkipTo target="trees">just here for the trees?</SkipTo>
 
       <motion.div {...rise(0.12)}><Facts rows={FACTS} /></motion.div>

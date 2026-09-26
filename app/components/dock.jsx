@@ -3,8 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { ThemeToggle, LocalClock } from './theme'
-import { GridOverlay, useGridOverlay } from './grid-overlay'
+import { LocalClock } from './theme'
 
 const LINKS = [
   { href: '/', label: 'Index' },
@@ -20,7 +19,6 @@ const LINKS = [
  */
 export default function Dock() {
   const pathname = usePathname()
-  const grid = useGridOverlay()
   const [hidden, setHidden] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -41,8 +39,6 @@ export default function Dock() {
 
   // Keyboard users always get it back: focusing anything inside shows it.
   return (
-    <>
-    <GridOverlay on={grid.on} />
     <header
       className="dock fixed inset-x-0 top-0 z-50"
       data-hidden={hidden || undefined}
@@ -68,22 +64,10 @@ export default function Dock() {
 
         <div className="ml-auto flex items-center">
           <LocalClock className="hidden pr-3 text-[0.8rem] text-faint sm:inline" />
-          {/* Desktop only: on a phone there is one column and nothing to reveal. */}
-          <button
-            type="button"
-            onClick={grid.toggle}
-            aria-pressed={grid.on}
-            title="Show the layout grid (G)"
-            className={`hidden min-h-[44px] items-center px-3 text-[0.8rem] transition-colors duration-150 ease-out sm:inline-flex ${
-              grid.on ? 'text-ink' : 'text-faint hover:text-ink'
-            }`}
-          >
-            Grid
-          </button>
-          <ThemeToggle className="-mr-3" />
+          {/* The lamp hangs through this slot from the top of the page (see Lamp). */}
+          <span aria-hidden="true" className="-mr-3 inline-block h-11 w-11" />
         </div>
       </nav>
     </header>
-    </>
   )
 }
