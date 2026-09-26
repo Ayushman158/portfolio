@@ -35,7 +35,7 @@ const MOMENTS = [
   { id: 'start', label: 'from the start', note: 'the letter, the promises, three questions', query: '?s=welcome' },
   { id: 'ritual', label: 'the daily ritual', note: 'one worry in, one action out', query: '?p=optimizer&n=2&s=worry&name=Cedar' },
   { id: 'growth', label: 'a stage change', note: 'the tree moves up, stage 3 to 4', query: '?p=planner&n=7&s=growth&name=Juniper' },
-  { id: 'day30', label: 'day thirty', note: 'fully grown', query: '?p=seeker&n=30&s=home&name=Willow' },
+  { id: 'day30', label: 'day thirty', note: 'fully grown, and a real plant', query: '?p=seeker&n=30&s=thirty&name=Willow' },
 ]
 
 export default function LiveApp() {
