@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from 'motion/react'
 import KizukuInteractions from '../components/kizuku-interactions'
 import { Back, Cards, Decisions, Facts, Heading, Rule, Shots, SkipTo } from '../components/case-study'
 import KizukuHero from './hero'
+import LiveApp from './live-app'
 import { CompetitorMap, Onboarding, Palette, Plate } from './diagrams'
 
 // Carried over from the long version — the substance, without the scaffolding.
@@ -128,6 +129,14 @@ export default function Kizuku() {
         {' · '}
         <Link href="/kizuku/process" className="prose-link">Full process, 4 stages</Link>
       </motion.p>
+
+      <Rule />
+
+      {/* ─── the app itself: the hero is the loop to watch, this is the loop to use ─ */}
+      <motion.section {...rise(0.2)}>
+        <Heading>The real app, in your browser.</Heading>
+        <LiveApp />
+      </motion.section>
 
       <Rule />
 
