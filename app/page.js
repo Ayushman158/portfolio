@@ -83,6 +83,9 @@ const TOOLS = [
 const METHODS = ['UX Research', 'Usability Design', 'Design Thinking', 'Design Systems']
 
 const PLAYGROUND = [
+  // The reel lives on its own page; here it is one row, and the hover preview
+  // plays it, so the index never repeats what the cards above already show.
+  { name: 'Showreel', year: '2026', href: '/reel', video: '/reel/showreel-preview.mp4' },
   { name: 'ALBUM//ALIVE', year: '2026', href: '/album-alive', img: '/album-alive/fan.jpg', w: 1200, h: 900 },
   { name: 'Motion studies', year: '2026', href: '/motion', img: '/assets/motion-studies.png', w: 1360, h: 1020 },
   { name: 'Gone or Still Here?', year: '2026', href: '/gone-or-still-here', img: '/gone/home.jpg', w: 1600, h: 1000 },
