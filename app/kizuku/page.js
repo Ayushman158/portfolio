@@ -63,15 +63,16 @@ const DECISIONS = [
   ['The type had to actually decide something', 'For a while it did not. The quiz set colours and artwork, and the action was then picked by summing the character codes of your worry. Personality was not an input at all. Actions now carry the types they serve, selection rotates least-recently-used inside your own pool, and what you wrote is read once, in memory, to prefer one action over another. It is still never stored.'],
   ['Six stages, landing on thirty', 'Growth used to finish after a single action, so the metaphor the whole loop builds toward was spent on day one. Three trees at six stages each. The curve opens fast, so the second stage arrives immediately and nobody waits to see that this responds to them. Then it lengthens, to put the last stage at the thirty-day milestone the brand already committed to.'],
   ['Growth tied to emotional labour, not time', 'Forest grows a tree when you sit still. Kizuku grows one when you face something hard. Same mechanic, completely different meaning.'],
+  ['Louder, without a new colour', 'Next to Finch it looked washed out: soft shadows at 8% opacity, pale grounds, grey outline icons. Everything I changed stayed inside the palette. The type colour became the ground, every surface got a hard darker edge, icons are filled with the three type pigments, and light breaks behind the two moments something arrives. I built a watercolour ground, measured it, then took it out after using it on a phone. Contrast was checked on every pixel.'],
   ['Copy decided at word level', '"Start quiz" against "find my tree type": one word decides whether the user feels assessed or invited. Every line documented with its before and after.'],
 ]
 
 // Captured from the running build, not from the Figma comps — this is what
 // the app actually looks like today, Satoshi and all.
 const SCREENS = [
-  ['/kizuku/app/garden.jpg', 'the garden. the planner’s tree at three actions.'],
+  ['/kizuku/app/garden.jpg', 'the garden. the seeker’s tree at three actions.'],
   ['/kizuku/app/worry.jpg', 'one worry. it is read once and never stored.'],
-  ['/kizuku/app/action.jpg', '“putting off the file” came back as start.'],
+  ['/kizuku/app/action.jpg', '“a message i still haven’t replied to” came back as reach out.'],
   ['/kizuku/app/reflection.jpg', 'what happened. this becomes the journal page.'],
   ['/kizuku/app/growth.jpg', 'the tree at its next stage.'],
 ]
@@ -135,7 +136,7 @@ export default function Kizuku() {
         <Heading>One worry in, one action out.</Heading>
         <p className="mb-8">
           The whole app, in five screens — shot on an iPhone. The action in the middle is the one that
-          worry really produced: “putting off the file” came back as <em>start</em>. The tab bar leaves
+          worry really produced: “a message i still haven’t replied to” came back as <em>reach out</em>. The tab bar leaves
           after the garden and returns at the growth, so there is nothing to wander off to mid-ritual.
         </p>
 
@@ -282,7 +283,7 @@ export default function Kizuku() {
       <Rule />
 
       <motion.section {...rise(0.26)}>
-        <Heading>Five more calls, and the reasoning.</Heading>
+        <Heading>Six more calls, and the reasoning.</Heading>
         <Decisions items={DECISIONS} />
       </motion.section>
 
