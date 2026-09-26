@@ -31,8 +31,8 @@ const SHIPPED = [
     live: true,
     site: 'hoychoycafe.com',
     url: 'https://www.hoychoycafe.com/',
-    shot: '/shipped/hoychoy.jpg',
-    alt: 'The Hoychoy Cafe menu, with live availability and prices',
+    shot: '/shipped/hoychoy-card.jpg',
+    alt: 'Three Hoychoy Cafe screens on yellow: the owner’s open/closed switch, the menu, and the checkout',
     what: (
       <>
         A café’s WhatsApp ordering rebuilt as a service. Ordering went from{' '}
@@ -204,13 +204,15 @@ export default function Home() {
           can pick up, with the lamp hanging beside it. On a phone the avatar
           leads, as it always has. */}
       <div className="track-wide flex flex-col lg:flex-row lg:items-start lg:justify-between lg:gap-12">
-      <motion.div {...rise(0)} className="relative h-[140px] w-[220px] flex-none lg:order-last lg:mt-1.5 lg:h-[190px]">
+      {/* Entrance: the text is there from the first frame; the lamp drops in
+          (see Lamp), then the magnet lands at 500ms. */}
+      <div className="relative h-[140px] w-[220px] flex-none lg:order-last lg:mt-1.5 lg:h-[190px]">
         <div data-lamp-target className="absolute left-0 top-0 lg:left-12 lg:top-[46px]">
-          <Magnet />
+          <Magnet drop={!returning} />
         </div>
-      </motion.div>
+      </div>
 
-      <motion.div {...rise(0.06)} className="min-w-0 flex-1 space-y-5 lg:pt-10 [&>*]:max-w-[38rem]">
+      <div className="min-w-0 flex-1 space-y-5 lg:pt-10 [&>*]:max-w-[38rem]">
         <Greeting />
 
         {/* The one sentence the whole page exists to deliver, at the size the
@@ -231,13 +233,14 @@ export default function Home() {
         <p>
           <Link href="/about" className="prose-link">More about me, and where I’ve worked</Link>
         </p>
-
-      </motion.div>
+      </div>
       </div>
 
       <motion.div {...rise(0.12)}>
-        <Shipped items={SHIPPED} />
+        {/* The case studies lead: they carry the research and the reasoning.
+            The shipped client work follows. */}
         <Shipped label="Case studies" items={RESEARCH} />
+        <Shipped items={SHIPPED} />
         <WorkIndex label="Playground" items={PLAYGROUND} />
       </motion.div>
 

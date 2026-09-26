@@ -71,6 +71,8 @@ export default function RootLayout({ children }) {
       <head>
         {/* Sets the theme before first paint so a dark-preferring machine never flashes light. */}
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        {/* Without scripts nothing runs the entrance, so show what it reveals. */}
+        <noscript><style>{'.magnet-drop{opacity:1!important}'}</style></noscript>
       </head>
       <body className="font-sans overflow-x-hidden">
         <ThemeProvider>

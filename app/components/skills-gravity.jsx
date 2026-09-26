@@ -146,15 +146,17 @@ export default function SkillsGravity({ tools, tags, still = false }) {
   }, [still])
 
   return (
+    // A drawer pulled out towards you: the tray the pieces sit in, and its
+    // front panel with a handle. Physics lives in the tray only.
+    <div className="skills-drawer">
     <div
       ref={wellRef}
       // Everything in here is named in server-rendered text beside it; these
       // are the same words and marks as things to play with, so the well is
       // hidden from assistive tech rather than read out a second time.
       aria-hidden="true"
-      className="skills-well relative h-[280px] w-full overflow-hidden rounded-[20px] sm:h-[320px]"
+      className="skills-well relative h-[260px] w-full overflow-hidden sm:h-[300px]"
     >
-      <span className="skills-groove absolute bottom-[12%] right-5 top-[12%] w-2.5 rounded-full" />
       {items.map((item, i) => {
         const rest = item.kind === 'tag' ? REST_TAGS[i] : REST_BALLS[i - tags.length]
         return (
@@ -175,6 +177,10 @@ export default function SkillsGravity({ tools, tags, still = false }) {
           </div>
         )
       })}
+    </div>
+    <div aria-hidden="true" className="drawer-front relative h-9">
+      <span className="drawer-handle absolute left-1/2 top-1/2 block h-2 w-20 -translate-x-1/2 -translate-y-1/2 rounded-full" />
+    </div>
     </div>
   )
 }

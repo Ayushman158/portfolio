@@ -104,6 +104,8 @@ const LAMP = {
   pullK: 240, pullDamp: 12,  // cord spring
   swayK: 36, swayDamp: 1.8,  // pendulum
   lenK: 90, lenDamp: 17,     // the cord paying out to a new length
+  dropK: 170, dropDamp: 18,  // the first drop on load: quicker, one small overshoot
+  hidden: -60,               // cord length that keeps the bead above the window
   tapKick: 560, tapSway: 4,  // the jerk a click gives it
   bead: 22,                  // half the bead's hit area
 }
@@ -114,15 +116,17 @@ export function Lamp() {
   const pathname = usePathname()
   const [mounted, setMounted] = useState(false)
   const [, render] = useState(0)
-  const sim = useRef({ pull: 0, sway: 0, vp: 0, vs: 0, len: LAMP.inNav, target: LAMP.inNav, vl: 0, drag: null, raf: null })
+  // Starts out of sight, so the server render never shows it before the drop.
+  const sim = useRef({ pull: 0, sway: 0, vp: 0, vs: 0, len: LAMP.hidden, target: LAMP.hidden, vl: 0, drag: null, raf: null })
   const isDark = mounted && theme === 'dark'
 
   const step = useCallback(() => {
     const s = sim.current
     const dt = 1 / 60
     if (!s.drag) { s.vp += (-LAMP.pullK * s.pull - LAMP.pullDamp * s.vp) * dt; s.pull += s.vp * dt }
-    if (!s.drag || !s.drag.moved) { s.vs += (-LAMP.swayK * s.sway - LAMP.swayDamp * s.vs) * dt; s.sway += s.vs * dt }
-    s.vl += (-LAMP.lenK * (s.len - s.target) - LAMP.lenDamp * s.vl) * dt; s.len += s.vl * dt
+    if (!s.drag || !s.drag.moved) { s.vs += (-LAMP.swayK * s.sway - (s.entering ? 5 : LAMP.swayDamp) * s.vs) * dt; s.sway += s.vs * dt }
+    const k = s.entering ? LAMP.dropK : LAMP.lenK, c = s.entering ? LAMP.dropDamp : LAMP.lenDamp
+    s.vl += (-k * (s.len - s.target) - c * s.vl) * dt; s.len += s.vl * dt
     const still = !s.drag && Math.abs(s.pull) < 0.2 && Math.abs(s.vp) < 0.5 && Math.abs(s.sway) < 0.05 &&
       Math.abs(s.vs) < 0.1 && Math.abs(s.len - s.target) < 0.3 && Math.abs(s.vl) < 0.5
     if (still) {
@@ -155,10 +159,28 @@ export function Lamp() {
     if (!animate || reducedMotion()) { s.len = target; s.vl = 0; render((n) => n + 1) } else kick()
   }, [kick])
 
+  /*
+   * ENTRANCE (site load)
+   *
+   *      0ms   the page's text is already there; nothing waits on this
+   *    150ms   the cord drops in from above the window and settles, with one
+   *            small sway (heavier damping while it lands)
+   *    350ms   the light comes on: the warm glow fades up
+   *    500ms   (the portrait magnet drops in; see Magnet)
+   */
+  const [lit, setLit] = useState(false)
   useEffect(() => {
     setMounted(true)
     const s = sim.current
-    measure(false)
+    const timers = []
+    if (reducedMotion()) {
+      measure(false)
+      setLit(true)
+    } else {
+      timers.push(setTimeout(() => { s.entering = true; s.vs = 30; measure(true) }, 150))
+      timers.push(setTimeout(() => { s.entering = false }, 1700))
+      timers.push(setTimeout(() => setLit(true), 350))
+    }
     const onResize = () => measure(false)
     window.addEventListener('resize', onResize)
     // Dusk: once, if the page is opened within 40 minutes after sunset in Assam.
@@ -167,7 +189,7 @@ export function Lamp() {
     if (!reducedMotion() && now > set && now < set + 40) {
       t = setTimeout(() => { s.vs = 10; s.vp = 60; kick() }, 1200)
     }
-    return () => { window.removeEventListener('resize', onResize); clearTimeout(t); cancelAnimationFrame(s.raf); s.unbind?.() }
+    return () => { window.removeEventListener('resize', onResize); clearTimeout(t); timers.forEach(clearTimeout); cancelAnimationFrame(s.raf); s.unbind?.() }
   }, [kick, measure])
 
   // A new page: let its content settle, then pay the cord out to its target.
@@ -243,7 +265,7 @@ export function Lamp() {
       {/* The light it gives, behind everything, only while it is on. */}
       <div aria-hidden="true" className="lamp-glow-anchor pointer-events-none absolute inset-x-0 top-0 h-[400px] overflow-hidden">
         <div className="chrome-track relative h-0">
-          <div className="lamp-glow absolute" />
+          <div className="lamp-glow absolute" data-lit={lit || undefined} />
         </div>
       </div>
 

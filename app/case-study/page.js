@@ -154,8 +154,8 @@ export default function Hoychoy() {
       {/* Not faded in: the card on the index grows into this image. */}
       <figure data-case-hero className="track-full mt-12 overflow-hidden rounded-xl">
         <img
-          src="/shipped/hoychoy.jpg"
-          alt="The Hoychoy Cafe menu, with live availability and prices"
+          src="/shipped/hoychoy-card.jpg"
+          alt="Three Hoychoy Cafe screens on yellow: the owner’s open/closed switch, the menu, and the checkout"
           width={1600}
           height={900}
           className="block h-auto w-full rounded-xl"
