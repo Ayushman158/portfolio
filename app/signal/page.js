@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
-import { Back, Decisions, Facts, Gallery, Heading, Rule, Shots, SkipTo } from '../components/case-study'
+import { Back, Decisions, Facts, Gallery, Heading, Overview, Rule, Shots, SkipTo, Subhead } from '../components/case-study'
 import SignalHero from './hero'
 import { Cards, Findings, JobStories, Personas, Ramp, Weights, Iterations, LoadCurve, Matrix, Morning, Numbers, ORANGE, Screens, Tested, Verdicts } from './visuals'
 
@@ -18,6 +18,14 @@ import { Cards, Findings, JobStories, Personas, Ramp, Weights, Iterations, LoadC
  */
 
 const PROTOTYPE = 'https://dainty-capybara-dd3d7e.netlify.app/'
+
+// The whole project in four answers, readable before anything else.
+const OVERVIEW = [
+  ['Context', 'Daily commuters on the Delhi Metro’s Yellow Line who change trains at INA. A 14-week M.Des project, done alone.'],
+  ['Problem', 'Regular riders know the route. What they can’t know is whether today is a normal day, so every one of them adds a buffer. Jasleen leaves 20 minutes early every morning.'],
+  ['Why it matters', 'That buffer is paid every day, whether or not anything goes wrong. Participants reported losing 34 minutes a day on average, across four apps that never say when to leave.'],
+  ['What I did', 'Interviews, peak-hour observation and five usability tests. Then a concept app that gives one answer, like “leave by 8:28”, and says how sure it is.'],
+]
 
 // Every outside figure on this page, scoped as its source scopes it. Anything
 // without a link is my own fieldwork and says so.
@@ -104,7 +112,6 @@ const BOARDS = [
 const FACTS = [
   ['Role', 'Solo — research, interaction design, prototype, film'],
   ['Timeline', '14 weeks · M.Des Design Project I'],
-  ['Research', '7 interviews · 2 observations · 5 usability tests'],
   ['Status', 'Concept with a working prototype — not shipped'],
 ]
 
@@ -132,12 +139,12 @@ const METHODS = [
 ]
 
 const FINDINGS = [
-  { stat: '4 apps', viz: ['pills', { items: ['Google Maps', 'DMRC', 'WhatsApp', 'the clock'] }], title: 'Four apps, no intelligence', body: 'Commuters with two or more transfers juggle all four to approximate one signal. None gives a departure verdict.' },
-  { stat: 'INA', title: 'The blind transfer', body: 'Crowding, the corridor walk and the next train are unknown until you are standing there. “I start checking my phone as soon as we leave Rajiv Chowk.”' },
-  { stat: '7 of 7', viz: ['dots', { k: 7, n: 7 }], title: 'The buffer is anxiety management', body: 'Every participant adds a buffer every day. They reported losing an average of 34 minutes a day to missing information.' },
-  { stat: '4 of 7', viz: ['dots', { k: 4, n: 7 }], title: 'Safety routes before speed', body: 'Four participants, all women, choose routes by lighting, crowding and CISF presence. Not built here; it sits in the future scope.' },
-  { stat: '89%', viz: ['bar', { pct: 89 }], title: 'Support ends at the exit gate', body: <>Of Delhi riders in <a href="https://wri-india.org/sites/default/files/Improving%20metro%20access%20in%20India_%20Working%20Paper.pdf" target="_blank" rel="noopener noreferrer" className="prose-link">WRI India’s 2023 survey</a> chose a share auto over the bus on last-mile trips where both ran — waiting, not price.</> },
-  { stat: '0', title: 'Live metro feeds to build on', body: <><a href="https://otd.delhi.gov.in/" target="_blank" rel="noopener noreferrer" className="prose-link">Delhi publishes</a> metro timetables and live bus positions, but nothing live from the trains: no positions, no crowding. That constraint shaped the product.</> },
+  { stat: '4 apps', viz: ['pills', { items: ['Google Maps', 'DMRC', 'WhatsApp', 'the clock'] }], title: 'Four apps to plan one trip', body: 'Commuters with two or more transfers juggle all four to approximate one signal. None gives a departure verdict.' },
+  { stat: 'INA', title: 'The transfer is a guess', body: 'Crowding, the corridor walk and the next train are unknown until you are standing there. “I start checking my phone as soon as we leave Rajiv Chowk.”' },
+  { stat: '7 of 7', viz: ['dots', { k: 7, n: 7 }], title: 'Everyone leaves early, every day', body: 'Every participant adds a buffer every day. They reported losing an average of 34 minutes a day to missing information.' },
+  { stat: '4 of 7', viz: ['dots', { k: 4, n: 7 }], title: 'Women pick routes for safety first', body: 'Four participants, all women, choose routes by lighting, crowding and CISF presence. Not built here; it sits in the future scope.' },
+  { stat: '89%', viz: ['bar', { pct: 89 }], title: 'The last mile is a share auto', body: <>Of Delhi riders in <a href="https://wri-india.org/sites/default/files/Improving%20metro%20access%20in%20India_%20Working%20Paper.pdf" target="_blank" rel="noopener noreferrer" className="prose-link">WRI India’s 2023 survey</a> chose a share auto over the bus on last-mile trips where both ran — waiting, not price.</> },
+  { stat: '0', title: 'Live metro data to build on', body: <><a href="https://otd.delhi.gov.in/" target="_blank" rel="noopener noreferrer" className="prose-link">Delhi publishes</a> metro timetables and live bus positions, but nothing live from the trains: no positions, no crowding. That constraint shaped the product.</> },
 ]
 
 const COMPETITORS = {
@@ -186,12 +193,12 @@ const REJECTED = [
 ]
 
 const PRINCIPLES = [
-  ['Verdict, not data', 'Participants shown a percentage alone asked what it meant for them. Signal leads with an action; the numbers support it.'],
+  ['Lead with an answer, not data', 'Participants shown a percentage alone asked what it meant for them. Signal leads with an action; the numbers support it.'],
   ['Lock screen first', 'On a crowded Yellow Line train the phone stays in the pocket. The happy path opens the app exactly twice per commute.'],
-  ['Pre-fill, never auto-book', 'Signal sets up Rapido; the commuter confirms it. Every consequential action keeps a human tap.'],
-  ['Speak first, once', 'Orange appears only at decision moments. 90% of every screen is ink and paper. Silence when nothing has changed is what makes a signal worth heeding.'],
-  ['Honest confidence', '74% is always paired with “Likely on time”. The pattern model is directionally accurate, not statistically precise, and the design never claims more.'],
-  ['Dismiss is a signal', '“WFH today” and “I have a ride” both feed the model. “It doesn’t make me feel bad for dismissing it. It just wants to learn.” — Kavya (P5)'],
+  ['Set up the ride, never book it', 'Signal sets up Rapido; the commuter confirms it. Every consequential action keeps a human tap.'],
+  ['Only speak when something changes', 'Orange appears only at decision moments. 90% of every screen is ink and paper. Silence when nothing has changed is what makes a signal worth heeding.'],
+  ['Show how sure it is', '74% is always paired with “Likely on time”. The pattern model is directionally accurate, not statistically precise, and the design never claims more.'],
+  ['Dismissing teaches the model', '“WFH today” and “I have a ride” both feed the model. “It doesn’t make me feel bad for dismissing it. It just wants to learn.” — Kavya (P5)'],
 ]
 
 const ITERATIONS = [
@@ -224,34 +231,15 @@ export default function Signal() {
       <motion.div {...rise(0)}><Back /></motion.div>
 
       <motion.header {...rise(0.06)} className="mt-10 space-y-5">
-        <p className="text-faint" style={{ fontSize: '0.95rem' }}>Signal · 2026 · Research</p>
-        <h1 className="display">
-          I designed for myself. The research took it away.
-        </h1>
-        <p>
-          I’m not from Delhi. On my first Metro ride I was going to the airport and got on the wrong
-          side of the line — right station, opposite direction.
-        </p>
-        <p>
-          So I started there: a first-timer who can’t tell which platform is which. Then I interviewed
-          seven people who ride the same corridor every day, and that idea didn’t survive. They don’t
-          need the map. Jasleen has run her route for two years and knows which coach puts her at the
-          exit. What she can’t tell is whether today is a normal day — and not knowing costs her twenty
-          minutes every morning, paid whether or not anything goes wrong.
-        </p>
-        <p>
-          So the project moved to her. Signal is a Delhi Metro companion for the Yellow Line corridor:
-          one screen instead of four apps, and one verdict that tells you when to leave, before you
-          need to.
-        </p>
+        <p className="text-faint" style={{ fontSize: '0.95rem' }}>Signal · 2026 · Research and concept</p>
+        <h1 className="display">Signal: an app that tells Delhi Metro commuters when to leave</h1>
       </motion.header>
+      <motion.div {...rise(0.08)}><Overview items={OVERVIEW} /></motion.div>
 
-      {/* The product first. A research case study still has to show what the
-          research turned into before it asks anyone to read the method. */}
       <div data-case-hero className="track-full mt-12 overflow-hidden rounded-xl">
         <SignalHero className="rounded-xl" />
       </div>
-      <SkipTo target="screens">just here for the screens?</SkipTo>
+      <SkipTo target="screens">skip to the screens</SkipTo>
 
       <motion.div {...rise(0.12)} className="mt-10">
         <Numbers items={[['7', 'commuter interviews'], ['2', 'peak-hour observations'], ['5', 'usability sessions'], ['14', 'weeks, solo']]} />
@@ -259,21 +247,16 @@ export default function Signal() {
       <motion.div {...rise(0.14)}><Facts rows={FACTS} /></motion.div>
       <motion.p {...rise(0.16)} className="mt-8">
         <a href={PROTOTYPE} target="_blank" rel="noopener noreferrer" className="prose-link">Try the prototype</a>
-        <span className="text-faint"> · 22 screens, 9 phases, lock screen, app and watch</span>
+        <span className="text-faint"> · 22 screens: lock screen, app and watch</span>
       </motion.p>
 
       <Rule />
 
       <section>
-        <Heading>One morning. Three decisions. No information.</Heading>
+        <Heading n="01">The problem</Heading>
         <p className="mb-8">
-          Before designing a screen I storyboarded the moments where the system fails a habitual
-          commuter every day.
-        </p>
-        <Shots items={STORYBOARD} cols="grid-cols-2 lg:grid-cols-4" />
-
-        <p className="mt-14 mb-4 text-faint" style={{ fontSize: '0.95rem' }}>
-          Jasleen’s commute, Dwarka Sec-21 to HUDA City Centre — a real participant
+          One real morning, from the interviews. Jasleen has taken this route for two years. At each of
+          these four points she has to make a decision, and nothing tells her what to do.
         </p>
         <Morning items={MORNING} />
 
@@ -281,125 +264,91 @@ export default function Signal() {
           <LoadCurve />
         </div>
         <p className="mt-6">
-          Load spikes at three moments — leaving, the INA transfer, and the exit. None of them is an
-          infrastructure problem; each is an information problem.
+          Stress peaks at three points: leaving home, the INA transfer and the exit. None of them is an
+          infrastructure problem. Each one is missing information.
         </p>
-        <p className="mt-3 text-faint" style={{ fontSize: '0.85rem' }}>
-          The route is simplified for the concept: one corridor, one interchange.
-        </p>
+
+        <Subhead>The same morning, storyboarded before any screens</Subhead>
+        <Shots items={STORYBOARD} cols="grid-cols-2 lg:grid-cols-4" />
       </section>
 
       <Rule />
 
       <section>
-        <Heading>Three methods, one corridor, real commuters.</Heading>
+        <Heading n="02">How I researched it</Heading>
+        <p className="mb-8">
+          I started with first-time riders, because on my own first Metro ride I took the wrong direction
+          to the airport. The interviews changed that. Daily riders know the route; they don’t know if
+          today is normal. So the project moved to them.
+        </p>
         <div className="track-wide">
           <Cards items={METHODS} cols="sm:grid-cols-2 lg:grid-cols-3" />
         </div>
-      </section>
 
-      <section className="mt-16">
-        <Heading>One board, seven commutes, five themes.</Heading>
-        <p className="mb-8">
-          Everything went onto one synthesis board: the participants and their commutes, the insights
-          pulled from each transcript, the secondary research beside them, and then the themes only the
-          two together produced.
-        </p>
+        <Subhead>Synthesis board</Subhead>
+        <p className="mb-8">Participants, what each interview gave up, the secondary research, and the themes that came out of both.</p>
         <Gallery items={BOARDS} />
-        {/* The exports are dense by nature, so the board itself sits with them. */}
         <p className="track-wide mt-4" style={{ fontSize: '0.95rem' }}>
           <a href="https://www.figma.com/board/WI0U6Rar6OSNFbAioAZmmo/Mobility-Research-Synthesis" target="_blank" rel="noopener noreferrer" className="prose-link">Open the board in FigJam ↗</a>
-          <span className="text-faint"> — or click any export above to read it full size.</span>
-        </p>
-      </section>
-
-      <section className="mt-16">
-        <Heading>Six findings.</Heading>
-        <Findings items={FINDINGS} />
-      </section>
-
-      <section className="mt-16">
-        <Heading>Nobody judges the transfer before you board.</Heading>
-        <p className="mb-8">
-          Five systems benchmarked. Citymapper comes closest, with proactive departures in London,
-          running on TfL’s open API. Delhi opens more than it gets credit for: timetables for the metro and
-          live positions for buses. What is missing is the live metro — and that is the part a
-          departure verdict would need.
-        </p>
-        <Matrix {...COMPETITORS} />
-        <p className="mt-8">
-          So Signal is not a navigation app and not a booking agent. It is a companion: pattern
-          intelligence that speaks first, shows its reasoning, and leaves every consequential decision to
-          the commuter.
-        </p>
-      </section>
-
-      <section className="mt-16">
-        <Heading>Two people the research kept returning to.</Heading>
-        <Personas items={PERSONAS} />
-
-        <p className="mt-6">
-          Safety is the one finding I did not build for. It had the sharpest unmet need in the
-          interviews, and it sits in the future scope. It would rest on lighting, crowding by hour and
-          CISF presence, none of which is published (finding 06), so this version does not pretend to
-          address it.
         </p>
       </section>
 
       <Rule />
 
       <section>
-        <Heading>Three jobs the product is hired for.</Heading>
+        <Heading n="03">What I found</Heading>
+        <Findings items={FINDINGS} />
+
+        <Subhead>What existing apps do</Subhead>
         <p className="mb-8">
-          Written up from the interviews as job stories, so each screen answers a situation rather
-          than a feature request. A fourth job, safety routing after dark, came out of the same
-          interviews and sits in the future scope.
+          None of them tells you when to leave before you set off. Citymapper comes closest, in London,
+          because TfL publishes live data. Delhi publishes metro timetables but not live metro positions.
         </p>
+        <Matrix {...COMPETITORS} />
+
+        <Subhead>Who I designed for</Subhead>
+        <Personas items={PERSONAS} />
+        <p className="mt-6">
+          Safety had the sharpest unmet need in the interviews, and I didn’t build for it. It would need
+          lighting, crowding and CISF data that isn’t published, so it sits in the future scope.
+        </p>
+      </section>
+
+      <Rule />
+
+      <section>
+        <Heading n="04">What commuters need</Heading>
+        <p className="mb-8">The interviews, written as job stories. Each screen answers one of these situations.</p>
         <JobStories items={JOBS} />
       </section>
 
       <Rule />
 
       <section id="screens" tabIndex={-1} data-skip-target>
-        <Heading>The prototype.</Heading>
+        <Heading n="05">The solution</Heading>
         <p className="mb-8">
-          22 screens across 9 phases and 3 surfaces — lock screen, app and watch — from a warning the
-          night before to arrival. Signal orange appears only at decision moments; the rest is ink and
-          paper.
+          A companion, not a navigation app. It speaks at decision moments, shows its reasoning, and
+          leaves every booking to the commuter. The orange appears only when there is a decision to make.
         </p>
         <Screens items={SCREENS} />
 
-        <p className="mt-14 mb-4 text-faint" style={{ fontSize: '0.95rem' }}>
-          The transfer verdict, in four states — designed for the INA interchange
-        </p>
+        <Subhead>The transfer answer at INA, in four states</Subhead>
         <Verdicts items={STATES} />
-      </section>
 
-      <section className="mt-16">
-        <Heading>How 74% is calculated.</Heading>
+        <Subhead>How the 74% is calculated</Subhead>
         <p className="mb-8">
-          There is no live feed to read, so the number is a weighted score over four sources — and the
-          product says what it is made of rather than presenting it as certainty. It is specified, not
-          running: AFC aggregates are not public today, which is why the research board’s own
-          recommendation is to build v1 on static schedules and historical patterns.
+          There is no live metro feed, so the score weighs four sources, and the app says what it is made
+          of. The model is specified, not running: the crowd data it needs isn’t public yet.
         </p>
         <Weights
           items={WEIGHTS}
-          note="Crowdsourced reports are a correction layer only: they can pull confidence down, never push it above the timetable baseline."
+          note="Crowdsourced reports can only lower confidence, never raise it above the timetable baseline."
         />
-
-        <p className="mt-10 mb-4 text-faint" style={{ fontSize: '0.95rem' }}>
-          Cold start: what the score knows about you, and when
-        </p>
+        <p className="mt-10 mb-4 text-faint" style={{ fontSize: '0.95rem' }}>What the score knows about you, and when</p>
         <Ramp steps={RAMP} />
-      </section>
 
-      <section className="mt-16">
-        <Heading>The morning, as a film.</Heading>
-        <p className="mb-8">
-          Eighty-five seconds from the night before to arrival, written in React and rendered with
-          Remotion. Sound on.
-        </p>
+        <Subhead>The concept film</Subhead>
+        <p className="mb-8">85 seconds, from the night before to arrival. Built in React with Remotion. Sound on.</p>
         <figure className="track-full">
           <video
             src="/signal/signal.mp4"
@@ -416,50 +365,46 @@ export default function Signal() {
       <Rule />
 
       <section>
-        <Heading>Six principles, each earned from research.</Heading>
+        <Heading n="06">Design principles</Heading>
         <Cards items={PRINCIPLES} />
       </section>
 
-      <section className="mt-16">
-        <Heading>What I rejected, and why.</Heading>
+      <Rule />
+
+      <section>
+        <Heading n="07">Testing, and what changed</Heading>
+        <p className="mb-8">Five think-aloud sessions with daily commuters on the Dwarka–Gurgaon corridor.</p>
+        <Tested items={TESTED} />
+        <p className="mt-10">
+          One question, “What does pre-fill mean exactly?”, showed that my internal words had leaked into
+          the interface in five places.
+        </p>
+        <p className="mt-8 mb-3 text-faint" style={{ fontSize: '0.95rem' }}>Before and after the sessions</p>
+        <Iterations items={ITERATIONS} />
+
+        <Subhead>What I rejected</Subhead>
         <Decisions items={REJECTED} />
       </section>
 
       <Rule />
 
       <section>
-        <Heading>Five participants. Every finding actioned.</Heading>
-        <p className="mb-8">
-          Moderated think-aloud sessions with habitual commuters on the Dwarka–Gurgaon corridor.
-        </p>
-        <Tested items={TESTED} />
-        <p className="mt-10">
-          The most useful session was one participant. Anshuman’s “What does pre-fill mean exactly?”
-          turned up in five places: internal terms had leaked into the interface.
-        </p>
-        <p className="mt-8 mb-3 text-faint" style={{ fontSize: '0.95rem' }}>One session, five fixes</p>
-        <Iterations items={ITERATIONS} />
-      </section>
-
-      <Rule />
-
-      <section>
-        <Heading>What this research can and can’t claim.</Heading>
+        <Heading n="08">Limits of this research</Heading>
         <Decisions items={LIMITS} />
         <p className="text-faint mt-6" style={{ fontSize: '0.9rem', lineHeight: 1.55 }}>
-          Participants consented to being quoted and are named by first name, as on the board. The
-          interview notes are available on request.
+          Participants agreed to be quoted and are named by first name. Interview notes are available on
+          request.
         </p>
       </section>
 
       <section className="mt-16">
-        <Heading>What the process taught me.</Heading>
+        <Heading n="09">What I learned</Heading>
         <p>
-          Constraints are the design argument. No live DMRC data forced pattern intelligence, and a 74%
-          that admits its uncertainty is more honest than an unverified “train in 3 minutes”. Silence is a
-          design decision: Signal says one thing in the morning and nothing more until it has something to
-          say. And good critique changed the product — a visiting designer’s feedback moved it from a
-          broadcaster to a companion that shows its reasoning and learns from being dismissed.
+          The constraints shaped the design. With no live data, the app had to work from patterns, and a
+          74% that admits it could be wrong is more honest than a made-up “train in 3 minutes”. Staying
+          quiet is part of it too: Signal says one thing in the morning and nothing more until something
+          changes. And a visiting designer’s critique moved it from something that broadcasts to
+          something that shows its reasoning and learns when you dismiss it.
         </p>
       </section>
 

@@ -22,7 +22,7 @@ const SHIPPED = [
     url: 'https://www.himanshugarg.in/',
     shot: '/shipped/banyan.jpg',
     alt: 'The Banyan Tree homepage: twelve categories of symptom over a banyan canopy',
-    what: 'An atlas of root-cause healing for a health practice. The metaphor is the navigation.',
+    what: 'A website for a functional-medicine practice. You move from a symptom down to its causes.',
     tags: ['Concept', 'Interface', 'Front end', 'Handover'],
   },
   {
@@ -35,7 +35,7 @@ const SHIPPED = [
     alt: 'Three Hoychoy Cafe screens on yellow: the owner’s open/closed switch, the menu, and the checkout',
     what: (
       <>
-        A café’s WhatsApp ordering rebuilt as a service. Ordering went from{' '}
+        A café’s WhatsApp orders moved to a web ordering system. Handling time per order went from{' '}
         <GradientText>6–8 minutes to 2–3</GradientText>.
       </>
     ),
@@ -54,7 +54,7 @@ const RESEARCH = [
     shot: '/research/kizuku-loop.jpg',
     video: '/research/kizuku-loop.mp4',
     alt: 'A worry becomes one small action, the seed grows when it is done, then three Kizuku screens',
-    what: 'A wellness app for people who overthink the future. One worry in, one small thing to do today — and the tree grows from the doing.',
+    what: 'An iOS app for people who overthink the future. You give it one worry and get one small thing to do today.',
     tags: ['Brand', 'Design system', 'Interaction', 'iOS build'],
   },
   {
@@ -64,7 +64,7 @@ const RESEARCH = [
     shot: '/research/signal-loop.jpg',
     video: '/research/signal-loop.mp4',
     alt: 'Signal’s departure card: leave by 8:28, 74% likely on time, then the three screens it lives on',
-    what: 'A Delhi Metro companion that tells you when to leave, before you need to. Concept with a working prototype.',
+    what: 'A Delhi Metro app that tells daily commuters when to leave. Research and a working prototype.',
     tags: ['Research', 'Interaction', 'Prototype', 'Film'],
   },
 ]

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
-import { Back, Cards, Decisions, Facts, Heading, Numbers, Rule, Shots, SkipTo } from '../components/case-study'
+import { Back, Cards, Decisions, Facts, Heading, Numbers, Overview, Rule, Shots, SkipTo, Subhead } from '../components/case-study'
 import { Backbone, Blueprint, Chat, Funnel, Outcomes, StepChain } from './diagrams'
 
 /*
@@ -13,6 +13,14 @@ import { Backbone, Blueprint, Chat, Funnel, Outcomes, StepChain } from './diagra
  * Ayushman's from those versions; two claims were left behind on purpose:
  * "infinitely scalable" and an unsourced "reduced Time-To-Purchase by 4 minutes".
  */
+
+// The whole project in four answers, readable before anything else.
+const OVERVIEW = [
+  ['Context', 'Hoychoy is a small café in Golaghat, Assam. It took every order on WhatsApp: a PDF menu, an address typed into the chat and a UPI screenshot.'],
+  ['Problem', 'The owner read each order, asked for what was missing, matched the payment and relayed it to the kitchen by hand. One order took 6–8 minutes to handle.'],
+  ['Why it matters', 'About half of peak hours went on clarifying incomplete orders instead of taking new ones, and 8–10 payments a week couldn’t be matched to an order.'],
+  ['What I did', 'Mapped the service, then designed and built a web menu, a checkout that won’t accept an incomplete order, UPI payment and Telegram alerts for the kitchen. In a two-week pilot, handling time fell to 2–3 minutes.'],
+]
 
 const FACTS = [
   ['Role', 'UX lead and product owner'],
@@ -92,8 +100,8 @@ const BACKBONE = [
 
 const SHIPPED = [
   ['Branded mobile ordering', 'A structured menu with real-time availability, reached by QR or link. No login, no download, nothing to install at the door.'],
-  ['Checkout that enforces itself', 'Cart, kitchen notes, GPS capture and a UPI deep link in one scrollable form. Required fields are enforced in the UI, so an incomplete order cannot reach the owner.'],
-  ['An automated relay', 'Orders land in a dashboard and fire a Telegram alert to the kitchen. The owner comes out of the relay chain entirely.'],
+  ['A checkout that won’t take an incomplete order', 'Cart, kitchen notes, GPS capture and a UPI deep link in one scrollable form. Required fields are enforced in the UI, so an incomplete order cannot reach the owner.'],
+  ['Orders go straight to the kitchen', 'Orders land in a dashboard and fire a Telegram alert to the kitchen. The owner comes out of the relay chain entirely.'],
 ]
 
 const SHOTS = [
@@ -106,13 +114,13 @@ const SHOTS = [
 
 const CHECKOUT = [
   ['Structured address, not a text field', 'GPS or a Google Maps link, plus kitchen notes, replace the ambiguous WhatsApp message. Every input is enforced in the UI.'],
-  ['A payment that cannot mismatch', 'A PhonePe deep link with the exact order total pre-filled. No amount to type, no screenshot to verify.'],
+  ['A payment that always matches the order', 'A PhonePe deep link with the exact order total pre-filled. No amount to type, no screenshot to verify.'],
 ]
 
 const DECISIONS = [
   ['No accounts, ever', 'WhatsApp needed zero setup, so any signup gate would have killed conversion outright. Account creation adds two to three minutes of friction to a ₹200 order. Sessions carry the cart instead.'],
   ['Web, not an app store', 'Installs add review delays and maintenance. Mobile web gives the same experience with no download barrier, on every phone that walks in, and updates without a release cycle.'],
-  ['WhatsApp kept as trust, not as the channel', 'Customers had built habits around a WhatsApp confirmation. Removing it entirely would have read as the order vanishing, so it stays as a one-way receipt while the ordering moves.'],
+  ['WhatsApp kept for confirmations only', 'Customers had built habits around a WhatsApp confirmation. Removing it entirely would have read as the order vanishing, so it stays as a one-way receipt while the ordering moves.'],
   ['Telegram for the kitchen, not WhatsApp', 'Business notifications get buried in personal chat noise, and WhatsApp offered no reliable API for this. Telegram’s bot API delivers structured, persistent, actionable alerts to the people cooking.'],
   ['One dashboard as the record', 'Without it the owner recalled orders from memory or scrolled back through chat. A central record made shift handoffs possible and gave the café a searchable order history for the first time.'],
   ['Minimal fields by default', 'People order on mobile data in a lunch break. Every field is a reason to abandon a ₹200 order, so every typing task became a tapping task wherever the data allowed.'],
@@ -138,18 +146,10 @@ export default function Hoychoy() {
       <motion.div {...rise(0)}><Back /></motion.div>
 
       <motion.header {...rise(0.06)} className="mt-10 space-y-5">
-        <p className="text-faint" style={{ fontSize: '0.95rem' }}>Hoychoy Cafe · 2025 · Service design</p>
-
-        <h1 className="display">
-          A café was taking orders in WhatsApp. Ordering took 6–8 minutes.
-        </h1>
-
-        <p>
-          It now takes two to three. Hoychoy is a hyperlocal café in Golaghat, Assam. I rebuilt its
-          ordering as a service rather than a screen: a mobile web menu, a checkout that refuses to produce
-          an incomplete order, and a Telegram relay that takes the owner out of the middle.
-        </p>
+        <p className="text-faint" style={{ fontSize: '0.95rem' }}>Hoychoy Cafe · 2025 · Service design and build</p>
+        <h1 className="display">Hoychoy Cafe: moving a café’s orders out of WhatsApp</h1>
       </motion.header>
+      <motion.div {...rise(0.08)}><Overview items={OVERVIEW} /></motion.div>
 
       {/* Not faded in: the card on the index grows into this image. */}
       <figure data-case-hero className="track-full mt-12 overflow-hidden rounded-xl">
@@ -162,44 +162,22 @@ export default function Hoychoy() {
           style={{ border: '1px solid var(--rule)' }}
         />
       </figure>
-      <SkipTo target="shipped">just here for the product?</SkipTo>
+      <SkipTo target="shipped">skip to the product</SkipTo>
 
       <motion.div {...rise(0.12)}><Facts rows={FACTS} /></motion.div>
-
       <motion.p {...rise(0.14)} className="mt-6">
-        I owned it end to end — problem framing, service and interface design, and the build, done
-        AI-assisted. I managed the client, ran the two-week pilot with the owner, and shipped it to
-        production.{' '}
-        <a href="https://www.hoychoycafe.com/" target="_blank" rel="noopener noreferrer" className="prose-link">hoychoycafe.com</a>
+        I did the research, the service and interface design, and the build (AI-assisted), and ran the
+        pilot with the owner. It runs the café today at{' '}
+        <a href="https://www.hoychoycafe.com/" target="_blank" rel="noopener noreferrer" className="prose-link">hoychoycafe.com</a>.
       </motion.p>
 
       <Rule />
 
-      {/* before / after first: the outcome is the strongest thing on the page */}
       <section>
-        <Heading>What changed in a two-week pilot.</Heading>
+        <Heading n="01">The problem</Heading>
         <p className="mb-8">
-          The owner’s own figures, from their logs. The before column was estimated rather than
-          instrumented, which is why it carries tildes — I have kept them.
-        </p>
-        <Outcomes items={OUTCOMES} />
-
-        <p className="mt-12 mb-4">
-          The handling time fell because the steps did. Ordering used to be a relay: confirm it in
-          chat, carry it to the kitchen, then carry the answer back to the customer — and every leg of
-          that waited on one person.
-        </p>
-        <StepChain rows={CHAIN} />
-      </section>
-
-      <Rule />
-
-      <section>
-        <Heading>Half of peak hours went on clarifying orders.</Heading>
-        <p className="mb-8">
-          Not taking new ones — clarifying incomplete ones. Customers browsed a PDF, typed their address
-          and sent a UPI screenshot; the owner decoded, clarified, verified and relayed each order to the
-          kitchen, alone, with a dozen threads open at rush hour.
+          I read more than 50 of the café’s WhatsApp threads from real service. Most of the owner’s
+          peak time went on completing orders, not taking them.
         </p>
         <Numbers
           cols="grid-cols-2"
@@ -210,62 +188,40 @@ export default function Hoychoy() {
         />
         <div className="mt-6 grid gap-6 sm:grid-cols-2 sm:items-center">
           <div>
-          <Chat messages={SIGNALS} reply="Owner: matching screenshots to addresses while six more messages arrive." />
-          <p className="text-faint mt-3" style={{ fontSize: '0.85rem', lineHeight: 1.45 }}>
-            Quoted as sent, from the café’s own threads. No customer names, numbers or addresses are
-            reproduced.
-          </p>
-        </div>
-          <div>
-            <p>
-              Two failure modes dominated the threads: payments that could not be matched to an order,
-              and orders lost in the scroll.
-            </p>
-            <p className="mt-4" style={{ color: 'var(--ink)' }}>
-              The problem wasn’t WhatsApp. It was the absence of any system behind it. Fix the system,
-              not the channel.
+            <Chat messages={SIGNALS} reply="Owner: matching screenshots to addresses while six more messages arrive." />
+            <p className="text-faint mt-3" style={{ fontSize: '0.85rem', lineHeight: 1.45 }}>
+              Quoted as sent, from the café’s threads. No names, numbers or addresses are reproduced.
             </p>
           </div>
+          <p>
+            Two things went wrong most often: payments that couldn’t be matched to an order, and orders
+            lost in the scroll.
+          </p>
         </div>
+
+        <Subhead>Where the time went</Subhead>
+        <p className="mb-4">
+          Every order was a relay through one person: confirm it in chat, tell the kitchen, then tell the
+          customer. Five of the six steps waited on the owner.
+        </p>
+        <StepChain rows={CHAIN} />
       </section>
 
-      <section className="mt-16">
-        <Heading>The service, before and after.</Heading>
+      <Rule />
+
+      <section>
+        <Heading n="02">The service, before and after</Heading>
         <p className="mb-8">
-          This wasn’t a UI problem; it was a workflow problem, so I mapped it as a service blueprint.
-          Switch between the two and watch the owner’s row.
+          The fix had to change the workflow as well as the screen, so I mapped it as a service
+          blueprint. Switch between the two and watch the owner’s row.
         </p>
         <Blueprint states={BLUEPRINT} />
       </section>
 
       <Rule />
 
-      <section>
-        <Heading>One page, one funnel.</Heading>
-        <p className="mb-8">
-          A flat, linear architecture built for speed: no navigation tree to learn, a straight line from
-          the menu to payment to confirmation.
-        </p>
-        <Funnel />
-      </section>
-
-      <section className="mt-16">
-        <Heading>The kitchen gets a Telegram bot, not another chat.</Heading>
-        <p className="mb-8">
-          WhatsApp was where orders got lost, and it lacks a reliable API for business alerts. Telegram’s bot API does — so the kitchen gets every order as a
-          structured message in a staff group, and the owner stops being the relay.
-        </p>
-        <Backbone items={BACKBONE} />
-        <p className="mt-6">
-          Chaining free tiers together meant no hosting bill to pass on: the café pays{' '}
-          <span style={{ color: 'var(--ink)' }}>$0 a month in server fees</span>.
-        </p>
-      </section>
-
-      <Rule />
-
       <section id="shipped" tabIndex={-1} data-skip-target>
-        <Heading>What shipped.</Heading>
+        <Heading n="03">The solution</Heading>
         <figure className="track-wide mb-12">
           <img
             src="/assets/hoychoy-flow.webp"
@@ -277,37 +233,52 @@ export default function Hoychoy() {
             style={{ border: '1px solid var(--rule)' }}
           />
           <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem' }}>
-            The whole order, from menu to checkout, in one take.
+            One order, from menu to checkout.
           </figcaption>
         </figure>
         <Decisions items={SHIPPED} />
         <div className="mt-12">
           <Shots items={SHOTS} />
         </div>
-      </section>
 
-      <section className="mt-16">
-        <Heading>The checkout, in two moves.</Heading>
+        <Subhead>One page, from menu to payment</Subhead>
+        <p className="mb-8">No menus to learn: a straight line from the menu to payment to confirmation.</p>
+        <Funnel />
+
+        <Subhead>The checkout</Subhead>
         <Cards items={CHECKOUT} />
+
+        <Subhead>How an order reaches the kitchen</Subhead>
+        <p className="mb-8">
+          The kitchen gets each order as a structured Telegram message in a staff group, so the owner is
+          no longer the relay. WhatsApp only sends the customer a confirmation.
+        </p>
+        <Backbone items={BACKBONE} />
         <p className="mt-6">
-          Turning a typing task into a tapping task removed the owner’s slowest verification step and
-          the largest single source of wrong orders.
+          It runs on free tiers, so the café pays <span style={{ color: 'var(--ink)' }}>$0 a month in server fees</span>.
         </p>
       </section>
 
       <Rule />
 
       <section>
-        <Heading>Six calls I would make again.</Heading>
+        <Heading n="04">What changed</Heading>
+        <p className="mb-8">
+          The owner’s figures from a two-week pilot. The before numbers were estimated from their logs,
+          not measured, so they keep the tildes.
+        </p>
+        <Outcomes items={OUTCOMES} />
+      </section>
+
+      <Rule />
+
+      <section>
+        <Heading n="05">Decisions</Heading>
         <Decisions items={DECISIONS} />
       </section>
 
       <section className="mt-16">
-        <Heading>What I’d build next.</Heading>
-        <p className="mb-6">
-          The current system solves the core ordering problem. None of these were in scope; each would
-          compound it.
-        </p>
+        <Heading n="06">What I’d build next</Heading>
         <div className="track-wide">
           <Cards items={NEXT} cols="sm:grid-cols-3" />
         </div>
@@ -315,8 +286,6 @@ export default function Hoychoy() {
 
       <section className="mt-16">
         <p>
-          The café runs on it today at{' '}
-          <a href="https://www.hoychoycafe.com/" target="_blank" rel="noopener noreferrer" className="prose-link">hoychoycafe.com</a>.
           Back to <Link href="/#work" className="prose-link">the work index</Link>, or read{' '}
           <Link href="/banyan" className="prose-link">Banyan Tree</Link> and{' '}
           <Link href="/signal" className="prose-link">Signal</Link>.

@@ -13,11 +13,44 @@ export function Rule() {
   return <div className="my-16" style={{ height: 1, background: 'var(--rule)' }} />
 }
 
-export function Heading({ children }) {
+/**
+ * A section heading. Plain words that say what the section is ("The problem",
+ * "What I found"), with an optional index so a reviewer scanning the page can
+ * see where they are and how much is left.
+ */
+export function Heading({ children, n }) {
   return (
-    <h2 className="headline mb-4">
-      {children}
+    <h2 className="mb-5">
+      {n && <span className="section-n">{n}</span>}
+      <span className="headline block">{children}</span>
     </h2>
+  )
+}
+
+/** A heading inside a section. */
+export function Subhead({ children, id }) {
+  return (
+    <h3 id={id} tabIndex={id ? -1 : undefined} data-skip-target={id ? '' : undefined} className="subhead mb-3 mt-14">
+      {children}
+    </h3>
+  )
+}
+
+/**
+ * The first thing under a case study's title: what the project is, what was
+ * wrong, why it mattered and what I did, in a sentence or two each, so the
+ * problem is clear before anything has to be read at length.
+ */
+export function Overview({ items }) {
+  return (
+    <dl className="overview mt-10 grid gap-x-8 gap-y-7 border-t border-rule pt-7 sm:grid-cols-2">
+      {items.map(([k, v]) => (
+        <div key={k}>
+          <dt className="text-faint mb-1.5 text-[0.85rem]">{k}</dt>
+          <dd className="text-ink text-[1rem] leading-relaxed">{v}</dd>
+        </div>
+      ))}
+    </dl>
   )
 }
 

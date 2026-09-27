@@ -744,3 +744,20 @@ html.theme-switching::view-transition-new(root) {
 @media (prefers-reduced-motion: reduce) {
     .magnet-drop, .magnet-drop[data-go] { opacity: 1; animation: none; }
 }
+
+/* ---- Case-study headings: an index above a plain serif title, and a
+   quieter sans subhead for the parts within a section. */
+.section-n {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--faint);
+}
+.subhead {
+    color: var(--ink);
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.35;
+}
