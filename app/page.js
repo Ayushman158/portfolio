@@ -84,6 +84,13 @@ const TOOLS = [
 
 const METHODS = ['UX Research', 'Usability Design', 'Design Thinking', 'Design Systems']
 
+// Brand and communication work: a different discipline from the product case
+// studies, so it gets its own short index rather than a card among them.
+// The case study is a standalone static page, opened in a new tab.
+const CAMPAIGNS = [
+  { name: 'Choose Assam · Tata Tea', year: '2026', href: '/choose-assam', external: true, video: '/choose-assam/preview.mp4' },
+]
+
 const PLAYGROUND = [
   // The reel lives on its own page; here it is one row, and the hover preview
   // plays it, so the index never repeats what the cards above already show.
@@ -241,6 +248,7 @@ export default function Home() {
             The shipped client work follows. */}
         <Shipped label="Case studies" items={RESEARCH} />
         <Shipped items={SHIPPED} />
+        <WorkIndex label="Campaigns" items={CAMPAIGNS} />
         <WorkIndex label="Playground" items={PLAYGROUND} />
       </motion.div>
 

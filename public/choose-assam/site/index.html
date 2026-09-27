@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Choose Assam — Tata Tea Premium</title>
+<meta name="description" content="You scanned a Choose Assam pack. Meet the makers of Assam who are open this week, and order from them directly.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=DM+Sans:opsz,wght@9..40,300..700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #1F4B34;
+  --green-ink: #163826;
+  --ivory: #F4EFE3;
+  --paper: #FBF8F1;
+  --gold: #C8A46A;
+  --red: #C62828;
+  --ink-2: #4E5E54;
+  --rule: rgba(31, 75, 52, 0.16);
+  --gutter: clamp(20px, 4vw, 56px);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 72px; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+body { margin: 0; background: var(--paper); color: var(--green-ink); font: 400 17px/1.55 'DM Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p, ol, ul, figure { margin: 0; padding: 0; }
+ol, ul { list-style: none; }
+img { display: block; width: 100%; }
+a { color: inherit; text-underline-offset: 4px; }
+button { font: inherit; }
+::selection { background: var(--gold); color: var(--green-ink); }
+:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+
+.label { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
+.muted { color: var(--ink-2); }
+.wrap { padding: 0 var(--gutter); max-width: 1320px; margin: 0 auto; }
+.lockup { display: inline-flex; flex-direction: column; line-height: 0.82; color: var(--green); }
+.lockup .s { font-family: 'Caveat Brush', cursive; font-size: 0.5em; margin-left: 0.04em; }
+.lockup .c { font-weight: 600; letter-spacing: 0.02em; }
+
+/* nav */
+.nav { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--paper) 94%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--rule); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 64px; }
+.nav .lockup { font-size: 26px; }
+.nav nav { display: flex; gap: clamp(14px, 2.4vw, 32px); }
+.nav nav a { text-decoration: none; }
+.nav nav a:hover { color: var(--red); }
+.bag { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border: 1px solid var(--green); border-radius: 999px; background: none; color: var(--green); cursor: pointer; }
+.bag b { min-width: 1.4em; height: 1.4em; border-radius: 50%; background: var(--green); color: var(--ivory); display: inline-grid; place-items: center; font-size: 12px; font-variant-numeric: tabular-nums; }
+
+/* hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--gutter); align-items: end; padding-top: clamp(40px, 7vw, 96px); }
+.hero .lockup { font-size: clamp(72px, 10vw, 150px); }
+.hero .tag { font-size: clamp(20px, 2vw, 26px); margin-top: 24px; font-weight: 500; }
+.hero .sub { margin-top: 14px; max-width: 38ch; color: var(--ink-2); }
+.cta { display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; padding: 14px 22px; background: var(--green); color: var(--ivory); border: 0; border-radius: 999px; text-decoration: none; font-weight: 600; cursor: pointer; transition: background-color 200ms var(--ease-out); }
+.cta:hover { background: var(--green-ink); }
+.hero figure img { aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px; }
+.scanned { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; color: var(--green); }
+.scanned::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--red); }
+
+/* status chips */
+.chip { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 10px; border-radius: 999px; }
+.chip::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.s-open { background: #E3ECE5; color: var(--green); }
+.s-producing { background: #F3EAD6; color: #7A5A1E; }
+.s-rebuilding { background: #F6E1DF; color: #A42020; }
+
+/* makers */
+.section { padding-top: clamp(80px, 11vw, 160px); }
+.head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 28px; }
+.head h2 { font-size: clamp(32px, 4vw, 56px); font-weight: 400; letter-spacing: -0.03em; line-height: 1.02; }
+.filters { display: flex; gap: 8px; flex-wrap: wrap; }
+.filters button { border: 1px solid var(--rule); background: none; color: var(--green-ink); padding: 9px 16px; border-radius: 999px; cursor: pointer; font-size: 14px; transition: background-color 200ms var(--ease-out), color 200ms var(--ease-out); }
+.filters button[aria-pressed="true"] { background: var(--green); border-color: var(--green); color: var(--ivory); }
+.makers { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 24px); }
+.maker { display: grid; gap: 12px; align-content: start; }
+.maker[hidden] { display: none; }
+.maker img { aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px; }
+.maker h3 { font-size: 20px; font-weight: 500; letter-spacing: -0.01em; }
+.maker .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid var(--rule); padding-top: 12px; }
+.order { background: none; border: 0; padding: 6px 0; color: var(--green); font-weight: 600; cursor: pointer; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+.order[aria-pressed="true"] { color: var(--red); }
+
+/* story */
+.story { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: var(--gutter); align-items: center; background: var(--green); color: var(--ivory); padding: clamp(24px, 4vw, 56px); border-radius: 4px; }
+.story img { aspect-ratio: 4 / 3; object-fit: cover; border-radius: 2px; }
+.story blockquote { margin: 16px 0 0; font-size: clamp(24px, 2.6vw, 38px); line-height: 1.15; font-weight: 300; letter-spacing: -0.02em; }
+.story .label { color: var(--gold); }
+.track { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 32px; border-top: 1px solid rgba(244, 239, 227, 0.25); }
+.track li { padding-top: 12px; font-size: 13px; color: rgba(244, 239, 227, 0.55); position: relative; }
+.track li.done { color: var(--ivory); }
+.track li.now { color: var(--gold); }
+.track li.now::before { content: ''; position: absolute; top: -2px; left: 0; right: 0; height: 3px; background: var(--gold); }
+.story .cta { background: var(--ivory); color: var(--green); }
+.story .cta:hover { background: #fff; }
+.story .cta.order { padding: 14px 22px; text-decoration: none; color: var(--green); }
+.story .cta.order[aria-pressed="true"] { background: var(--gold); }
+
+/* how */
+.how { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--green); }
+.how li { padding: 16px 20px 0 0; display: grid; gap: 8px; }
+.how li + li { padding-left: 20px; border-left: 1px solid var(--rule); }
+.how b { font-size: 22px; font-weight: 500; letter-spacing: -0.01em; }
+.how p { color: var(--ink-2); font-size: 15px; }
+
+/* promise + footer */
+.promise { text-align: center; padding: clamp(96px, 12vw, 180px) var(--gutter); }
+.promise p { font-size: clamp(28px, 3.6vw, 52px); font-weight: 300; letter-spacing: -0.03em; line-height: 1.1; max-width: 22ch; margin: 0 auto; }
+.promise .s { font-family: 'Caveat Brush', cursive; color: var(--red); }
+footer { border-top: 1px solid var(--rule); }
+footer .wrap { display: flex; justify-content: space-between; gap: 24px; padding-top: 24px; padding-bottom: 32px; flex-wrap: wrap; }
+
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 16px); opacity: 0; background: var(--green-ink); color: var(--ivory); padding: 12px 18px; border-radius: 999px; font-size: 14px; pointer-events: none; transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out); }
+.toast.on { opacity: 1; transform: translate(-50%, 0); }
+
+@media (max-width: 900px) {
+  .hero, .story { grid-template-columns: 1fr; }
+  .makers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .how { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 24px; }
+  .how li:nth-child(3) { padding-left: 0; border-left: 0; }
+}
+@media (max-width: 560px) {
+  .nav nav { display: none; }
+  .makers { grid-template-columns: 1fr; }
+  .maker img { aspect-ratio: 3 / 2; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="#top" class="lockup" style="text-decoration:none" aria-label="Choose Assam home"><span class="s">Choose</span><span class="c">ASSAM</span></a>
+    <nav class="label" aria-label="Main">
+      <a href="#makers">Makers</a>
+      <a href="#story">Stories</a>
+      <a href="#how">How it works</a>
+    </nav>
+    <button class="bag label" type="button" aria-label="Orders"><span>Orders</span><b id="count">0</b></button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="wrap hero">
+    <div>
+      <p class="scanned label">You scanned a Tata Tea Premium pack</p>
+      <h1 class="lockup"><span class="s">Choose</span><span class="c">ASSAM</span></h1>
+      <p class="tag">Your tea. Their future. Our Assam.</p>
+      <p class="sub">The floods have gone from the news. The makers are still reopening. Buy from them directly.</p>
+      <a class="cta" href="#makers">Meet the makers <span aria-hidden="true">↓</span></a>
+    </div>
+    <figure><img src="../assets/state-producing.jpg" alt="Jonali weaving in her workshop, finished red-bordered cloths on the shelves behind her"></figure>
+  </section>
+
+  <section class="wrap section" id="makers" aria-labelledby="makers-h">
+    <div class="head">
+      <h2 id="makers-h">Open this week</h2>
+      <div class="filters" role="group" aria-label="Filter by status">
+        <button type="button" aria-pressed="true" data-f="all">All</button>
+        <button type="button" aria-pressed="false" data-f="open">Open</button>
+        <button type="button" aria-pressed="false" data-f="producing">Producing</button>
+        <button type="button" aria-pressed="false" data-f="rebuilding">Rebuilding</button>
+      </div>
+    </div>
+    <ul class="makers">
+      <li class="maker" data-s="producing">
+        <img src="../assets/state-producing.jpg" alt="Jonali at her loom" loading="lazy">
+        <div><h3>Jonali's Loom</h3><p class="muted">Handloom gamosa · Sivasagar</p></div>
+        <div class="row"><span class="chip s-producing">Producing</span><button class="order" type="button" aria-pressed="false">Pre-order</button></div>
+      </li>
+      <li class="maker" data-s="open">
+        <img src="../assets/film-pluck.jpg" alt="Hands plucking tea leaves" loading="lazy">
+        <div><h3>Borah Tea Growers</h3><p class="muted">Small-garden tea · Dibrugarh</p></div>
+        <div class="row"><span class="chip s-open">Open</span><button class="order" type="button" aria-pressed="false">Order</button></div>
+      </li>
+      <li class="maker" data-s="open">
+        <img src="../assets/film-reopen.jpg" alt="A grocer lifting his shop shutter" loading="lazy">
+        <div><h3>Das General Store</h3><p class="muted">Joha rice and pickles · Nalbari</p></div>
+        <div class="row"><span class="chip s-open">Open</span><button class="order" type="button" aria-pressed="false">Order</button></div>
+      </li>
+      <li class="maker" data-s="rebuilding">
+        <img src="../assets/state-rebuilding.jpg" alt="Washed cotton yarn drying in a workshop after the flood" loading="lazy">
+        <div><h3>Sualkuchi Weavers</h3><p class="muted">Cotton and muga · Kamrup</p></div>
+        <div class="row"><span class="chip s-rebuilding">Rebuilding</span><button class="order" type="button" aria-pressed="false">Pre-order</button></div>
+      </li>
+    </ul>
+    <p class="muted" style="margin-top:20px;font-size:14px">Makers and statuses are illustrative.</p>
+  </section>
+
+  <section class="wrap section" id="story" aria-labelledby="story-h">
+    <div class="story">
+      <img src="../assets/state-closed.jpg" alt="Jonali at her workshop shutter during the flood" loading="lazy">
+      <div>
+        <p class="label" id="story-h">Maker story · Sivasagar</p>
+        <blockquote>“The water took two weeks. Getting the looms running took two months.”</blockquote>
+        <p style="margin-top:14px;color:rgba(244,239,227,0.75)">Jonali, weaver</p>
+        <ol class="track" aria-label="Jonali's status">
+          <li class="done">Closed</li>
+          <li class="done">Rebuilding</li>
+          <li class="now" aria-current="step">Producing</li>
+          <li>Open</li>
+        </ol>
+        <button class="cta order" type="button" aria-pressed="false" style="text-decoration:none">Pre-order a gamosa</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section" id="how" aria-labelledby="how-h">
+    <div class="head"><h2 id="how-h">How it works</h2></div>
+    <ol class="how">
+      <li><span class="label muted">01</span><b>Buy the pack</b><p>Choose Assam limited edition, in stores and on quick-commerce apps.</p></li>
+      <li><span class="label muted">02</span><b>Scan the tag</b><p>The QR on the pack, tag or billboard brings you here.</p></li>
+      <li><span class="label muted">03</span><b>Meet a maker</b><p>See who is open, producing or rebuilding this week.</p></li>
+      <li><span class="label muted">04</span><b>Order direct</b><p>Your order goes to the maker, and their status moves forward.</p></li>
+    </ol>
+  </section>
+
+  <section class="promise" aria-label="Our promise">
+    <p>Every order goes to the maker.</p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap label muted">
+    <span>Tata Tea Premium · Desh ki Chai</span>
+    <span>Concept microsite. Not affiliated with Tata Consumer Products.</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const filters = document.querySelectorAll('.filters button');
+const makers = document.querySelectorAll('.maker');
+filters.forEach(b => b.addEventListener('click', () => {
+  filters.forEach(x => x.setAttribute('aria-pressed', x === b));
+  makers.forEach(m => { m.hidden = b.dataset.f !== 'all' && m.dataset.s !== b.dataset.f; });
+}));
+
+const count = document.getElementById('count');
+const toast = document.getElementById('toast');
+let n = 0, t;
+document.querySelectorAll('.order').forEach(b => {
+  const label = b.textContent;
+  b.addEventListener('click', () => {
+    const on = b.getAttribute('aria-pressed') !== 'true';
+    b.setAttribute('aria-pressed', on);
+    b.textContent = on ? 'Added' : label;
+    n += on ? 1 : -1;
+    count.textContent = n;
+    toast.textContent = on ? 'Added. Your order goes straight to the maker.' : 'Removed from your orders.';
+    toast.classList.add('on');
+    clearTimeout(t); t = setTimeout(() => toast.classList.remove('on'), 2200);
+  });
+});
+</script>
+</body>
+</html>

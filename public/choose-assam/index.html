@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<base href="/choose-assam/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Choose Assam — Case Study</title>
+<meta name="description" content="Choose Assam — a speculative brand campaign for Tata Tea Premium. After the flood, Assam means business.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FFFFFF;
+  --ink: #111512;
+  --ink-2: #5E645F;
+  --rule: #E6E6E3;
+  --red: #C62828;
+  --gutter: clamp(20px, 3.4vw, 56px);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+* { box-sizing: border-box; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 400 17px/1.55 'Archivo', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, p, figure, ol, ul, dl, dd { margin: 0; padding: 0; }
+ol, ul { list-style: none; }
+img, video { display: block; width: 100%; }
+a { color: inherit; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+::selection { background: var(--ink); color: var(--bg); }
+:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+
+.label { font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; }
+.muted { color: var(--ink-2); }
+.display { font-weight: 300; letter-spacing: -0.035em; line-height: 1.02; text-wrap: balance; }
+.wrap { padding: 0 var(--gutter); }
+.gap-xl { margin-top: clamp(120px, 16vw, 240px); }
+.gap-lg { margin-top: clamp(72px, 9vw, 140px); }
+figcaption { margin-top: 12px; }
+
+/* ── hero ── */
+.hero { position: relative; height: 100svh; min-height: 520px; background: #000; color: #fff; overflow: hidden; }
+.hero video { position: absolute; inset: 0; height: 100%; object-fit: cover; }
+.hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,0.45), transparent 35%), linear-gradient(180deg, rgba(0,0,0,0.3), transparent 20%); pointer-events: none; }
+.hero-top, .hero-bottom { position: absolute; left: var(--gutter); right: var(--gutter); z-index: 1; display: flex; justify-content: space-between; align-items: end; gap: 24px; }
+.hero-top { top: 24px; align-items: start; }
+.hero-bottom { bottom: clamp(24px, 3vw, 40px); }
+.hero h1 { font-size: clamp(40px, 7vw, 112px); font-weight: 300; letter-spacing: -0.04em; line-height: 0.95; }
+.sound {
+  all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 10px;
+  padding: 12px 18px; border: 1px solid rgba(255,255,255,0.5); border-radius: 999px;
+  transition: background-color 200ms var(--ease-out), color 200ms var(--ease-out);
+}
+.sound:hover { background: #fff; color: #000; }
+.sound:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.sound svg { width: 16px; height: 16px; }
+
+/* ── intro ── */
+.intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--gutter); }
+.intro .display { font-size: clamp(34px, 4.4vw, 72px); }
+.meta { display: grid; gap: 18px; align-content: start; padding-top: 10px; }
+.meta div { border-top: 1px solid var(--rule); padding-top: 10px; display: grid; gap: 2px; }
+
+/* ── layout ── */
+.bleed img { height: min(100svh, 62vw); object-fit: cover; }
+.split-head { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; font-size: clamp(48px, 11vw, 188px); font-weight: 300; letter-spacing: -0.05em; line-height: 0.9; flex-wrap: wrap; }
+.pair { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: clamp(12px, 2vw, 32px); align-items: start; }
+.pair.rev { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }
+.pair .drop { margin-top: clamp(80px, 14vw, 240px); }
+.note { max-width: 32ch; font-size: clamp(20px, 1.8vw, 26px); line-height: 1.3; font-weight: 300; letter-spacing: -0.015em; }
+.row-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(8px, 1vw, 16px); }
+.row-4 img { aspect-ratio: 4 / 5; object-fit: cover; }
+.row-4 .n { display: flex; justify-content: space-between; margin-top: 12px; border-top: 1px solid var(--ink); padding-top: 10px; }
+.web-frame { background: #F4F4F2; padding: clamp(24px, 6vw, 120px) clamp(20px, 12vw, 240px) 0; }
+.web-frame .view { height: min(88svh, 900px); overflow: hidden; scrollbar-width: none; box-shadow: 0 30px 60px -30px rgba(0,0,0,0.3); }
+.web-frame .view::-webkit-scrollbar { display: none; }
+.web-frame iframe { display: block; width: 100%; height: 100%; border: 0; background: #FBF8F1; }
+.credits { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gutter); border-top: 1px solid var(--ink); padding-top: 14px; }
+.credits div { display: grid; gap: 2px; }
+/* ── brief blocks: problem, insights, why ── */
+.brief { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--gutter); }
+.brief h2 { font-size: clamp(28px, 3.2vw, 52px); font-weight: 300; letter-spacing: -0.03em; line-height: 1.06; max-width: 22ch; text-wrap: balance; }
+.index { margin-top: clamp(32px, 4vw, 56px); border-top: 1px solid var(--ink); }
+.index li { display: grid; grid-template-columns: 3.5em minmax(0, 1fr); gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--rule); font-size: clamp(17px, 1.3vw, 20px); line-height: 1.4; }
+.index li b { font-weight: 500; }
+.index li .label { padding-top: 4px; }
+
+/* ── ecology diagram ── */
+.eco { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+.eco li { position: relative; padding: 18px 24px 22px 0; display: grid; gap: 10px; align-content: start; }
+.eco li + li { padding-left: 24px; border-left: 1px solid var(--rule); }
+.eco li:not(:last-child)::after { content: ''; position: absolute; right: -5px; top: 26px; width: 8px; height: 8px; border-top: 1px solid var(--ink); border-right: 1px solid var(--ink); background: var(--bg); transform: rotate(45deg); }
+.eco .node { font-size: clamp(22px, 2vw, 30px); font-weight: 300; letter-spacing: -0.025em; line-height: 1.08; }
+.eco p:last-child { font-size: 15px; color: var(--ink-2); max-width: 24ch; }
+.eco li.hub .node { color: var(--red); }
+.eco-bar { display: flex; justify-content: space-between; gap: 24px; border: 1px solid var(--ink); padding: 14px 18px; margin-top: 12px; }
+.eco-loop { display: flex; align-items: center; gap: 14px; margin-top: 18px; color: var(--red); }
+.eco-loop svg { flex: 1; height: 12px; min-width: 40px; }
+
+/* ── touchpoints ── */
+.row-6 { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(8px, 1vw, 16px); }
+.row-6 img, .row-6 video { aspect-ratio: 4 / 5; object-fit: cover; }
+.row-6 .n { margin-top: 12px; border-top: 1px solid var(--ink); padding-top: 10px; display: grid; gap: 4px; }
+.row-6 .n span:last-child { text-transform: none; letter-spacing: 0; font-size: 14px; }
+
+/* ── sources ── */
+.sources { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--gutter); }
+.sources ol { border-top: 1px solid var(--ink); }
+.sources li { padding: 14px 0; border-bottom: 1px solid var(--rule); font-size: 15px; line-height: 1.45; }
+.sources li span { display: block; color: var(--ink-2); }
+
+footer { padding: 28px var(--gutter) 40px; display: flex; justify-content: space-between; gap: 24px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .rv { opacity: 0; transform: translateY(20px); transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out); }
+  .rv.in { opacity: 1; transform: none; }
+}
+@media (max-width: 1100px) and (min-width: 821px) {
+  .row-6 { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 28px; }
+  .eco .node { font-size: 22px; }
+}
+@media (max-width: 820px) {
+  .intro, .pair, .pair.rev { grid-template-columns: 1fr; }
+  .pair .drop { margin-top: 0; }
+  .row-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 28px; }
+  .credits { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 20px; }
+  .bleed img { height: auto; }
+  .brief, .sources { grid-template-columns: 1fr; }
+  .eco { grid-template-columns: 1fr; }
+  .eco li + li { padding-left: 0; border-left: 0; border-top: 1px solid var(--rule); }
+  .eco li:not(:last-child)::after { right: auto; left: 0; top: auto; bottom: -5px; transform: rotate(135deg); }
+  .row-6 { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 28px; }
+  .hero-bottom { flex-direction: column; align-items: start; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero" id="top">
+  <video id="film" autoplay muted loop playsinline preload="auto" poster="assets/film-street.jpg" aria-label="Choose Assam campaign film">
+    <source src="assets/film-1080.mp4" type="video/mp4">
+  </video>
+  <div class="hero-top label"><a href="/" style="text-decoration:none">← Ayushman Bharadwaj</a><span>Choose Assam · Tata Tea Premium · 2026</span></div>
+  <div class="hero-bottom">
+    <h1>Assam means<br>business.</h1>
+    <button class="sound label" id="sound" type="button" aria-pressed="false">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M2 6h3l4-3v10l-4-3H2z"/><path id="wave" d="M11.5 5.5a3.5 3.5 0 010 5M13.5 3.5a6 6 0 010 9"/></svg>
+      <span id="sound-label">Watch with sound</span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <section class="wrap gap-xl intro rv" aria-label="Introduction">
+    <dl class="meta label">
+      <div><dt class="muted">Client</dt><dd>Tata Tea Premium</dd></div>
+      <div><dt class="muted">Scope</dt><dd>Film · Pack · Outdoor · Retail · Web</dd></div>
+      <div><dt class="muted">Year</dt><dd>2026, speculative</dd></div>
+    </dl>
+    <p class="display">When the flood leaves the headlines, the work of reopening begins. Tata Tea gives its own media to the makers of Assam, and asks people to <span style="color:var(--red)">buy</span>, not donate.</p>
+  </section>
+
+  <section class="wrap gap-xl brief rv" aria-labelledby="problem-h">
+    <p class="label muted">The problem</p>
+    <div>
+      <h2 id="problem-h">Assam's floods are covered as a tragedy, and forgotten as an economy.</h2>
+      <ol class="index">
+        <li><span class="label muted">01</span><span><b>Attention is short.</b> The news moves on in days. Clearing silt, repairing looms and winning back customers takes months.</span></li>
+        <li><span class="label muted">02</span><span><b>Charity sets the wrong role.</b> Appeals cast Assam as a victim and the audience as a donor, and the relationship ends with the payment.</span></li>
+        <li><span class="label muted">03</span><span><b>Makers have no reach.</b> Weavers, grocers and homestays can't reach buyers outside the state when they reopen.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <figure class="gap-xl bleed rv">
+    <img src="assets/problem-aerial.jpg" alt="Aerial view of flooded fields and tin-roofed houses in Assam" loading="lazy">
+    <figcaption class="wrap label muted">Monsoon · Assam</figcaption>
+  </figure>
+
+  <figure class="gap-lg bleed rv">
+    <img src="assets/film-street.jpg" alt="A shuttered market street in Assam after the flood" loading="lazy">
+    <figcaption class="wrap label muted">01 · Closed</figcaption>
+  </figure>
+
+  <section class="wrap gap-lg pair rv" aria-label="Reopening">
+    <figure><img src="assets/film-reopen.jpg" alt="A shopkeeper lifts his shutter to reopen" loading="lazy"><figcaption class="label muted">02 · Reopening</figcaption></figure>
+    <div class="drop">
+      <p class="note">A flood gets ten days of news. Reopening takes ninety.</p>
+      <figure class="gap-lg"><img src="assets/film-phone.jpg" alt="A phone on a weaving table beside skeins of cotton yarn" loading="lazy"></figure>
+    </div>
+  </section>
+
+  <figure class="gap-xl bleed rv">
+    <img src="assets/film-weaver.jpg" alt="A weaver at her wooden handloom in a bamboo workshop" loading="lazy">
+    <figcaption class="wrap label muted">03 · Producing</figcaption>
+  </figure>
+
+  <section class="wrap gap-xl brief rv" aria-labelledby="insight-h">
+    <p class="label muted">Insights</p>
+    <div>
+      <h2 id="insight-h">People want to help. They just don't want it to end at a donation.</h2>
+      <ol class="index">
+        <li><span class="label muted">01</span><span><b>A purchase keeps the relationship going.</b> A donation is one moment. An order brings the buyer back, and the maker along with them.</span></li>
+        <li><span class="label muted">02</span><span><b>Tea is already the bridge.</b> Assam reaches most Indian homes every morning, in a cup. The link exists; it just isn't visible.</span></li>
+        <li><span class="label muted">03</span><span><b>Dignity comes from trade.</b> Makers want to be seen as producers with something to sell, not as people who need saving.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="wrap gap-xl rv" aria-label="Strategy">
+    <h2 class="split-head"><span>Producer,</span><span class="muted">not victim.</span></h2>
+  </section>
+
+  <section class="wrap gap-lg pair rev rv" aria-label="From loom to door">
+    <div>
+      <figure><img src="assets/film-loom.jpg" alt="Hands at the loom beside a finished cloth with a red woven border" loading="lazy"></figure>
+      <p class="note gap-lg">Tata Tea hands over its packs, billboards, shelves and app slots to makers for ninety days.</p>
+    </div>
+    <figure class="drop"><img src="assets/film-fold.jpg" alt="A finished cloth folded into kraft paper for an order" loading="lazy"><figcaption class="label muted">04 · Open for orders</figcaption></figure>
+  </section>
+
+  <figure class="gap-xl bleed rv">
+    <img src="assets/bleed-delivery.jpg" alt="A delivery rider carries a kraft parcel across a bridge over the Brahmaputra at sunrise" loading="lazy">
+    <figcaption class="wrap label muted">05 · On its way</figcaption>
+  </figure>
+
+  <figure class="gap-lg bleed rv">
+    <img src="assets/bleed-home.jpg" alt="In a city apartment, hands unwrap a handwoven red-bordered cloth from kraft paper beside a cup of tea" loading="lazy">
+    <figcaption class="wrap label muted">06 · Delivered</figcaption>
+  </figure>
+
+  <section class="wrap gap-xl rv" aria-label="Four states">
+    <p class="label muted" style="margin-bottom:20px">Every maker, one status</p>
+    <ol class="row-4">
+      <li><img src="assets/state-closed.jpg" alt="Jonali at her shutter as floodwater fills the workshop" loading="lazy"><div class="n label"><span>Closed</span><span class="muted">Day 1</span></div></li>
+      <li><img src="assets/state-rebuilding.jpg" alt="Jonali hangs washed yarn to dry on a mud-cracked floor" loading="lazy"><div class="n label"><span>Rebuilding</span><span class="muted">Day 14</span></div></li>
+      <li><img src="assets/state-producing.jpg" alt="Jonali and another weaver at work, finished cloths stacked on shelves" loading="lazy"><div class="n label"><span>Producing</span><span class="muted">Day 40</span></div></li>
+      <li><img src="assets/film-handoff.jpg" alt="A parcel handed to a delivery rider outside the workshop" loading="lazy"><div class="n label"><span>Open</span><span class="muted">Day 90</span></div></li>
+    </ol>
+  </section>
+
+  <section class="wrap gap-xl brief rv" aria-labelledby="why-h">
+    <p class="label muted">Why Tata Tea</p>
+    <div>
+      <h2 id="why-h">The brand already carries Assam into the home.</h2>
+      <ol class="index">
+        <li><span class="label muted">01</span><span><b>Assam is in the product.</b> Tata Tea Premium is a strong Assam CTC blend, and Tata's tea business grew out of Assam's estates.</span></li>
+        <li><span class="label muted">02</span><span><b>It has earned a public voice.</b> Jaago Re showed the brand can speak on civic issues and still be believed.</span></li>
+        <li><span class="label muted">03</span><span><b>It owns the media.</b> Packs, shelves, outdoor and digital reach at national scale. That's the infrastructure Choose Assam hands over to makers.</span></li>
+        <li><span class="label muted">04</span><span><b>“Desh ki Chai” fits.</b> A national daily ritual is the right place for one region's recovery to become everyone's business.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="wrap gap-xl rv" aria-labelledby="eco-h">
+    <div class="brief" style="margin-bottom:clamp(40px,5vw,72px)">
+      <p class="label muted">Communication ecology</p>
+      <h2 id="eco-h">Six touchpoints, one path: from feeling to ordering.</h2>
+    </div>
+    <ol class="eco" aria-label="Communication ecology: awareness, encounter, bridge, action, outcome">
+      <li><p class="label muted">Awareness</p><p class="node">Cinematic film<br>Social media</p><p>The story reaches people where they already watch and scroll.</p></li>
+      <li><p class="label muted">Encounter</p><p class="node">Packaging</p><p>The pack in the kitchen carries the campaign into the home every day.</p></li>
+      <li class="hub"><p class="label muted">Bridge</p><p class="node">QR code</p><p>On pack, tag and billboard, one scan leads from the cup to the maker.</p></li>
+      <li><p class="label muted">Action</p><p class="node">Website</p><p>A live directory of makers to buy from, book or pre-order.</p></li>
+      <li><p class="label muted">Outcome</p><p class="node">Orders to makers</p><p>Revenue reaches the maker, and their status moves toward Open.</p></li>
+    </ol>
+    <div class="eco-bar label"><span>Branding</span><span class="muted">One Choose Assam identity holds every touchpoint together</span></div>
+    <div class="eco-loop label">
+      <svg viewBox="0 0 400 12" preserveAspectRatio="none" aria-hidden="true"><path d="M0 6H400" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke"/></svg>
+      <span>Maker updates feed back into social and the site</span>
+    </div>
+  </section>
+
+  <section class="wrap gap-lg rv" aria-label="Touchpoints">
+    <ol class="row-6">
+      <li><a href="/choose-assam#top" aria-label="Play the film at the top of the page"><img src="assets/tp-film.jpg" alt="A family watches the Choose Assam film on TV at home" loading="lazy"></a><div class="n label"><span>Cinematic film</span><span class="muted">60s anthem</span></div></li>
+      <li><img src="assets/tp-social.jpg" alt="A commuter watches a Choose Assam reel on her phone on a Mumbai local train" loading="lazy"><div class="n label"><span>Social media</span><span class="muted">Vertical cuts, maker stories</span></div></li>
+      <li><img src="assets/tp-pack.jpg" alt="A hand takes a Choose Assam pack from a kitchen shelf" loading="lazy"><div class="n label"><span>Packaging</span><span class="muted">Limited-edition pack</span></div></li>
+      <li><img src="assets/tp-qr.jpg" alt="Scanning the QR hang tag on a Choose Assam pack" loading="lazy"><div class="n label"><span>QR code</span><span class="muted">Pack, tag, billboard</span></div></li>
+      <li><a href="site/index.html" aria-label="Open the Choose Assam microsite"><img src="assets/site-shot.jpg" alt="Choose Assam microsite on a phone" loading="lazy" style="object-position:50% 0"></a><div class="n label"><span>Website</span><span class="muted">Maker directory</span></div></li>
+      <li><img src="assets/identity-lockup.jpg" alt="Choose Assam lockup and hang tag" loading="lazy"><div class="n label"><span>Branding</span><span class="muted">Choose Assam identity</span></div></li>
+    </ol>
+  </section>
+
+  <figure class="wrap gap-xl rv">
+    <img src="assets/identity-sheet.jpg" alt="Choose Assam identity: lockup, motifs, colours, typography and tone of voice" loading="lazy">
+    <figcaption class="label muted">Identity · Choose Assam</figcaption>
+  </figure>
+
+  <figure class="gap-xl bleed rv">
+    <img src="assets/figma-01.jpg" alt="Choose Assam limited-edition Tata Tea Premium pouch with hang tag on a wooden table" loading="lazy">
+    <figcaption class="wrap label muted">Pack · Front</figcaption>
+  </figure>
+
+  <section class="wrap gap-lg pair rv" aria-label="Pack and retail">
+    <figure><img src="assets/figma-02.jpg" alt="Back of the pouch with an Assam map and maker stories" loading="lazy"><figcaption class="label muted">Pack · Back</figcaption></figure>
+    <div class="drop">
+      <p class="note">This pack doesn't donate. It points to the makers who are open this week.</p>
+      <figure class="gap-lg"><img src="assets/film-pour.jpg" alt="Tea poured into a cup beside the Choose Assam pack" loading="lazy"></figure>
+    </div>
+  </section>
+
+  <figure class="wrap gap-lg rv">
+    <img src="assets/figma-03.jpg" alt="Supermarket end-cap stocked with Choose Assam packs" loading="lazy">
+    <figcaption class="label muted">Retail · End-cap</figcaption>
+  </figure>
+
+  <figure class="gap-xl bleed rv">
+    <img src="assets/figma-07.jpg" alt="Guwahati roadside billboard: this billboard used to sell tea, today it sells Jonali's work" loading="lazy">
+    <figcaption class="wrap label muted">Outdoor · GS Road, Guwahati</figcaption>
+  </figure>
+
+  <section class="wrap gap-xl rv" aria-label="Campaign site">
+    <p class="note" style="margin-bottom:clamp(28px,4vw,56px)">One scan from the pack lands here: the makers open this week, and a way to order.</p>
+  </section>
+  <figure class="web-frame rv">
+    <div class="view"><iframe src="site/index.html" title="Choose Assam microsite, live" loading="lazy"></iframe></div>
+  </figure>
+  <p class="wrap label muted" style="margin-top:12px;display:flex;justify-content:space-between;gap:16px"><span>Microsite · live, scroll inside</span><a href="site/index.html">Open full screen ↗</a></p>
+
+  <figure class="gap-xl bleed rv">
+    <img src="assets/film-end.jpg" alt="Choose Assam end card: a river forms the word Assam" loading="lazy">
+  </figure>
+
+  <section class="wrap gap-xl rv" aria-labelledby="src-h">
+    <div class="brief" style="margin-bottom:clamp(32px,4vw,56px)">
+      <p class="label muted" id="src-h">Sources</p>
+      <p class="muted" style="max-width:52ch">Where the problem, insights and brand fit come from. The campaign, its figures and its makers are speculative.</p>
+    </div>
+    <div class="sources">
+      <ol aria-label="Research">
+        <li>Assam State Disaster Management Authority<span>Flood Reporting and Information Management System (FRIMS), daily flood reports</span></li>
+        <li>Tata Consumer Products<span>Tata Tea Premium “Desh ki Chai” positioning; Jaago Re campaign; annual reports on tea sourcing</span></li>
+        <li>News coverage of Assam's monsoon floods<span>Used to compare the length of media attention with the time recovery takes</span></li>
+      </ol>
+      <ol aria-label="Frameworks">
+        <li>Belch &amp; Belch<span>Advertising and Promotion: An Integrated Marketing Communications Perspective</span></li>
+        <li>Clow &amp; Baack<span>Integrated Advertising, Promotion, and Marketing Communications</span></li>
+        <li>Sullivan &amp; Boches<span>Hey Whipple, Squeeze This</span></li>
+        <li>McDougall<span>Media Literacy for the Communication Ecosystem</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="wrap gap-lg rv" aria-label="Credits">
+    <dl class="credits label">
+      <div><dt class="muted">Client</dt><dd>Tata Tea Premium</dd></div>
+      <div><dt class="muted">Project</dt><dd>Designing Communication Ecologies · M.Des, UPES</dd></div>
+      <div><dt class="muted">Role</dt><dd>Concept, art direction</dd></div>
+      <div><dt class="muted">Deliverables</dt><dd>Film · Pack · OOH · Web</dd></div>
+    </dl>
+  </section>
+
+</main>
+
+<footer class="label muted">
+  <span>Speculative. Not affiliated with Tata Consumer Products.</span>
+  <span style="display:flex;gap:24px"><a href="/">Portfolio</a><a href="/choose-assam#top" onclick="window.scrollTo({top:0});return false;">Top ↑</a></span>
+</footer>
+
+<script>
+const film = document.getElementById('film');
+const btn = document.getElementById('sound');
+const lbl = document.getElementById('sound-label');
+const wave = document.getElementById('wave');
+function setSound(on) {
+  film.muted = !on;
+  btn.setAttribute('aria-pressed', on);
+  lbl.textContent = on ? 'Mute' : 'Watch with sound';
+  wave.style.opacity = on ? 1 : 0.3;
+}
+btn.addEventListener('click', () => {
+  const on = film.muted;
+  if (on) { film.currentTime = 0; film.play(); }
+  setSound(on);
+});
+setSound(false);
+
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+}), { rootMargin: '0px 0px -10% 0px' });
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
