@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
-import { Back, Decisions, Facts, Gallery, Heading, Overview, Rule, Shots, SkipTo, Subhead } from '../components/case-study'
+import { Back, Facts, Heading, Impact, Overview, Rule, SkipTo, Subhead, Tradeoffs } from '../components/case-study'
 import SignalHero from './hero'
 import { Cards, Findings, JobStories, Personas, Ramp, Weights, Iterations, LoadCurve, Matrix, Morning, Numbers, ORANGE, Screens, Tested, Verdicts } from './visuals'
 
@@ -21,10 +21,28 @@ const PROTOTYPE = 'https://dainty-capybara-dd3d7e.netlify.app/'
 
 // The whole project in four answers, readable before anything else.
 const OVERVIEW = [
-  ['Context', 'Daily commuters on the Delhi Metro’s Yellow Line who change trains at INA. A 14-week M.Des project, done alone.'],
-  ['Problem', 'Regular riders know the route. What they can’t know is whether today is a normal day, so every one of them adds a buffer. Jasleen leaves 20 minutes early every morning.'],
-  ['Why it matters', 'That buffer is paid every day, whether or not anything goes wrong. Participants reported losing 34 minutes a day on average, across four apps that never say when to leave.'],
-  ['What I did', 'Interviews, peak-hour observation and five usability tests. Then a concept app that gives one answer, like “leave by 8:28”, and says how sure it is.'],
+  ['Context', 'Daily commuters on the Delhi Metro’s Yellow Line who change at INA. A 14-week M.Des project I did alone.'],
+  ['Problem', 'Regular riders know the route. They don’t know if today is a normal day, so all seven people I interviewed leave early every morning, just in case.'],
+  ['Why it matters', 'They said they lose about 34 minutes a day to this. Some juggle four apps to plan one trip, and none of them says when to leave.'],
+  ['What I did', 'Research with commuters, then a prototype that gives one answer, “leave by 8:28”, and says how sure it is.'],
+]
+
+// Usability results with five commuters. A concept, not a shipped product.
+const IMPACT = [
+  ['4 of 5', 'read the “leave by” answer correctly in under 3 seconds'],
+  ['4 of 5', 'completed onboarding'],
+  ['5', 'wording fixes from one test session'],
+  ['1 screen', 'instead of four apps on the way to work'],
+]
+
+// What I was up against, what I chose, and what that gave up.
+const TRADEOFFS = [
+  ['Delhi publishes no live metro positions', 'A confidence score from timetables, weather, the calendar and past patterns', 'It’s an estimate, not live data, and the model is specified, not yet running'],
+  ['Booking a ride for you risks surge pricing and wrong bookings', 'Signal fills in the Rapido ride; the commuter confirms it', 'One extra tap, about four seconds'],
+  ['The answer has to land in two seconds, mid-transfer at INA', 'Inter Bold for the answer instead of a serif', 'Less warmth and personality on the main screen'],
+  ['Safety had the strongest need, but lighting and crowding data isn’t published', 'Left safety out of this version', 'Priya’s need, the sharpest in the research, is unmet'],
+  ['14 weeks, on my own', 'One line and one interchange: the Yellow Line at INA', 'Says nothing yet about other lines'],
+  ['Seven interviews and five tests, found through my own network', 'Findings written as counts, like “4 of 7”, not percentages', 'Enough to find problems, not to say how common they are'],
 ]
 
 // Every outside figure on this page, scoped as its source scopes it. Anything
@@ -112,6 +130,7 @@ const BOARDS = [
 const FACTS = [
   ['Role', 'Solo — research, interaction design, prototype, film'],
   ['Timeline', '14 weeks · M.Des Design Project I'],
+  ['Research', '7 interviews · 2 peak-hour observations · 5 usability tests'],
   ['Status', 'Concept with a working prototype — not shipped'],
 ]
 
@@ -235,19 +254,19 @@ export default function Signal() {
         <h1 className="display">Signal: an app that tells Delhi Metro commuters when to leave</h1>
       </motion.header>
       <motion.div {...rise(0.08)}><Overview items={OVERVIEW} /></motion.div>
+      <motion.div {...rise(0.1)}>
+        <Impact items={IMPACT} note="Usability results with five daily commuters. Signal is a concept with a working prototype, not a shipped app." />
+      </motion.div>
 
       <div data-case-hero className="track-full mt-12 overflow-hidden rounded-xl">
         <SignalHero className="rounded-xl" />
       </div>
       <SkipTo target="screens">skip to the screens</SkipTo>
 
-      <motion.div {...rise(0.12)} className="mt-10">
-        <Numbers items={[['7', 'commuter interviews'], ['2', 'peak-hour observations'], ['5', 'usability sessions'], ['14', 'weeks, solo']]} />
-      </motion.div>
       <motion.div {...rise(0.14)}><Facts rows={FACTS} /></motion.div>
       <motion.p {...rise(0.16)} className="mt-8">
         <a href={PROTOTYPE} target="_blank" rel="noopener noreferrer" className="prose-link">Try the prototype</a>
-        <span className="text-faint"> · 22 screens: lock screen, app and watch</span>
+        <span className="text-faint"> · lock screen, app and watch</span>
       </motion.p>
 
       <Rule />
@@ -255,100 +274,62 @@ export default function Signal() {
       <section>
         <Heading n="01">The problem</Heading>
         <p className="mb-8">
-          One real morning, from the interviews. Jasleen has taken this route for two years. At each of
-          these four points she has to make a decision, and nothing tells her what to do.
+          This is Jasleen’s real morning. She has done this route for two years and still makes four
+          guesses on the way.
         </p>
         <Morning items={MORNING} />
-
         <div className="mt-14">
           <LoadCurve />
         </div>
         <p className="mt-6">
-          Stress peaks at three points: leaving home, the INA transfer and the exit. None of them is an
-          infrastructure problem. Each one is missing information.
+          The stress comes at three points: leaving home, changing at INA and getting out. Each time,
+          what’s missing is information, not infrastructure.
         </p>
-
-        <Subhead>The same morning, storyboarded before any screens</Subhead>
-        <Shots items={STORYBOARD} cols="grid-cols-2 lg:grid-cols-4" />
       </section>
 
       <Rule />
 
       <section>
-        <Heading n="02">How I researched it</Heading>
+        <Heading n="02">What I found</Heading>
         <p className="mb-8">
-          I started with first-time riders, because on my own first Metro ride I took the wrong direction
-          to the airport. The interviews changed that. Daily riders know the route; they don’t know if
-          today is normal. So the project moved to them.
+          I started with first-time riders, because on my own first ride I went the wrong way to the
+          airport. Seven interviews with daily riders changed that: they know the route, they just
+          don’t know if today is normal. I also watched two peak hours at Rajiv Chowk and HUDA City
+          Centre and compared five transit apps.{' '}
+          <a href="https://www.figma.com/board/WI0U6Rar6OSNFbAioAZmmo/Mobility-Research-Synthesis" target="_blank" rel="noopener noreferrer" className="prose-link">The synthesis board is in FigJam ↗</a>
         </p>
-        <div className="track-wide">
-          <Cards items={METHODS} cols="sm:grid-cols-2 lg:grid-cols-3" />
-        </div>
-
-        <Subhead>Synthesis board</Subhead>
-        <p className="mb-8">Participants, what each interview gave up, the secondary research, and the themes that came out of both.</p>
-        <Gallery items={BOARDS} />
-        <p className="track-wide mt-4" style={{ fontSize: '0.95rem' }}>
-          <a href="https://www.figma.com/board/WI0U6Rar6OSNFbAioAZmmo/Mobility-Research-Synthesis" target="_blank" rel="noopener noreferrer" className="prose-link">Open the board in FigJam ↗</a>
-        </p>
-      </section>
-
-      <Rule />
-
-      <section>
-        <Heading n="03">What I found</Heading>
         <Findings items={FINDINGS} />
 
         <Subhead>What existing apps do</Subhead>
-        <p className="mb-8">
-          None of them tells you when to leave before you set off. Citymapper comes closest, in London,
-          because TfL publishes live data. Delhi publishes metro timetables but not live metro positions.
-        </p>
+        <p className="mb-8">None of them tells you when to leave before you set off. Citymapper comes closest, in London, where live data is public.</p>
         <Matrix {...COMPETITORS} />
 
         <Subhead>Who I designed for</Subhead>
         <Personas items={PERSONAS} />
-        <p className="mt-6">
-          Safety had the sharpest unmet need in the interviews, and I didn’t build for it. It would need
-          lighting, crowding and CISF data that isn’t published, so it sits in the future scope.
-        </p>
-      </section>
-
-      <Rule />
-
-      <section>
-        <Heading n="04">What commuters need</Heading>
-        <p className="mb-8">The interviews, written as job stories. Each screen answers one of these situations.</p>
-        <JobStories items={JOBS} />
       </section>
 
       <Rule />
 
       <section id="screens" tabIndex={-1} data-skip-target>
-        <Heading n="05">The solution</Heading>
+        <Heading n="03">The solution</Heading>
         <p className="mb-8">
-          A companion, not a navigation app. It speaks at decision moments, shows its reasoning, and
-          leaves every booking to the commuter. The orange appears only when there is a decision to make.
+          One answer in the morning, on the lock screen, and nothing else until something changes. The
+          orange only appears when there’s a decision to make.
         </p>
         <Screens items={SCREENS} />
 
-        <Subhead>The transfer answer at INA, in four states</Subhead>
+        <Subhead>The answer at INA, in four states</Subhead>
         <Verdicts items={STATES} />
 
-        <Subhead>How the 74% is calculated</Subhead>
-        <p className="mb-8">
-          There is no live metro feed, so the score weighs four sources, and the app says what it is made
-          of. The model is specified, not running: the crowd data it needs isn’t public yet.
-        </p>
+        <Subhead>Where the 74% comes from</Subhead>
+        <p className="mb-8">With no live feed, the score weighs four sources, and the app tells you what it’s based on.</p>
         <Weights
           items={WEIGHTS}
           note="Crowdsourced reports can only lower confidence, never raise it above the timetable baseline."
         />
-        <p className="mt-10 mb-4 text-faint" style={{ fontSize: '0.95rem' }}>What the score knows about you, and when</p>
-        <Ramp steps={RAMP} />
 
         <Subhead>The concept film</Subhead>
-        <p className="mb-8">85 seconds, from the night before to arrival. Built in React with Remotion. Sound on.</p>
+        <p className="mb-8">85 seconds, from the night before to arrival. Made in code with Remotion. Sound on.</p>
         <figure className="track-full">
           <video
             src="/signal/signal.mp4"
@@ -365,46 +346,29 @@ export default function Signal() {
       <Rule />
 
       <section>
-        <Heading n="06">Design principles</Heading>
-        <Cards items={PRINCIPLES} />
-      </section>
+        <Heading n="04">Constraints and tradeoffs</Heading>
+        <Tradeoffs items={TRADEOFFS} />
 
-      <Rule />
-
-      <section>
-        <Heading n="07">Testing, and what changed</Heading>
-        <p className="mb-8">Five think-aloud sessions with daily commuters on the Dwarka–Gurgaon corridor.</p>
-        <Tested items={TESTED} />
-        <p className="mt-10">
-          One question, “What does pre-fill mean exactly?”, showed that my internal words had leaked into
-          the interface in five places.
+        <Subhead>What testing changed</Subhead>
+        <p className="mb-6">
+          One tester asked “What does pre-fill mean exactly?”, and it showed my own working words had
+          leaked into the app in five places.
         </p>
-        <p className="mt-8 mb-3 text-faint" style={{ fontSize: '0.95rem' }}>Before and after the sessions</p>
         <Iterations items={ITERATIONS} />
-
-        <Subhead>What I rejected</Subhead>
-        <Decisions items={REJECTED} />
       </section>
 
       <Rule />
 
       <section>
-        <Heading n="08">Limits of this research</Heading>
-        <Decisions items={LIMITS} />
-        <p className="text-faint mt-6" style={{ fontSize: '0.9rem', lineHeight: 1.55 }}>
-          Participants agreed to be quoted and are named by first name. Interview notes are available on
-          request.
-        </p>
-      </section>
-
-      <section className="mt-16">
-        <Heading n="09">What I learned</Heading>
+        <Heading n="05">What I learned</Heading>
         <p>
-          The constraints shaped the design. With no live data, the app had to work from patterns, and a
-          74% that admits it could be wrong is more honest than a made-up “train in 3 minutes”. Staying
-          quiet is part of it too: Signal says one thing in the morning and nothing more until something
-          changes. And a visiting designer’s critique moved it from something that broadcasts to
-          something that shows its reasoning and learns when you dismiss it.
+          I’m not the user. I’ve taken the Delhi Metro twice, so everything I know about this morning
+          came from seven people and two mornings of watching. That made me lean on the research and
+          say less than I’d like to. The lack of live data ended up shaping the whole product: a 74%
+          that admits it could be wrong is more honest than a made-up “train in 3 minutes”.
+        </p>
+        <p className="text-faint mt-6" style={{ fontSize: '0.9rem', lineHeight: 1.55 }}>
+          Participants agreed to be quoted and are named by first name.
         </p>
       </section>
 

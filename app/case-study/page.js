@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
-import { Back, Cards, Decisions, Facts, Heading, Numbers, Overview, Rule, Shots, SkipTo, Subhead } from '../components/case-study'
+import { Back, Cards, Decisions, Facts, Heading, Impact, Numbers, Overview, Rule, Shots, SkipTo, Subhead, Tradeoffs } from '../components/case-study'
 import { Backbone, Blueprint, Chat, Funnel, Outcomes, StepChain } from './diagrams'
 
 /*
@@ -16,10 +16,20 @@ import { Backbone, Blueprint, Chat, Funnel, Outcomes, StepChain } from './diagra
 
 // The whole project in four answers, readable before anything else.
 const OVERVIEW = [
-  ['Context', 'Hoychoy is a small café in Golaghat, Assam. It took every order on WhatsApp: a PDF menu, an address typed into the chat and a UPI screenshot.'],
-  ['Problem', 'The owner read each order, asked for what was missing, matched the payment and relayed it to the kitchen by hand. One order took 6–8 minutes to handle.'],
-  ['Why it matters', 'About half of peak hours went on clarifying incomplete orders instead of taking new ones, and 8–10 payments a week couldn’t be matched to an order.'],
-  ['What I did', 'Mapped the service, then designed and built a web menu, a checkout that won’t accept an incomplete order, UPI payment and Telegram alerts for the kitchen. In a two-week pilot, handling time fell to 2–3 minutes.'],
+  ['Context', 'Hoychoy is a small café in Golaghat, Assam. Every order came in on WhatsApp: a PDF menu, an address typed into the chat, a UPI screenshot.'],
+  ['Problem', 'The owner read each order, asked for what was missing, checked the payment and passed it to the kitchen, all by hand. One order took 6–8 minutes.'],
+  ['Why it matters', 'About half of the busiest hours went on sorting out incomplete orders, and 8–10 payments a week couldn’t be matched to an order.'],
+  ['What I did', 'Mapped how orders actually moved, then designed and built a web menu, a checkout that won’t accept an incomplete order, UPI payment and Telegram alerts for the kitchen.'],
+]
+
+// What I was up against, what I chose, and what that gave up.
+const TRADEOFFS = [
+  ['People order a ₹200 meal on mobile data, and WhatsApp needed no setup', 'No accounts and no login', 'No order history or saved address yet, so regulars type it again'],
+  ['App stores mean review delays and upkeep for a small café', 'A mobile website, reached by QR code or link', 'Nobody finds it in an app store; the café has to hand out the QR code and link'],
+  ['Customers were used to a WhatsApp confirmation', 'Kept WhatsApp, but only as a one-way receipt', 'Two channels to run instead of one'],
+  ['WhatsApp had no reliable way to send business alerts', 'A Telegram bot posts each order to the kitchen group', 'Kitchen staff need a second app'],
+  ['No budget for hosting', 'Free tiers for the site, backend and alerts', '$0 a month, but the backend sleeps when idle, so the first order after a quiet spell is slower'],
+  ['Nobody had measured anything before', 'The owner’s estimates from their logs as the baseline', 'The before numbers are approximate, so they keep their tildes'],
 ]
 
 const FACTS = [
@@ -150,6 +160,12 @@ export default function Hoychoy() {
         <h1 className="display">Hoychoy Cafe: moving a café’s orders out of WhatsApp</h1>
       </motion.header>
       <motion.div {...rise(0.08)}><Overview items={OVERVIEW} /></motion.div>
+      <motion.div {...rise(0.1)}>
+        <Impact
+          items={OUTCOMES.map(([label, before, after]) => [after, label, before])}
+          note="The owner’s figures from a two-week pilot. The before numbers were estimated from their logs, not measured."
+        />
+      </motion.div>
 
       {/* Not faded in: the card on the index grows into this image. */}
       <figure data-case-hero className="track-full mt-12 overflow-hidden rounded-xl">
@@ -166,8 +182,8 @@ export default function Hoychoy() {
 
       <motion.div {...rise(0.12)}><Facts rows={FACTS} /></motion.div>
       <motion.p {...rise(0.14)} className="mt-6">
-        I did the research, the service and interface design, and the build (AI-assisted), and ran the
-        pilot with the owner. It runs the café today at{' '}
+        I did the research, the design and the build (AI-assisted), and ran the pilot with the owner. It
+        runs the café today at{' '}
         <a href="https://www.hoychoycafe.com/" target="_blank" rel="noopener noreferrer" className="prose-link">hoychoycafe.com</a>.
       </motion.p>
 
@@ -176,8 +192,8 @@ export default function Hoychoy() {
       <section>
         <Heading n="01">The problem</Heading>
         <p className="mb-8">
-          I read more than 50 of the café’s WhatsApp threads from real service. Most of the owner’s
-          peak time went on completing orders, not taking them.
+          I read more than 50 of the café’s WhatsApp threads. Most of the owner’s busy hours went on
+          finishing orders, not taking new ones.
         </p>
         <Numbers
           cols="grid-cols-2"
@@ -190,39 +206,29 @@ export default function Hoychoy() {
           <div>
             <Chat messages={SIGNALS} reply="Owner: matching screenshots to addresses while six more messages arrive." />
             <p className="text-faint mt-3" style={{ fontSize: '0.85rem', lineHeight: 1.45 }}>
-              Quoted as sent, from the café’s threads. No names, numbers or addresses are reproduced.
+              Quoted as sent. No names, numbers or addresses are reproduced.
             </p>
           </div>
-          <p>
-            Two things went wrong most often: payments that couldn’t be matched to an order, and orders
-            lost in the scroll.
-          </p>
+          <p>Two things went wrong most: payments that couldn’t be matched to an order, and orders lost in the scroll.</p>
         </div>
 
         <Subhead>Where the time went</Subhead>
-        <p className="mb-4">
-          Every order was a relay through one person: confirm it in chat, tell the kitchen, then tell the
-          customer. Five of the six steps waited on the owner.
-        </p>
+        <p className="mb-4">Every order passed through one person. Five of the six steps waited on the owner.</p>
         <StepChain rows={CHAIN} />
       </section>
 
       <Rule />
 
-      <section>
-        <Heading n="02">The service, before and after</Heading>
+      <section id="shipped" tabIndex={-1} data-skip-target>
+        <Heading n="02">The solution</Heading>
         <p className="mb-8">
-          The fix had to change the workflow as well as the screen, so I mapped it as a service
-          blueprint. Switch between the two and watch the owner’s row.
+          The fix was in the workflow, not just the screens, so I mapped the service first. Switch
+          between before and after and watch the owner’s row empty out.
         </p>
         <Blueprint states={BLUEPRINT} />
-      </section>
 
-      <Rule />
-
-      <section id="shipped" tabIndex={-1} data-skip-target>
-        <Heading n="03">The solution</Heading>
-        <figure className="track-wide mb-12">
+        <Subhead>What shipped</Subhead>
+        <figure className="track-wide mb-10">
           <img
             src="/assets/hoychoy-flow.webp"
             alt="The full ordering flow: menu, cart, checkout and confirmation"
@@ -232,53 +238,27 @@ export default function Hoychoy() {
             className="block h-auto w-full rounded-xl"
             style={{ border: '1px solid var(--rule)' }}
           />
-          <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem' }}>
-            One order, from menu to checkout.
-          </figcaption>
         </figure>
         <Decisions items={SHIPPED} />
         <div className="mt-12">
           <Shots items={SHOTS} />
         </div>
 
-        <Subhead>One page, from menu to payment</Subhead>
-        <p className="mb-8">No menus to learn: a straight line from the menu to payment to confirmation.</p>
-        <Funnel />
-
-        <Subhead>The checkout</Subhead>
-        <Cards items={CHECKOUT} />
-
         <Subhead>How an order reaches the kitchen</Subhead>
-        <p className="mb-8">
-          The kitchen gets each order as a structured Telegram message in a staff group, so the owner is
-          no longer the relay. WhatsApp only sends the customer a confirmation.
-        </p>
         <Backbone items={BACKBONE} />
-        <p className="mt-6">
-          It runs on free tiers, so the café pays <span style={{ color: 'var(--ink)' }}>$0 a month in server fees</span>.
-        </p>
       </section>
 
       <Rule />
 
       <section>
-        <Heading n="04">What changed</Heading>
-        <p className="mb-8">
-          The owner’s figures from a two-week pilot. The before numbers were estimated from their logs,
-          not measured, so they keep the tildes.
-        </p>
-        <Outcomes items={OUTCOMES} />
+        <Heading n="03">Constraints and tradeoffs</Heading>
+        <Tradeoffs items={TRADEOFFS} />
       </section>
 
       <Rule />
 
       <section>
-        <Heading n="05">Decisions</Heading>
-        <Decisions items={DECISIONS} />
-      </section>
-
-      <section className="mt-16">
-        <Heading n="06">What I’d build next</Heading>
+        <Heading n="04">What I’d build next</Heading>
         <div className="track-wide">
           <Cards items={NEXT} cols="sm:grid-cols-3" />
         </div>

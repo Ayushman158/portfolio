@@ -3,17 +3,33 @@
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
 import KizukuInteractions from '../components/kizuku-interactions'
-import { Back, Cards, Decisions, Facts, Heading, Overview, Rule, Shots, SkipTo, Subhead } from '../components/case-study'
+import { Back, Facts, Heading, Impact, Overview, Rule, Shots, SkipTo, Subhead, Tradeoffs } from '../components/case-study'
 import KizukuHero from './hero'
 import LiveApp from './live-app'
 import { CompetitorMap, Onboarding, Palette, Plate } from './diagrams'
 
 // The whole project in four answers, readable before anything else.
 const OVERVIEW = [
-  ['Context', 'Future anxiety: rehearsing what could go wrong before anything has happened. It’s my own habit. I run every decision forward, and the running doesn’t stop once I’ve decided.'],
-  ['Problem', 'The wellness apps I reviewed treat general stress or gamify self-care. None deals with this loop, and a broken streak gives an anxious person one more thing to worry about.'],
-  ['Why it matters', 'Thinking more doesn’t end the loop. Kizuku bets that one small, concrete action today helps more than another round of reflection.'],
-  ['What I did', 'Research, brand, a design system and the iOS build in React Native. You give it one worry, it gives you one thing to do today, and your tree grows when you do it. Reviewed with professors, not yet tested with users.'],
+  ['Context', 'Future anxiety: rehearsing what could go wrong before anything has happened. It’s my own habit. I run every decision forward, and it doesn’t stop once I’ve decided.'],
+  ['Problem', 'The wellness apps I looked at deal with general stress or turn self-care into streaks. None deals with this loop, and a broken streak is one more thing to worry about.'],
+  ['Why it matters', 'More thinking doesn’t end the loop. My bet is that one small, real action today helps more than another round of reflection.'],
+  ['What I did', 'Research, brand, a design system and the iOS app in React Native. You give it one worry, it gives you one thing to do today, and your tree grows when you do it.'],
+]
+
+const IMPACT = [
+  ['iPhone', 'the full loop runs on a real phone, worry to growth'],
+  ['18', 'illustrations: three trees, six stages each'],
+  ['5', 'bugs that only showed up on a real phone, found in the first hour'],
+  ['0', 'streaks, so missing a day never costs you anything'],
+]
+
+// What I was up against, what I chose, and what that gave up.
+const TRADEOFFS = [
+  ['The people using it are already anxious', 'No streaks; missing a day never shrinks the tree', 'Gives up the most common way apps bring people back'],
+  ['The fear question is personal, and it came 40 seconds in', 'A screen of plain promises first, and the fear question can be skipped', 'Less to tailor the actions to for people who skip it'],
+  ['Growth that finished after one action used up the reward on day one', 'Six stages, quick at first, ending at day thirty', 'Some people won’t stay long enough to see the last stage'],
+  ['I only had a browser to test in at first', 'Moved to testing on a real iPhone', 'Five bugs turned up late, four in code I had already reviewed'],
+  ['Working alone, with no users yet', 'Reviewed with professors before testing with users', 'The loop is still unproven with real users'],
 ]
 
 // Carried over from the long version — the substance, without the scaffolding.
@@ -106,6 +122,9 @@ export default function Kizuku() {
         <h1 className="display">Kizuku: an iOS app for people who overthink the future</h1>
       </motion.header>
       <motion.div {...rise(0.08)}><Overview items={OVERVIEW} /></motion.div>
+      <motion.div {...rise(0.1)}>
+        <Impact items={IMPACT} note="In development. Reviewed with professors, not yet tested with users." />
+      </motion.div>
 
       {/* Not faded in: the card on the index grows into this. */}
       <div data-case-hero className="track-full mt-12 overflow-hidden rounded-xl">
@@ -117,7 +136,7 @@ export default function Kizuku() {
       <motion.p {...rise(0.14)} className="mt-8">
         <a href="https://www.figma.com/proto/80dVRiAfseQp409VZtvZZ6/Kizuku?node-id=160-994&t=xcyzJ9w5g52hdI6V-1" target="_blank" rel="noopener noreferrer" className="prose-link">Figma prototype</a>
         {' · '}
-        <Link href="/kizuku/process" className="prose-link">Full process, 4 stages</Link>
+        <Link href="/kizuku/process" className="prose-link">Full process</Link>
       </motion.p>
 
       <Rule />
@@ -125,20 +144,16 @@ export default function Kizuku() {
       <motion.section {...rise(0.16)}>
         <Heading n="01">The problem</Heading>
         <p className="mb-8">
-          The wellness apps I reviewed treat general stress or gamify self-care. Here are five of them,
-          placed by tone (warm or clinical) and by what they ask of you (passive or active). None sits in
-          the warm, active corner, and none is built for rehearsing the future.
+          Five popular wellness apps, placed by tone (warm or clinical) and by what they ask of you
+          (passive or active). None sits in the warm, active corner, and none is built for rehearsing
+          the future.
         </p>
         <CompetitorMap apps={APPS} us={['Kizuku', 76, 20]} />
-      </motion.section>
 
-      <Rule />
-
-      <motion.section {...rise(0.18)}>
-        <Heading n="02">Who it’s for</Heading>
+        <Subhead>Who it’s for</Subhead>
         <p className="mb-8">
-          People overthink the future in different ways. Three questions sort you into one of three
-          types, and your type decides your tree, the app’s wording and which actions you’re offered.
+          People overthink in different ways. Three questions sort you into a type, and the type decides
+          your tree, the app’s wording and which actions you get.
         </p>
         <div className="track-wide grid items-start gap-8 sm:grid-cols-[1fr_200px] lg:grid-cols-[1fr_300px] lg:gap-14">
           <div>
@@ -155,117 +170,58 @@ export default function Kizuku() {
           <figure className="m-0">
             <img src="/kizuku/app/reveal.jpg" alt="The seeker's type reveal" loading="lazy"
               className="h-auto w-full rounded-xl" style={{ border: '1px solid var(--rule)' }} />
-            <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem', lineHeight: 1.45 }}>
-              The seeker’s result screen.
-            </figcaption>
+            <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem', lineHeight: 1.45 }}>The seeker’s result screen.</figcaption>
           </figure>
         </div>
       </motion.section>
 
       <Rule />
 
-      <motion.section {...rise(0.2)}>
-        <Heading n="03">How it works</Heading>
+      <motion.section {...rise(0.18)}>
+        <Heading n="02">The solution</Heading>
         <p className="mb-8">
-          One worry in, one action out, in five screens shot on an iPhone. “A message i still haven’t
-          replied to” came back as <em>reach out</em>. The tab bar hides during the ritual so there is
-          nothing to wander off to.
+          One worry in, one action out. “A message i still haven’t replied to” came back as{' '}
+          <em>reach out</em>. These are five screens from the app running on an iPhone.
         </p>
         <Shots items={SCREENS} />
 
         <Subhead>Try the real app</Subhead>
         <LiveApp />
-      </motion.section>
 
-      <Rule />
-
-      <motion.section {...rise(0.22)}>
-        <Heading n="04">Onboarding</Heading>
-        <p className="mb-6">
-          The fear question used to come about forty seconds in, and you couldn’t continue without
-          answering it. Now a screen of plain promises comes first (no account, nothing leaves your
-          phone, no streaks, stop whenever) and the fear question can be skipped.
-        </p>
-        <Onboarding {...ONBOARDING} />
-      </motion.section>
-
-      <Rule />
-
-      <motion.section {...rise(0.22)}>
-        <Heading n="05">Animations</Heading>
-        <p className="mb-3">
-          Each animation had to have a reason I could say in one sentence, or it was removed. Three are
-          playable here, using the same numbers and release logic as the app.
-        </p>
-        <p className="text-faint mb-8" style={{ fontSize: '0.95rem' }}>
-          Rebuilt for the browser with Motion. They need a pointer or a thumb.
+        <Subhead>Three interactions to play with</Subhead>
+        <p className="mb-8">
+          Same numbers and release logic as the app, rebuilt for the browser. They need a pointer or a
+          thumb.
         </p>
         <KizukuInteractions />
-        <div className="mt-8 flex justify-center">
-          <div className="kz-grow-sprite" role="img" aria-label="The optimiser's seed opening into its plant" />
-        </div>
-        <p className="text-faint mt-2 text-center" style={{ fontSize: '0.9rem' }}>
-          The optimiser’s growth: a 111 KB sprite made from a 3.9 MB clip.
-        </p>
-      </motion.section>
-
-      <Rule />
-
-      <motion.section {...rise(0.24)}>
-        <Heading n="06">Visual system</Heading>
-        <p>
-          Three typefaces, each with one job: Newsreader for what the app says to you, Satoshi for the
-          interface, Caveat for the journal, because those words are yours. Everything is lowercase.
-          Colour, type, spacing and motion are tokens the build uses directly.
-        </p>
 
         <Subhead id="trees">Illustrations: three trees, six stages each</Subhead>
-        <p className="mb-6">Each tree reflects its type from the very first stage.</p>
+        <p className="mb-6">Each tree shows its type from the seed onwards.</p>
         <div className="space-y-6">
           {GROWTH.map(([src, caption]) => (
             <Plate key={src} src={src} alt={`Six growth stages: ${caption}`} caption={caption} w={929} h={300} />
           ))}
         </div>
 
-        <Subhead>Logo</Subhead>
-        <p className="mb-6">A K, mirrored, with bamboo: it bends without breaking.</p>
-        <Plate src="/kizuku/logo-formation.webp" alt="The Kizuku mark: a K mirrored and joined with bamboo, and the app icon in five colours" w={908} h={693} />
-
         <Subhead>Colour</Subhead>
-        <p className="mb-6">Six colours, each with a reason, first found in watercolour.</p>
         <Palette colours={COLOURS} />
       </motion.section>
 
       <Rule />
 
-      <motion.section {...rise(0.25)}>
-        <Heading n="07">Testing on a real phone</Heading>
-        <p className="mb-8">
-          Until then I had only checked it in a browser at iPhone size. The first hour on a real phone
-          found five bugs, four of them in code I had already reviewed.
-        </p>
-        <div className="track-wide">
-          <Cards items={DEVICE} cols="sm:grid-cols-2 lg:grid-cols-3" />
-        </div>
-      </motion.section>
+      <motion.section {...rise(0.2)}>
+        <Heading n="03">Constraints and tradeoffs</Heading>
+        <Tradeoffs items={TRADEOFFS} />
 
-      <Rule />
-
-      <motion.section {...rise(0.26)}>
-        <Heading n="08">Decisions</Heading>
-        <Subhead>No streaks</Subhead>
-        <p className="mb-10">
-          A streak creates performance pressure in someone who already has it, and a broken one becomes
-          one more thing to overthink. Missing a day doesn’t shrink the tree.
-        </p>
-        <Decisions items={DECISIONS} />
+        <Subhead>Onboarding, before and after</Subhead>
+        <Onboarding {...ONBOARDING} />
       </motion.section>
 
       <motion.section {...rise(0.28)} className="mt-16">
         <p>
-          The painting that started it, four rejected names, the competitive analysis and all eighteen
-          illustrations are in the <Link href="/kizuku/process" className="prose-link">full process</Link>.
-          Back to <Link href="/#work" className="prose-link">the work index</Link>, or read{' '}
+          The painting that started it, rejected names and all eighteen illustrations are in the{' '}
+          <Link href="/kizuku/process" className="prose-link">full process</Link>. Back to{' '}
+          <Link href="/#work" className="prose-link">the work index</Link>, or read{' '}
           <Link href="/banyan" className="prose-link">Banyan Tree</Link> and{' '}
           <Link href="/case-study" className="prose-link">Hoychoy Cafe</Link>.
         </p>

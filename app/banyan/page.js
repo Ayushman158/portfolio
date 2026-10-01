@@ -2,14 +2,29 @@
 
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
-import { Back, Decisions, Facts, Figure, Heading, Overview, Rule, Shots } from '../components/case-study'
+import { Back, Facts, Figure, Heading, Impact, Overview, Rule, Shots, Tradeoffs } from '../components/case-study'
 
 // The whole project in four answers, readable before anything else.
 const OVERVIEW = [
-  ['Context', 'Himanshu Garg runs a functional-medicine practice. Patients found him through referrals and talked to him on WhatsApp.'],
+  ['Context', 'Himanshu Garg runs a functional-medicine practice. Patients came through referrals and talked to him on WhatsApp.'],
   ['Problem', 'He had nowhere to send someone who wanted to know what he does before messaging a stranger about their health.'],
-  ['Why it matters', 'The brief was credibility, not conversion: to look as serious online as he is in person. And his method, that every symptom has deeper causes, is hard to explain in words alone.'],
-  ['What I did', 'The banyan idea is his: symptoms in the canopy, causes in the roots. I turned it into the site’s navigation, built it, launched it and handed it over so he can run it himself.'],
+  ['Why it matters', 'The brief was to look as credible online as he is in person, not to sell. And his idea, that every symptom has deeper causes, is hard to explain in words.'],
+  ['What I did', 'The banyan idea is his: symptoms in the canopy, causes in the roots. I turned it into the site’s navigation, built it, launched it and handed it over.'],
+]
+
+const IMPACT = [
+  ['Live', 'the practice’s only website, at himanshugarg.in'],
+  ['1–2 min', 'for him to publish a new patient story from a spreadsheet, no developer'],
+  ['6 MB', 'of illustrations, cut so the site loads well on phones', '27 MB'],
+  ['108', 'conditions, each linked to its root causes'],
+]
+
+// What I was up against, what I chose, and what that gave up.
+const TRADEOFFS = [
+  ['A metaphor can easily hide the content', 'The tree is the navigation, with a breadcrumb that always shows where you are', 'Less familiar than a menu; it asks visitors to explore'],
+  ['He has to run the site without me', 'Patient stories come from a Google Sheet, plus four short guides in the repo', 'He can change the stories, not the layout'],
+  ['Heavy illustrations and animation on phones', 'Animation runs only on screen and not on touch; illustrations cut from 27 MB to 6 MB', 'Phones get a calmer, less animated page'],
+  ['A health site that takes payments', 'Privacy, terms, refunds, a medical disclaimer and security headers, all before launch', 'More work up front than a simple site usually gets'],
 ]
 
 const FACTS = [
@@ -76,6 +91,7 @@ export default function Banyan() {
         <h1 className="display">Banyan Tree: a website for a functional-medicine practice</h1>
       </motion.header>
       <motion.div {...rise(0.08)}><Overview items={OVERVIEW} /></motion.div>
+      <motion.div {...rise(0.1)}><Impact items={IMPACT} /></motion.div>
 
       {/* The live site as it opens. Not faded in: the card on the index grows
           into this image. */}
@@ -89,12 +105,9 @@ export default function Banyan() {
         />
       </figure>
 
-      <motion.div {...rise(0.1)}><Facts rows={FACTS} /></motion.div>
+      <motion.div {...rise(0.12)}><Facts rows={FACTS} /></motion.div>
       <motion.p {...rise(0.14)} className="mt-8">
-        <a href="https://www.himanshugarg.in/" target="_blank" rel="noopener noreferrer" className="prose-link">
-          Visit himanshugarg.in
-        </a>
-        <span className="text-faint"> · 12 categories, 108 conditions, 11 root causes</span>
+        <a href="https://www.himanshugarg.in/" target="_blank" rel="noopener noreferrer" className="prose-link">Visit himanshugarg.in</a>
       </motion.p>
 
       <Rule />
@@ -102,15 +115,14 @@ export default function Banyan() {
       <motion.section {...rise(0.18)}>
         <Heading n="01">The idea</Heading>
         <p>
-          Functional medicine says a symptom is the visible end of a longer story. Instead of writing
-          that down, the site makes you do it: pick a condition in the canopy and the page goes
-          underground to the causes behind it. Threads connect your condition to its roots, because the
-          practice also says the roots are connected to each other.
+          Functional medicine says a symptom is the visible end of a longer story. Rather than explain
+          that, the site has you follow it: pick a condition in the canopy and the page goes underground
+          to the causes behind it, with threads joining them.
         </p>
         <Figure
           src="/banyan/roots.jpg"
           alt="The underground view: eleven root causes laid along the banyan's roots, with threads drawn to the selected condition"
-          caption="Underground, after choosing depression: the threads lead to the root causes behind it."
+          caption="Underground, after choosing depression: the threads lead to the causes behind it."
           className="mt-8"
         />
       </motion.section>
@@ -120,9 +132,8 @@ export default function Banyan() {
       <motion.section {...rise(0.2)}>
         <Heading n="02">How it works</Heading>
         <p className="mb-8">
-          Four levels: canopy, category, roots, detail. One state drives the background, the
-          breadcrumb, the tint and the back button, so every level stays in step. Escape goes back up
-          one level at a time.
+          Four levels: canopy, category, roots, detail. One piece of state drives the background,
+          breadcrumb and back button, so they never disagree. Escape goes back up one level.
         </p>
         <Shots items={SCREENS} />
       </motion.section>
@@ -130,31 +141,8 @@ export default function Banyan() {
       <Rule />
 
       <motion.section {...rise(0.22)}>
-        <Heading n="03">Handing it over</Heading>
-        <p className="mb-4">
-          A site built for someone else shouldn’t need a phone call every time something changes. The
-          repo has four short guides: running and deploying it, pointing the domain, adding a
-          testimonial without touching code, and what can and can’t be protected in a site every
-          browser downloads.
-        </p>
-        <p>
-          Deploying is a push to <span style={{ color: 'var(--ink)' }}>main</span>, and rolling back is
-          promoting the last good build. The part that changes every week, patient stories, he edits
-          in a spreadsheet.
-        </p>
-        <Figure
-          src="/banyan/detail.jpg"
-          alt="A root cause opened in its side panel, with domain, span and layer metadata"
-          caption="One root cause, opened: a side panel on desktop, a bottom sheet on a phone."
-          className="mt-8"
-        />
-      </motion.section>
-
-      <Rule />
-
-      <motion.section {...rise(0.24)}>
-        <Heading n="04">Decisions</Heading>
-        <Decisions items={DECISIONS} />
+        <Heading n="03">Constraints and tradeoffs</Heading>
+        <Tradeoffs items={TRADEOFFS} />
       </motion.section>
 
       <motion.section {...rise(0.26)} className="mt-16">

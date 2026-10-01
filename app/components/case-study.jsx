@@ -188,6 +188,55 @@ export function Numbers({ items, cols = 'grid-cols-2 sm:grid-cols-4' }) {
   )
 }
 
+/**
+ * What changed because of the work, right under the overview, so the result
+ * is visible before any process. Each item is [value, what it measures,
+ * before?]; a before value is shown struck through above the after.
+ */
+export function Impact({ items, note }) {
+  return (
+    <section aria-label="Outcome" className="mt-10">
+      <p className="text-faint mb-3 text-[0.85rem]">Outcome</p>
+      <div className={`grid grid-cols-2 gap-px overflow-hidden rounded-xl ${items.length > 3 ? 'sm:grid-cols-4' : 'sm:grid-cols-3'}`} style={{ background: 'var(--rule)', border: '1px solid var(--rule)' }}>
+        {items.map(([value, text, before]) => (
+          <div key={text} className="p-4 sm:p-5" style={{ background: 'var(--ground)' }}>
+            {before && <p className="text-faint tnum line-through" style={{ fontSize: '0.9rem', textDecorationColor: 'var(--faint)' }}>{before}</p>}
+            <p className="font-serif" style={{ color: 'var(--ink)', fontSize: '2.2rem', lineHeight: 1.05 }}>{value}</p>
+            <p className="text-faint mt-2" style={{ fontSize: '0.85rem', lineHeight: 1.4 }}>{text}</p>
+          </div>
+        ))}
+      </div>
+      {note && <p className="text-faint mt-3" style={{ fontSize: '0.85rem', lineHeight: 1.5 }}>{note}</p>}
+    </section>
+  )
+}
+
+/**
+ * Constraints and tradeoffs as a table: what I was up against, what I chose,
+ * and what that choice gave up. Three columns on a wide screen; stacked with
+ * labels on a phone.
+ */
+export function Tradeoffs({ items }) {
+  const head = ['Constraint', 'What I chose', 'What it cost']
+  return (
+    <div className="track-wide">
+      <div className="text-faint hidden grid-cols-3 gap-8 border-b border-rule pb-2 text-[0.85rem] md:grid">
+        {head.map((h) => <span key={h}>{h}</span>)}
+      </div>
+      {items.map((row) => (
+        <div key={row[0]} className="grid gap-x-8 gap-y-1.5 border-b border-rule py-4 md:grid-cols-3">
+          {row.map((cell, i) => (
+            <div key={i}>
+              <span className="text-faint block text-[0.8rem] md:hidden">{head[i]}</span>
+              <span className={i === 0 ? 'text-ink' : 'text-[0.95rem]'}>{cell}</span>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  )
+}
+
 /** Short titled cards in a grid, for lists whose items are parallel. */
 export function Cards({ items, cols = 'sm:grid-cols-2' }) {
   return (
