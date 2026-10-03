@@ -112,6 +112,14 @@ figcaption { margin-top: 12px; }
 .sources li { padding: 14px 0; border-bottom: 1px solid var(--rule); font-size: 15px; line-height: 1.45; }
 .sources li span { display: block; color: var(--ink-2); }
 
+.id-panel { background: #F4EFE3; display: grid; place-items: center; padding: clamp(56px, 10vw, 160px) var(--gutter); }
+.id-panel img { width: min(560px, 80%); }
+.swatches { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(8px, 1vw, 16px); margin-top: clamp(8px, 1vw, 16px); }
+.swatches li { display: grid; gap: 4px; }
+.swatches i { display: block; aspect-ratio: 3 / 1; margin-bottom: 8px; }
+.swatches li:nth-child(2) i { outline: 1px solid var(--rule); outline-offset: -1px; }
+@media (max-width: 820px) { .swatches { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 20px; } }
+
 footer { padding: 28px var(--gutter) 40px; display: flex; justify-content: space-between; gap: 24px; }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -279,38 +287,43 @@ footer { padding: 28px var(--gutter) 40px; display: flex; justify-content: space
     <ol class="row-6">
       <li><a href="/choose-assam#top" aria-label="Play the film at the top of the page"><img src="assets/tp-film.jpg" alt="A family watches the Choose Assam film on TV at home" loading="lazy"></a><div class="n label"><span>Cinematic film</span><span class="muted">60s anthem</span></div></li>
       <li><img src="assets/tp-social.jpg" alt="A commuter watches a Choose Assam reel on her phone on a Mumbai local train" loading="lazy"><div class="n label"><span>Social media</span><span class="muted">Vertical cuts, maker stories</span></div></li>
-      <li><img src="assets/tp-pack.jpg" alt="A hand takes a Choose Assam pack from a kitchen shelf" loading="lazy"><div class="n label"><span>Packaging</span><span class="muted">Limited-edition pack</span></div></li>
-      <li><img src="assets/tp-qr.jpg" alt="Scanning the QR hang tag on a Choose Assam pack" loading="lazy"><div class="n label"><span>QR code</span><span class="muted">Pack, tag, billboard</span></div></li>
+      <li><img src="assets/pour.jpg" alt="Tea poured beside the Choose Assam pack on a kitchen table" loading="lazy" style="object-position:72% 50%"><div class="n label"><span>Packaging</span><span class="muted">Limited-edition pack</span></div></li>
+      <li><img src="assets/hang-tag.jpg" alt="The Choose Assam hang tag and its QR card: scan to meet the maker" loading="lazy"><div class="n label"><span>QR code</span><span class="muted">Pack, tag, billboard</span></div></li>
       <li><a href="site/index.html" aria-label="Open the Choose Assam microsite"><img src="assets/site-shot.jpg" alt="Choose Assam microsite on a phone" loading="lazy" style="object-position:50% 0"></a><div class="n label"><span>Website</span><span class="muted">Maker directory</span></div></li>
-      <li><img src="assets/identity-lockup.jpg" alt="Choose Assam lockup and hang tag" loading="lazy"><div class="n label"><span>Branding</span><span class="muted">Choose Assam identity</span></div></li>
+      <li><img src="assets/lockup.png" alt="Choose Assam logo" loading="lazy" style="object-fit:contain;background:#F4EFE3;padding:16%"><div class="n label"><span>Branding</span><span class="muted">Choose Assam identity</span></div></li>
     </ol>
   </section>
 
-  <figure class="wrap gap-xl rv">
-    <img src="assets/identity-sheet.jpg" alt="Choose Assam identity: lockup, motifs, colours, typography and tone of voice" loading="lazy">
-    <figcaption class="label muted">Identity · Choose Assam</figcaption>
-  </figure>
+  <section class="wrap gap-xl rv" aria-label="Identity">
+    <div class="id-panel"><img src="assets/lockup.png" alt="Choose Assam logo: a brush-script Choose over brushed ASSAM, with a gold tea-leaf underline" loading="lazy"></div>
+    <ol class="swatches label">
+      <li><i style="background:#1F4B34"></i><span>Assam Green</span><span class="muted">#1F4B34</span></li>
+      <li><i style="background:#F4EFE3"></i><span>Warm Ivory</span><span class="muted">#F4EFE3</span></li>
+      <li><i style="background:#C8A46A"></i><span>Muga Gold</span><span class="muted">#C8A46A</span></li>
+      <li><i style="background:#C62828"></i><span>Gamosa Red</span><span class="muted">#C62828</span></li>
+    </ol>
+    <p class="label muted" style="margin-top:12px">Identity · One logo on every touchpoint</p>
+  </section>
 
   <figure class="gap-xl bleed rv">
-    <img src="assets/figma-01.jpg" alt="Choose Assam limited-edition Tata Tea Premium pouch with hang tag on a wooden table" loading="lazy">
+    <img src="assets/pack-front.jpg" alt="Choose Assam limited-edition Tata Tea Premium pouch: Now put Assam in your cart" loading="lazy">
     <figcaption class="wrap label muted">Pack · Front</figcaption>
   </figure>
 
   <section class="wrap gap-lg pair rv" aria-label="Pack and retail">
-    <figure><img src="assets/figma-02.jpg" alt="Back of the pouch with an Assam map and maker stories" loading="lazy"><figcaption class="label muted">Pack · Back</figcaption></figure>
+    <figure><img src="assets/pack-back.jpg" alt="Back of the pouch: This pack doesn't donate. It points. Scan the tag to meet the makers open this week." loading="lazy"><figcaption class="label muted">Pack · Back</figcaption></figure>
     <div class="drop">
       <p class="note">This pack doesn't donate. It points to the makers who are open this week.</p>
-      <figure class="gap-lg"><img src="assets/film-pour.jpg" alt="Tea poured into a cup beside the Choose Assam pack" loading="lazy"></figure>
     </div>
   </section>
 
   <figure class="wrap gap-lg rv">
-    <img src="assets/figma-03.jpg" alt="Supermarket end-cap stocked with Choose Assam packs" loading="lazy">
+    <img src="assets/endcap.jpg" alt="Supermarket end-cap: Assam makes a lot more than tea. Now put Assam in your cart." loading="lazy">
     <figcaption class="label muted">Retail · End-cap</figcaption>
   </figure>
 
   <figure class="gap-xl bleed rv">
-    <img src="assets/figma-07.jpg" alt="Guwahati roadside billboard: this billboard used to sell tea, today it sells Jonali's work" loading="lazy">
+    <img src="assets/billboard.jpg" alt="Guwahati roadside billboard: this billboard used to sell tea, today it sells Jonali's work" loading="lazy">
     <figcaption class="wrap label muted">Outdoor · GS Road, Guwahati</figcaption>
   </figure>
 
