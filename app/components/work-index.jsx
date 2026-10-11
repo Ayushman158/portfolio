@@ -86,10 +86,11 @@ export default function WorkIndex({ label, items }) {
           return (
             <li key={item.name}>
               {item.href && item.external ? (
+                // A plain link, not next/link: these are static pages outside the
+                // app. Ones on this site open in the same tab; other sites, a new one.
                 <a
                   href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  {...(item.href.startsWith('/') ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
                   className="index-row"
                   onMouseEnter={() => setActive(item.name)}
                   onMouseLeave={() => setActive(null)}
