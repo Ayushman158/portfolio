@@ -163,14 +163,19 @@ function handStep(dt) {
   else g[2] -= g[2] * Math.min(1, dt * 7)
 }
 
+const EMBED = new URLSearchParams(location.search).has('embed')
+let wishCount = 0
 function makeWish(x, y) {
   const now = S.t
+  wishCount++
   S.wishT = now; S.wish = { x, y, t: now }
   S.wishes.push({ x, y, t: now, seed: Math.random() }); S.wishes = S.wishes.slice(-P.Maxlotus); saveWishes()
   const lines = WISH_LINES.filter((l) => l !== S.wishLine); S.wishLine = lines[Math.floor(Math.random() * lines.length)]
+  if (EMBED && wishCount === 1) S.wishLine = 'Your wish has been heard.'     // the first wish on the case study
   showWishLine(S.wishLine)
+  if (EMBED) parent.postMessage({ type: 'koi-wish', n: wishCount, line: S.wishLine }, location.origin)
   S.events.push([x, y, 0.7, 1])
-  sfx('wish_chime', 0.8, x)
+  sfx('coin_chime', 0.9, x)     // the installation's coin: coin_splash_v2.wav, a light chime
   for (const f of S.fish) { f.react = now + rand(0, 0.35); f.mode = 'joy'; f.until = now + 7; f.happy = 0 }
   for (let i = 0; i < 26; i++) {            // gold sparkles off the coin
     const a = rand(0, 6.283), sp = rand(20, 90)
@@ -851,7 +856,7 @@ async function startAudio() {
   if (actx || !soundOn) { if (actx?.state === 'suspended') actx.resume(); return }
   actx = new (window.AudioContext || window.webkitAudioContext)(); master = actx.createGain(); master.connect(actx.destination)
   const load = async (n) => { const r = await fetch(new URL(`a/${n}.m4a`, import.meta.url)); buffers[n] = await actx.decodeAudioData(await r.arrayBuffer()) }
-  await Promise.all(['wish_chime', 'koi_bloop', 'splash'].map(load).concat(load('ambient').then(loopAmbient))).catch(() => {})
+  await Promise.all(['coin_chime', 'koi_bloop', 'splash'].map(load).concat(load('ambient').then(loopAmbient))).catch(() => {})
 }
 function loopAmbient() {     // two overlapping copies with long fades, so the loop has no seam
   const b = buffers.ambient; if (!b) return
@@ -889,6 +894,17 @@ function showWishLine(text) {
 document.getElementById('enter').addEventListener('click', () => {
   document.getElementById('intro').classList.add('gone'); canvas.classList.remove('idle'); startAudio()
 })
+// Embedded: already in the water, and the pond watches itself. In an iframe the observer measures
+// against the page's viewport, so it knows when the case study has scrolled it away and stops drawing.
+let paused = false, looping = false, started = false
+if (EMBED) {
+  document.getElementById('intro')?.remove(); canvas.classList.remove('idle')
+  new IntersectionObserver(([e]) => {
+    paused = !e.isIntersecting
+    if (!paused && !looping && started) { last = performance.now(); looping = true; requestAnimationFrame(frame) }
+    if (actx) paused ? actx.suspend() : (soundOn && actx.resume())
+  }, { threshold: 0.02 }).observe(canvas)
+}
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
 let last = performance.now()
 await ready
@@ -905,7 +921,9 @@ function frame(t) {
   }
   if (n === 3) stepAcc = 0
   render()
-  requestAnimationFrame(frame)
+  if (paused) looping = false
+  else requestAnimationFrame(frame)
 }
+started = true; looping = true
 requestAnimationFrame(frame)
 window.__pond = { S, hands, P }    // for testing

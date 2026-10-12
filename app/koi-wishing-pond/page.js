@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
 import { Back, Cards, Decisions, Facts, Figure, Heading, Overview, Rule, Shots, Tradeoffs } from '../components/case-study'
@@ -62,6 +63,70 @@ const TRADEOFFS = [
   ['The free TouchDesigner licence caps images at 1280px', 'I repacked the koi artwork to fit', 'Each fish has less detail up close'],
 ]
 
+/*
+ * The pond itself is the first thing on the page, already running, the way the
+ * room was: you walked in and the water was moving. It is the browser port in
+ * an iframe (?embed drops its intro card). Your first wish there is answered
+ * with "Your wish has been heard." and the page then carries you into the
+ * story. Off screen, the pond stops drawing on its own. Reduced motion gets the photo.
+ */
+function PondHero({ reduceMotion }) {
+  const box = useRef(null)
+  const frame = useRef(null)
+  const [live, setLive] = useState(false)
+
+  useEffect(() => {
+    if (reduceMotion) return
+    const f = frame.current
+    // Fade the pond in once it has loaded (it may already have, before this page finished starting).
+    const show = () => setTimeout(() => setLive(true), 300)
+    if (f?.contentDocument?.readyState === 'complete' && f.contentWindow?.location.href !== 'about:blank') show()
+    else f?.addEventListener('load', show, { once: true })
+    // The first wish: let the line rise above the water, then go down into the story.
+    let carry = 0
+    const onMsg = (e) => {
+      if (e.origin !== location.origin || e.source !== f?.contentWindow) return
+      if (e.data?.type === 'koi-wish' && e.data.n === 1) {
+        carry = setTimeout(() => {
+          const story = document.getElementById('story')
+          if (story && window.scrollY < box.current.offsetHeight * 0.5) story.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }, 5000)
+      }
+    }
+    addEventListener('message', onMsg)
+    return () => { f?.removeEventListener('load', show); removeEventListener('message', onMsg); clearTimeout(carry) }
+  }, [reduceMotion])
+
+  return (
+    <section ref={box} data-case-hero className="flex w-full flex-col overflow-hidden bg-black" style={{ height: 'clamp(34rem, 94svh, 64rem)' }}>
+      {/* The words sit above the water, centred like the sign at the head of the pond. */}
+      <header className="px-6 pt-20 text-center sm:pt-24" style={{ color: '#EEF3F8' }}>
+        <p style={{ fontSize: '0.9rem', opacity: 0.7 }}>Koi Wishing Pond · 2026 · Interactive installation</p>
+        <h1 className="mt-1 font-serif" style={{ fontSize: 'clamp(2.4rem, 1.8rem + 2.6vw, 4.2rem)', lineHeight: 1.04, letterSpacing: '-0.012em' }}>Koi Wishing Pond</h1>
+        <p className="mx-auto mt-2 max-w-[30rem]" style={{ fontSize: '1rem', lineHeight: 1.5, color: '#B9C6D2' }}>
+          {reduceMotion ? 'An interactive koi pond, projected on the floor.' : 'Move over the water. Hold, then let go, to make a wish.'}
+        </p>
+      </header>
+      <div className="relative min-h-0 flex-1">
+        <img src={A + 'cover_pond.jpg'} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" style={{ opacity: live ? 0 : 0.8, transition: 'opacity 900ms ease' }} />
+        {!reduceMotion && (
+          <iframe
+            ref={frame}
+            src="/koi-wishing-pond/pond?embed"
+            title="Koi Wishing Pond, live. Move over the water to make ripples; press and hold, then let go, to make a wish."
+            allow="camera; autoplay"
+            className="absolute inset-0 h-full w-full border-0"
+            style={{ opacity: live ? 1 : 0, transition: 'opacity 900ms ease' }}
+          />
+        )}
+        <a href="#story" className="absolute bottom-3 left-5 rounded-full px-4 py-2 text-[0.9rem] sm:left-8" style={{ color: '#EEF3F8', background: 'rgba(10,16,24,.55)', border: '1px solid rgba(255,255,255,.14)' }}>
+          The story ↓
+        </a>
+      </div>
+    </section>
+  )
+}
+
 export default function KoiWishingPond() {
   const reduceMotion = useReducedMotion()
   const rise = (delay) => ({
@@ -71,13 +136,11 @@ export default function KoiWishingPond() {
   })
 
   return (
-    <main className="measure min-h-screen pb-28 pt-20 sm:pt-28 lg:pt-36">
+    <>
+    <PondHero reduceMotion={reduceMotion} />
+    <main id="story" className="measure min-h-screen pb-28 pt-16 sm:pt-20" style={{ scrollMarginTop: '0px' }}>
       <motion.div {...rise(0)}><Back /></motion.div>
 
-      <motion.header {...rise(0.06)} className="mt-10 space-y-5">
-        <p className="text-faint" style={{ fontSize: '0.95rem' }}>Koi Wishing Pond · 2026 · Interactive installation</p>
-        <h1 className="display">Koi Wishing Pond: a pond you can touch</h1>
-      </motion.header>
       <motion.div {...rise(0.08)}><Overview items={OVERVIEW} /></motion.div>
 
       <motion.p {...rise(0.1)} className="mt-10 border-l-2 pl-4" style={{ borderColor: 'var(--rule)', color: 'var(--ink)' }}>
@@ -85,14 +148,9 @@ export default function KoiWishingPond() {
         their favourite installation.
       </motion.p>
 
-      {/* Not faded in: the card on the index grows into this image. */}
-      <figure data-case-hero className="track-full mt-12 overflow-hidden rounded-xl" style={{ border: '1px solid var(--rule)' }}>
-        <img src={A + 'cover_pond.jpg'} alt="The koi pond glowing blue on a dark floor at UPES, a candle lantern at its edge" width={1800} height={1013} className="block h-auto w-full" />
-      </figure>
-
       <motion.div {...rise(0.12)}><Facts rows={FACTS} /></motion.div>
       <motion.div {...rise(0.14)} className="mt-8 flex flex-wrap items-center gap-3">
-        <a href={PLAY} className="btn-primary">Play the pond in your browser</a>
+        <a href={PLAY} className="btn-primary">Open the pond full screen</a>
         <a href={FILM} target="_blank" rel="noopener noreferrer" className="btn-quiet">Watch the film ↗</a>
       </motion.div>
 
@@ -197,5 +255,6 @@ export default function KoiWishingPond() {
         </p>
       </section>
     </main>
+    </>
   )
 }

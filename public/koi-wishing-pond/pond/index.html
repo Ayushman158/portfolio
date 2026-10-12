@@ -56,9 +56,18 @@
     opacity: 0; transition: opacity 1.2s ease; pointer-events: none; display: none; padding: 0 24px; }
   body.portrait svg#bank { display: none; }
   body.portrait #wishcap { display: block; }
+  /* ?embed: the pond as the case study's hero. No intro card, no back link; the page around it carries the words. */
+  body.embed #intro, body.embed a.back { display: none; }
+  body.embed canvas#pond { cursor: none; }
+  body.embed .bar.top { top: auto; bottom: 0; justify-content: flex-end; }
+  /* room above the rim for the wish line, and below for the buttons */
+  body.embed canvas#pond, body.embed svg#bank { top: 44px; height: calc(100% - 44px - 56px); }
+  body.embed #wishcap { top: 8px; }
+  body.embed .bar.bottom { display: none; }
 </style>
 </head>
 <body>
+<script>if (new URLSearchParams(location.search).has('embed')) document.body.classList.add('embed')</script>
 <canvas id="pond" class="idle" aria-label="An interactive koi pond. Move over the water to make ripples; press and hold, then let go, to make a wish."></canvas>
 <svg id="bank" viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
   <defs><path id="arc" d="M 40 360 A 600 334 0 0 1 1240 360"/></defs>
