@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
-import { Back, Cards, Facts, Figure, Heading, Overview, Rule, Shots, Tradeoffs } from '../components/case-study'
+import { Back, Cards, Decisions, Facts, Figure, Heading, Overview, Rule, Shots, Tradeoffs } from '../components/case-study'
 
 /*
  * Koi Wishing Pond. The words are Ayushman's, from his reflection on the
@@ -38,6 +38,21 @@ const PEOPLE = [
   [A + 'visitor_kneel.jpg', 'Some got down close to the koi.'],
   [A + 'hand_reach.jpg', 'A hand in the water.'],
   [A + 'visitor_stand.jpg', 'The pond was the only light in the room.'],
+]
+
+// Visitors wrote in a feedback book at the pond. Their words, spelling tidied.
+const CARDS = [
+  [A + 'feedback_1.jpg', '“The best of all. Hella fun, 100/10!”'],
+  [A + 'feedback_2.jpg', '“It’s a wonderful experience. It’s so cool.”'],
+  [A + 'feedback_3.jpg', '“Really cute and interactive, very soothing.”'],
+]
+
+// What I saw on the day, and what each one tells me to change.
+const NOTICED = [
+  ['People wanted to touch the water', 'They hovered their hands above the pond, and many tried to touch the floor itself. A depth sensor like the Kinect could have allowed that, but it would not run properly on my MacBook. Next time: a depth camera on a machine that supports it.'],
+  ['The camera’s range was invisible', 'The tracking came from a phone on the floor, so I had to tell people where the camera was and where their hand would work. A marked area on the floor would tell them without me.'],
+  ['The gesture could be found without help', 'One visitor, curious about the space, worked out the fist and the coin toss on his own before I explained anything.'],
+  ['What visitors asked for', 'A brighter glow under the hand, so it is easier to follow. Movements with fingertips, not only the whole hand. Lily pads that react when you touch them. More depth and perspective in the pond.'],
 ]
 
 // What I was up against, what I chose, and what that gave up.
@@ -152,7 +167,20 @@ export default function KoiWishingPond() {
       <Rule />
 
       <section>
-        <Heading n="05">What I learned</Heading>
+        <Heading n="05">What people said, and what I’d change</Heading>
+        <p className="mb-8">
+          Visitors left notes in a feedback book at the pond. What they liked most was the space
+          around the projection: the stones and pebbles, the leaves, the bench, the fan and the low
+          light. That was the part we cared about most.
+        </p>
+        <Shots items={CARDS} cols="grid-cols-1 sm:grid-cols-3" />
+        <Decisions items={NOTICED} />
+      </section>
+
+      <Rule />
+
+      <section>
+        <Heading n="06">What I learned</Heading>
         <p>
           What stayed with me most was seeing something we made put a smile on people’s faces, even
           for a few minutes. It also showed me the kind of work I want to do: experiences that go
