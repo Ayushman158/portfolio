@@ -14,7 +14,6 @@ import { Back, Cards, Decisions, Facts, Figure, Heading, Overview, Rule, Shots, 
 
 const A = '/koi-wishing-pond/assets/'
 const FILM = 'https://www.youtube.com/watch?v=E0lpMtR87I0'
-const PLAY = '/koi-wishing-pond/pond'
 
 const OVERVIEW = [
   ['Context', 'An exhibition at UPES on 8 October 2026. I made it with Eifa: I built the pond, she built the set around it.'],
@@ -153,7 +152,6 @@ export default function KoiWishingPond() {
 
       <motion.div {...rise(0.12)}><Facts rows={FACTS} /></motion.div>
       <motion.div {...rise(0.14)} className="mt-8 flex flex-wrap items-center gap-3">
-        <a href={PLAY} className="btn-primary">Open the pond full screen</a>
         <a href={FILM} target="_blank" rel="noopener noreferrer" className="btn-quiet">Watch the film ↗</a>
       </motion.div>
 
@@ -252,8 +250,7 @@ export default function KoiWishingPond() {
 
       <section className="mt-16">
         <p>
-          <a href={PLAY} className="prose-link">Play the pond</a> or{' '}
-          <a href={FILM} target="_blank" rel="noopener noreferrer" className="prose-link">watch the film</a>. Back to{' '}
+          <a href={FILM} target="_blank" rel="noopener noreferrer" className="prose-link">Watch the film</a>, or go back to{' '}
           <Link href="/#work" className="prose-link">the work index</Link>.
         </p>
       </section>
