@@ -99,7 +99,7 @@ export default function AlbumAlive() {
           <span className="text-faint"> · </span>
           <a href="https://github.com/Ayushman158/WebAR-Vinyl" target="_blank" rel="noopener noreferrer" className="prose-link">Source on GitHub</a>
           <span className="text-faint"> · </span>
-          <Link href="/" className="prose-link">Back to index</Link>
+          <Link href="/archive" className="prose-link">Back to the archive</Link>
         </p>
       </motion.section>
     </main>

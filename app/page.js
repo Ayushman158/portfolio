@@ -6,7 +6,6 @@ import dynamic from 'next/dynamic'
 import { motion, useReducedMotion } from 'motion/react'
 import GradientText from './components/gradient-text'
 import LetterSwap from './components/letter-swap'
-import WorkIndex from './components/work-index'
 import ScrambleText from './components/scramble-text'
 import Shipped from './components/shipped'
 import Magnet from './components/magnet'
@@ -17,6 +16,7 @@ import VerticalCutReveal from './components/vertical-cut-reveal'
 const SHIPPED = [
   {
     name: 'Banyan Tree',
+    kind: 'Website · Live',
     href: '/banyan',
     site: 'himanshugarg.in',
     url: 'https://www.himanshugarg.in/',
@@ -27,6 +27,7 @@ const SHIPPED = [
   },
   {
     name: 'Hoychoy Cafe',
+    kind: 'Service design · Live',
     href: '/case-study',
     live: true,
     site: 'hoychoycafe.com',
@@ -49,17 +50,19 @@ const SHIPPED = [
 const RESEARCH = [
   {
     name: 'Koi Wishing Pond',
+    kind: 'Interactive installation · Exhibited at UPES',
     href: '/koi-wishing-pond',
-    feature: true,
+    play: '/koi-wishing-pond/pond',
     site: 'Exhibited at UPES',
     shot: '/research/koi-loop.jpg',
     video: '/research/koi-loop.mp4',
     alt: 'The koi pond from above: six koi, lily pads and coins on the water, with ripple rings',
-    what: 'A koi pond projected on the floor that answers your hand. Shown at UPES, and playable in your browser.',
+    what: 'A koi pond projected on the floor that answers your hand. You can play it in your browser.',
     tags: ['Interaction', 'TouchDesigner', 'Hand tracking', 'Installation'],
   },
   {
     name: 'Kizuku',
+    kind: 'iOS app · In development',
     href: '/kizuku',
     site: 'In development',
     shot: '/research/kizuku-loop.jpg',
@@ -70,6 +73,7 @@ const RESEARCH = [
   },
   {
     name: 'Signal',
+    kind: 'Mobile app · Research and prototype',
     href: '/signal',
     site: '7 interviews · 5 tests',
     shot: '/research/signal-loop.jpg',
@@ -79,6 +83,10 @@ const RESEARCH = [
     tags: ['Research', 'Interaction', 'Prototype', 'Film'],
   },
 ]
+
+// Strongest first: shipped with measured results, then research, then the build.
+const byName = Object.fromEntries([...SHIPPED, ...RESEARCH].map((p) => [p.name, p]))
+const SELECTED = ['Hoychoy Cafe', 'Signal', 'Koi Wishing Pond', 'Kizuku', 'Banyan Tree'].map((n) => byName[n])
 
 // matter-js is ~30 kB gzipped and only matters once this section is reached, so
 // it is split out of the initial bundle entirely rather than shipped with the fold.
@@ -98,18 +106,6 @@ const METHODS = ['UX Research', 'Usability Design', 'Design Thinking', 'Design S
 // Brand and communication work: a different discipline from the product case
 // studies, so it gets its own short index rather than a card among them.
 // The case study is a standalone static page, opened in a new tab.
-const CAMPAIGNS = [
-  { name: 'Choose Assam · Tata Tea', year: '2026', href: '/choose-assam', external: true, video: '/choose-assam/preview.mp4' },
-]
-
-const PLAYGROUND = [
-  // The reel lives on its own page; here it is one row, and the hover preview
-  // plays it, so the index never repeats what the cards above already show.
-  { name: 'Showreel', year: '2026', href: '/reel', video: '/reel/showreel-preview.mp4' },
-  { name: 'ALBUM//ALIVE', year: '2026', href: '/album-alive', img: '/album-alive/fan.jpg', w: 1200, h: 900 },
-  { name: 'Motion studies', year: '2026', href: '/motion', img: '/assets/motion-studies.png', w: 1360, h: 1020 },
-  { name: 'Gone or Still Here?', year: '2026', href: '/gone-or-still-here', img: '/gone/home.jpg', w: 1600, h: 1000 },
-]
 
 // Madi Things and KL Hi-Tech are not live yet, so they are held back
 // rather than listed as work a visitor cannot reach.
@@ -255,12 +251,12 @@ export default function Home() {
       </div>
 
       <motion.div {...rise(0.12)}>
-        {/* The case studies lead: they carry the research and the reasoning.
-            The shipped client work follows. */}
-        <Shipped label="Case studies" items={RESEARCH} />
-        <Shipped items={SHIPPED} />
-        <WorkIndex label="Campaigns" items={CAMPAIGNS} />
-        <WorkIndex label="Playground" items={PLAYGROUND} />
+        {/* Only the work with a full case study, strongest first, one per row.
+            Everything else is in the Archive (linked under the list and in the nav). */}
+        <Shipped label="Selected work" items={SELECTED} rows />
+        <p className="track-wide text-faint mt-6" style={{ fontSize: '0.95rem' }}>
+          Campaigns, motion and smaller experiments are in the <Link href="/archive" className="prose-link">archive</Link>.
+        </p>
       </motion.div>
 
       {/* Skills across the full track, as things to pick up; then Connect. */}

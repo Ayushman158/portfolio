@@ -22,11 +22,11 @@ import ScrambleText from './scramble-text'
  * study, the domain opens the site. Nesting them would be invalid markup and
  * would also hide the more interesting of the two.
  */
-export default function Shipped({ label = 'Shipped', items, className = 'mt-16' }) {
+export default function Shipped({ label = 'Shipped', items, className = 'mt-16', rows = false }) {
   const reduceMotion = useReducedMotion()
   const section = useRef(null)
   const cards = useRef([])
-  const turns = useTurns(section, cards, items)
+  const turns = useTurns(section, cards, items, rows)
   const router = useRouter()
 
   return (
@@ -37,6 +37,13 @@ export default function Shipped({ label = 'Shipped', items, className = 'mt-16' 
         <ScrambleText>{label}</ScrambleText>
       </h2>
 
+      {rows ? (
+        <div className="track-wide border-b border-rule">
+          {items.map((p, i) => (
+            <Row key={p.name} p={p} i={i} cards={cards} turns={turns} reduceMotion={reduceMotion} router={router} />
+          ))}
+        </div>
+      ) : (
       <div className="track-wide grid gap-x-5 gap-y-10 sm:grid-cols-2">
         {items.map((p, i) => (
           /* One card, one hover response, two destinations. The shot and the
@@ -127,7 +134,76 @@ export default function Shipped({ label = 'Shipped', items, className = 'mt-16' 
           </article>
         ))}
       </div>
+      )}
     </section>
+  )
+}
+
+/**
+ * One project per row, image and words alternating sides: the number, the
+ * name, what kind of work it is, one line, the tags, and where it lives.
+ */
+function Row({ p, i, cards, turns, reduceMotion, router }) {
+  const flip = i % 2 === 1
+  return (
+    <article
+      ref={(el) => { cards.current[i] = el }}
+      className={`group grid items-center gap-x-10 gap-y-5 border-t border-rule py-8 ${flip ? 'lg:grid-cols-[1fr_1.45fr]' : 'lg:grid-cols-[1.45fr_1fr]'}`}
+      onMouseEnter={() => turns.take(i)}
+      onMouseLeave={() => turns.release(i)}
+      onFocus={() => turns.take(i)}
+      onBlur={() => turns.release(i)}
+    >
+      <Go
+        p={p}
+        aria-label={`${p.name} — read the case study`}
+        data-case-card={p.static ? undefined : p.href}
+        onClick={p.static ? undefined : (e) => openCase(e, router, p.href)}
+        className={`relative block overflow-hidden rounded-xl [isolation:isolate]${flip ? ' lg:order-2' : ''}`}
+        style={{ border: '1px solid var(--rule)', background: 'var(--raised)' }}
+      >
+        {p.video && !reduceMotion ? (
+          <Loop src={p.video} poster={p.shot} playing={turns.playing === i} repeat={turns.repeat(i)} onEnded={() => turns.next(i)} />
+        ) : (
+          <Image
+            src={p.shot}
+            alt={p.alt}
+            width={1600}
+            height={900}
+            sizes="(min-width: 60rem) 560px, 100vw"
+            className={`aspect-video w-full object-cover object-top${reduceMotion ? '' : ' transition-transform duration-500 ease-out group-hover:scale-[1.02]'}`}
+          />
+        )}
+        {p.live && <LiveBadge />}
+      </Go>
+
+      <div className={flip ? 'lg:order-1' : undefined}>
+        <p className="section-n">{String(i + 1).padStart(2, '0')}</p>
+        <h3 className="headline">
+          <Go p={p} className="transition-opacity duration-150 hover:opacity-80">{p.name}</Go>
+        </h3>
+        <p className="text-faint mt-1.5" style={{ fontSize: '0.95rem' }}>{p.kind}</p>
+        <p className="mt-3">{p.what}</p>
+        <ul className="mt-4 flex flex-wrap gap-1.5 p-0">
+          {p.tags.map((t) => <li key={t} className="chip">{t}</li>)}
+        </ul>
+        <p className="mt-4" style={{ fontSize: '0.95rem' }}>
+          <Go p={p} className="prose-link">Read the case study</Go>
+          {p.url && (
+            <>
+              <span className="text-faint"> · </span>
+              <a href={p.url} target="_blank" rel="noopener noreferrer" className="prose-link">{p.site} ↗</a>
+            </>
+          )}
+          {p.play && (
+            <>
+              <span className="text-faint"> · </span>
+              <a href={p.play} className="prose-link">Play it</a>
+            </>
+          )}
+        </p>
+      </div>
+    </article>
   )
 }
 
@@ -148,7 +224,7 @@ export default function Shipped({ label = 'Shipped', items, className = 'mt-16' 
 
 const STACKED = '(max-width: 639px)' // the grid is one column below sm
 
-function useTurns(section, cards, items) {
+function useTurns(section, cards, items, rows = false) {
   const order = items.map((p, i) => (p.video ? i : null)).filter((i) => i !== null)
   const [turn, setTurn] = useState(order[0] ?? null)
   const [held, setHeld] = useState(null)
@@ -158,7 +234,7 @@ function useTurns(section, cards, items) {
 
   useEffect(() => {
     const mq = window.matchMedia(STACKED)
-    const set = () => setStacked(mq.matches)
+    const set = () => setStacked(rows || mq.matches)   // rows are always one above another
     set()
     mq.addEventListener('change', set)
     return () => mq.removeEventListener('change', set)

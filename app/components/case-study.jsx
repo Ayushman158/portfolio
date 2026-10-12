@@ -54,10 +54,10 @@ export function Overview({ items }) {
   )
 }
 
-export function Back() {
+export function Back({ href = '/#work', label = '← Work' }) {
   const router = useRouter()
   // Arrived from a card? The top image shrinks back into it.
-  return <Link href="/#work" onClick={(e) => backToCard(e, router)} className="prose-link text-[0.95rem]">← Work</Link>
+  return <Link href={href} onClick={href === '/#work' ? (e) => backToCard(e, router) : undefined} className="prose-link text-[0.95rem]">{label}</Link>
 }
 
 /** Role, scope, stack — the four rows a recruiter reads first. */

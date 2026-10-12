@@ -67,7 +67,7 @@ export default function Reel() {
 
   return (
     <main className="measure min-h-screen pb-28 pt-20 sm:pt-28 lg:pt-36">
-      <motion.div {...rise(0)}><Back /></motion.div>
+      <motion.div {...rise(0)}><Back href="/archive" label="← Archive" /></motion.div>
 
       <motion.div {...rise(0.04)} className="mt-8 space-y-5">
         <p className="text-faint" style={{ fontSize: '0.95rem' }}>Showreel · 2026</p>
@@ -125,7 +125,7 @@ export default function Reel() {
       <motion.section {...rise(0.18)} className="mt-16">
         <p>
           The projects in it are in full on{' '}
-          <Link href="/#work" className="prose-link">the work index</Link>.
+          <Link href="/archive" className="prose-link">the archive</Link>.
         </p>
       </motion.section>
     </main>
