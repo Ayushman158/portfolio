@@ -761,3 +761,28 @@ html.theme-switching::view-transition-new(root) {
     font-weight: 500;
     line-height: 1.35;
 }
+
+/* ---- Koi Wishing Pond: the room around the words ----------------------
+   The lab was dark and lit by candle lanterns. While the page is open the
+   site is dark and the lamp cord is put away (data-room on <html>); two warm
+   glows sit low at the edges and breathe, unevenly, like a flame. */
+html[data-room] .lamp-anchor,
+html[data-room] .lamp-glow-anchor { display: none; }
+.koi-lantern {
+    position: absolute;
+    width: 26rem;
+    height: 26rem;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232, 163, 90, 0.16), rgba(232, 163, 90, 0.05) 45%, rgba(232, 163, 90, 0) 70%);
+    animation: koi-flicker 6.2s ease-in-out infinite;
+}
+@keyframes koi-flicker {
+    0%, 100% { opacity: 0.85; }
+    18% { opacity: 1; }
+    31% { opacity: 0.78; }
+    52% { opacity: 0.95; }
+    70% { opacity: 0.82; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .koi-lantern { animation: none; }
+}

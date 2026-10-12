@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
+import { Room } from './room'
 import { Back, Cards, Decisions, Facts, Figure, Heading, Overview, Rule, Shots, Tradeoffs } from '../components/case-study'
 
 /*
@@ -70,8 +71,7 @@ const TRADEOFFS = [
  * with "Your wish has been heard." and the page then carries you into the
  * story. Off screen, the pond stops drawing on its own. Reduced motion gets the photo.
  */
-function PondHero({ reduceMotion }) {
-  const box = useRef(null)
+function PondHero({ reduceMotion, box }) {
   const frame = useRef(null)
   const [live, setLive] = useState(false)
 
@@ -98,7 +98,7 @@ function PondHero({ reduceMotion }) {
   }, [reduceMotion])
 
   return (
-    <section ref={box} data-case-hero className="flex w-full flex-col overflow-hidden bg-black" style={{ height: 'clamp(34rem, 94svh, 64rem)' }}>
+    <section ref={box} data-case-hero className="relative z-[1] flex w-full flex-col overflow-hidden bg-black" style={{ height: 'clamp(34rem, 94svh, 64rem)' }}>
       {/* The words sit above the water, centred like the sign at the head of the pond. */}
       <header className="px-6 pt-20 text-center sm:pt-24" style={{ color: '#EEF3F8' }}>
         <p style={{ fontSize: '0.9rem', opacity: 0.7 }}>Koi Wishing Pond · 2026 · Interactive installation</p>
@@ -129,6 +129,8 @@ function PondHero({ reduceMotion }) {
 
 export default function KoiWishingPond() {
   const reduceMotion = useReducedMotion()
+  const hero = useRef(null)
+  const column = useRef(null)
   const rise = (delay) => ({
     initial: reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 },
     animate: { opacity: 1, y: 0 },
@@ -137,8 +139,9 @@ export default function KoiWishingPond() {
 
   return (
     <>
-    <PondHero reduceMotion={reduceMotion} />
-    <main id="story" className="measure min-h-screen pb-28 pt-16 sm:pt-20" style={{ scrollMarginTop: '0px' }}>
+    <Room column={column} hero={hero} reduceMotion={reduceMotion} />
+    <PondHero reduceMotion={reduceMotion} box={hero} />
+    <main ref={column} id="story" className="relative z-[1] measure min-h-screen pb-28 pt-16 sm:pt-20" style={{ scrollMarginTop: '0px' }}>
       <motion.div {...rise(0)}><Back /></motion.div>
 
       <motion.div {...rise(0.08)}><Overview items={OVERVIEW} /></motion.div>
