@@ -43,6 +43,8 @@ export default function Shipped({ label = 'Shipped', items, className = 'mt-16' 
              name used to react separately — hovering the shot scaled it while
              the name sat still, hovering the name underlined it while the shot
              sat still — which read as two unrelated controls stacked up. */
+          // A static case study (its own HTML outside the app) gets plain links
+          // and no card-to-hero transition.
           <article
             key={p.name}
             ref={(el) => { cards.current[i] = el }}
@@ -52,11 +54,11 @@ export default function Shipped({ label = 'Shipped', items, className = 'mt-16' 
             onFocus={() => turns.take(i)}
             onBlur={() => turns.release(i)}
           >
-            <Link
-              href={p.href}
+            <Go
+              p={p}
               aria-label={`${p.name} — read the case study`}
-              data-case-card={p.href}
-              onClick={(e) => openCase(e, router, p.href)}
+              data-case-card={p.static ? undefined : p.href}
+              onClick={p.static ? undefined : (e) => openCase(e, router, p.href)}
               // isolate: a filtered or scaling child can escape a parent's
               // rounded overflow clip in Safari; its own stacking context
               // keeps the corners.
@@ -84,15 +86,15 @@ export default function Shipped({ label = 'Shipped', items, className = 'mt-16' 
                 />
               )}
               {p.live && <LiveBadge />}
-            </Link>
+            </Go>
 
             <div className="mt-3 flex items-baseline justify-between gap-4">
-              <Link
-                href={p.href}
+              <Go
+                p={p}
                 className="text-muted transition-colors duration-150 ease-out group-hover:text-ink focus-visible:text-ink"
               >
                 {p.name}
-              </Link>
+              </Go>
               {p.url ? (
                 <a
                   href={p.url}
@@ -327,4 +329,9 @@ function LiveBadge() {
       {status.open ? 'Taking orders now' : back ? `Closed · back at ${back}` : 'Not taking orders right now'}
     </span>
   )
+}
+
+// next/link for pages in the app; a plain link for static case studies.
+function Go({ p, ...rest }) {
+  return p.static ? <a href={p.href} {...rest} /> : <Link href={p.href} {...rest} />
 }
