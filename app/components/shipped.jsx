@@ -43,12 +43,12 @@ export default function Shipped({ label = 'Shipped', items, className = 'mt-16' 
              name used to react separately — hovering the shot scaled it while
              the name sat still, hovering the name underlined it while the shot
              sat still — which read as two unrelated controls stacked up. */
-          // A static case study (its own HTML outside the app) gets plain links
-          // and no card-to-hero transition.
+          // A featured card spans both columns, media left and words right, so an
+          // odd number of cards still fills the grid in whole rows.
           <article
             key={p.name}
             ref={(el) => { cards.current[i] = el }}
-            className="group"
+            className={`group${p.feature ? ' sm:col-span-2 lg:grid lg:grid-cols-[1.7fr_1fr] lg:items-end lg:gap-x-8' : ''}`}
             onMouseEnter={() => turns.take(i)}
             onMouseLeave={() => turns.release(i)}
             onFocus={() => turns.take(i)}
@@ -88,6 +88,7 @@ export default function Shipped({ label = 'Shipped', items, className = 'mt-16' 
               {p.live && <LiveBadge />}
             </Go>
 
+            <div className={p.feature ? 'lg:pb-1' : undefined}>
             <div className="mt-3 flex items-baseline justify-between gap-4">
               <Go
                 p={p}
@@ -122,6 +123,7 @@ export default function Shipped({ label = 'Shipped', items, className = 'mt-16' 
                 <li key={t} className="chip">{t}</li>
               ))}
             </ul>
+            </div>
           </article>
         ))}
       </div>

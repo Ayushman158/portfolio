@@ -48,6 +48,17 @@ const SHIPPED = [
 // argument, and a hover-only preview hid them from every phone.
 const RESEARCH = [
   {
+    name: 'Koi Wishing Pond',
+    href: '/koi-wishing-pond',
+    feature: true,
+    site: 'Exhibited at UPES',
+    shot: '/research/koi-loop.jpg',
+    video: '/research/koi-loop.mp4',
+    alt: 'The koi pond from above: six koi, lily pads and coins on the water, with ripple rings',
+    what: 'A koi pond projected on the floor that answers your hand. Shown at UPES, and playable in your browser.',
+    tags: ['Interaction', 'TouchDesigner', 'Hand tracking', 'Installation'],
+  },
+  {
     name: 'Kizuku',
     href: '/kizuku',
     site: 'In development',
@@ -66,17 +77,6 @@ const RESEARCH = [
     alt: 'Signal’s departure card: leave by 8:28, 74% likely on time, then the three screens it lives on',
     what: 'A Delhi Metro app that tells daily commuters when to leave. Research and a working prototype.',
     tags: ['Research', 'Interaction', 'Prototype', 'Film'],
-  },
-  {
-    name: 'Koi Wishing Pond',
-    href: '/koi-wishing-pond',
-    static: true,
-    site: 'Exhibited at UPES',
-    shot: '/research/koi-loop.jpg',
-    video: '/research/koi-loop.mp4',
-    alt: 'The koi pond from above: six koi, lily pads and coins on the water, with ripple rings',
-    what: 'A koi pond projected on the floor that answers your hand. Shown at UPES, and playable in your browser.',
-    tags: ['Interaction', 'TouchDesigner', 'Hand tracking', 'Installation'],
   },
 ]
 
