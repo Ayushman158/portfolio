@@ -11,6 +11,7 @@ const nextConfig = {
     return [
       { source: '/choose-assam', destination: '/choose-assam/index.html' },
       { source: '/koi-wishing-pond', destination: '/koi-wishing-pond/index.html' },
+      { source: '/koi-wishing-pond/pond', destination: '/koi-wishing-pond/pond/index.html' },
     ]
   },
 }

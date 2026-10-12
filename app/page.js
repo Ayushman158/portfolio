@@ -96,7 +96,7 @@ const PLAYGROUND = [
   // plays it, so the index never repeats what the cards above already show.
   { name: 'Showreel', year: '2026', href: '/reel', video: '/reel/showreel-preview.mp4' },
   { name: 'ALBUM//ALIVE', year: '2026', href: '/album-alive', img: '/album-alive/fan.jpg', w: 1200, h: 900 },
-  // An installation shown in the college's photography lab. A standalone static page, like Choose Assam.
+  // An installation shown at UPES. A standalone static page, like Choose Assam; /koi-wishing-pond/pond is the playable version.
   { name: 'Koi Wishing Pond', year: '2026', href: '/koi-wishing-pond', external: true, video: '/koi-wishing-pond/preview.mp4' },
   { name: 'Motion studies', year: '2026', href: '/motion', img: '/assets/motion-studies.png', w: 1360, h: 1020 },
   { name: 'Gone or Still Here?', year: '2026', href: '/gone-or-still-here', img: '/gone/home.jpg', w: 1600, h: 1000 },

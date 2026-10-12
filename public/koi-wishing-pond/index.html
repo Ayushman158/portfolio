@@ -148,6 +148,9 @@ body.over-pond .where i{background:rgba(238,231,220,.2)}
 .play{position:absolute;left:1.4rem;bottom:1.4rem;display:inline-flex;align-items:center;gap:.7rem;background:var(--pond-ink);color:var(--pond);text-decoration:none;font-size:.95rem;font-weight:500;padding:.8rem 1.15rem;border-radius:99px;transition:transform .2s var(--ease-out)}
 .play:active{transform:scale(.97)}
 .play svg{width:.8rem;height:.8rem}
+.try{display:inline-flex;align-items:center;gap:.6rem;align-self:flex-start;background:var(--ink);color:var(--ground,#fff);text-decoration:none;font-size:.95rem;font-weight:500;padding:.75rem 1.2rem;border-radius:99px;transition:transform .2s var(--ease-out)}
+.try:hover{transform:translateY(-1px)}
+.try svg{width:.8rem;height:.8rem}
 .play[aria-disabled="true"]{opacity:.65;cursor:default}
 
 .next .lead{height:68vh}
@@ -212,7 +215,7 @@ body.over-pond .where i{background:rgba(238,231,220,.2)}
     <div class="left">
       <a href="/#work" class="prose-link" style="align-self:flex-start;font-size:.95rem">← Work</a>
       <div class="col">
-        <p class="meta-line">Interactive installation · Photography Lab, 8 October 2026</p>
+        <p class="meta-line">Interactive installation · UPES, 8 October 2026</p>
         <h1 class="display">Koi Wishing Pond: a pond that answers your hand</h1>
       </div>
       <dl class="overview">
@@ -221,9 +224,10 @@ body.over-pond .where i{background:rgba(238,231,220,.2)}
         <div><dt>Team</dt><dd>Ayushman Bharadwaj and Eifa</dd></div>
         <div><dt>Response</dt><dd>People stayed, played and came back for another go. Many told us it was their favourite installation.</dd></div>
       </dl>
+      <a class="try" href="/koi-wishing-pond/pond"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z" fill="currentColor"/></svg>Play the pond in your browser</a>
       <p class="hint" aria-hidden="true">Scroll to walk through <span></span></p>
     </div>
-    <figure><img src="assets/cover_pond.jpg" width="1800" height="1013" alt="The koi pond glowing blue on the dark floor of the photography lab, a candle lantern at its edge"></figure>
+    <figure><img src="assets/cover_pond.jpg" width="1800" height="1013" alt="The koi pond glowing blue on a dark floor at UPES, a candle lantern at its edge"></figure>
   </section>
 
   <section class="p on-pond why" data-title="Why" aria-label="Why">
@@ -238,6 +242,7 @@ body.over-pond .where i{background:rgba(238,231,220,.2)}
     <div class="col rv" style="width:26vw">
       <h2><span class="section-n">01</span><span class="headline">How you use it</span></h2>
       <p class="prose">No buttons and nothing to read first. A small sign at the pond shows the only two gestures you need.</p>
+      <p class="prose" style="margin-top:.9rem"><a class="prose-link" href="/koi-wishing-pond/pond">Try it in your browser</a>, with your mouse or, if you have a webcam, your hand.</p>
     </div>
     <figure class="film rv"><video src="assets/pond_loop.mp4" poster="assets/pond_loop_poster.jpg" width="960" height="540" muted loop playsinline autoplay preload="metadata" aria-label="The pond reacting to a hand: ripples, a closed fist, then the coin drops"></video><figcaption class="cap">Recorded live from the projection.</figcaption></figure>
     <div class="steps rv">
@@ -261,7 +266,7 @@ body.over-pond .where i{background:rgba(238,231,220,.2)}
   <section class="p before" id="before" data-title="Before the room" aria-label="Before the room">
     <div class="col rv" style="width:28vw;align-self:center">
       <h2><span class="section-n">03</span><span class="headline">Getting people to the room</span></h2>
-      <div class="prose"><p>I designed the poster, the directional signs and a trail of clues around college.</p><p>The poster caught people's attention, the clues made them curious, and the arrows brought them to the photography lab.</p></div>
+      <div class="prose"><p>I designed the poster, the directional signs and a trail of clues around college.</p><p>The poster caught people's attention, the clues made them curious, and the arrows brought them to the room.</p></div>
     </div>
     <figure class="tall rv"><img loading="lazy" decoding="async" src="assets/poster.jpg" width="1024" height="1536" alt="The Koi Wishing Pond poster: two koi in a swirl of deep teal and a red sun on cream paper"><figcaption class="cap">The poster.</figcaption></figure>
     <figure class="mid rv"><img loading="lazy" decoding="async" src="assets/sign_close.jpg" width="1012" height="1800" alt="An arrow sign reading Photography Lab, 8th Block, on a brick wall"><figcaption class="cap">Arrows across campus.</figcaption></figure>
