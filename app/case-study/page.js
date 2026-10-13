@@ -32,6 +32,13 @@ const TRADEOFFS = [
   ['Nobody had measured anything before', 'The owner’s estimates from their logs as the baseline', 'The before numbers are approximate, so they keep their tildes'],
 ]
 
+// The café and its interior. Add the photos to public/hoychoy/ and list them
+// here as [src, alt, caption]; the row stays hidden while this is empty.
+const CAFE_PHOTOS = [
+  // ['/hoychoy/cafe.jpg', 'Hoychoy Café from the street', 'The café, near the railway gate.'],
+  // ['/hoychoy/interior.jpg', 'Inside Hoychoy Café', 'Inside.'],
+]
+
 const FACTS = [
   ['Role', 'UX lead and product owner'],
   ['Scope', 'Research, service design, interface, build'],
@@ -196,35 +203,16 @@ export default function Hoychoy() {
           don’t deliver here, so the café ran its own deliveries, and WhatsApp was the only ordering
           system it had.
         </p>
-        <div className="track-wide grid gap-4 sm:grid-cols-[1.5fr_1fr]">
-          <figure className="sm:row-span-2">
-            <img src="/hoychoy/station.jpg" alt="Sarupathar railway station: the platform, a station master in white signalling a train" loading="lazy" className="block h-full w-full rounded-xl object-cover" style={{ border: '1px solid var(--rule)' }} />
-          </figure>
-          <figure>
-            <img src="/hoychoy/town.jpg" alt="A small-town main road in Golaghat district, shops under big trees" loading="lazy" className="block h-auto w-full rounded-xl" style={{ border: '1px solid var(--rule)' }} />
-          </figure>
-          <figure>
-            <img src="/hoychoy/stall.jpg" alt="A roadside fruit stall in Golaghat district, pineapples hanging above oranges" loading="lazy" className="block h-auto w-full rounded-xl" style={{ border: '1px solid var(--rule)' }} />
-          </figure>
-        </div>
-        <p className="track-wide text-faint mt-2" style={{ fontSize: '0.8rem', lineHeight: 1.5 }}>
-          Sarupathar station, by{' '}
-          <a className="prose-link" href="https://commons.wikimedia.org/wiki/File:The_SM_of_Sarupathar_Station_gives_pass_to_12067_Janshatabdi_Express_-_Flickr_-_Dr._Santulan_Mahanta.jpg" target="_blank" rel="noopener noreferrer">Santulan Mahanta</a>, CC BY 2.0.
-          A street in Golaghat district, by{' '}
-          <a className="prose-link" href="https://commons.wikimedia.org/wiki/File:Kohora_village_in_Golaghat_district_01.jpg" target="_blank" rel="noopener noreferrer">Pinakpani</a>, CC BY 4.0.
-          A fruit stall at Kaziranga, Golaghat, by{' '}
-          <a className="prose-link" href="https://commons.wikimedia.org/wiki/File:Pineapple_Stall_at_Kaziranga,Golaghat.jpg" target="_blank" rel="noopener noreferrer">পাপৰি বৰা</a>, CC BY-SA 4.0. Cropped.
-        </p>
-
-        <p className="mt-10 mb-4">What the café serves, from its own menu photos:</p>
-        <div className="track-wide grid grid-cols-3 gap-4">
-          {[['dish-teriyaki.jpg', 'Grilled teriyaki chicken'], ['dish-fish.jpg', 'Grilled fish in lemon butter'], ['dish-octopus.jpg', 'Octopus chilli']].map(([src, cap]) => (
-            <figure key={src}>
-              <img src={'/hoychoy/' + src} alt={cap} loading="lazy" className="block aspect-square w-full rounded-xl object-cover" style={{ border: '1px solid var(--rule)' }} />
-              <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem' }}>{cap}</figcaption>
-            </figure>
-          ))}
-        </div>
+        {CAFE_PHOTOS.length > 0 && (
+          <div className="track-wide grid gap-4 sm:grid-cols-2">
+            {CAFE_PHOTOS.map(([src, alt, cap]) => (
+              <figure key={src}>
+                <img src={src} alt={alt} loading="lazy" className="block aspect-[4/3] w-full rounded-xl object-cover" style={{ border: '1px solid var(--rule)' }} />
+                <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem' }}>{cap}</figcaption>
+              </figure>
+            ))}
+          </div>
+        )}
       </section>
 
       <Rule />
