@@ -32,10 +32,12 @@ const TRADEOFFS = [
   ['Nobody had measured anything before', 'The owner’s estimates from their logs as the baseline', 'The before numbers are approximate, so they keep their tildes'],
 ]
 
-// One photo of the café, shown under the map. Put it at public/hoychoy/cafe.jpg
-// and fill this in as [src, alt, caption]; nothing shows while it is null.
-const CAFE_PHOTO = null
-// e.g. ['/hoychoy/cafe.jpg', 'Inside Hoychoy Café', 'Hoychoy Café, Sarupathar.']
+// The café itself, under the map. Shown as portraits at a fixed height: the
+// interior shot is small, and this keeps it near its real size.
+const CAFE_PHOTOS = [
+  ['/hoychoy/sign.jpg', 'The café’s lit signboard at night, its name written in Assamese script', 'The sign, in Assamese.', 765, 1020],
+  ['/hoychoy/interior.jpg', 'Inside Hoychoy Café: white chairs, small tables and round mirrors under green ceiling panels', 'Inside.', 243, 406],
+]
 
 const FACTS = [
   ['Role', 'UX lead and product owner'],
@@ -202,12 +204,14 @@ export default function Hoychoy() {
           system it had.
         </p>
         <AssamMap />
-        {CAFE_PHOTO && (
-          <figure className="track-wide mt-4">
-            <img src={CAFE_PHOTO[0]} alt={CAFE_PHOTO[1]} loading="lazy" className="block aspect-[16/9] w-full rounded-xl object-cover" style={{ border: '1px solid var(--rule)' }} />
-            <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem' }}>{CAFE_PHOTO[2]}</figcaption>
-          </figure>
-        )}
+        <div className="track-wide mt-4 flex gap-4">
+          {CAFE_PHOTOS.map(([src, alt, cap, w, h]) => (
+            <figure key={src} className="min-w-0" style={{ flex: `${w / h} 1 0` , maxWidth: `calc(26rem * ${w / h})` }}>
+              <img src={src} alt={alt} width={w} height={h} loading="lazy" className="block h-auto w-full rounded-xl" style={{ border: '1px solid var(--rule)' }} />
+              <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem' }}>{cap}</figcaption>
+            </figure>
+          ))}
+        </div>
       </section>
 
       <Rule />
