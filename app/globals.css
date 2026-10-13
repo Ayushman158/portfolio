@@ -786,3 +786,8 @@ html[data-room] .lamp-glow-anchor { display: none; }
 @media (prefers-reduced-motion: reduce) {
     .koi-lantern { animation: none; }
 }
+
+/* Hoychoy map: the café's label sits right of its pin, and under it on a
+   narrow screen where the right edge is too close. */
+.map-label-cafe { transform: translate(-50%, 70%); }
+@media (min-width: 640px) { .map-label-cafe { transform: translate(16px, -50%); } }

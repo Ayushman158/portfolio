@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
 import { Back, Cards, Decisions, Facts, Heading, Impact, Numbers, Overview, Rule, Shots, SkipTo, Subhead, Tradeoffs } from '../components/case-study'
-import { Backbone, Blueprint, Chat, Funnel, Outcomes, StepChain } from './diagrams'
+import { AssamMap, Backbone, Blueprint, Chat, Funnel, Outcomes, StepChain } from './diagrams'
 
 /*
  * Hoychoy, with the research, the service blueprint, the information
@@ -203,8 +203,9 @@ export default function Hoychoy() {
           don’t deliver here, so the café ran its own deliveries, and WhatsApp was the only ordering
           system it had.
         </p>
+        <AssamMap />
         {CAFE_PHOTOS.length > 0 && (
-          <div className="track-wide grid gap-4 sm:grid-cols-2">
+          <div className="track-wide mt-4 grid gap-4 sm:grid-cols-2">
             {CAFE_PHOTOS.map(([src, alt, cap]) => (
               <figure key={src}>
                 <img src={src} alt={alt} loading="lazy" className="block aspect-[4/3] w-full rounded-xl object-cover" style={{ border: '1px solid var(--rule)' }} />
