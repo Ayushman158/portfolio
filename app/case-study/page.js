@@ -16,7 +16,7 @@ import { Backbone, Blueprint, Chat, Funnel, Outcomes, StepChain } from './diagra
 
 // The whole project in four answers, readable before anything else.
 const OVERVIEW = [
-  ['Context', 'Hoychoy is a small café in Golaghat, Assam. Every order came in on WhatsApp: a PDF menu, an address typed into the chat, a UPI screenshot.'],
+  ['Context', 'Hoychoy is a small café in Sarupathar, a town in Assam’s Golaghat district. Zomato and Swiggy don’t deliver there, so every order came in on WhatsApp: a PDF menu, an address typed into the chat, a UPI screenshot.'],
   ['Problem', 'The owner read each order, asked for what was missing, checked the payment and passed it to the kitchen, all by hand. One order took 6–8 minutes.'],
   ['Why it matters', 'About half of the busiest hours went on sorting out incomplete orders, and 8–10 payments a week couldn’t be matched to an order.'],
   ['What I did', 'Mapped how orders actually moved, then designed and built a web menu, a checkout that won’t accept an incomplete order, UPI payment and Telegram alerts for the kitchen.'],
@@ -190,7 +190,47 @@ export default function Hoychoy() {
       <Rule />
 
       <section>
-        <Heading n="01">The problem</Heading>
+        <Heading n="01">Where it is</Heading>
+        <p className="mb-8">
+          Hoychoy is in Sarupathar, a small town in Assam, near the railway gate. Zomato and Swiggy
+          don’t deliver here, so the café ran its own deliveries, and WhatsApp was the only ordering
+          system it had.
+        </p>
+        <div className="track-wide grid gap-4 sm:grid-cols-[1.5fr_1fr]">
+          <figure className="sm:row-span-2">
+            <img src="/hoychoy/station.jpg" alt="Sarupathar railway station: the platform, a station master in white signalling a train" loading="lazy" className="block h-full w-full rounded-xl object-cover" style={{ border: '1px solid var(--rule)' }} />
+          </figure>
+          <figure>
+            <img src="/hoychoy/town.jpg" alt="A small-town main road in Golaghat district, shops under big trees" loading="lazy" className="block h-auto w-full rounded-xl" style={{ border: '1px solid var(--rule)' }} />
+          </figure>
+          <figure>
+            <img src="/hoychoy/stall.jpg" alt="A roadside fruit stall in Golaghat district, pineapples hanging above oranges" loading="lazy" className="block h-auto w-full rounded-xl" style={{ border: '1px solid var(--rule)' }} />
+          </figure>
+        </div>
+        <p className="track-wide text-faint mt-2" style={{ fontSize: '0.8rem', lineHeight: 1.5 }}>
+          Sarupathar station, by{' '}
+          <a className="prose-link" href="https://commons.wikimedia.org/wiki/File:The_SM_of_Sarupathar_Station_gives_pass_to_12067_Janshatabdi_Express_-_Flickr_-_Dr._Santulan_Mahanta.jpg" target="_blank" rel="noopener noreferrer">Santulan Mahanta</a>, CC BY 2.0.
+          A street in Golaghat district, by{' '}
+          <a className="prose-link" href="https://commons.wikimedia.org/wiki/File:Kohora_village_in_Golaghat_district_01.jpg" target="_blank" rel="noopener noreferrer">Pinakpani</a>, CC BY 4.0.
+          A fruit stall at Kaziranga, Golaghat, by{' '}
+          <a className="prose-link" href="https://commons.wikimedia.org/wiki/File:Pineapple_Stall_at_Kaziranga,Golaghat.jpg" target="_blank" rel="noopener noreferrer">পাপৰি বৰা</a>, CC BY-SA 4.0. Cropped.
+        </p>
+
+        <p className="mt-10 mb-4">What the café serves, from its own menu photos:</p>
+        <div className="track-wide grid grid-cols-3 gap-4">
+          {[['dish-teriyaki.jpg', 'Grilled teriyaki chicken'], ['dish-fish.jpg', 'Grilled fish in lemon butter'], ['dish-octopus.jpg', 'Octopus chilli']].map(([src, cap]) => (
+            <figure key={src}>
+              <img src={'/hoychoy/' + src} alt={cap} loading="lazy" className="block aspect-square w-full rounded-xl object-cover" style={{ border: '1px solid var(--rule)' }} />
+              <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem' }}>{cap}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      <Rule />
+
+      <section>
+        <Heading n="02">The problem</Heading>
         <p className="mb-8">
           I read more than 50 of the café’s WhatsApp threads. Most of the owner’s busy hours went on
           finishing orders, not taking new ones.
@@ -220,7 +260,7 @@ export default function Hoychoy() {
       <Rule />
 
       <section id="shipped" tabIndex={-1} data-skip-target>
-        <Heading n="02">The solution</Heading>
+        <Heading n="03">The solution</Heading>
         <p className="mb-8">
           The fix was in the workflow, not just the screens, so I mapped the service first. Switch
           between before and after and watch the owner’s row empty out.
@@ -251,14 +291,14 @@ export default function Hoychoy() {
       <Rule />
 
       <section>
-        <Heading n="03">Constraints and tradeoffs</Heading>
+        <Heading n="04">Constraints and tradeoffs</Heading>
         <Tradeoffs items={TRADEOFFS} />
       </section>
 
       <Rule />
 
       <section>
-        <Heading n="04">What I’d build next</Heading>
+        <Heading n="05">What I’d build next</Heading>
         <div className="track-wide">
           <Cards items={NEXT} cols="sm:grid-cols-3" />
         </div>
