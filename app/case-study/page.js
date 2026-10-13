@@ -32,12 +32,10 @@ const TRADEOFFS = [
   ['Nobody had measured anything before', 'The owner’s estimates from their logs as the baseline', 'The before numbers are approximate, so they keep their tildes'],
 ]
 
-// The café and its interior. Add the photos to public/hoychoy/ and list them
-// here as [src, alt, caption]; the row stays hidden while this is empty.
-const CAFE_PHOTOS = [
-  // ['/hoychoy/cafe.jpg', 'Hoychoy Café from the street', 'The café, near the railway gate.'],
-  // ['/hoychoy/interior.jpg', 'Inside Hoychoy Café', 'Inside.'],
-]
+// One photo of the café, shown under the map. Put it at public/hoychoy/cafe.jpg
+// and fill this in as [src, alt, caption]; nothing shows while it is null.
+const CAFE_PHOTO = null
+// e.g. ['/hoychoy/cafe.jpg', 'Inside Hoychoy Café', 'Hoychoy Café, Sarupathar.']
 
 const FACTS = [
   ['Role', 'UX lead and product owner'],
@@ -204,15 +202,11 @@ export default function Hoychoy() {
           system it had.
         </p>
         <AssamMap />
-        {CAFE_PHOTOS.length > 0 && (
-          <div className="track-wide mt-4 grid gap-4 sm:grid-cols-2">
-            {CAFE_PHOTOS.map(([src, alt, cap]) => (
-              <figure key={src}>
-                <img src={src} alt={alt} loading="lazy" className="block aspect-[4/3] w-full rounded-xl object-cover" style={{ border: '1px solid var(--rule)' }} />
-                <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem' }}>{cap}</figcaption>
-              </figure>
-            ))}
-          </div>
+        {CAFE_PHOTO && (
+          <figure className="track-wide mt-4">
+            <img src={CAFE_PHOTO[0]} alt={CAFE_PHOTO[1]} loading="lazy" className="block aspect-[16/9] w-full rounded-xl object-cover" style={{ border: '1px solid var(--rule)' }} />
+            <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem' }}>{CAFE_PHOTO[2]}</figcaption>
+          </figure>
         )}
       </section>
 
