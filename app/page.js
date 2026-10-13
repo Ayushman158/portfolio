@@ -79,7 +79,7 @@ const RESEARCH = [
     shot: '/research/signal-loop.jpg',
     video: '/research/signal-loop.mp4',
     alt: 'Signal’s departure card: leave by 8:28, 74% likely on time, then the three screens it lives on',
-    what: 'A Delhi Metro app that tells daily commuters when to leave. Research and a working prototype.',
+    what: 'Most people learn the Delhi Metro in a ride or two. Office commuters still guess, every morning, when to leave. Signal tells them.',
     tags: ['Research', 'Interaction', 'Prototype', 'Film'],
   },
 ]

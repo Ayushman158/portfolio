@@ -21,10 +21,10 @@ const PROTOTYPE = 'https://dainty-capybara-dd3d7e.netlify.app/'
 
 // The whole project in four answers, readable before anything else.
 const OVERVIEW = [
-  ['Context', 'Daily commuters on the Delhi Metro’s Yellow Line who change at INA. A 14-week M.Des project I did alone.'],
-  ['Problem', 'Regular riders know the route. They don’t know if today is a normal day, so all seven people I interviewed leave early every morning, just in case.'],
-  ['Why it matters', 'They said they lose about 34 minutes a day to this. Some juggle four apps to plan one trip, and none of them says when to leave.'],
-  ['What I did', 'Research with commuters, then a prototype that gives one answer, “leave by 8:28”, and says how sure it is.'],
+  ['Who it’s for', 'Daily office commuters on the Yellow Line who change at INA.'],
+  ['The problem', 'All seven people I interviewed leave early every morning, just in case. They said it costs them about 34 minutes a day.'],
+  ['What I did', 'Seven interviews, two peak-hour observations, five usability tests, and a working prototype.'],
+  ['Project', 'A 14-week M.Des project, done alone. A concept, not a shipped app.'],
 ]
 
 // Usability results with five commuters. A concept, not a shipped product.
@@ -230,7 +230,7 @@ const ITERATIONS = [
 
 const LIMITS = [
   ['I am not this user', 'I don’t commute this corridor, or any corridor. I have taken the Delhi Metro twice. Everything I know about the morning came from seven people and two mornings of watching, so where the research was thin I had no lived experience to fall back on.'],
-  ['A narrow, convenient sample', 'Interviewees and testers came from personal networks and corridor WhatsApp groups. The five testers were all aged 24–31 and live on the Dwarka corridor, and one is a UX student. The findings describe this group, not Delhi’s 6.5 million daily riders.'],
+  ['A narrow, convenient sample', 'Interviewees and testers came from personal networks and corridor WhatsApp groups. The five testers were all aged 24–31 and live on the Dwarka corridor, and one is a UX student. The findings describe this group, not Delhi’s 6.46 million daily riders.'],
   ['Small numbers', 'Seven interviews and five usability sessions are enough to find problems and direction, not to measure prevalence. Figures from the sample are written as counts for that reason.'],
   ['An unvalidated model', 'Confidence comes from static GTFS schedules, weather, the calendar and patterns. None of it is live, and none of it has been checked against real outcomes.'],
   ['Safety is not addressed', 'The finding with the sharpest unmet need was scoped out. Priya’s need goes unmet in this version: safety-first routing on lighting, crowding and CISF presence.'],
@@ -252,6 +252,25 @@ export default function Signal() {
       <motion.header {...rise(0.06)} className="mt-10 space-y-5">
         <p className="text-faint" style={{ fontSize: '0.95rem' }}>Signal · 2026 · Research and concept</p>
         <h1 className="display">Signal: an app that tells Delhi Metro commuters when to leave</h1>
+        {/* Ayushman's own telling, lightly edited. */}
+        <div className="space-y-4 pt-2">
+          <p>
+            Every day, 6.46 million people ride the Delhi Metro. I was one of them once, as a
+            first-time rider, travelling with my younger brother. I was the older one, so the decisions
+            were mine, and I took the wrong one: we went the opposite way.
+          </p>
+          <p>
+            So I decided to build an app that would help me make those decisions. While researching,
+            I realised most people work the Metro out after a ride or two. The people making these
+            decisions every single day are the 9-to-5 office commuters.
+          </p>
+          <p>
+            In India, a normal day today doesn’t mean a normal day tomorrow. If I leave at 8:30 and reach
+            the office by 9 today, leaving at 8:30 tomorrow might not get me there in time. Signal makes
+            that decision easier. Every morning it tells you when to leave, and the night before it tells
+            you whether tomorrow is looking good.
+          </p>
+        </div>
       </motion.header>
       <motion.div {...rise(0.08)}><Overview items={OVERVIEW} /></motion.div>
       <motion.div {...rise(0.1)}>
@@ -292,10 +311,9 @@ export default function Signal() {
       <section>
         <Heading n="02">What I found</Heading>
         <p className="mb-8">
-          I started with first-time riders, because on my own first ride I went the wrong way to the
-          airport. Seven interviews with daily riders changed that: they know the route, they just
-          don’t know if today is normal. I also watched two peak hours at Rajiv Chowk and HUDA City
-          Centre and compared five transit apps.{' '}
+          Seven interviews with daily riders, two peak hours watching Rajiv Chowk and HUDA City Centre,
+          and five transit apps compared. Daily riders know the route; what they don’t know is whether
+          today is a normal day.{' '}
           <a href="https://www.figma.com/board/WI0U6Rar6OSNFbAioAZmmo/Mobility-Research-Synthesis" target="_blank" rel="noopener noreferrer" className="prose-link">The synthesis board is in FigJam ↗</a>
         </p>
         <Findings items={FINDINGS} />
