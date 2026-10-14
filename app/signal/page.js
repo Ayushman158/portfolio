@@ -22,7 +22,7 @@ const PROTOTYPE = 'https://dainty-capybara-dd3d7e.netlify.app/'
 
 // The whole project in four answers, readable before anything else.
 const OVERVIEW = [
-  ['Who it’s for', 'Daily office commuters on the Yellow Line who change at INA and get out at HUDA City Centre.'],
+  ['Who it’s for', 'Office commuters on the Delhi Metro who change lines on the way and finish the trip by auto or cab.'],
   ['The problem', 'Trains run on time, but the trip doesn’t. All seven people I interviewed leave early every day, just in case. What they can’t predict is getting on at the interchange and getting away from the exit.'],
   ['What I did', 'Seven interviews, two peak-hour observations, five usability tests and a prototype. Then I checked the idea against DMRC’s own figures and Google Maps, and refocused it.'],
   ['Project', 'A 14-week M.Des project, done alone. A concept, not a shipped app.'],
