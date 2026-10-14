@@ -2,9 +2,8 @@
 
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
-import { Back, Decisions, Facts, Heading, Impact, Overview, Rule, SkipTo, Subhead, Tradeoffs } from '../components/case-study'
+import { Back, Decisions, Facts, Figure, Heading, Impact, Overview, Rule, SkipTo, Subhead, Tradeoffs } from '../components/case-study'
 import SignalHero from './hero'
-import { PlatformScreen } from './phones'
 import { DmrcFlow, DmrcToday } from './dmrc'
 import { Cards, Findings, JobStories, Personas, Ramp, Weights, Iterations, LoadCurve, Matrix, Morning, Numbers, ORANGE, Screens, Tested, Verdicts } from './visuals'
 
@@ -339,7 +338,8 @@ export default function Signal() {
 
       <section>
         <Heading n="01">The problem</Heading>
-        <p className="mb-8">A morning, put together from what participants described. Only the first guess is about time.</p>
+        <Figure src="/signal/photos/platform.jpg" alt="A crowded metro interchange platform at rush hour, a packed train pulling in, a woman in the foreground checking her phone" caption="Peak hour at an interchange. AI-generated illustration, not a photograph." track="track-wide" />
+        <p className="mb-8 mt-10">A morning, put together from what participants described. Only the first guess is about time.</p>
         <Morning items={MORNING} />
         <div className="mt-14">
           <LoadCurve />
@@ -356,6 +356,9 @@ export default function Signal() {
           <a href="https://www.figma.com/board/WI0U6Rar6OSNFbAioAZmmo/Mobility-Research-Synthesis" target="_blank" rel="noopener noreferrer" className="prose-link">The synthesis board ↗</a>
         </p>
         <Findings items={FINDINGS} />
+        <div className="mt-12">
+          <Figure src="/signal/photos/exit.jpg" alt="Shared auto-rickshaws lined up under an elevated metro line in Gurugram as office commuters stream out of the station" caption="The last mile: shared autos waiting under the line at a Gurugram exit. AI-generated illustration." track="track-wide" />
+        </div>
 
         <Subhead>What existing apps do</Subhead>
         <Matrix {...COMPETITORS} />
@@ -398,10 +401,13 @@ export default function Signal() {
 
         <Subhead>The redesign: one trip, four screens</Subhead>
         <p className="mb-8">DMRC’s blue and layout stay. Signal gets a tab, and its orange appears only at a decision.</p>
-        <DmrcFlow />
+        <Figure src="/signal/photos/in-hand.jpg" alt="A commuter's hand holding a phone on a crowded platform; the screen reads Let one go, with the next three trains and coach 7 to stand at" caption="Near INA, on the platform. Screen composited into an AI-generated photo." track="track-wide" />
+        <div className="mt-10"><DmrcFlow /></div>
         <p className="text-faint mt-4" style={{ fontSize: '0.85rem' }}>A concept for DMRC, not affiliated with it. HUDA City Centre is now Millennium City Centre, the name the app uses. Times, counts and pillar numbers are illustrative.</p>
 
-        <div className="mt-14"><PlatformScreen /></div>
+        <div className="mt-14">
+          <Figure src="/signal/photos/platform-display.jpg" alt="A platform display above a crowded metro platform: the 9:16 is full; coaches 6 to 8 have room on the 9:19" caption="The same answer on the platform display, for everyone without the app. Each bar is one coach, filled by its weight. Display composited into an AI-generated photo." track="track-wide" />
+        </div>
 
         <Subhead>The answer at INA, in four states</Subhead>
         <Verdicts items={STATES} />
