@@ -116,9 +116,9 @@ const BACKBONE = [
 ]
 
 const SHIPPED = [
-  ['Branded mobile ordering', 'A structured menu with real-time availability, reached by QR or link. No login, no download, nothing to install at the door.'],
-  ['A checkout that won’t take an incomplete order', 'Cart, kitchen notes, GPS capture and a UPI deep link in one scrollable form. Required fields are enforced in the UI, so an incomplete order cannot reach the owner.'],
-  ['Orders go straight to the kitchen', 'Orders land in a dashboard and fire a Telegram alert to the kitchen. The owner comes out of the relay chain entirely.'],
+  ['No login, no download', 'Ordering on WhatsApp needed no setup, so anything more would lose people. A QR code at the counter or a link opens the menu; no account, no app, and the cart lives in the session.'],
+  ['A checkout that won’t take an incomplete order', 'Most of the owner’s time went on asking for what was missing, so I made missing impossible. Address by GPS or a Maps link, kitchen notes, and a PhonePe link with the exact total, so there is no screenshot to match.'],
+  ['The owner leaves the relay', 'WhatsApp had no reliable way to alert the kitchen, so a Telegram bot posts each order to the kitchen group. WhatsApp stays only as a receipt, because customers expected one; removing it would have felt like the order vanished.'],
 ]
 
 const SHOTS = [

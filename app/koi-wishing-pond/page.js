@@ -64,6 +64,36 @@ const TRAIL = [
   [A + 'lab_door.jpg', 'The door.'],
 ]
 
+// Where the idea came from: four inputs, one pond.
+const ORIGINS = [
+  ['Something with sound', 'my idea'],
+  ['A meditative space, about health', 'Eifa’s idea'],
+  ['Water in TouchDesigner, and a wishing-well reel', 'from YouTube and Instagram'],
+  ['Sitting by ponds and rivers to switch off', 'home, in Assam'],
+]
+
+function Origins() {
+  return (
+    <figure className="track-wide !mt-8">
+      <div className="grid items-center gap-3 sm:grid-cols-[1fr_auto_minmax(0,15rem)]">
+        <ul className="grid gap-2 p-0 sm:grid-cols-2">
+          {ORIGINS.map(([what, who]) => (
+            <li key={what} className="list-none rounded-xl px-4 py-3" style={{ border: '1px solid var(--rule)' }}>
+              <span className="block" style={{ color: 'var(--ink)', fontSize: '0.95rem', lineHeight: 1.35 }}>{what}</span>
+              <span className="text-faint block" style={{ fontSize: '0.8rem', marginTop: 2 }}>{who}</span>
+            </li>
+          ))}
+        </ul>
+        <span aria-hidden="true" className="text-faint text-center" style={{ fontSize: '1.4rem' }}>→</span>
+        <div className="rounded-xl px-5 py-4" style={{ background: 'var(--raised)', border: '1px solid var(--rule)' }}>
+          <span className="block" style={{ color: 'var(--ink)', lineHeight: 1.35 }}>A zen koi pond you can make a wish in</span>
+          <span className="text-faint block" style={{ fontSize: '0.8rem', marginTop: 4 }}>projected on the floor, answering your hand</span>
+        </div>
+      </div>
+    </figure>
+  )
+}
+
 const PEOPLE = [
   [A + 'kids_bench.jpg', 'Some sat and just watched.'],
   [A + 'visitor_kneel.jpg', 'Some got down close to the koi.'],
@@ -191,15 +221,10 @@ export default function KoiWishingPond() {
         <Heading n="01">Where the idea came from</Heading>
         <div className="space-y-5">
           <p>
-            It started as two ideas. I wanted to make something with sound. Eifa, my partner on this,
-            wanted to build something about health and a meditative space. We put them together, and I
-            suggested a zen experience.
+            It started as two ideas, mine and Eifa’s, and my feed and my home did the rest. I wanted to
+            build an experience like the wishing well I’d seen, and make it better with koi.
           </p>
-          <p>
-            The koi came from my feed. I had been watching people make water in TouchDesigner on YouTube
-            and Instagram, and then I saw a reel where someone had made a wishing well. I wanted to build
-            an experience like that, and make it better with koi.
-          </p>
+          <Origins />
           <p>
             It is personal too. Where I come from, in Assam, there are ponds everywhere, and I like
             sitting by a river or a pond to switch off. I wanted people to be able to do that indoors.

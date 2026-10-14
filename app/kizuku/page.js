@@ -146,14 +146,16 @@ export default function Kizuku() {
         <p className="mb-8">
           Five popular wellness apps, placed by tone (warm or clinical) and by what they ask of you
           (passive or active). None sits in the warm, active corner, and none is built for rehearsing
-          the future.
+          the future. They treat anxiety as one broad thing, so I built for one loop only.
         </p>
         <CompetitorMap apps={APPS} us={['Kizuku', 76, 20]} />
 
         <Subhead>Who it’s for</Subhead>
         <p className="mb-8">
           People overthink in different ways. Three questions sort you into a type, and the type decides
-          your tree, the app’s wording and which actions you get.
+          your tree, the app’s wording and which actions you get. For a while it didn’t: the type only
+          changed the colours, and the action was picked from the letters of your worry. Now every action
+          carries the types it serves, so the quiz actually changes what you’re given.
         </p>
         <div className="track-wide grid items-start gap-8 sm:grid-cols-[1fr_200px] lg:grid-cols-[1fr_300px] lg:gap-14">
           <div>
@@ -181,7 +183,8 @@ export default function Kizuku() {
         <Heading n="02">The solution</Heading>
         <p className="mb-8">
           One worry in, one action out. “A message i still haven’t replied to” came back as{' '}
-          <em>reach out</em>. These are five screens from the app running on an iPhone.
+          <em>reach out</em>. Forest grows a tree when you sit still; Kizuku grows one when you face
+          something hard. Same mechanic, a different meaning. Five screens from the app on an iPhone.
         </p>
         <Shots items={SCREENS} />
 
@@ -196,14 +199,26 @@ export default function Kizuku() {
         <KizukuInteractions />
 
         <Subhead id="trees">Illustrations: three trees, six stages each</Subhead>
-        <p className="mb-6">Each tree shows its type from the seed onwards.</p>
+        <p className="mb-6">
+          Each tree shows its type from the seed onwards. Growth used to finish after one action, which
+          spent the reward on day one. So each tree has six stages: quick at first, so the second arrives
+          straight away, then slower, landing on day thirty.
+        </p>
         <div className="space-y-6">
           {GROWTH.map(([src, caption]) => (
             <Plate key={src} src={src} alt={`Six growth stages: ${caption}`} caption={caption} w={929} h={300} />
           ))}
         </div>
 
-        <Subhead>Colour</Subhead>
+        <Subhead>Logo and colour</Subhead>
+        <p className="mb-6">
+          The K of kizuku, mirrored, joined with bamboo, which grows fast and bends without breaking.
+          Next to Finch the app looked washed out, so I made it louder without adding a colour: harder
+          edges, filled icons, and the type colour as the ground.
+        </p>
+        <figure className="track-wide mb-10">
+          <img src="/kizuku/logo-formation.webp" alt="How the logo was made: the letter K, mirrored, plus bamboo, makes the final mark; below, the app icon on five colours" width={908} height={693} loading="lazy" className="block h-auto w-full rounded-xl" style={{ border: '1px solid var(--rule)', background: '#fff' }} />
+        </figure>
         <Palette colours={COLOURS} />
       </motion.section>
 

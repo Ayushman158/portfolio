@@ -43,6 +43,34 @@ const SCREENS = [
   ['/banyan/app/5-detail.jpg', 'One root cause, opened.'],
 ]
 
+// The site's structure as you move through it: down from symptom to cause.
+const LEVELS = [
+  ['Canopy', '12 categories of symptom', '#5E8B4A'],
+  ['Category', 'the symptoms inside one, 108 in all', '#7C8F4E'],
+  ['Roots', 'the causes behind the one you picked, joined by threads', '#8A6A44'],
+  ['Detail', 'one cause, opened', '#6B4E32'],
+]
+
+function Descent() {
+  return (
+    <figure className="track-wide">
+      <ol className="relative p-0">
+        {LEVELS.map(([name, what, c], i) => (
+          <li key={name} className="relative grid list-none items-center gap-4" style={{ gridTemplateColumns: '2.5rem 9rem 1fr', paddingBlock: '0.85rem', borderTop: i ? '1px solid var(--rule)' : 0 }}>
+            <span className="relative flex justify-center" aria-hidden="true">
+              <span style={{ width: 14, height: 14, borderRadius: 999, background: c }} />
+              {i < LEVELS.length - 1 && <span className="absolute" style={{ top: 14, height: 'calc(100% + 1.7rem)', width: 2, background: `linear-gradient(${c}, ${LEVELS[i + 1][2]})` }} />}
+            </span>
+            <span style={{ color: 'var(--ink)' }}>{name}</span>
+            <span className="text-faint" style={{ fontSize: '0.95rem' }}>{what}</span>
+          </li>
+        ))}
+      </ol>
+      <figcaption className="text-faint mt-3" style={{ fontSize: '0.85rem' }}>Every page sits at one of four levels. Escape goes back up one.</figcaption>
+    </figure>
+  )
+}
+
 const DECISIONS = [
   [
     'The tree is the navigation',
@@ -115,9 +143,10 @@ export default function Banyan() {
       <motion.section {...rise(0.18)}>
         <Heading n="01">The idea</Heading>
         <p>
-          Functional medicine says a symptom is the visible end of a longer story. Rather than explain
-          that, the site has you follow it: pick a condition in the canopy and the page goes underground
-          to the causes behind it, with threads joining them.
+          Functional medicine says a symptom is the visible end of a longer story. The banyan is
+          Himanshu’s idea. Behind an ordinary page it would only be decoration, so I made it the
+          navigation: pick a condition in the canopy and the page goes underground to the causes behind
+          it, with threads joining them. You follow the idea instead of reading it.
         </p>
         <Figure
           src="/banyan/roots.jpg"
@@ -132,9 +161,12 @@ export default function Banyan() {
       <motion.section {...rise(0.2)}>
         <Heading n="02">How it works</Heading>
         <p className="mb-8">
-          Four levels: canopy, category, roots, detail. One piece of state drives the background,
-          breadcrumb and back button, so they never disagree. Escape goes back up one level.
+          Four levels, top to bottom. A metaphor can easily hide the content, so a breadcrumb always
+          shows where you are, and one piece of state drives the background, breadcrumb and back button,
+          so they never disagree.
         </p>
+        <Descent />
+        <div className="mt-12" />
         <Shots items={SCREENS} />
       </motion.section>
 
