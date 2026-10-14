@@ -17,7 +17,7 @@ const FILM = 'https://www.youtube.com/watch?v=E0lpMtR87I0'
 
 const OVERVIEW = [
   ['Context', 'An exhibition at UPES on 8 October 2026. I made it with Eifa: I built the pond, she built the set around it.'],
-  ['What I wanted', 'A physical experience. Something that makes people stop for a moment, interact with something, and feel happy.'],
+  ['What I wanted', 'I wanted to make something with sound; Eifa wanted something about health and a meditative space. We put them together: a zen space where people stop for a moment, play with something, and leave calmer.'],
   ['What I made', 'A koi pond projected on the floor. Move your hand and the water ripples. Close your hand around a wish, let go, and the koi come to the coin.'],
   ['My part', 'The TouchDesigner build and the hand tracking, the poster, the signs and clues around college, and the film.'],
 ]
@@ -32,6 +32,36 @@ const STEPS = [
   ['Move', 'Move your hand over the water. The ripples follow it and the koi swim over.'],
   ['Hold', 'Close your hand around a wish and hold it. A coin starts to glow.'],
   ['Let go', 'Open your hand. The coin drops and the koi gather round it.'],
+]
+
+// Why it works the way it does. His reasons, in his words.
+const WHY = [
+  ['On the floor, because that’s where a pond is', 'A pond can’t be on a wall or a table. I wanted it to feel as real as a pond, so it went on the floor, with a bench beside it so people could sit. One of the faculty came in and just watched the fish move. He found it really relaxing.'],
+  ['A coin, not just water', 'Playing with the water is nice, but it isn’t much to do. Tossing a coin gives people one more thing to do, the way a wishing well does.'],
+  ['Hold for three seconds, then let go', 'In the build, a fist held for 0.7 seconds was enough. For the installation I made it three. You hold on to your wish so it feels real, then you let it go, so making a wish is intentional. A longer, steadier fist is also easier for the camera to pick up.'],
+  ['The coins stay for the day', 'They don’t disappear. The next person sees coins in the water, asks what they are, and finds out they can make a wish too. The coins teach the interaction, and show that other people have been here.'],
+  ['A dark corner, a breeze, quiet music', 'The room is dark, like a studio, so we chose a corner to make it more immersive. The AC and the fan sent a breeze across the pond, so it was something you felt as well as saw. The music is soft and ambient, so it never pulls attention away from the pond.'],
+]
+
+const GESTURE = [
+  [A + 'hand_fist.jpg', 'Hold on to your wish.'],
+  [A + 'hand_open.jpg', 'Then let it go.'],
+]
+
+const PROTOTYPES = [
+  [A + 'proto_1.jpg', 'The first tests ran on a table.'],
+  [A + 'proto_2.jpg', 'Koi, coins and lily pads, before the floor.'],
+]
+
+const LOOKS = [
+  [A + 'mood_anime.jpg', 'Painted, on blue water. This is the one on the floor.'],
+  [A + 'mood_ink.jpg', 'Ink, on black.'],
+]
+
+const TRAIL = [
+  [A + 'clue_poster.jpg', 'A clue: “A wish is waiting below.”'],
+  [A + 'sign_wall.jpg', 'Arrows to the room.'],
+  [A + 'lab_door.jpg', 'The door.'],
 ]
 
 const PEOPLE = [
@@ -58,7 +88,7 @@ const NOTICED = [
 
 // What I was up against, what I chose, and what that gave up.
 const TRADEOFFS = [
-  ['My first version, made of sand-like particles, didn’t read well on a floor', 'Painted, anime-style water', 'I set the particle version aside'],
+  ['The camera needs a clear, steady fist to see a wish', 'A three-second hold before the coin drops', 'It takes a moment longer, and the first try often needs showing'],
   ['The Kinect wouldn’t run reliably on my Mac', 'An iPhone lying on the floor, with MediaPipe hand tracking', 'It has to be recalibrated every time it moves'],
   ['The free TouchDesigner licence caps images at 1280px', 'I repacked the koi artwork to fit', 'Each fish has less detail up close'],
 ]
@@ -158,7 +188,34 @@ export default function KoiWishingPond() {
       <Rule />
 
       <section>
-        <Heading n="01">How it works</Heading>
+        <Heading n="01">Where the idea came from</Heading>
+        <div className="space-y-5">
+          <p>
+            It started as two ideas. I wanted to make something with sound. Eifa, my partner on this,
+            wanted to build something about health and a meditative space. We put them together, and I
+            suggested a zen experience.
+          </p>
+          <p>
+            The koi came from my feed. I had been watching people make water in TouchDesigner on YouTube
+            and Instagram, and then I saw a reel where someone had made a wishing well. I wanted to build
+            an experience like that, and make it better with koi.
+          </p>
+          <p>
+            It is personal too. Where I come from, in Assam, there are ponds everywhere, and I like
+            sitting by a river or a pond to switch off. I wanted people to be able to do that indoors.
+          </p>
+          <p>
+            I didn’t make it for one age group. I pictured an office: people under stress walk into this
+            room, sit by the pond, watch the fish and let their minds settle. At college, that meant
+            faculty and students.
+          </p>
+        </div>
+      </section>
+
+      <Rule />
+
+      <section>
+        <Heading n="02">How it works</Heading>
         <p className="mb-8">
           No buttons and nothing to read. A small sign at the pond showed the two gestures, and that
           was enough.
@@ -180,24 +237,56 @@ export default function KoiWishingPond() {
       <Rule />
 
       <section>
-        <Heading n="02">On the day</Heading>
-        <p className="mb-8">
-          People came in and watched the fish. Some sat and just looked. Others started playing with
-          the koi, and you could hear them go “wow!” Some came back to do it again.
-        </p>
-        <Shots items={PEOPLE} cols="grid-cols-2 lg:grid-cols-4" />
+        <Heading n="03">Why it works this way</Heading>
+        <p className="mb-8">Every part of the interaction has a reason behind it.</p>
+        <Shots items={GESTURE} cols="grid-cols-2" />
+        <Decisions items={WHY} />
       </section>
 
       <Rule />
 
       <section>
-        <Heading n="03">Before the room, and the room</Heading>
+        <Heading n="04">From a table to the floor</Heading>
+        <p className="mb-8">
+          I tested it before the exhibition: in class with Eifa, with my friends and with my teacher.
+          The first version ran on a table, where I could try the koi, the coins and the lily pads.
+        </p>
+        {/* Portrait phone photos: kept to the text column so they don't tower over the page. */}
+        <div className="grid grid-cols-2 gap-4">
+          {PROTOTYPES.map(([src, caption]) => (
+            <figure key={src}>
+              <img src={src} alt={caption} loading="lazy" className="block h-auto w-full rounded-xl" style={{ border: '1px solid var(--rule)' }} />
+              <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem' }}>{caption}</figcaption>
+            </figure>
+          ))}
+        </div>
+        <p className="mb-8 mt-12">I tried two looks for the koi and the lily pads.</p>
+        <Shots items={LOOKS} cols="grid-cols-1 sm:grid-cols-2" />
+        <div className="mt-12">
+          <Figure
+            src={A + 'room_plan.jpg'}
+            alt="Floor plan of a zen room: the pond in the middle, a bamboo corner, a leaf path from the entrance, a zen garden wall and meditation cushions"
+            caption="The first plan was a whole zen room: a bamboo corner with a shishi-odoshi, a leaf path, a raked-sand wall that ripples when a wish is made, and cushions facing it. On the day, we built the pond and its edge in one corner."
+            track="track-wide"
+          />
+        </div>
+        <p className="mt-10">
+          Testing also showed me something the exhibition confirmed. People put their hands right over
+          the pond, not where the camera could see them. That is the first thing I would fix.
+        </p>
+      </section>
+
+      <Rule />
+
+      <section>
+        <Heading n="05">Before the room, and the room</Heading>
         <p className="mb-8">
           The experience started much before people entered the room. I made a poster, signs and a
           trail of clues around college that led people there. Inside, Eifa built the pond’s edge with
           river stones, grass, a bench and candle lanterns, with music playing. The room was dark, so
           the pond was the only real light.
         </p>
+        <div className="mb-10"><Shots items={TRAIL} cols="grid-cols-3" /></div>
         <div className="track-wide grid items-start gap-4 sm:grid-cols-[1fr_2fr]">
           <figure>
             <img src={A + 'poster.jpg'} alt="The Koi Wishing Pond poster: two koi in a swirl of deep teal and red on cream paper" loading="lazy" className="block h-auto w-full rounded-xl" style={{ border: '1px solid var(--rule)' }} />
@@ -213,7 +302,18 @@ export default function KoiWishingPond() {
       <Rule />
 
       <section>
-        <Heading n="04">How I built it</Heading>
+        <Heading n="06">On the day</Heading>
+        <p className="mb-8">
+          People came in and watched the fish. Some sat and just looked. Others started playing with
+          the koi, and you could hear them go “wow!” Some came back to do it again.
+        </p>
+        <Shots items={PEOPLE} cols="grid-cols-2 lg:grid-cols-4" />
+      </section>
+
+      <Rule />
+
+      <section>
+        <Heading n="07">How I built it</Heading>
         <p className="mb-8">
           An iPhone lies on the floor with its camera looking up. MediaPipe finds the hands and tells
           an open hand from a fist. TouchDesigner turns that into ripples, coins and koi, and a
@@ -226,7 +326,7 @@ export default function KoiWishingPond() {
       <Rule />
 
       <section>
-        <Heading n="05">What people said, and what I’d change</Heading>
+        <Heading n="08">What people said, and what I’d change</Heading>
         <p className="mb-8">
           Visitors left notes in a feedback book at the pond. What they liked most was the space
           around the projection: the stones and pebbles, the leaves, the bench, the fan and the low
@@ -239,7 +339,7 @@ export default function KoiWishingPond() {
       <Rule />
 
       <section>
-        <Heading n="06">What I learned</Heading>
+        <Heading n="09">What I learned</Heading>
         <p>
           What stayed with me most was seeing something we made put a smile on people’s faces, even
           for a few minutes. It also showed me the kind of work I want to do: experiences that go
