@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
 import { Back, Decisions, Facts, Figure, Heading, Impact, Overview, Rule, SkipTo, Subhead, Tradeoffs } from '../components/case-study'
-import SignalHero from './hero'
 import { DmrcFlow, DmrcToday } from './dmrc'
 import { Cards, Findings, JobStories, Personas, Ramp, Weights, Iterations, LoadCurve, Matrix, Morning, Numbers, ORANGE, Screens, Tested, Verdicts } from './visuals'
 
@@ -327,9 +326,10 @@ export default function Signal() {
         <Impact items={IMPACT} note="Usability results from the first version, with five daily commuters. The redesign has not been tested yet." />
       </motion.div>
 
-      <div data-case-hero className="track-full mt-12 overflow-hidden rounded-xl">
-        <SignalHero className="rounded-xl" />
-      </div>
+      <figure data-case-hero className="track-full mt-12 overflow-hidden rounded-xl" style={{ border: '1px solid var(--rule)' }}>
+        <img src="/signal/photos/in-hand.jpg" alt="A commuter's hand holding a phone on a crowded platform; the screen reads Let one go, with the next three trains and coach 7 to stand at" width={1536} height={1024} className="block h-auto w-full" />
+      </figure>
+      <p className="text-faint mt-2" style={{ fontSize: '0.85rem' }}>Near INA, on the platform. The screen is the redesign, composited into an AI-generated photo.</p>
       <SkipTo target="screens">skip to the screens</SkipTo>
 
       <motion.div {...rise(0.14)}><Facts rows={FACTS} /></motion.div>
@@ -401,8 +401,7 @@ export default function Signal() {
 
         <Subhead>The redesign: one trip, four screens</Subhead>
         <p className="mb-8">DMRC’s blue and layout stay. Signal gets a tab, and its orange appears only at a decision.</p>
-        <Figure src="/signal/photos/in-hand.jpg" alt="A commuter's hand holding a phone on a crowded platform; the screen reads Let one go, with the next three trains and coach 7 to stand at" caption="Near INA, on the platform. Screen composited into an AI-generated photo." track="track-wide" />
-        <div className="mt-10"><DmrcFlow /></div>
+        <DmrcFlow />
         <p className="text-faint mt-4" style={{ fontSize: '0.85rem' }}>A concept for DMRC, not affiliated with it. HUDA City Centre is now Millennium City Centre, the name the app uses. Times, counts and pillar numbers are illustrative.</p>
 
         <div className="mt-14">
@@ -418,21 +417,6 @@ export default function Signal() {
           note="Specified, not running. It depends on DMRC using data it already collects, and the coach sensors are still a trial."
         />
 
-        <Subhead>The first version, in 85 seconds</Subhead>
-        <figure className="track-full">
-          <video
-            src="/signal/signal.mp4"
-            poster="/signal/poster.jpg"
-            controls
-            playsInline
-            preload="metadata"
-            className="block w-full rounded-xl"
-            style={{ border: '1px solid var(--rule)', aspectRatio: '16 / 9', background: '#0f0f0f' }}
-          />
-          <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem' }}>
-            The leave-by version, made in code with Remotion. <a href={PROTOTYPE} target="_blank" rel="noopener noreferrer" className="prose-link">Its prototype ↗</a>
-          </figcaption>
-        </figure>
       </section>
 
       <Rule />
@@ -442,6 +426,7 @@ export default function Signal() {
         <Tradeoffs items={TRADEOFFS} />
 
         <Subhead>What testing changed, in the first version</Subhead>
+        <p className="mb-6">Five commuters tested the leave-by version. <a href={PROTOTYPE} target="_blank" rel="noopener noreferrer" className="prose-link">Its prototype ↗</a></p>
         <Iterations items={ITERATIONS} />
       </section>
 
@@ -457,7 +442,8 @@ export default function Signal() {
         </p>
 
         <Subhead>The need I left out: safety</Subhead>
-        <p className="mb-6">Four of my seven participants, all women, choose routes by lighting, crowding and whether CISF is around. It deserves its own project.</p>
+        <Figure src="/signal/photos/night-exit.jpg" alt="A woman walking alone at night along a dim footpath beside a metro station, autos parked by the road" caption="The walk from the exit after dark. AI-generated illustration." track="track-wide" />
+        <p className="mb-6 mt-10">Four of my seven participants, all women, choose routes by lighting, crowding and whether CISF is around. It deserves its own project.</p>
         <Decisions items={SAFETY} />
         <p className="text-faint mt-8" style={{ fontSize: '0.9rem', lineHeight: 1.55 }}>
           Participants agreed to be quoted and are named by first name.
