@@ -4,7 +4,8 @@ import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
 import { Back, Decisions, Facts, Heading, Impact, Overview, Rule, SkipTo, Subhead, Tradeoffs } from '../components/case-study'
 import SignalHero from './hero'
-import { PlatformScreen, RefocusScreens } from './phones'
+import { PlatformScreen } from './phones'
+import { DmrcFlow, DmrcToday } from './dmrc'
 import { Cards, Findings, JobStories, Personas, Ramp, Weights, Iterations, LoadCurve, Matrix, Morning, Numbers, ORANGE, Screens, Tested, Verdicts } from './visuals'
 
 /*
@@ -157,6 +158,33 @@ const SAFETY = [
   ['Where it could land', 'The same place as Signal: DMRC’s app and platform screens, which exit is lit and staffed tonight, and where the women’s coach stops.'],
 ]
 
+const NEW_APP = [
+  'Nobody downloads an app for a daily annoyance; commuters adapt.',
+  'Built on riders’ reports, it starts empty, and stays empty.',
+  'Another thing to open on a crowded platform.',
+]
+
+const IN_DMRC = [
+  'People already open it for their QR ticket.',
+  'DMRC already weighs every coach, on trial, and logs every gate tap.',
+  'Riders’ reports only fill the gaps.',
+]
+
+function Compare({ a, b }) {
+  return (
+    <div className="track-wide mt-6 grid gap-3 sm:grid-cols-2">
+      {[a, b].map(([h, items], i) => (
+        <div key={h} className="rounded-xl p-5" style={{ border: '1px solid var(--rule)', background: i ? 'var(--raised)' : 'transparent' }}>
+          <p className="text-faint" style={{ fontSize: '0.8rem', letterSpacing: '0.04em', textTransform: 'uppercase' }}>{h}</p>
+          <ul className="mt-3 space-y-2 p-0">
+            {items.map((x) => <li key={x} className="list-none" style={{ fontSize: '0.95rem', lineHeight: 1.45, color: i ? 'var(--ink)' : undefined }}>{x}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 const FACTS = [
   ['Role', 'Solo — research, interaction design, prototype, film'],
   ['Timeline', '14 weeks · M.Des Design Project I'],
@@ -284,28 +312,20 @@ export default function Signal() {
         {/* Ayushman's own telling, lightly edited. */}
         <div className="space-y-4 pt-2">
           <p>
-            Every day, 6.46 million people ride the Delhi Metro. I was one of them once, as a
-            first-time rider, travelling with my younger brother. I was the older one, so the decisions
-            were mine, and I took the wrong one: we went the opposite way.
+            My first Delhi Metro ride, with my younger brother, went the wrong way. I set out to build an
+            app for those decisions, and the research led me to the people who make them every day:
+            office commuters.
           </p>
           <p>
-            So I decided to build an app that would help me make those decisions. While researching,
-            I realised most people work the Metro out after a ride or two. The people making these
-            decisions every single day are the 9-to-5 office commuters.
-          </p>
-          <p>
-            My first version told them when to leave. Then I checked it against the data. The train is
-            rarely the problem: DMRC says 99.95% of its trains ran on time in 2026, and Google Maps can
-            already remind you when to leave. What my participants couldn’t predict was everything around
-            the train: whether they would get on at the interchange, and what would be waiting at the
-            exit. So I refocused Signal on those two moments, and moved it inside DMRC’s own app, so
-            nobody has to download anything new.
+            My first version told them when to leave. The data said that was mostly solved, and my own
+            research pointed somewhere else: getting on at the interchange, and getting away from the
+            exit. So Signal became a feature of DMRC’s own app, built for those two moments.
           </p>
         </div>
       </motion.header>
       <motion.div {...rise(0.08)}><Overview items={OVERVIEW} /></motion.div>
       <motion.div {...rise(0.1)}>
-        <Impact items={IMPACT} note="Usability results from the first version, with five daily commuters. The refocused screens have not been tested yet." />
+        <Impact items={IMPACT} note="Usability results from the first version, with five daily commuters. The redesign has not been tested yet." />
       </motion.div>
 
       <div data-case-hero className="track-full mt-12 overflow-hidden rounded-xl">
@@ -314,27 +334,16 @@ export default function Signal() {
       <SkipTo target="screens">skip to the screens</SkipTo>
 
       <motion.div {...rise(0.14)}><Facts rows={FACTS} /></motion.div>
-      <motion.p {...rise(0.16)} className="mt-8">
-        <a href={PROTOTYPE} target="_blank" rel="noopener noreferrer" className="prose-link">Try the first version’s prototype</a>
-        <span className="text-faint"> · lock screen, app and watch</span>
-      </motion.p>
 
       <Rule />
 
       <section>
         <Heading n="01">The problem</Heading>
-        <p className="mb-8">
-          A morning put together from what participants described. Four guesses on the way, and only
-          the first one is about time.
-        </p>
+        <p className="mb-8">A morning, put together from what participants described. Only the first guess is about time.</p>
         <Morning items={MORNING} />
         <div className="mt-14">
           <LoadCurve />
         </div>
-        <p className="mt-6">
-          The stress comes at three points: leaving home, changing at INA and getting out. Each time,
-          what’s missing is information, not infrastructure.
-        </p>
       </section>
 
       <Rule />
@@ -342,15 +351,13 @@ export default function Signal() {
       <section>
         <Heading n="02">What I found</Heading>
         <p className="mb-8">
-          Seven interviews with daily riders, two peak hours watching Rajiv Chowk and HUDA City Centre,
-          and five transit apps compared. Daily riders know the route. What they can’t see is how full the
-          train at the interchange will be, or what’s waiting at the exit.{' '}
-          <a href="https://www.figma.com/board/WI0U6Rar6OSNFbAioAZmmo/Mobility-Research-Synthesis" target="_blank" rel="noopener noreferrer" className="prose-link">The synthesis board is in FigJam ↗</a>
+          Seven interviews, two peak hours watching Rajiv Chowk and HUDA City Centre, and five apps
+          compared.{' '}
+          <a href="https://www.figma.com/board/WI0U6Rar6OSNFbAioAZmmo/Mobility-Research-Synthesis" target="_blank" rel="noopener noreferrer" className="prose-link">The synthesis board ↗</a>
         </p>
         <Findings items={FINDINGS} />
 
         <Subhead>What existing apps do</Subhead>
-        <p className="mb-8">Google Maps already tells you when to leave. Nobody tells you whether you’ll get on at INA, or what’s waiting at the exit.</p>
         <Matrix {...COMPETITORS} />
 
         <Subhead>Who I designed for</Subhead>
@@ -361,11 +368,7 @@ export default function Signal() {
 
       <section>
         <Heading n="03">Is this a real problem?</Heading>
-        <p className="mb-8">
-          The first version of Signal answered one question: when should I leave? Coming back to it, I
-          wasn’t sure that was a real problem. I’m not from Delhi, and I had built it on my own guess
-          that trains run late.
-        </p>
+        <p className="mb-8">I’m not from Delhi, and my first version rested on my own guess that trains run late. So I checked.</p>
         <div className="track-wide grid gap-3 sm:grid-cols-3">
           {CHECKS.map(([stat, body, href, source]) => (
             <div key={stat} className="rounded-xl p-5" style={{ border: '1px solid var(--rule)' }}>
@@ -375,88 +378,41 @@ export default function Signal() {
             </div>
           ))}
         </div>
-        <div className="mt-10 space-y-5">
-          <p>
-            So the train itself isn’t the problem. Going back to my own research, it had been pointing
-            somewhere else all along. The pain points participants ranked highest were one stage going
-            wrong and knocking on to the rest, crowding at the interchange, and the last mile. Two of the
-            seven had reorganised their lives to avoid an interchange. And the shared autos most riders
-            finish the trip in leave no trace in any app.
-          </p>
-          <p>
-            When the Yellow Line does fail, it fails as crowding. In August 2025 a signalling fault{' '}
-            <a href="https://www.theweek.in/wire-updates/national/2025/08/29/des92-dl-3rdld-dmrc-delay.html" target="_blank" rel="noopener noreferrer" className="prose-link">packed the platforms</a>{' '}
-            at Hauz Khas, Rajiv Chowk and Kashmere Gate.
-          </p>
-          <p>
-            So I kept the leave-by time, but made it the smallest part. Signal now speaks at the two
-            moments nobody else covers: the interchange, and the exit.
-          </p>
-        </div>
-        <Subhead>Then a second question: why would anyone download it?</Subhead>
-        <div className="space-y-5">
-          <p>
-            My first answer was a separate app that ran on riders’ reports. It doesn’t hold up. Nobody
-            downloads an app for a daily annoyance; my own research says commuters put up with the
-            chaos and adapt. And an app that runs on reports is empty until lots of people use it, and
-            nobody uses it while it’s empty.
-          </p>
-          <p>
-            The data already exists, though. DMRC is trialling live occupancy for each coach, measured
-            by weight, and showing it only on the platform screens, once you are already standing
-            there. It also has every card and QR tap at every gate. And people already open its app,
-            Momentum 2.0, to get a ticket.
-          </p>
-          <p>
-            So Signal became a feature of DMRC’s own app and platform screens, running on data DMRC
-            already collects. Rider reports only fill the gaps. The design question changed too: how
-            should DMRC show crowding before people commit to a train?
-          </p>
-        </div>
-        <div className="track-wide mt-10 grid gap-3 sm:grid-cols-2">
-          {[['What I assumed', ASSUMED], ['What the research showed', FOUND]].map(([h, items], i) => (
-            <div key={h} className="rounded-xl p-5" style={{ border: '1px solid var(--rule)', background: i ? 'var(--raised)' : 'transparent' }}>
-              <p className="text-faint" style={{ fontSize: '0.8rem', letterSpacing: '0.04em', textTransform: 'uppercase' }}>{h}</p>
-              <ul className="mt-3 space-y-2 p-0">
-                {items.map((x) => <li key={x} className="list-none" style={{ fontSize: '0.95rem', lineHeight: 1.45, color: i ? 'var(--ink)' : undefined }}>{x}</li>)}
-              </ul>
-            </div>
-          ))}
-        </div>
+        <Compare a={['What I assumed', ASSUMED]} b={['What the research showed', FOUND]} />
+        <p className="mt-8">
+          When the Yellow Line does fail, it fails as crowding: in August 2025 a signal fault{' '}
+          <a href="https://www.theweek.in/wire-updates/national/2025/08/29/des92-dl-3rdld-dmrc-delay.html" target="_blank" rel="noopener noreferrer" className="prose-link">packed the platforms</a>{' '}
+          at Hauz Khas, Rajiv Chowk and Kashmere Gate.
+        </p>
+
+        <Subhead>Then: why would anyone download it?</Subhead>
+        <Compare a={['A new app', NEW_APP]} b={['A feature of DMRC’s app', IN_DMRC]} />
       </section>
 
       <Rule />
 
       <section id="screens" tabIndex={-1} data-skip-target>
         <Heading n="04">The solution</Heading>
-        <p className="mb-8">
-          Signal is a tab in DMRC’s app, and it speaks at two moments: on the way to INA, and just
-          before the exit. In between it stays quiet. The orange only appears when there’s a decision
-          to make.
-        </p>
-        <RefocusScreens />
-        <p className="text-faint mt-4" style={{ fontSize: '0.85rem' }}>A concept for DMRC, not affiliated with it. Stations are real; times, counts and pillar numbers are illustrative.</p>
-        <div className="mt-12"><PlatformScreen /></div>
+        <Subhead>DMRC’s app today</Subhead>
+        <DmrcToday />
+
+        <Subhead>The redesign: one trip, four screens</Subhead>
+        <p className="mb-8">DMRC’s blue and layout stay. Signal gets a tab, and its orange appears only at a decision.</p>
+        <DmrcFlow />
+        <p className="text-faint mt-4" style={{ fontSize: '0.85rem' }}>A concept for DMRC, not affiliated with it. HUDA City Centre is now Millennium City Centre, the name the app uses. Times, counts and pillar numbers are illustrative.</p>
+
+        <div className="mt-14"><PlatformScreen /></div>
 
         <Subhead>The answer at INA, in four states</Subhead>
         <Verdicts items={STATES} />
 
         <Subhead>Where the answer comes from</Subhead>
-        <p className="mb-8">Mostly from data DMRC already collects. Riders only fill the gaps.</p>
         <Weights
           items={WEIGHTS}
-          note="Specified, not running. It depends on DMRC using data it already collects in its own app, and the coach sensors are still a trial. With no live data, Signal shows the usual pattern and says that’s all it has."
+          note="Specified, not running. It depends on DMRC using data it already collects, and the coach sensors are still a trial."
         />
 
-        <Subhead>Kept from the first version</Subhead>
-        <p className="mb-8">
-          The morning answer is still there, smaller: leave by 8:28, on the lock screen. These screens are
-          from the first version’s prototype, the one five commuters tested.
-        </p>
-        <Screens items={SCREENS} />
-
-        <Subhead>The first version’s concept film</Subhead>
-        <p className="mb-8">85 seconds, from the night before to arrival. Made in code with Remotion. Sound on.</p>
+        <Subhead>The first version, in 85 seconds</Subhead>
         <figure className="track-full">
           <video
             src="/signal/signal.mp4"
@@ -467,6 +423,9 @@ export default function Signal() {
             className="block w-full rounded-xl"
             style={{ border: '1px solid var(--rule)', aspectRatio: '16 / 9', background: '#0f0f0f' }}
           />
+          <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem' }}>
+            The leave-by version, made in code with Remotion. <a href={PROTOTYPE} target="_blank" rel="noopener noreferrer" className="prose-link">Its prototype ↗</a>
+          </figcaption>
         </figure>
       </section>
 
@@ -477,10 +436,6 @@ export default function Signal() {
         <Tradeoffs items={TRADEOFFS} />
 
         <Subhead>What testing changed, in the first version</Subhead>
-        <p className="mb-6">
-          One tester asked “What does pre-fill mean exactly?”, and it showed my own working words had
-          leaked into the app in five places.
-        </p>
         <Iterations items={ITERATIONS} />
       </section>
 
@@ -489,36 +444,22 @@ export default function Signal() {
       <section>
         <Heading n="06">What I learned</Heading>
         <p>
-          I’m not the user. I’ve taken the Delhi Metro twice, so everything I know about this morning
-          came from seven people and two mornings of watching. That made me lean on the research.
-        </p>
-        <p className="mt-5">
-          The biggest lesson came late: I had to question my own problem, twice. My first version
-          solved something that was mostly solved already. My research had been pointing at the
-          interchange and the exit the whole time; I just hadn’t followed it. Then the fix needed
-          its own question: a good answer still has to reach people, and the easiest way is through
-          an app they already use.
-        </p>
-        <p className="mt-5">
-          Next, I’d take the refocused screens back to three to five of the original participants and
-          ask one question: what would you use this for that Google Maps doesn’t do?
+          I had to question my own problem, twice. First, whether it was real; then, whether anyone
+          would download the answer. My research had been pointing at the interchange and the exit all
+          along. Next, I’d show the redesign to three to five of the original participants and ask what
+          it does for them that Google Maps doesn’t.
         </p>
 
         <Subhead>The need I left out: safety</Subhead>
-        <p className="mb-6">
-          This is the biggest gap in Signal, and I think it matters more than crowding. Four of my
-          seven participants, all women, choose their routes by lighting, crowding and whether CISF
-          is around. It needs its own research, so I’m treating it as the next project, not a feature.
-        </p>
+        <p className="mb-6">Four of my seven participants, all women, choose routes by lighting, crowding and whether CISF is around. It deserves its own project.</p>
         <Decisions items={SAFETY} />
-        <p className="text-faint mt-6" style={{ fontSize: '0.9rem', lineHeight: 1.55 }}>
+        <p className="text-faint mt-8" style={{ fontSize: '0.9rem', lineHeight: 1.55 }}>
           Participants agreed to be quoted and are named by first name.
         </p>
       </section>
 
       <section className="mt-16">
         <p>
-          <a href={PROTOTYPE} target="_blank" rel="noopener noreferrer" className="prose-link">Try the first version’s prototype</a>.
           Back to <Link href="/#work" className="prose-link">the work index</Link>, or read{' '}
           <Link href="/kizuku" className="prose-link">Kizuku</Link>.
         </p>
