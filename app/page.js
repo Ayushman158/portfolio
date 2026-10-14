@@ -79,7 +79,7 @@ const RESEARCH = [
     shot: '/research/signal-loop.jpg',
     video: '/research/signal-loop.mp4',
     alt: 'Signal’s departure card: leave by 8:28, 74% likely on time, then the three screens it lives on',
-    what: 'Most people learn the Delhi Metro in a ride or two. Office commuters still guess, every morning, when to leave. Signal tells them.',
+    what: 'Delhi Metro trains run on time; the trip around them doesn’t. Signal tells office commuters what the timetable can’t: whether they’ll get on at the interchange, and what’s waiting at the exit.',
     tags: ['Research', 'Interaction', 'Prototype', 'Film'],
   },
 ]

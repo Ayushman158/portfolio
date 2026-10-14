@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
 import { Back, Facts, Heading, Impact, Overview, Rule, SkipTo, Subhead, Tradeoffs } from '../components/case-study'
 import SignalHero from './hero'
+import { RefocusScreens } from './phones'
 import { Cards, Findings, JobStories, Personas, Ramp, Weights, Iterations, LoadCurve, Matrix, Morning, Numbers, ORANGE, Screens, Tested, Verdicts } from './visuals'
 
 /*
@@ -21,9 +22,9 @@ const PROTOTYPE = 'https://dainty-capybara-dd3d7e.netlify.app/'
 
 // The whole project in four answers, readable before anything else.
 const OVERVIEW = [
-  ['Who it’s for', 'Daily office commuters on the Yellow Line who change at INA.'],
-  ['The problem', 'All seven people I interviewed leave early every morning, just in case. They said it costs them about 34 minutes a day.'],
-  ['What I did', 'Seven interviews, two peak-hour observations, five usability tests, and a working prototype.'],
+  ['Who it’s for', 'Daily office commuters on the Yellow Line who change at INA and get out at HUDA City Centre.'],
+  ['The problem', 'Trains run on time, but the trip doesn’t. All seven people I interviewed leave early every day, just in case. What they can’t predict is getting on at the interchange and getting away from the exit.'],
+  ['What I did', 'Seven interviews, two peak-hour observations, five usability tests and a prototype. Then I checked the idea against DMRC’s own figures and Google Maps, and refocused it.'],
   ['Project', 'A 14-week M.Des project, done alone. A concept, not a shipped app.'],
 ]
 
@@ -32,16 +33,17 @@ const IMPACT = [
   ['4 of 5', 'read the “leave by” answer correctly in under 3 seconds'],
   ['4 of 5', 'completed onboarding'],
   ['5', 'wording fixes from one test session'],
-  ['1 screen', 'instead of four apps on the way to work'],
 ]
 
 // What I was up against, what I chose, and what that gave up.
 const TRADEOFFS = [
-  ['Delhi publishes no live metro positions', 'A confidence score from timetables, weather, the calendar and past patterns', 'It’s an estimate, not live data, and the model is specified, not yet running'],
+  ['Delhi publishes nothing live about crowding', 'Riders report it in two taps, and past reports fill the gaps', 'It needs enough regulars on a line; early mornings and late nights will be thin'],
+  ['Crowd reports can be wrong, stale or gamed', 'Reports fade after 20 minutes, and one report on its own never changes the answer', 'Quiet stretches get the usual pattern, not a live answer'],
+  ['Google Maps already tells you when to leave', 'Kept the leave-by time, but made the interchange and the exit the core', 'Signal is no longer a single morning glance; it speaks at two more moments'],
   ['Booking a ride for you risks surge pricing and wrong bookings', 'Signal fills in the Rapido ride; the commuter confirms it', 'One extra tap, about four seconds'],
   ['The answer has to land in two seconds, mid-transfer at INA', 'Inter Bold for the answer instead of a serif', 'Less warmth and personality on the main screen'],
   ['Safety had the strongest need, but lighting and crowding data isn’t published', 'Left safety out of this version', 'Priya’s need, the sharpest in the research, is unmet'],
-  ['14 weeks, on my own', 'One line and one interchange: the Yellow Line at INA', 'Says nothing yet about other lines'],
+  ['14 weeks, on my own', 'One line, one interchange, one exit: the Yellow Line, INA and HUDA City Centre', 'Says nothing yet about other lines'],
   ['Seven interviews and five tests, found through my own network', 'Findings written as counts, like “4 of 7”, not percentages', 'Enough to find problems, not to say how common they are'],
 ]
 
@@ -106,10 +108,10 @@ const JOBS = [
 
 // The model's own weights, sources and percentages as specified.
 const WEIGHTS = [
-  ['AFC crowd patterns', 40, '90-day rolling tap-in and tap-out density at Dwarka Sec-21 and INA for this time window and day of week. Historical, not real time.'],
-  ['GTFS timetable baseline', 30, 'DMRC’s published schedule sets the departure and arrival windows; confidence starts at 100% and degrades with historical deviation.'],
-  ['IMD weather signal', 15, 'Three disruption proxies: dense fog on the elevated sections, heavy rain at station approaches, and heat events that change dwell time.'],
-  ['Calendar disruption signal', 15, 'Matches at Kotla, board exam dates, public holidays and nearby concerts — all open data, indexed 90 days ahead.'],
+  ['Rider reports, last 20 minutes', 40, 'Two-tap reports from people on the same line. They fade after 20 minutes, and one report on its own never changes the answer.'],
+  ['Past reports, same train and weekday', 30, 'Four weeks of reports for this train, at this time, on this day of the week. Signal falls back on this when it’s quiet.'],
+  ['Timetable, calendar and weather', 20, 'DMRC’s published timetable, plus matches at Kotla, exam days, holidays, fog and heavy rain. All open data.'],
+  ['Your own trips', 10, 'Which train you actually boarded, and whether you said it was full.'],
 ]
 
 const RAMP = [
@@ -127,11 +129,30 @@ const BOARDS = [
 ]
 
 
+// The checks that made me refocus. Each figure is scoped the way its source scopes it.
+const CHECKS = [
+  ['99.95%', 'of Delhi Metro trains ran on time in 2026, by DMRC’s count. A train is late if it arrives more than 59 seconds behind.', 'https://www.tribuneindia.com/news/delhi/delhi-metro-records-99-95-train-punctuality-in-2026-dmrc/', 'The Tribune'],
+  ['2 min 18 s', 'between trains on DMRC’s busiest corridors, by its own figures.', 'https://businesstoday.in/india/story/99-95-punctuality-record-how-delhi-metro-beat-new-york-paris-subways-at-the-reliability-game-548187-2026-08-09', 'Business Today'],
+  ['Built', 'Google Maps already reminds you when to leave, working back from when you need to arrive.', 'https://support.google.com/maps/answer/7382999', 'Google Maps help'],
+]
+
+const ASSUMED = [
+  'Trains run late, so people need to know when to leave.',
+  'The morning departure is the decision that matters.',
+  'Better timing data would remove the buffer.',
+]
+
+const FOUND = [
+  'Trains run on time. Getting on them at the interchange doesn’t.',
+  'The hard decisions are at INA and at the exit.',
+  'People already avoid interchanges and queue for shared autos that no app can see.',
+]
+
 const FACTS = [
   ['Role', 'Solo — research, interaction design, prototype, film'],
   ['Timeline', '14 weeks · M.Des Design Project I'],
   ['Research', '7 interviews · 2 peak-hour observations · 5 usability tests'],
-  ['Status', 'Concept with a working prototype — not shipped'],
+  ['Status', 'Concept. The first version was prototyped and tested; the refocus is not yet tested'],
 ]
 
 const STORYBOARD = [
@@ -142,10 +163,10 @@ const STORYBOARD = [
 ]
 
 const MORNING = [
-  ['7:45', 'Home', 'What time should I leave?', 'adds a 20-minute buffer'],
-  ['8:52', 'Rajiv Chowk', 'Board now or wait?', 'board says 6 min — actual 14'],
-  ['9:18', 'INA interchange', 'Will I make the connection?', 'runs the 4-minute walk, misses it'],
-  ['9:55', 'HUDA City Centre', 'Why is every auto on surge?', 'mass exit surge from the delay'],
+  ['7:45', 'Home', 'What time should I leave?', 'adds a 20-minute buffer, every day'],
+  ['9:10', 'On the Pink Line', 'Will I get on at INA?', 'no way to know until the doors open'],
+  ['9:16', 'INA interchange', 'This one, or the next?', 'the first train is too full; she waits'],
+  ['9:52', 'HUDA City Centre', 'Shared auto or Rapido?', 'autos wait to fill up; Rapido is on surge'],
 ]
 
 const METHODS = [
@@ -158,23 +179,22 @@ const METHODS = [
 ]
 
 const FINDINGS = [
-  { stat: '4 apps', viz: ['pills', { items: ['Google Maps', 'DMRC', 'WhatsApp', 'the clock'] }], title: 'Four apps to plan one trip', body: 'Commuters with two or more transfers juggle all four to approximate one signal. None gives a departure verdict.' },
-  { stat: 'INA', title: 'The transfer is a guess', body: 'Crowding, the corridor walk and the next train are unknown until you are standing there. “I start checking my phone as soon as we leave Rajiv Chowk.”' },
-  { stat: '7 of 7', viz: ['dots', { k: 7, n: 7 }], title: 'Everyone leaves early, every day', body: 'Every participant adds a buffer every day. They reported losing an average of 34 minutes a day to missing information.' },
+  { stat: '2 of 7', viz: ['dots', { k: 2, n: 7 }], title: 'People reorganise their lives around it', body: 'One participant moved house to get onto the Yellow Line and avoid changing at Rajiv Chowk. Another walks ten extra minutes every morning to skip an interchange. Nothing else in the research cost people this much.' },
+  { stat: 'INA', title: 'The interchange is a guess', body: 'At peak the first train is often too full to board, and nobody knows how crowded the next one is until they are on the platform. “I start checking my phone as soon as we leave Rajiv Chowk.”' },
+  { stat: '7 of 7', viz: ['dots', { k: 7, n: 7 }], title: 'Everyone leaves early, every day', body: 'Every participant adds a buffer every day. Muskaan leaves an hour early for a 40-minute journey. They reported losing an average of 34 minutes a day to it.' },
+  { stat: '0 apps', title: 'The shared-auto queue is invisible', body: <>At Gurgaon exits, commuters wait at particular pillars and split the fare, and no app knows it exists. In <a href="https://wri-india.org/sites/default/files/Improving%20metro%20access%20in%20India_%20Working%20Paper.pdf" target="_blank" rel="noopener noreferrer" className="prose-link">WRI India’s 2023 survey</a>, 89% of Delhi riders chose a share auto over the bus where both ran.</> },
   { stat: '4 of 7', viz: ['dots', { k: 4, n: 7 }], title: 'Women pick routes for safety first', body: 'Four participants, all women, choose routes by lighting, crowding and CISF presence. Not built here; it sits in the future scope.' },
-  { stat: '89%', viz: ['bar', { pct: 89 }], title: 'The last mile is a share auto', body: <>Of Delhi riders in <a href="https://wri-india.org/sites/default/files/Improving%20metro%20access%20in%20India_%20Working%20Paper.pdf" target="_blank" rel="noopener noreferrer" className="prose-link">WRI India’s 2023 survey</a> chose a share auto over the bus on last-mile trips where both ran — waiting, not price.</> },
-  { stat: '0', title: 'Live metro data to build on', body: <><a href="https://otd.delhi.gov.in/" target="_blank" rel="noopener noreferrer" className="prose-link">Delhi publishes</a> metro timetables and live bus positions, but nothing live from the trains: no positions, no crowding. That constraint shaped the product.</> },
+  { stat: '0', title: 'Live crowding data to build on', body: <><a href="https://otd.delhi.gov.in/" target="_blank" rel="noopener noreferrer" className="prose-link">Delhi publishes</a> metro timetables but nothing live about crowding. DMRC is <a href="https://www.dnaindia.com/delhi/report-delhi-metro-news-you-can-now-find-empty-coaches-before-you-board-train-know-how-3153723" target="_blank" rel="noopener noreferrer" className="prose-link">trialling coach occupancy</a> on platform screens, so you only see it once you are already there.</> },
 ]
 
 const COMPETITORS = {
-  columns: ['Departure intelligence', 'Transfer viability', 'First-mile pre-fill', 'Proactive alerts', 'Corridor-specific'],
+  columns: ['Leave-by time', 'Crowding before you board', 'Which coach', 'The last mile at the exit', 'Learns from riders'],
   rows: [
-    ['Google Maps', [[1, 'Reactive only'], [0, 'None'], [0, 'None'], [0, 'None'], [0, 'Generic']]],
-    ['DMRC Sarthi', [[1, 'Timetable lookup'], [0, 'None'], [0, 'None'], [0, 'None'], [0, 'Generic']]],
-    ['Moovit', [[1, 'Reactive, per journey'], [0, 'None'], [0, 'None'], [1, 'Generic delays'], [0, 'Generic']]],
-    ['Citymapper (London)', [[2, 'Proactive departure'], [1, 'Limited'], [0, 'None'], [1, 'Disruption alerts'], [1, 'Route-level']]],
-    ['WhatsApp groups', [[1, 'Crowdsourced, delayed'], [1, 'Anecdotal'], [0, 'None'], [1, 'Manual posts'], [2, 'Very corridor-specific']]],
-    ['Signal (concept)', [[2, 'Verdict before leaving'], [2, 'INA verdict before boarding'], [2, 'Rapido pre-filled'], [2, 'Night before + morning'], [2, 'Yellow Line only']], true],
+    ['Google Maps', [[2, 'Reminder to leave'], [0, 'Not confirmed for Delhi Metro'], [0, 'None'], [1, 'Routes, no queues'], [1, 'Crowd ratings, some cities']]],
+    ['DMRC app and screens', [[1, 'Timetable lookup'], [1, 'On platform screens, on trial'], [1, 'Same, on the platform only'], [1, 'Bike taxi and e-auto booking'], [0, 'None']]],
+    ['Rapido and Uber', [[0, 'None'], [0, 'None'], [0, 'None'], [1, 'A ride, at surge'], [0, 'None']]],
+    ['WhatsApp groups', [[0, 'None'], [1, 'Anecdotal, late'], [0, 'None'], [1, 'Manual posts'], [2, 'Entirely rider-led']]],
+    ['Signal (refocused)', [[1, 'Kept, but secondary'], [2, 'Before you reach the platform'], [2, 'Which coach is emptier'], [2, 'Shared-auto queue, surge, walk'], [2, 'Two-tap reports']], true],
   ],
 }
 
@@ -191,10 +211,10 @@ const SCREENS = [
 ]
 
 const STATES = [
-  ['Viable', 'You’ll make it.', '4 min walk · 7 min available', '#1F8A5B'],
-  ['Tight', 'Move briskly.', '6 min walk · 7 min available', '#D08A00'],
-  ['Risky', 'Next service.', 'window overrun · next at 9:04', ORANGE],
-  ['Missed', 'Rebook.', 'a clean fallback, no alarm', 'var(--faint)'],
+  ['Board', 'Get on this one.', 'there’s usually room on it', '#1F8A5B'],
+  ['Move down', 'Board at coach 7.', 'full by the stairs, room further along', '#D08A00'],
+  ['Let one go', 'Wait for the next.', 'usually packed · next in 3 min', ORANGE],
+  ['No reports', 'Timetable only.', 'says so, rather than guessing', 'var(--faint)'],
 ]
 
 const TESTED = [
@@ -251,7 +271,7 @@ export default function Signal() {
 
       <motion.header {...rise(0.06)} className="mt-10 space-y-5">
         <p className="text-faint" style={{ fontSize: '0.95rem' }}>Signal · 2026 · Research and concept</p>
-        <h1 className="display">Signal: an app that tells Delhi Metro commuters when to leave</h1>
+        <h1 className="display">Signal: what the timetable can’t tell Delhi Metro commuters</h1>
         {/* Ayushman's own telling, lightly edited. */}
         <div className="space-y-4 pt-2">
           <p>
@@ -265,16 +285,17 @@ export default function Signal() {
             decisions every single day are the 9-to-5 office commuters.
           </p>
           <p>
-            In India, a normal day today doesn’t mean a normal day tomorrow. If I leave at 8:30 and reach
-            the office by 9 today, leaving at 8:30 tomorrow might not get me there in time. Signal makes
-            that decision easier. Every morning it tells you when to leave, and the night before it tells
-            you whether tomorrow is looking good.
+            My first version told them when to leave. Then I checked it against the data. The train is
+            rarely the problem: DMRC says 99.95% of its trains ran on time in 2026, and Google Maps can
+            already remind you when to leave. What my participants couldn’t predict was everything around
+            the train: whether they would get on at the interchange, and what would be waiting at the
+            exit. So I refocused Signal on those two moments.
           </p>
         </div>
       </motion.header>
       <motion.div {...rise(0.08)}><Overview items={OVERVIEW} /></motion.div>
       <motion.div {...rise(0.1)}>
-        <Impact items={IMPACT} note="Usability results with five daily commuters. Signal is a concept with a working prototype, not a shipped app." />
+        <Impact items={IMPACT} note="Usability results from the first version, with five daily commuters. The refocused screens have not been tested yet." />
       </motion.div>
 
       <div data-case-hero className="track-full mt-12 overflow-hidden rounded-xl">
@@ -284,7 +305,7 @@ export default function Signal() {
 
       <motion.div {...rise(0.14)}><Facts rows={FACTS} /></motion.div>
       <motion.p {...rise(0.16)} className="mt-8">
-        <a href={PROTOTYPE} target="_blank" rel="noopener noreferrer" className="prose-link">Try the prototype</a>
+        <a href={PROTOTYPE} target="_blank" rel="noopener noreferrer" className="prose-link">Try the first version’s prototype</a>
         <span className="text-faint"> · lock screen, app and watch</span>
       </motion.p>
 
@@ -293,8 +314,8 @@ export default function Signal() {
       <section>
         <Heading n="01">The problem</Heading>
         <p className="mb-8">
-          This is Jasleen’s real morning. She has done this route for two years and still makes four
-          guesses on the way.
+          A morning put together from what participants described. Four guesses on the way, and only
+          the first one is about time.
         </p>
         <Morning items={MORNING} />
         <div className="mt-14">
@@ -312,14 +333,14 @@ export default function Signal() {
         <Heading n="02">What I found</Heading>
         <p className="mb-8">
           Seven interviews with daily riders, two peak hours watching Rajiv Chowk and HUDA City Centre,
-          and five transit apps compared. Daily riders know the route; what they don’t know is whether
-          today is a normal day.{' '}
+          and five transit apps compared. Daily riders know the route. What they can’t see is how full the
+          train at the interchange will be, or what’s waiting at the exit.{' '}
           <a href="https://www.figma.com/board/WI0U6Rar6OSNFbAioAZmmo/Mobility-Research-Synthesis" target="_blank" rel="noopener noreferrer" className="prose-link">The synthesis board is in FigJam ↗</a>
         </p>
         <Findings items={FINDINGS} />
 
         <Subhead>What existing apps do</Subhead>
-        <p className="mb-8">None of them tells you when to leave before you set off. Citymapper comes closest, in London, where live data is public.</p>
+        <p className="mb-8">Google Maps already tells you when to leave. Nobody tells you whether you’ll get on at INA, or what’s waiting at the exit.</p>
         <Matrix {...COMPETITORS} />
 
         <Subhead>Who I designed for</Subhead>
@@ -328,25 +349,81 @@ export default function Signal() {
 
       <Rule />
 
-      <section id="screens" tabIndex={-1} data-skip-target>
-        <Heading n="03">The solution</Heading>
+      <section>
+        <Heading n="03">Is this a real problem?</Heading>
         <p className="mb-8">
-          One answer in the morning, on the lock screen, and nothing else until something changes. The
-          orange only appears when there’s a decision to make.
+          The first version of Signal answered one question: when should I leave? Coming back to it, I
+          wasn’t sure that was a real problem. I’m not from Delhi, and I had built it on my own guess
+          that trains run late.
         </p>
-        <Screens items={SCREENS} />
+        <div className="track-wide grid gap-3 sm:grid-cols-3">
+          {CHECKS.map(([stat, body, href, source]) => (
+            <div key={stat} className="rounded-xl p-5" style={{ border: '1px solid var(--rule)' }}>
+              <p className="tnum" style={{ color: 'var(--ink)', fontSize: '1.6rem', fontWeight: 500, lineHeight: 1, letterSpacing: '-0.02em' }}>{stat}</p>
+              <p className="mt-3" style={{ fontSize: '0.95rem', lineHeight: 1.45 }}>{body}</p>
+              <a href={href} target="_blank" rel="noopener noreferrer" className="prose-link text-faint mt-3 inline-block" style={{ fontSize: '0.85rem' }}>{source} ↗</a>
+            </div>
+          ))}
+        </div>
+        <div className="mt-10 space-y-5">
+          <p>
+            So the train itself isn’t the problem. Going back to my own research, it had been pointing
+            somewhere else all along. The pain points participants ranked highest were one stage going
+            wrong and knocking on to the rest, crowding at the interchange, and the last mile. Two of the
+            seven had reorganised their lives to avoid an interchange. And the shared autos most riders
+            finish the trip in leave no trace in any app.
+          </p>
+          <p>
+            When the Yellow Line does fail, it fails as crowding. In August 2025 a signalling fault{' '}
+            <a href="https://www.theweek.in/wire-updates/national/2025/08/29/des92-dl-3rdld-dmrc-delay.html" target="_blank" rel="noopener noreferrer" className="prose-link">packed the platforms</a>{' '}
+            at Hauz Khas, Rajiv Chowk and Kashmere Gate.
+          </p>
+          <p>
+            So I kept the leave-by time, but made it the smallest part. Signal now speaks at the two
+            moments nobody else covers: the interchange, and the exit.
+          </p>
+        </div>
+        <div className="track-wide mt-10 grid gap-3 sm:grid-cols-2">
+          {[['What I assumed', ASSUMED], ['What the research showed', FOUND]].map(([h, items], i) => (
+            <div key={h} className="rounded-xl p-5" style={{ border: '1px solid var(--rule)', background: i ? 'var(--raised)' : 'transparent' }}>
+              <p className="text-faint" style={{ fontSize: '0.8rem', letterSpacing: '0.04em', textTransform: 'uppercase' }}>{h}</p>
+              <ul className="mt-3 space-y-2 p-0">
+                {items.map((x) => <li key={x} className="list-none" style={{ fontSize: '0.95rem', lineHeight: 1.45, color: i ? 'var(--ink)' : undefined }}>{x}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <Rule />
+
+      <section id="screens" tabIndex={-1} data-skip-target>
+        <Heading n="04">The solution</Heading>
+        <p className="mb-8">
+          Signal now speaks at two moments: on the way to INA, and just before the exit. In between it
+          stays quiet. The orange only appears when there’s a decision to make.
+        </p>
+        <RefocusScreens />
+        <p className="text-faint mt-4" style={{ fontSize: '0.85rem' }}>Stations are real; times, counts and pillar numbers are illustrative.</p>
 
         <Subhead>The answer at INA, in four states</Subhead>
         <Verdicts items={STATES} />
 
-        <Subhead>Where the 74% comes from</Subhead>
-        <p className="mb-8">With no live feed, the score weighs four sources, and the app tells you what it’s based on.</p>
+        <Subhead>Where the answer comes from</Subhead>
+        <p className="mb-8">Delhi publishes nothing live about crowding, so riders are the live feed, and past patterns fill the gaps.</p>
         <Weights
           items={WEIGHTS}
-          note="Crowdsourced reports can only lower confidence, never raise it above the timetable baseline."
+          note="Specified, not yet running. With no recent reports, Signal shows the usual pattern and says that’s all it has."
         />
 
-        <Subhead>The concept film</Subhead>
+        <Subhead>Kept from the first version</Subhead>
+        <p className="mb-8">
+          The morning answer is still there, smaller: leave by 8:28, on the lock screen. These screens are
+          from the first version’s prototype, the one five commuters tested.
+        </p>
+        <Screens items={SCREENS} />
+
+        <Subhead>The first version’s concept film</Subhead>
         <p className="mb-8">85 seconds, from the night before to arrival. Made in code with Remotion. Sound on.</p>
         <figure className="track-full">
           <video
@@ -364,10 +441,10 @@ export default function Signal() {
       <Rule />
 
       <section>
-        <Heading n="04">Constraints and tradeoffs</Heading>
+        <Heading n="05">Constraints and tradeoffs</Heading>
         <Tradeoffs items={TRADEOFFS} />
 
-        <Subhead>What testing changed</Subhead>
+        <Subhead>What testing changed, in the first version</Subhead>
         <p className="mb-6">
           One tester asked “What does pre-fill mean exactly?”, and it showed my own working words had
           leaked into the app in five places.
@@ -378,12 +455,20 @@ export default function Signal() {
       <Rule />
 
       <section>
-        <Heading n="05">What I learned</Heading>
+        <Heading n="06">What I learned</Heading>
         <p>
           I’m not the user. I’ve taken the Delhi Metro twice, so everything I know about this morning
-          came from seven people and two mornings of watching. That made me lean on the research and
-          say less than I’d like to. The lack of live data ended up shaping the whole product: a 74%
-          that admits it could be wrong is more honest than a made-up “train in 3 minutes”.
+          came from seven people and two mornings of watching. That made me lean on the research.
+        </p>
+        <p className="mt-5">
+          The biggest lesson came late: I had to question my own problem. My first version solved
+          something that was mostly solved already. My research had been pointing at the interchange
+          and the exit the whole time; I just hadn’t followed it.
+        </p>
+        <p className="mt-5">
+          Next, I’d take the refocused screens back to three to five of the original participants and
+          ask one question: what would you use this for that Google Maps doesn’t do? After that comes
+          the need I left out, safety-first routes for women travelling late.
         </p>
         <p className="text-faint mt-6" style={{ fontSize: '0.9rem', lineHeight: 1.55 }}>
           Participants agreed to be quoted and are named by first name.
@@ -392,7 +477,7 @@ export default function Signal() {
 
       <section className="mt-16">
         <p>
-          <a href={PROTOTYPE} target="_blank" rel="noopener noreferrer" className="prose-link">Try the prototype</a>.
+          <a href={PROTOTYPE} target="_blank" rel="noopener noreferrer" className="prose-link">Try the first version’s prototype</a>.
           Back to <Link href="/#work" className="prose-link">the work index</Link>, or read{' '}
           <Link href="/kizuku" className="prose-link">Kizuku</Link>.
         </p>
