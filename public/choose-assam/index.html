@@ -88,18 +88,6 @@ figcaption { margin-top: 12px; }
 .index li b { font-weight: 500; }
 .index li .label { padding-top: 4px; }
 
-/* ── ecology diagram ── */
-.eco { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1px solid var(--ink); }
-.eco li { position: relative; padding: 18px 24px 22px 0; display: grid; gap: 10px; align-content: start; }
-.eco li + li { padding-left: 24px; border-left: 1px solid var(--rule); }
-.eco li:not(:last-child)::after { content: ''; position: absolute; right: -5px; top: 26px; width: 8px; height: 8px; border-top: 1px solid var(--ink); border-right: 1px solid var(--ink); background: var(--bg); transform: rotate(45deg); }
-.eco .node { font-size: clamp(22px, 2vw, 30px); font-weight: 300; letter-spacing: -0.025em; line-height: 1.08; }
-.eco p:last-child { font-size: 15px; color: var(--ink-2); max-width: 24ch; }
-.eco li.hub .node { color: var(--red); }
-.eco-bar { display: flex; justify-content: space-between; gap: 24px; border: 1px solid var(--ink); padding: 14px 18px; margin-top: 12px; }
-.eco-loop { display: flex; align-items: center; gap: 14px; margin-top: 18px; color: var(--red); }
-.eco-loop svg { flex: 1; height: 12px; min-width: 40px; }
-
 /* ── touchpoints ── */
 .row-6 { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(8px, 1vw, 16px); }
 .row-6 img, .row-6 video { aspect-ratio: 4 / 5; object-fit: cover; }
@@ -107,10 +95,11 @@ figcaption { margin-top: 12px; }
 .row-6 .n span:last-child { text-transform: none; letter-spacing: 0; font-size: 14px; }
 
 /* ── sources ── */
-.sources { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--gutter); }
+.sources { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gutter); }
 .sources ol { border-top: 1px solid var(--ink); }
 .sources li { padding: 14px 0; border-bottom: 1px solid var(--rule); font-size: 15px; line-height: 1.45; }
 .sources li span { display: block; color: var(--ink-2); }
+.sources li a { text-decoration: underline; }
 
 .id-panel { background: #F4EFE3; display: grid; place-items: center; padding: clamp(56px, 10vw, 160px) var(--gutter); }
 .id-panel img { width: min(560px, 80%); }
@@ -120,6 +109,49 @@ figcaption { margin-top: 12px; }
 .swatches li:nth-child(2) i { outline: 1px solid var(--rule); outline-offset: -1px; }
 @media (max-width: 820px) { .swatches { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 20px; } }
 
+/* ── overview ── */
+.overview { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gutter); border-top: 1px solid var(--ink); padding-top: 14px; }
+.overview div { display: grid; gap: 10px; align-content: start; }
+.overview p:last-child { font-size: 16px; line-height: 1.5; }
+.lede { max-width: 60ch; margin-top: 20px; color: var(--ink-2); font-size: clamp(17px, 1.2vw, 19px); }
+
+/* ── system map: five layers, hover a part to see what it touches ── */
+.sys { position: relative; border-top: 1px solid var(--ink); padding-right: 56px; }
+.sys-layer { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--rule); align-items: start; }
+.sys-layer > .label { padding-top: 14px; }
+.sys-row { display: grid; gap: clamp(8px, 1vw, 14px); }
+.sys-row.c1 { grid-template-columns: minmax(0, 1fr); max-width: 340px; }
+.sys-row.c2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.sys-row.c3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.sys-row.c5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.sys-node { border: 1px solid var(--rule); padding: 12px 14px 14px; display: grid; gap: 4px; cursor: default; outline-offset: 2px;
+  transition: opacity 250ms var(--ease-out), border-color 250ms var(--ease-out), background-color 250ms var(--ease-out); }
+.sys-node b { font-weight: 400; font-size: clamp(18px, 1.5vw, 22px); letter-spacing: -0.02em; line-height: 1.15; }
+.sys-node span { font-size: 14px; line-height: 1.4; color: var(--ink-2); }
+.sys-node.hub { border-color: var(--red); }
+.sys-node.hub b { color: var(--red); }
+.sys.focus .sys-node { opacity: 0.25; }
+.sys.focus .sys-node.lit { opacity: 1; border-color: var(--ink); }
+.sys.focus .sys-node.on { background: #F4F4F2; }
+.sys-link { font-size: 13px; color: var(--ink-2); margin-top: 10px; }
+.sys-loop { position: absolute; top: 28px; bottom: 28px; right: 0; width: 40px; border: 1px solid var(--red); border-left: 0; color: var(--red); }
+.sys-loop::before { content: ''; position: absolute; top: -5px; left: -2px; width: 8px; height: 8px; border-top: 1px solid var(--red); border-left: 1px solid var(--red); transform: rotate(-45deg); }
+.sys-loop span { position: absolute; right: -4px; top: 50%; transform: translate(50%, -50%) rotate(90deg); white-space: nowrap; background: var(--bg); padding: 0 10px; }
+.sys-hint { margin-top: 12px; }
+
+/* ── status engine: what each state unlocks ── */
+.row-4 dl { display: grid; gap: 8px; margin-top: 12px; font-size: 15px; line-height: 1.4; }
+.row-4 dt { color: var(--ink-2); font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; }
+.row-4 dd { margin: 2px 0 0; }
+
+/* ── spec tables (stack into labelled cards on a phone) ── */
+.spec { border-top: 1px solid var(--ink); font-size: 15px; line-height: 1.45; }
+.spec [role="row"] { display: grid; grid-template-columns: var(--cols); gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.spec [role="columnheader"] { font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); }
+.spec [role="cell"]:first-child { font-weight: 500; }
+.spec .muted a { color: var(--ink-2); }
+.spec + .label { margin-top: 12px; }
+
 footer { padding: 28px var(--gutter) 40px; display: flex; justify-content: space-between; gap: 24px; }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -128,7 +160,6 @@ footer { padding: 28px var(--gutter) 40px; display: flex; justify-content: space
 }
 @media (max-width: 1100px) and (min-width: 821px) {
   .row-6 { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 28px; }
-  .eco .node { font-size: 22px; }
 }
 @media (max-width: 820px) {
   .intro, .pair, .pair.rev { grid-template-columns: 1fr; }
@@ -137,11 +168,26 @@ footer { padding: 28px var(--gutter) 40px; display: flex; justify-content: space
   .credits { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 20px; }
   .bleed img { height: auto; }
   .brief, .sources { grid-template-columns: 1fr; }
-  .eco { grid-template-columns: 1fr; }
-  .eco li + li { padding-left: 0; border-left: 0; border-top: 1px solid var(--rule); }
-  .eco li:not(:last-child)::after { right: auto; left: 0; top: auto; bottom: -5px; transform: rotate(135deg); }
   .row-6 { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 28px; }
   .hero-bottom { flex-direction: column; align-items: start; }
+  .overview { grid-template-columns: 1fr; row-gap: 24px; }
+  .sys { padding-right: 0; padding-bottom: 56px; }
+  .sys-layer { grid-template-columns: 1fr; gap: 10px; }
+  .sys-layer > .label { padding-top: 0; }
+  .sys-row.c3, .sys-row.c5 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sys-row.c1 { max-width: none; }
+  .sys-loop { top: auto; bottom: 0; left: 0; width: auto; height: 40px; border: 1px solid var(--red); border-top: 0; }
+  .sys-loop::before { display: none; }
+  .sys-loop span { position: static; display: block; transform: none; white-space: normal; text-align: center; padding: 12px 10px 0; background: none; }
+  .row-4 dl { font-size: 14px; }
+  .spec [role="row"]:first-child { display: none; }
+  .spec [role="row"] { grid-template-columns: 1fr; gap: 6px; }
+  .spec [role="cell"][data-h]::before { content: attr(data-h); display: block; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 2px; }
+  .sources { grid-template-columns: 1fr; }
+}
+@media (max-width: 1100px) and (min-width: 821px) {
+  .overview { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 28px; }
+  .sys-row.c5 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 </style>
 </head>
@@ -166,10 +212,19 @@ footer { padding: 28px var(--gutter) 40px; display: flex; justify-content: space
   <section class="wrap gap-xl intro rv" aria-label="Introduction">
     <dl class="meta label">
       <div><dt class="muted">Client</dt><dd>Tata Tea Premium</dd></div>
-      <div><dt class="muted">Scope</dt><dd>Film · Pack · Outdoor · Retail · Web</dd></div>
+      <div><dt class="muted">System</dt><dd>Campaign · Maker platform · Identity</dd></div>
       <div><dt class="muted">Year</dt><dd>2026, speculative</dd></div>
     </dl>
-    <p class="display">When the flood leaves the headlines, the work of reopening begins. Tata Tea gives its own media to the makers of Assam, and asks people to <span style="color:var(--red)">buy</span>, not donate.</p>
+    <p class="display">After the flood, Tata Tea hands its media to the makers of Assam. Behind the campaign, a system tracks each maker’s recovery and decides how people can help: lend, pre-order or <span style="color:var(--red)">buy</span>. Never donate.</p>
+  </section>
+
+  <section class="wrap gap-lg rv" aria-label="Overview">
+    <div class="overview">
+      <div><p class="label muted">Context</p><p>Every monsoon, floods in Assam shut workshops, shops and homestays. The news moves on in days. Reopening takes months.</p></div>
+      <div><p class="label muted">Problem</p><p>Flood appeals ask for donations. That casts makers as victims, ends the relationship at the payment, and does nothing to bring their customers back.</p></div>
+      <div><p class="label muted">What I designed</p><p>A campaign, a maker platform and the rules between them. Every piece of Tata Tea’s media carries one QR. It lands on verified makers, and each maker’s status decides what money can reach them.</p></div>
+      <div><p class="label muted">Status</p><p>Speculative. An M.Des project for Designing Communication Ecologies at UPES. Not tested with makers or buyers; makers and figures are illustrative.</p></div>
+    </div>
   </section>
 
   <section class="wrap gap-xl brief rv" aria-labelledby="problem-h">
@@ -241,16 +296,6 @@ footer { padding: 28px var(--gutter) 40px; display: flex; justify-content: space
     <figcaption class="wrap label muted">06 · Delivered</figcaption>
   </figure>
 
-  <section class="wrap gap-xl rv" aria-label="Four states">
-    <p class="label muted" style="margin-bottom:20px">Every maker, one status</p>
-    <ol class="row-4">
-      <li><img src="assets/state-closed.jpg" alt="Jonali at her shutter as floodwater fills the workshop" loading="lazy"><div class="n label"><span>Closed</span><span class="muted">Day 1</span></div></li>
-      <li><img src="assets/state-rebuilding.jpg" alt="Jonali hangs washed yarn to dry on a mud-cracked floor" loading="lazy"><div class="n label"><span>Rebuilding</span><span class="muted">Day 14</span></div></li>
-      <li><img src="assets/state-producing.jpg" alt="Jonali and another weaver at work, finished cloths stacked on shelves" loading="lazy"><div class="n label"><span>Producing</span><span class="muted">Day 40</span></div></li>
-      <li><img src="assets/film-handoff.jpg" alt="A parcel handed to a delivery rider outside the workshop" loading="lazy"><div class="n label"><span>Open</span><span class="muted">Day 90</span></div></li>
-    </ol>
-  </section>
-
   <section class="wrap gap-xl brief rv" aria-labelledby="why-h">
     <p class="label muted">Why Tata Tea</p>
     <div>
@@ -264,37 +309,129 @@ footer { padding: 28px var(--gutter) 40px; display: flex; justify-content: space
     </div>
   </section>
 
-  <section class="wrap gap-xl rv" aria-labelledby="eco-h">
+  <section class="wrap gap-xl rv" aria-labelledby="sys-h">
     <div class="brief" style="margin-bottom:clamp(40px,5vw,72px)">
-      <p class="label muted">Communication ecology</p>
-      <h2 id="eco-h">Six touchpoints, one path: from feeling to ordering.</h2>
+      <p class="label muted">The system</p>
+      <div>
+        <h2 id="sys-h">The media brings people in. The platform decides where their money can go.</h2>
+        <p class="lede">Every piece of Tata Tea’s media carries the same QR. It lands on the maker platform, where each maker’s status sets which actions are open. The maker collective verifies makers and posts their updates, and those updates feed back into the pack and social.</p>
+      </div>
     </div>
-    <ol class="eco" aria-label="Communication ecology: awareness, encounter, bridge, action, outcome">
-      <li><p class="label muted">Awareness</p><p class="node">Cinematic film<br>Social media</p><p>The story reaches people where they already watch and scroll.</p></li>
-      <li><p class="label muted">Encounter</p><p class="node">Packaging</p><p>The pack in the kitchen carries the campaign into the home every day.</p></li>
-      <li class="hub"><p class="label muted">Bridge</p><p class="node">QR code</p><p>On pack, tag and billboard, one scan leads from the cup to the maker.</p></li>
-      <li><p class="label muted">Action</p><p class="node">Website</p><p>A live directory of makers to buy from, book or pre-order.</p></li>
-      <li><p class="label muted">Outcome</p><p class="node">Orders to makers</p><p>Revenue reaches the maker, and their status moves toward Open.</p></li>
+    <div class="sys" id="sys">
+      <div class="sys-layer">
+        <p class="label muted">Reach · Tata Tea’s media</p>
+        <ul class="sys-row c5">
+          <li class="sys-node" tabindex="0" data-id="film"><b>Film</b><span>60 seconds, told once at scale</span></li>
+          <li class="sys-node" tabindex="0" data-id="social"><b>Social</b><span>Maker updates, every week</span></li>
+          <li class="sys-node" tabindex="0" data-id="pack"><b>Pack</b><span>In the kitchen every morning</span></li>
+          <li class="sys-node" tabindex="0" data-id="shelf"><b>Shelf</b><span>End-caps in stores</span></li>
+          <li class="sys-node" tabindex="0" data-id="outdoor"><b>Outdoor</b><span>Billboards that name a maker</span></li>
+        </ul>
+      </div>
+      <div class="sys-layer">
+        <p class="label muted">Bridge</p>
+        <ul class="sys-row c1">
+          <li class="sys-node" tabindex="0" data-id="qr"><b>One QR</b><span>Same code on every surface, one destination</span></li>
+        </ul>
+      </div>
+      <div class="sys-layer">
+        <p class="label muted">Platform · the microsite</p>
+        <ul class="sys-row c3">
+          <li class="sys-node" tabindex="0" data-id="buy"><b>Buy</b><span>From makers who are open</span></li>
+          <li class="sys-node" tabindex="0" data-id="preorder"><b>Pre-order</b><span>Pay now, goods later; funds working capital</span></li>
+          <li class="sys-node" tabindex="0" data-id="lend"><b>Lend or back</b><span>Through regulated partners</span></li>
+        </ul>
+      </div>
+      <div class="sys-layer">
+        <p class="label muted">Rules</p>
+        <ul class="sys-row c2">
+          <li class="sys-node hub" tabindex="0" data-id="engine"><b>Status engine</b><span>Closed to Open; sets which money can reach a maker</span></li>
+          <li class="sys-node" tabindex="0" data-id="ledger"><b>Trust ledger</b><span>Public proof for every maker</span></li>
+        </ul>
+      </div>
+      <div class="sys-layer">
+        <p class="label muted">Ground</p>
+        <ul class="sys-row c3">
+          <li class="sys-node" tabindex="0" data-id="collective"><b>Maker collective</b><span>Verifies makers, posts updates</span></li>
+          <li class="sys-node" tabindex="0" data-id="makers"><b>Makers</b><span>Craft, food, homestays</span></li>
+          <li class="sys-node" tabindex="0" data-id="rails"><b>Regulated rails</b><span>Escrow, a licensed P2P lender, the Social Stock Exchange</span></li>
+        </ul>
+      </div>
+      <p class="sys-loop label" aria-label="Feedback loop"><span>Maker updates feed the ledger, the pack and social</span></p>
+    </div>
+    <p class="sys-hint label muted" id="sys-hint" aria-live="polite">Hover or tab to a part to see what it connects to</p>
+  </section>
+
+  <section class="wrap gap-xl rv" aria-labelledby="engine-h">
+    <div class="brief" style="margin-bottom:clamp(40px,5vw,72px)">
+      <p class="label muted">The status engine</p>
+      <div>
+        <h2 id="engine-h">Money unlocks as a maker moves from Closed to Open.</h2>
+        <p class="lede">This is what lets someone trust where their money goes. Nobody can buy from a maker who can’t ship yet, and loan repayments only start once the maker is selling again.</p>
+      </div>
+    </div>
+    <ol class="row-4">
+      <li><img src="assets/state-closed.jpg" alt="Jonali at her shutter as floodwater fills the workshop" loading="lazy"><div class="n label"><span>Closed</span><span class="muted">Day 1</span></div>
+        <dl><div><dt>Released</dt><dd>Nothing yet. The collective verifies the maker and lists them.</dd></div><div><dt>You can</dt><dd>Lend</dd></div></dl></li>
+      <li><img src="assets/state-rebuilding.jpg" alt="Jonali hangs washed yarn to dry on a mud-cracked floor" loading="lazy"><div class="n label"><span>Rebuilding</span><span class="muted">Day 14</span></div>
+        <dl><div><dt>Released</dt><dd>Repair funds, for silt, looms and stock</dd></div><div><dt>You can</dt><dd>Lend</dd></div></dl></li>
+      <li><img src="assets/state-producing.jpg" alt="Jonali and another weaver at work, finished cloths stacked on shelves" loading="lazy"><div class="n label"><span>Producing</span><span class="muted">Day 40</span></div>
+        <dl><div><dt>Released</dt><dd>Working capital, from pre-orders</dd></div><div><dt>You can</dt><dd>Pre-order, lend</dd></div></dl></li>
+      <li><img src="assets/film-handoff.jpg" alt="A parcel handed to a delivery rider outside the workshop" loading="lazy"><div class="n label"><span>Open</span><span class="muted">Day 90</span></div>
+        <dl><div><dt>Released</dt><dd>Sales go straight to the maker. Loan repayments begin.</dd></div><div><dt>You can</dt><dd>Buy, pre-order</dd></div></dl></li>
     </ol>
-    <div class="eco-bar label"><span>Branding</span><span class="muted">One Choose Assam identity holds every touchpoint together</span></div>
-    <div class="eco-loop label">
-      <svg viewBox="0 0 400 12" preserveAspectRatio="none" aria-hidden="true"><path d="M0 6H400" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke"/></svg>
-      <span>Maker updates feed back into social and the site</span>
+  </section>
+
+  <section class="wrap gap-xl rv" aria-labelledby="back-h">
+    <div class="brief" style="margin-bottom:clamp(40px,5vw,72px)">
+      <p class="label muted">Backing makers</p>
+      <div>
+        <h2 id="back-h">Keep the idea of investing. Change the structure.</h2>
+        <p class="lede">Investing in a maker sounds right, but equity crowdfunding isn’t legal in India. SEBI calls it “unauthorised, unregulated and illegal”, and its 2014 proposal is still not regulation. So backing runs through three routes that are legal.</p>
+      </div>
+    </div>
+    <div class="spec" role="table" aria-label="Three legal ways to back a maker" style="--cols: minmax(0,1fr) minmax(0,1fr) minmax(0,2fr) minmax(0,2fr)">
+      <div role="row"><span role="columnheader">Route</span><span role="columnheader">Who</span><span role="columnheader">How it works</span><span role="columnheader">Legal basis</span></div>
+      <div role="row"><span role="cell">Pre-order</span><span role="cell" data-h="Who">Anyone</span><span role="cell" data-h="How it works">Pay now, receive the goods later. It funds the maker’s working capital.</span><span role="cell" class="muted" data-h="Legal basis">Reward crowdfunding, legal without sector-specific rules (<a href="https://www.incorpx.io/blog/crowdfunding-india-sebi-legal-framework-2026" target="_blank" rel="noopener">InCorpX</a>)</span></div>
+      <div role="row"><span role="cell">Lend</span><span role="cell" data-h="Who">Individuals</span><span role="cell" data-h="How it works">Small loans through a licensed P2P partner. Rang De is the model.</span><span role="cell" class="muted" data-h="Legal basis">RBI NBFC-P2P licence; escrow is mandatory and no repayment guarantee is allowed (<a href="https://rangde.in/blog/rbi-lending-regulations" target="_blank" rel="noopener">Rang De</a>, <a href="https://ies.gov.in/arthapedia/concept/peer-peer-p2p-lending" target="_blank" rel="noopener">IES</a>)</span></div>
+      <div role="row"><span role="cell">Back the collective</span><span role="cell" data-h="Who">Tata and institutions</span><span role="cell" data-h="How it works">Subscribe to zero-coupon zero-principal (ZCZP) instruments of a partner NPO listed on the Social Stock Exchange.</span><span role="cell" class="muted" data-h="Legal basis">Since May 2026, up to 10% of a company’s CSR obligation can go to ZCZPs (<a href="https://ssrana.in/articles/a-new-route-for-csr-deployment-zczp-instruments-on-the-social-stock-exchange/" target="_blank" rel="noopener">S.S. Rana</a>)</span></div>
+    </div>
+    <p class="label muted">Backing the collective gives Tata a regulated, auditable way to anchor the fund, a stronger story than “we donated”.</p>
+
+    <div class="brief gap-lg">
+      <p class="label muted">What builds trust</p>
+      <ol class="index" style="margin-top:0">
+        <li><span class="label muted">01</span><span><b>Verification.</b> The collective checks every maker in person before listing. Each listing shows their Udyam registration and any GI tags.</span></li>
+        <li><span class="label muted">02</span><span><b>Milestone release.</b> Money unlocks by status, as above. Nothing reaches a stage the maker hasn’t reached.</span></li>
+        <li><span class="label muted">03</span><span><b>A public ledger per maker.</b> Orders fulfilled, money received and used, repayments made, and photo updates at 30, 60 and 90 days.</span></li>
+        <li><span class="label muted">04</span><span><b>Risk labels and a grievance path</b> on every loan, because the platform can’t guarantee repayment.</span></li>
+      </ol>
     </div>
   </section>
 
-  <section class="wrap gap-lg rv" aria-label="Touchpoints">
+  <section class="wrap gap-xl rv" aria-labelledby="tp-h">
+    <div class="brief" style="margin-bottom:clamp(40px,5vw,72px)">
+      <p class="label muted">Touchpoints</p>
+      <h2 id="tp-h">Six touchpoints, each with one job.</h2>
+    </div>
     <ol class="row-6">
-      <li><a href="/choose-assam#top" aria-label="Play the film at the top of the page"><img src="assets/tp-film.jpg" alt="A family watches the Choose Assam film on TV at home" loading="lazy"></a><div class="n label"><span>Cinematic film</span><span class="muted">60s anthem</span></div></li>
-      <li><img src="assets/tp-social.jpg" alt="A commuter watches a Choose Assam reel on her phone on a Mumbai local train" loading="lazy"><div class="n label"><span>Social media</span><span class="muted">Vertical cuts, maker stories</span></div></li>
-      <li><img src="assets/pour.jpg" alt="Tea poured beside the Choose Assam pack on a kitchen table" loading="lazy" style="object-position:72% 50%"><div class="n label"><span>Packaging</span><span class="muted">Limited-edition pack</span></div></li>
-      <li><img src="assets/hang-tag.jpg" alt="The Choose Assam hang tag and its QR card: scan to meet the maker" loading="lazy"><div class="n label"><span>QR code</span><span class="muted">Pack, tag, billboard</span></div></li>
-      <li><a href="site/index.html" aria-label="Open the Choose Assam microsite"><img src="assets/site-shot.jpg" alt="Choose Assam microsite on a phone" loading="lazy" style="object-position:50% 0"></a><div class="n label"><span>Website</span><span class="muted">Maker directory</span></div></li>
-      <li><img src="assets/lockup.png" alt="Choose Assam logo" loading="lazy" style="object-fit:contain;background:#F4EFE3;padding:16%"><div class="n label"><span>Branding</span><span class="muted">Choose Assam identity</span></div></li>
+      <li><a href="/choose-assam#top" aria-label="Play the film at the top of the page"><img src="assets/tp-film.jpg" alt="A family watches the Choose Assam film on TV at home" loading="lazy"></a><div class="n label"><span>Cinematic film</span><span class="muted">Reach: tells the story once, at scale</span></div></li>
+      <li><img src="assets/tp-social.jpg" alt="A commuter watches a Choose Assam reel on her phone on a Mumbai local train" loading="lazy"><div class="n label"><span>Social media</span><span class="muted">Return: maker updates bring people back</span></div></li>
+      <li><img src="assets/pour.jpg" alt="Tea poured beside the Choose Assam pack on a kitchen table" loading="lazy" style="object-position:72% 50%"><div class="n label"><span>Packaging</span><span class="muted">Encounter: in the home, every morning</span></div></li>
+      <li><img src="assets/hang-tag.jpg" alt="The Choose Assam hang tag and its QR card: scan to meet the maker" loading="lazy"><div class="n label"><span>QR code</span><span class="muted">Bridge: one scan from any surface</span></div></li>
+      <li><a href="site/index.html" aria-label="Open the Choose Assam microsite"><img src="assets/site-shot.jpg" alt="Choose Assam microsite on a phone" loading="lazy" style="object-position:50% 0"></a><div class="n label"><span>Website</span><span class="muted">Action: lend, pre-order, buy</span></div></li>
+      <li><img src="assets/lockup.png" alt="Choose Assam logo" loading="lazy" style="object-fit:contain;background:#F4EFE3;padding:16%"><div class="n label"><span>Branding</span><span class="muted">Consistency: one lockup everywhere</span></div></li>
     </ol>
   </section>
 
-  <section class="wrap gap-xl rv" aria-label="Identity">
+  <section class="wrap gap-xl rv" aria-labelledby="id-h">
+    <div class="brief" style="margin-bottom:clamp(40px,5vw,72px)">
+      <p class="label muted">Identity</p>
+      <div>
+        <h2 id="id-h">One wordmark that never changes, and a craft band that changes with every edition.</h2>
+        <p class="lede">The gamosa can’t carry the whole identity. Each pack edition takes its band from one community’s own material and links to that community’s makers on the platform. The pack becomes a series worth collecting, which gives people a reason to come back.</p>
+      </div>
+    </div>
     <div class="id-panel"><img src="assets/lockup.png" alt="Choose Assam logo: a brush-script Choose over brushed ASSAM, with a gold tea-leaf underline" loading="lazy"></div>
     <ol class="swatches label">
       <li><i style="background:#1F4B34"></i><span>Assam Green</span><span class="muted">#1F4B34</span></li>
@@ -302,7 +439,23 @@ footer { padding: 28px var(--gutter) 40px; display: flex; justify-content: space
       <li><i style="background:#C8A46A"></i><span>Muga Gold</span><span class="muted">#C8A46A</span></li>
       <li><i style="background:#C62828"></i><span>Gamosa Red</span><span class="muted">#C62828</span></li>
     </ol>
-    <p class="label muted" style="margin-top:12px">Identity · One logo on every touchpoint</p>
+    <p class="label muted" style="margin-top:12px">The constant · One lockup, four colours, on every touchpoint</p>
+
+    <div class="brief gap-lg">
+      <p class="label muted">The editions · Planned, not yet designed</p>
+      <div>
+        <div class="spec" role="table" aria-label="Planned pack editions" style="--cols: minmax(0,1fr) minmax(0,2fr)">
+          <div role="row"><span role="columnheader">Edition</span><span role="columnheader">The band comes from</span></div>
+          <div role="row"><span role="cell">Silk</span><span role="cell" data-h="The band comes from">Muga and pat silk from Sualkuchi; Bodo Aronai weaving</span></div>
+          <div role="row"><span role="cell">Bamboo and cane</span><span role="cell" data-h="The band comes from">The japi; basketry from Barpeta and Cachar</span></div>
+          <div role="row"><span role="cell">Bell metal</span><span role="cell" data-h="The band comes from">The xorai from Sarthebari</span></div>
+          <div role="row"><span role="cell">Majuli</span><span role="cell" data-h="The band comes from">Masks and pottery</span></div>
+          <div role="row"><span role="cell">Food</span><span role="cell" data-h="The band comes from">Bhut jolokia, bamboo shoot pickle, Joha rice, Karbi Anglong ginger, Assam lemon</span></div>
+          <div role="row"><span role="cell">Tea community</span><span role="cell" data-h="The band comes from">Jhumur and Karam, made with community artists, credited and paid</span></div>
+        </div>
+        <p class="lede">The tea community edition is the centrepiece, and it has to be co-authored. A tea brand using tea-community imagery will rightly be questioned, given the history of estate labour, so the co-authorship shows on the pack and on the site.</p>
+      </div>
+    </div>
   </section>
 
   <figure class="gap-xl bleed rv">
@@ -339,10 +492,52 @@ footer { padding: 28px var(--gutter) 40px; display: flex; justify-content: space
     <img src="assets/film-end.jpg" alt="Choose Assam end card: a river forms the word Assam" loading="lazy">
   </figure>
 
+  <section class="wrap gap-xl rv" aria-labelledby="trade-h">
+    <div class="brief" style="margin-bottom:clamp(40px,5vw,72px)">
+      <p class="label muted">Constraints and tradeoffs</p>
+      <h2 id="trade-h">What I chose, and what it cost.</h2>
+    </div>
+    <div class="spec" role="table" aria-label="Constraints and tradeoffs" style="--cols: minmax(0,1fr) minmax(0,1fr) minmax(0,1fr)">
+      <div role="row"><span role="columnheader">Constraint</span><span role="columnheader">What I chose</span><span role="columnheader">What it cost</span></div>
+      <div role="row"><span role="cell">A brand can’t be seen profiting from a disaster, and charity casts makers as victims.</span><span role="cell" data-h="What I chose">Commerce: buy, pre-order or lend. Never a donate button.</span><span role="cell" data-h="What it cost">Harder to explain than “donate”, and it only works for makers who can sell again.</span></div>
+      <div role="row"><span role="cell">Makers recover at different speeds.</span><span role="cell" data-h="What I chose">A status for every maker that sets which actions are open.</span><span role="cell" data-h="What it cost">Early on, most makers aren’t open yet, so lending and pre-orders have to carry the first weeks.</span></div>
+      <div role="row"><span role="cell">Equity crowdfunding is illegal in India.</span><span role="cell" data-h="What I chose">Pre-orders, a licensed P2P lender, and ZCZPs on the Social Stock Exchange.</span><span role="cell" data-h="What it cost">Backers get no upside, and lending needs a licensed partner that can’t promise repayment.</span></div>
+      <div role="row"><span role="cell">Packs, shelves and billboards can’t be reprinted every week.</span><span role="cell" data-h="What I chose">One QR on every surface. What changes lives on the platform.</span><span role="cell" data-h="What it cost">It depends on the collective updating statuses every week, or the pack points at stale news.</span></div>
+      <div role="row"><span role="cell">A tea brand using tea-community imagery.</span><span role="cell" data-h="What I chose">A co-authored edition with artists credited and paid.</span><span role="cell" data-h="What it cost">Slower, and it needs community partners before the edition can exist.</span></div>
+    </div>
+  </section>
+
+  <section class="wrap gap-xl rv" aria-labelledby="next-h">
+    <div class="brief" style="margin-bottom:clamp(40px,5vw,72px)">
+      <p class="label muted">What I’d fix next</p>
+      <div>
+        <h2 id="next-h">The pack still contradicts itself in five places.</h2>
+        <p class="lede">It reads as generated, not designed. The fix is to build it flat from a dieline, print one and photograph it. That print is also the first test on the ground.</p>
+      </div>
+    </div>
+    <div class="spec" role="table" aria-label="Known issues and fixes" style="--cols: minmax(0,3fr) minmax(0,2fr)">
+      <div role="row"><span role="columnheader">Issue</span><span role="columnheader">Fix</span></div>
+      <div role="row"><span role="cell">Three different lockups: the front, the hang tag and the back each mix the script and caps differently.</span><span role="cell" data-h="Fix">One lockup, everywhere</span></div>
+      <div role="row"><span role="cell">The back says “scan the tag”, but the QR is printed on the pouch.</span><span role="cell" data-h="Fix">Copy that matches where the QR sits</span></div>
+      <div role="row"><span role="cell">The Tata Tea Premium logo is redrawn, and a kraft stand-up pouch isn’t the real pack format.</span><span role="cell" data-h="Fix">The real pack, with a limited-edition band</span></div>
+      <div role="row"><span role="cell">The red diamond border is a generic pattern, not a gamosa weave.</span><span role="cell" data-h="Fix">Scanned textile and craft textures</span></div>
+      <div role="row"><span role="cell">The same golden-hour table front and back, engraving-style illustration, four typefaces.</span><span role="cell" data-h="Fix">Two typefaces, real materials, a printed prototype</span></div>
+    </div>
+    <div class="brief gap-lg">
+      <p class="label muted">And on the microsite</p>
+      <ol class="index" style="margin-top:0">
+        <li><span class="label muted">01</span><span>Grow from four makers to about 24 across the editions above, filtered by craft, district and status, on a map of Assam.</span></li>
+        <li><span class="label muted">02</span><span>Give each maker a page with their status timeline, their ledger and the three actions. Today a Rebuilding maker still shows Pre-order, which the rules above don’t allow.</span></li>
+        <li><span class="label muted">03</span><span>Replace “Makers and statuses are illustrative” with the name of the verification partner. That is the line a backer actually reads.</span></li>
+        <li><span class="label muted">04</span><span>An Assamese-script version of the wordmark.</span></li>
+      </ol>
+    </div>
+  </section>
+
   <section class="wrap gap-xl rv" aria-labelledby="src-h">
     <div class="brief" style="margin-bottom:clamp(32px,4vw,56px)">
       <p class="label muted" id="src-h">Sources</p>
-      <p class="muted" style="max-width:52ch">Where the problem, insights and brand fit come from. The campaign, its figures and its makers are speculative.</p>
+      <p class="muted" style="max-width:52ch">Where the problem, insights, brand fit and backing routes come from. The campaign, its figures and its makers are speculative.</p>
     </div>
     <div class="sources">
       <ol aria-label="Research">
@@ -356,6 +551,14 @@ footer { padding: 28px var(--gutter) 40px; display: flex; justify-content: space
         <li>Sullivan &amp; Boches<span>Hey Whipple, Squeeze This</span></li>
         <li>McDougall<span>Media Literacy for the Communication Ecosystem</span></li>
       </ol>
+      <ol aria-label="Law and finance">
+        <li><a href="https://www.incorpx.io/blog/crowdfunding-india-sebi-legal-framework-2026" target="_blank" rel="noopener">InCorpX</a><span>Crowdfunding in India: the SEBI framework</span></li>
+        <li><a href="https://investindia.gov.in/team-india-blogs/crowdfunding-india" target="_blank" rel="noopener">Invest India</a><span>Crowdfunding in India</span></li>
+        <li><a href="https://rangde.in/blog/rbi-lending-regulations" target="_blank" rel="noopener">Rang De</a><span>RBI P2P lending compliance</span></li>
+        <li><a href="https://ies.gov.in/arthapedia/concept/peer-peer-p2p-lending" target="_blank" rel="noopener">IES Arthapedia</a><span>Peer-to-peer lending</span></li>
+        <li><a href="https://indiacorplaw.in/2017/10/10/rbi-directions-peer-peer-lending/" target="_blank" rel="noopener">IndiaCorpLaw</a><span>RBI Directions on P2P lending</span></li>
+        <li><a href="https://ssrana.in/articles/a-new-route-for-csr-deployment-zczp-instruments-on-the-social-stock-exchange/" target="_blank" rel="noopener">S.S. Rana</a><span>CSR through ZCZP instruments on the Social Stock Exchange</span></li>
+      </ol>
     </div>
   </section>
 
@@ -363,8 +566,8 @@ footer { padding: 28px var(--gutter) 40px; display: flex; justify-content: space
     <dl class="credits label">
       <div><dt class="muted">Client</dt><dd>Tata Tea Premium</dd></div>
       <div><dt class="muted">Project</dt><dd>Designing Communication Ecologies · M.Des, UPES</dd></div>
-      <div><dt class="muted">Role</dt><dd>Concept, art direction</dd></div>
-      <div><dt class="muted">Deliverables</dt><dd>Film · Pack · OOH · Web</dd></div>
+      <div><dt class="muted">Role</dt><dd>Concept, system design, art direction</dd></div>
+      <div><dt class="muted">Deliverables</dt><dd>System · Film · Pack · OOH · Web</dd></div>
     </dl>
   </section>
 
@@ -392,6 +595,37 @@ btn.addEventListener('click', () => {
   setSound(on);
 });
 setSound(false);
+
+/* System map: a part and everything it touches stay lit; the rest steps back. */
+const EDGES = [
+  ['film','qr'],['social','qr'],['pack','qr'],['shelf','qr'],['outdoor','qr'],
+  ['qr','buy'],['qr','preorder'],['qr','lend'],
+  ['engine','buy'],['engine','preorder'],['engine','lend'],['engine','ledger'],
+  ['collective','engine'],['collective','makers'],['collective','ledger'],
+  ['buy','makers'],['preorder','makers'],['lend','rails'],['rails','makers'],
+  ['ledger','social'],['ledger','pack'],
+];
+const sys = document.getElementById('sys');
+const hint = document.getElementById('sys-hint');
+const HINT = hint.textContent;
+const nodes = [...sys.querySelectorAll('.sys-node')];
+const nameOf = (id) => sys.querySelector(`[data-id="${id}"] b`).textContent;
+function light(id) {
+  const near = new Set([id]);
+  EDGES.forEach(([a, b]) => { if (a === id) near.add(b); if (b === id) near.add(a); });
+  sys.classList.add('focus');
+  nodes.forEach((n) => { n.classList.toggle('lit', near.has(n.dataset.id)); n.classList.toggle('on', n.dataset.id === id); });
+  near.delete(id);
+  hint.textContent = `${nameOf(id)} connects to ${[...near].map(nameOf).join(', ')}`;
+}
+function clear() { sys.classList.remove('focus'); nodes.forEach((n) => n.classList.remove('lit', 'on')); hint.textContent = HINT; }
+nodes.forEach((n) => {
+  n.addEventListener('mouseenter', () => light(n.dataset.id));
+  n.addEventListener('focus', () => light(n.dataset.id));
+  n.addEventListener('click', () => light(n.dataset.id));
+});
+sys.addEventListener('mouseleave', clear);
+sys.addEventListener('focusout', (e) => { if (!sys.contains(e.relatedTarget)) clear(); });
 
 const io = new IntersectionObserver(es => es.forEach(e => {
   if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
