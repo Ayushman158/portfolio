@@ -2,9 +2,9 @@
 
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
-import { Back, Facts, Heading, Impact, Overview, Rule, SkipTo, Subhead, Tradeoffs } from '../components/case-study'
+import { Back, Decisions, Facts, Heading, Impact, Overview, Rule, SkipTo, Subhead, Tradeoffs } from '../components/case-study'
 import SignalHero from './hero'
-import { RefocusScreens } from './phones'
+import { PlatformScreen, RefocusScreens } from './phones'
 import { Cards, Findings, JobStories, Personas, Ramp, Weights, Iterations, LoadCurve, Matrix, Morning, Numbers, ORANGE, Screens, Tested, Verdicts } from './visuals'
 
 /*
@@ -24,7 +24,7 @@ const PROTOTYPE = 'https://dainty-capybara-dd3d7e.netlify.app/'
 const OVERVIEW = [
   ['Who it’s for', 'Office commuters on the Delhi Metro who change lines on the way and finish the trip by auto or cab.'],
   ['The problem', 'Trains run on time, but the trip doesn’t. All seven people I interviewed leave early every day, just in case. What they can’t predict is getting on at the interchange and getting away from the exit.'],
-  ['What I did', 'Seven interviews, two peak-hour observations, five usability tests and a prototype. Then I checked the idea against DMRC’s own figures and Google Maps, and refocused it.'],
+  ['What I did', 'Seven interviews, two peak-hour observations, five usability tests and a prototype. Then I checked the idea against DMRC’s own figures and Google Maps, refocused it, and made it a feature of DMRC’s own app.'],
   ['Project', 'A 14-week M.Des project, done alone. A concept, not a shipped app.'],
 ]
 
@@ -37,8 +37,9 @@ const IMPACT = [
 
 // What I was up against, what I chose, and what that gave up.
 const TRADEOFFS = [
-  ['Delhi publishes nothing live about crowding', 'Riders report it in two taps, and past reports fill the gaps', 'It needs enough regulars on a line; early mornings and late nights will be thin'],
-  ['Crowd reports can be wrong, stale or gamed', 'Reports fade after 20 minutes, and one report on its own never changes the answer', 'Quiet stretches get the usual pattern, not a live answer'],
+  ['Nobody downloads a new app for a daily annoyance, and crowdsourcing alone starts empty', 'A feature inside DMRC’s own app, on data DMRC already collects', 'It only happens if DMRC builds it. As a student I can propose it, not ship it'],
+  ['The coach sensors are a trial, on some routes only', 'Rider reports fill the gaps, and cover the shared-auto queue', 'Where there are neither, Signal can only show the usual pattern'],
+  ['Crowd reports can be wrong, stale or gamed', 'Reports fade after 20 minutes, and one report on its own never changes the answer', 'A slower answer when sensors are off'],
   ['Google Maps already tells you when to leave', 'Kept the leave-by time, but made the interchange and the exit the core', 'Signal is no longer a single morning glance; it speaks at two more moments'],
   ['Booking a ride for you risks surge pricing and wrong bookings', 'Signal fills in the Rapido ride; the commuter confirms it', 'One extra tap, about four seconds'],
   ['The answer has to land in two seconds, mid-transfer at INA', 'Inter Bold for the answer instead of a serif', 'Less warmth and personality on the main screen'],
@@ -108,10 +109,10 @@ const JOBS = [
 
 // The model's own weights, sources and percentages as specified.
 const WEIGHTS = [
-  ['Rider reports, last 20 minutes', 40, 'Two-tap reports from people on the same line. They fade after 20 minutes, and one report on its own never changes the answer.'],
-  ['Past reports, same train and weekday', 30, 'Four weeks of reports for this train, at this time, on this day of the week. Signal falls back on this when it’s quiet.'],
+  ['Coach sensors, live', 40, 'DMRC is trialling occupancy measured by the weight of each coach, shown today only on platform screens. Signal shows it before you reach the platform.'],
+  ['Tap-ins and tap-outs', 25, 'Card and QR entries and exits, by station and minute: how busy INA and the exit gates are now, and on a usual Tuesday.'],
   ['Timetable, calendar and weather', 20, 'DMRC’s published timetable, plus matches at Kotla, exam days, holidays, fog and heavy rain. All open data.'],
-  ['Your own trips', 10, 'Which train you actually boarded, and whether you said it was full.'],
+  ['Rider reports', 15, 'Two taps, where sensors aren’t running yet, and for the shared-auto queue. They fade after 20 minutes; one report alone never changes the answer.'],
 ]
 
 const RAMP = [
@@ -146,6 +147,14 @@ const FOUND = [
   'Trains run on time. Getting on them at the interchange doesn’t.',
   'The hard decisions are at INA and at the exit.',
   'People already avoid interchanges and queue for shared autos that no app can see.',
+]
+
+// Why safety comes next, and what it would take.
+const SAFETY = [
+  ['It is the first thing people need', 'In a 2014 Delhi preference study, safety came first (36%) among what would get people onto public transport, ahead of reliability (27%).'],
+  ['The walk to and from the station is the weak part', <>Safetipin’s 2015 evening audit of Yellow Line station areas scored HUDA City Centre 1.7 out of 5 and IFFCO Chowk 1.5, on lighting, walkways, visibility and how many people are around (<a href="https://safetyscore.safetipin.com/projects/13/enhancing-last-mile-connectivity-report/" target="_blank" rel="noopener noreferrer" className="prose-link">report</a>).</>],
+  ['What I would do first', 'Talk to women who travel after dark, walk the exits with them using Safetipin’s audit method, and find out which exits, gates and last-mile options feel safe at which hours.'],
+  ['Where it could land', 'The same place as Signal: DMRC’s app and platform screens, which exit is lit and staffed tonight, and where the women’s coach stops.'],
 ]
 
 const FACTS = [
@@ -194,7 +203,7 @@ const COMPETITORS = {
     ['DMRC app and screens', [[1, 'Timetable lookup'], [1, 'On platform screens, on trial'], [1, 'Same, on the platform only'], [1, 'Bike taxi and e-auto booking'], [0, 'None']]],
     ['Rapido and Uber', [[0, 'None'], [0, 'None'], [0, 'None'], [1, 'A ride, at surge'], [0, 'None']]],
     ['WhatsApp groups', [[0, 'None'], [1, 'Anecdotal, late'], [0, 'None'], [1, 'Manual posts'], [2, 'Entirely rider-led']]],
-    ['Signal (refocused)', [[1, 'Kept, but secondary'], [2, 'Before you reach the platform'], [2, 'Which coach is emptier'], [2, 'Shared-auto queue, surge, walk'], [2, 'Two-tap reports']], true],
+    ['Signal, in DMRC’s app', [[1, 'Kept, but secondary'], [2, 'Before you reach the platform'], [2, 'Which coach is emptier'], [2, 'Shared-auto queue, surge, walk'], [1, 'Reports fill sensor gaps']], true],
   ],
 }
 
@@ -214,7 +223,7 @@ const STATES = [
   ['Board', 'Get on this one.', 'there’s usually room on it', '#1F8A5B'],
   ['Move down', 'Board at coach 7.', 'full by the stairs, room further along', '#D08A00'],
   ['Let one go', 'Wait for the next.', 'usually packed · next in 3 min', ORANGE],
-  ['No reports', 'Timetable only.', 'says so, rather than guessing', 'var(--faint)'],
+  ['No live data', 'Usual pattern only.', 'says so, rather than guessing', 'var(--faint)'],
 ]
 
 const TESTED = [
@@ -289,7 +298,8 @@ export default function Signal() {
             rarely the problem: DMRC says 99.95% of its trains ran on time in 2026, and Google Maps can
             already remind you when to leave. What my participants couldn’t predict was everything around
             the train: whether they would get on at the interchange, and what would be waiting at the
-            exit. So I refocused Signal on those two moments.
+            exit. So I refocused Signal on those two moments, and moved it inside DMRC’s own app, so
+            nobody has to download anything new.
           </p>
         </div>
       </motion.header>
@@ -383,6 +393,26 @@ export default function Signal() {
             moments nobody else covers: the interchange, and the exit.
           </p>
         </div>
+        <Subhead>Then a second question: why would anyone download it?</Subhead>
+        <div className="space-y-5">
+          <p>
+            My first answer was a separate app that ran on riders’ reports. It doesn’t hold up. Nobody
+            downloads an app for a daily annoyance; my own research says commuters put up with the
+            chaos and adapt. And an app that runs on reports is empty until lots of people use it, and
+            nobody uses it while it’s empty.
+          </p>
+          <p>
+            The data already exists, though. DMRC is trialling live occupancy for each coach, measured
+            by weight, and showing it only on the platform screens, once you are already standing
+            there. It also has every card and QR tap at every gate. And people already open its app,
+            Momentum 2.0, to get a ticket.
+          </p>
+          <p>
+            So Signal became a feature of DMRC’s own app and platform screens, running on data DMRC
+            already collects. Rider reports only fill the gaps. The design question changed too: how
+            should DMRC show crowding before people commit to a train?
+          </p>
+        </div>
         <div className="track-wide mt-10 grid gap-3 sm:grid-cols-2">
           {[['What I assumed', ASSUMED], ['What the research showed', FOUND]].map(([h, items], i) => (
             <div key={h} className="rounded-xl p-5" style={{ border: '1px solid var(--rule)', background: i ? 'var(--raised)' : 'transparent' }}>
@@ -400,20 +430,22 @@ export default function Signal() {
       <section id="screens" tabIndex={-1} data-skip-target>
         <Heading n="04">The solution</Heading>
         <p className="mb-8">
-          Signal now speaks at two moments: on the way to INA, and just before the exit. In between it
-          stays quiet. The orange only appears when there’s a decision to make.
+          Signal is a tab in DMRC’s app, and it speaks at two moments: on the way to INA, and just
+          before the exit. In between it stays quiet. The orange only appears when there’s a decision
+          to make.
         </p>
         <RefocusScreens />
-        <p className="text-faint mt-4" style={{ fontSize: '0.85rem' }}>Stations are real; times, counts and pillar numbers are illustrative.</p>
+        <p className="text-faint mt-4" style={{ fontSize: '0.85rem' }}>A concept for DMRC, not affiliated with it. Stations are real; times, counts and pillar numbers are illustrative.</p>
+        <div className="mt-12"><PlatformScreen /></div>
 
         <Subhead>The answer at INA, in four states</Subhead>
         <Verdicts items={STATES} />
 
         <Subhead>Where the answer comes from</Subhead>
-        <p className="mb-8">Delhi publishes nothing live about crowding, so riders are the live feed, and past patterns fill the gaps.</p>
+        <p className="mb-8">Mostly from data DMRC already collects. Riders only fill the gaps.</p>
         <Weights
           items={WEIGHTS}
-          note="Specified, not yet running. With no recent reports, Signal shows the usual pattern and says that’s all it has."
+          note="Specified, not running. It depends on DMRC using data it already collects in its own app, and the coach sensors are still a trial. With no live data, Signal shows the usual pattern and says that’s all it has."
         />
 
         <Subhead>Kept from the first version</Subhead>
@@ -461,15 +493,24 @@ export default function Signal() {
           came from seven people and two mornings of watching. That made me lean on the research.
         </p>
         <p className="mt-5">
-          The biggest lesson came late: I had to question my own problem. My first version solved
-          something that was mostly solved already. My research had been pointing at the interchange
-          and the exit the whole time; I just hadn’t followed it.
+          The biggest lesson came late: I had to question my own problem, twice. My first version
+          solved something that was mostly solved already. My research had been pointing at the
+          interchange and the exit the whole time; I just hadn’t followed it. Then the fix needed
+          its own question: a good answer still has to reach people, and the easiest way is through
+          an app they already use.
         </p>
         <p className="mt-5">
           Next, I’d take the refocused screens back to three to five of the original participants and
-          ask one question: what would you use this for that Google Maps doesn’t do? After that comes
-          the need I left out, safety-first routes for women travelling late.
+          ask one question: what would you use this for that Google Maps doesn’t do?
         </p>
+
+        <Subhead>The need I left out: safety</Subhead>
+        <p className="mb-6">
+          This is the biggest gap in Signal, and I think it matters more than crowding. Four of my
+          seven participants, all women, choose their routes by lighting, crowding and whether CISF
+          is around. It needs its own research, so I’m treating it as the next project, not a feature.
+        </p>
+        <Decisions items={SAFETY} />
         <p className="text-faint mt-6" style={{ fontSize: '0.9rem', lineHeight: 1.55 }}>
           Participants agreed to be quoted and are named by first name.
         </p>

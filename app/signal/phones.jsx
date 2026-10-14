@@ -40,7 +40,9 @@ function Phone({ time, children }) {
           </span>
         </div>
         <div className="flex items-center justify-between" style={{ padding: '6cqw 6cqw 0' }}>
-          <span className="flex items-center" style={{ gap: '2cqw', fontSize: '4.4cqw', fontWeight: 500 }}>
+          {/* Signal lives inside DMRC's own app, as a tab, not as an app of its own. */}
+          <span style={{ fontSize: '4.4cqw', fontWeight: 600 }}>Momentum 2.0</span>
+          <span className="flex items-center" style={{ ...mono, gap: '1.4cqw', fontSize: '2.7cqw', padding: '1.2cqw 2.4cqw', borderRadius: 999, background: '#fff', border: `1px solid ${RULE}` }}>
             <span aria-hidden="true" style={{ color: ORANGE }}>◎</span> Signal
           </span>
         </div>
@@ -99,7 +101,7 @@ function Interchange() {
       <p style={{ marginTop: '2.4cqw', fontSize: '3.5cqw', lineHeight: 1.4 }}>
         <b style={{ fontWeight: 600 }}>Coach 7.</b> <span style={{ color: FAINT }}>Usually the emptiest at this time.</span>
       </p>
-      <p style={{ ...mono, fontSize: '2.6cqw', color: FAINT, marginTop: '6cqw', lineHeight: 1.6 }}>From 14 riders, last 20 min<br />and 4 weeks of Tuesdays</p>
+      <p style={{ ...mono, fontSize: '2.6cqw', color: FAINT, marginTop: '6cqw', lineHeight: 1.6 }}>Live from the coach sensors<br />and 4 weeks of Tuesdays</p>
     </Phone>
   )
 }
@@ -129,7 +131,7 @@ function Exit() {
           </li>
         ))}
       </ul>
-      <p style={{ ...mono, fontSize: '2.6cqw', color: FAINT, marginTop: '6cqw', lineHeight: 1.6 }}>Queue from 9 riders, last 15 min<br />Rapido from its own estimate</p>
+      <p style={{ ...mono, fontSize: '2.6cqw', color: FAINT, marginTop: '6cqw', lineHeight: 1.6 }}>Exit gates live · queue from 9 riders<br />Rapido from its own estimate</p>
     </Phone>
   )
 }
@@ -146,7 +148,7 @@ function Report() {
       <p style={{ ...mono, color: FAINT }}>On the 9:19 · coach 7</p>
       <p style={{ marginTop: '3cqw', fontSize: '8.4cqw', fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.05 }}>How full is it?</p>
       <p style={{ marginTop: '2.5cqw', fontSize: '3.9cqw', lineHeight: 1.4, color: FAINT }}>
-        One tap. It tells the riders behind you at INA what to expect.
+        One tap. It fills in where the coach sensors aren’t running yet.
       </p>
       <div className="grid" style={{ gap: '2.6cqw', marginTop: '6cqw' }}>
         {opts.map(([o, c]) => (
@@ -167,8 +169,51 @@ function Report() {
 const SCREENS = [
   [Interchange, 'At INA: which train to board, and which coach to stand at.'],
   [Exit, 'Before the exit: the shared-auto queue, Rapido’s surge, or the walk.'],
-  [Report, 'The two-tap report that feeds the riders behind you.'],
+  [Report, 'Where the sensors aren’t running yet, riders fill the gap in one tap.'],
 ]
+
+const TRAINS = [
+  ['9:16', [5, 5, 5, 5, 5, 4, 4, 4], 'Full'],
+  ['9:19', [5, 4, 4, 3, 3, 2, 2, 2], 'Room at the back'],
+]
+const tone = (n) => (n >= 5 ? ORANGE : n >= 3 ? AMBER : GREEN)
+
+/** The platform display at INA, for everyone without the app. */
+export function PlatformScreen() {
+  return (
+    <figure className="track-wide">
+      <div role="img" aria-label="Platform display at INA: the 9:16 is full; the 9:19 has room in coaches 6 to 8" className="rounded-xl p-[6px]" style={{ background: '#161616' }}>
+        <div className="rounded-lg" style={{ background: '#0B0B0B', color: '#F2F2F2', fontFamily: SANS, containerType: 'inline-size', padding: '2.6cqw 3cqw' }}>
+          <div className="flex items-baseline justify-between" style={{ ...mono, fontSize: '1.25cqw', color: '#9A9A9A' }}>
+            <span>INA · Platform 2 · towards HUDA City Centre</span><span className="tnum">9:14</span>
+          </div>
+          <div style={{ marginTop: '2cqw' }}>
+            {TRAINS.map(([time, coaches, what]) => (
+              <div key={time} className="grid items-center" style={{ gridTemplateColumns: '8cqw 1fr 18cqw', gap: '2cqw', padding: '1.4cqw 0', borderTop: '1px solid #2A2A2A' }}>
+                <span className="tnum" style={{ fontSize: '3.2cqw', fontWeight: 600 }}>{time}</span>
+                <span className="flex" style={{ gap: '0.7cqw' }}>
+                  {coaches.map((n, i) => (
+                    <span key={i} className="flex flex-1 flex-col justify-end" style={{ height: '5cqw', borderRadius: '0.5cqw', background: '#1E1E1E', overflow: 'hidden' }}>
+                      <span style={{ height: `${n * 20}%`, background: tone(n) }} />
+                    </span>
+                  ))}
+                </span>
+                <span style={{ fontSize: '2.1cqw', color: '#CFCFCF' }}>{what}</span>
+              </div>
+            ))}
+          </div>
+          <div className="flex items-baseline justify-between" style={{ marginTop: '1.6cqw', paddingTop: '1.6cqw', borderTop: '1px solid #2A2A2A' }}>
+            <span style={{ fontSize: '3cqw', fontWeight: 700, color: ORANGE, letterSpacing: '-0.02em' }}>Coaches 6–8 have room on the 9:19.</span>
+            <span style={{ ...mono, fontSize: '1.15cqw', color: '#9A9A9A' }}>Coach 1 · women</span>
+          </div>
+        </div>
+      </div>
+      <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem', lineHeight: 1.4 }}>
+        The same answer on the platform display, for everyone without the app. Each bar is one coach, filled by its weight.
+      </figcaption>
+    </figure>
+  )
+}
 
 export function RefocusScreens() {
   return (
