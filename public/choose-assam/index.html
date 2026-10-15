@@ -262,6 +262,29 @@ footer { padding: 28px var(--gutter) 40px; display: flex; justify-content: space
 .board .phone { overflow: visible; }
 .board .phone img { border-radius: 18px; }
 @media (max-width: 820px) { .b4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ── patterns as accents ── */
+.banded { display: flex; flex-direction: column; }
+.banded img { flex: 1; min-height: 0; }
+.board .band { display: block; height: 16px; flex: none; background-size: auto 100%; background-repeat: repeat-x; background-position: left center; }
+.board figure.banded figcaption { bottom: 28px; }
+.panel.craft { min-height: clamp(320px, 34vw, 460px); position: relative; overflow: hidden; padding-bottom: clamp(56px, 6vw, 84px); }
+.drift { position: absolute; left: 0; right: 0; bottom: 0; height: 22px; overflow: hidden; }
+.drift-track { display: flex; width: max-content; height: 100%; }
+.drift-track span { width: 360px; height: 100%; background-size: auto 100%; background-repeat: repeat-x; }
+@media (prefers-reduced-motion: no-preference) {
+  .rv .band { clip-path: inset(0 100% 0 0); transition: clip-path 1100ms var(--ease-out) 300ms; }
+  .rv.in .band { clip-path: inset(0); }
+  .rv .banded:nth-child(2) .band { transition-delay: 450ms; }
+  .rv .banded:nth-child(3) .band { transition-delay: 600ms; }
+  .rv .motifs img { opacity: 0; transform: translateY(10px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
+  .rv.in .motifs img { opacity: 1; transform: none; }
+  .rv.in .motifs img:nth-child(2) { transition-delay: 90ms; } .rv.in .motifs img:nth-child(3) { transition-delay: 180ms; }
+  .rv.in .motifs img:nth-child(4) { transition-delay: 270ms; } .rv.in .motifs img:nth-child(5) { transition-delay: 360ms; }
+  .rv.in .motifs img:nth-child(6) { transition-delay: 450ms; }
+  .drift-track { animation: drift 60s linear infinite; }
+  @keyframes drift { to { transform: translateX(-50%); } }
+}
 </style>
 </head>
 <body>
@@ -321,18 +344,12 @@ footer { padding: 28px var(--gutter) 40px; display: flex; justify-content: space
 
   <p class="board-head label gap-xl rv"><span>02</span><span class="muted">The makers</span></p>
   <div class="board b3 rv">
-    <figure class="t45"><img src="assets/editions/scenes/p1-tea.jpg" alt="A tea plucker at dawn" loading="lazy"><figcaption class="label">Tea tribe pluckers</figcaption></figure>
-    <figure class="t45"><img src="assets/editions/scenes/p4-majuli.jpg" alt="A Majuli mask maker painting a mask" loading="lazy"><figcaption class="label">Majuli mask makers</figcaption></figure>
-    <figure class="t45"><img src="assets/editions/scenes/p5-bellmetal.jpg" alt="A Sarthebari bell-metal smith" loading="lazy"><figcaption class="label">Sarthebari bell metal</figcaption></figure>
+    <figure class="t45 banded"><img src="assets/editions/scenes/p1-tea.jpg" alt="A tea plucker at dawn" loading="lazy"><figcaption class="label">Tea tribe pluckers</figcaption><span class="band" style="background-image:url(assets/editions/patterns/strips/ed-tea-strip.jpg)" aria-hidden="true"></span></figure>
+    <figure class="t45 banded"><img src="assets/editions/scenes/p4-majuli.jpg" alt="A Majuli mask maker painting a mask" loading="lazy"><figcaption class="label">Majuli mask makers</figcaption><span class="band" style="background-image:url(assets/editions/patterns/strips/ed-majuli-strip.jpg)" aria-hidden="true"></span></figure>
+    <figure class="t45 banded"><img src="assets/editions/scenes/p5-bellmetal.jpg" alt="A Sarthebari bell-metal smith" loading="lazy"><figcaption class="label">Sarthebari bell metal</figcaption><span class="band" style="background-image:url(assets/editions/patterns/strips/ed-bellmetal-strip.jpg)" aria-hidden="true"></span></figure>
   </div>
-  <div class="board b3 rv">
-    <figure class="t11"><img src="assets/editions/patterns/ed-tea-pattern.jpg" alt="The tea tribe pattern" loading="lazy"></figure>
-    <figure class="t11"><img src="assets/editions/patterns/ed-mising-pattern.jpg" alt="The Mising pattern" loading="lazy"></figure>
-    <figure class="t11"><img src="assets/editions/patterns/ed-majuli-pattern.jpg" alt="The Majuli mask pattern" loading="lazy"></figure>
-  </div>
-  <div class="board b2 rv">
-    <div class="panel"><span class="label muted">From craft to pack</span><h3>Every pattern comes from one craft.</h3><div class="motifs"><img src="assets/editions/motifs/ed-tea-motif-1.png" alt=""> <img src="assets/editions/motifs/ed-mising-motif-1.png" alt=""> <img src="assets/editions/motifs/ed-bodo-motif-1.png" alt=""> <img src="assets/editions/motifs/ed-majuli-motif-1.png" alt=""> <img src="assets/editions/motifs/ed-bellmetal-motif-1.png" alt=""> <img src="assets/editions/motifs/ed-jaapi-motif-1.png" alt=""></div></div>
-    <figure class="t11"><img src="assets/editions/patterns/ed-bellmetal-pattern.jpg" alt="The bell metal pattern" loading="lazy"></figure>
+  <div class="board rv">
+    <div class="panel craft"><span class="label muted">From craft to pack</span><h3>Every pattern comes from one craft.</h3><div class="motifs"><img src="assets/editions/motifs/ed-tea-motif-1.png" alt=""> <img src="assets/editions/motifs/ed-mising-motif-1.png" alt=""> <img src="assets/editions/motifs/ed-bodo-motif-1.png" alt=""> <img src="assets/editions/motifs/ed-majuli-motif-1.png" alt=""> <img src="assets/editions/motifs/ed-bellmetal-motif-1.png" alt=""> <img src="assets/editions/motifs/ed-jaapi-motif-1.png" alt=""></div><div class="drift" aria-hidden="true"><div class="drift-track"><span style="background-image:url(assets/editions/patterns/strips/ed-tea-strip.jpg)"></span><span style="background-image:url(assets/editions/patterns/strips/ed-mising-strip.jpg)"></span><span style="background-image:url(assets/editions/patterns/strips/ed-bodo-strip.jpg)"></span><span style="background-image:url(assets/editions/patterns/strips/ed-majuli-strip.jpg)"></span><span style="background-image:url(assets/editions/patterns/strips/ed-bellmetal-strip.jpg)"></span><span style="background-image:url(assets/editions/patterns/strips/ed-jaapi-strip.jpg)"></span><span style="background-image:url(assets/editions/patterns/strips/ed-tea-strip.jpg)"></span><span style="background-image:url(assets/editions/patterns/strips/ed-mising-strip.jpg)"></span><span style="background-image:url(assets/editions/patterns/strips/ed-bodo-strip.jpg)"></span><span style="background-image:url(assets/editions/patterns/strips/ed-majuli-strip.jpg)"></span><span style="background-image:url(assets/editions/patterns/strips/ed-bellmetal-strip.jpg)"></span><span style="background-image:url(assets/editions/patterns/strips/ed-jaapi-strip.jpg)"></span></div></div></div>
   </div>
 
   <p class="board-head label gap-xl rv"><span>03</span><span class="muted">What changed</span></p>
