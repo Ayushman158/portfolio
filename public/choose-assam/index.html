@@ -224,6 +224,36 @@ footer { padding: 28px var(--gutter) 40px; display: flex; justify-content: space
 .notes details[open] summary::after { content: '–'; }
 .notes .body { padding: 8px 0 clamp(40px, 5vw, 64px); }
 @media (max-width: 820px) { .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ── reference-style board layout ── */
+.board { padding: 0 var(--gutter); display: grid; gap: 8px; }
+.board + .board { margin-top: 8px; }
+.b2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.b3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.b21 { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+.b12 { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
+.board > * { position: relative; overflow: hidden; min-height: 0; }
+.board img { width: 100%; height: 100%; object-fit: cover; }
+.board .t45 { aspect-ratio: 4 / 5; }
+.board .t11 { aspect-ratio: 1; }
+.board .t32 { aspect-ratio: 3 / 2; }
+.board .full { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
+.board .wide { grid-column: 1 / -1; aspect-ratio: 3 / 1; }
+.panel { display: flex; flex-direction: column; justify-content: space-between; padding: clamp(24px, 3.4vw, 56px); background: #F4EFE3; color: var(--ink); }
+.panel.green { background: #1F4B34; color: #F4EFE3; }
+.panel.green .muted { color: rgba(244,239,227,.7); }
+.panel h3 { margin: 0; font-size: clamp(28px, 3.4vw, 56px); font-weight: 300; letter-spacing: -0.035em; line-height: 1.02; text-wrap: balance; }
+.panel p { max-width: 34ch; font-size: clamp(15px, 1.1vw, 17px); line-height: 1.45; }
+.panel .motifs { display: flex; flex-wrap: wrap; gap: clamp(10px, 1.6vw, 22px); align-items: center; }
+.panel .motifs img { width: auto; height: clamp(40px, 4.4vw, 70px); object-fit: contain; }
+.board figcaption { position: absolute; left: 14px; bottom: 12px; margin: 0; color: #fff; text-shadow: 0 1px 8px rgba(0,0,0,.45); }
+.board-head { padding: 0 var(--gutter); display: flex; justify-content: space-between; align-items: baseline; gap: 24px; margin-bottom: 16px; }
+@media (max-width: 820px) {
+  .b2, .b3, .b21, .b12 { grid-template-columns: minmax(0, 1fr); }
+  .b3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .board .wide { aspect-ratio: 16 / 9; }
+  .panel { min-height: 280px; }
+}
 </style>
 </head>
 <body>
@@ -244,127 +274,78 @@ footer { padding: 28px var(--gutter) 40px; display: flex; justify-content: space
 
 <main>
 
-  <section class="wrap gap-xl rv" aria-label="Introduction">
-    <p class="display" style="font-size:clamp(30px,3.6vw,58px);max-width:24ch">After a flood, Tata Tea points its packs and ads at the makers of Assam, so people can buy from them instead of donating.</p>
-    <p class="label muted" style="margin-top:28px">Tata Tea Premium · M.Des, Designing Communication Ecologies, UPES · 2026, speculative</p>
+  <section class="wrap gap-xl rv" aria-label="Introduction" style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:var(--gutter);align-items:end">
+    <p class="display" style="font-size:clamp(30px,3.6vw,58px);max-width:22ch">After a flood, Tata Tea points its packs and ads at the makers of Assam, so people can buy from them instead of donating.</p>
+    <dl class="meta label">
+      <div><dt class="muted">Client</dt><dd>Tata Tea Premium</dd></div>
+      <div><dt class="muted">Scope</dt><dd>Campaign · Packaging · Maker platform</dd></div>
+      <div><dt class="muted">Context</dt><dd>M.Des, UPES · 2026, speculative</dd></div>
+    </dl>
   </section>
 
-  <figure class="gap-xl bleed rv">
-    <img src="assets/editions/scenes/s1-aerial.jpg" alt="Aerial view of flooded paddy fields and villages in Assam" loading="lazy">
-  </figure>
-  <p class="wrap gap-md line rv">Floods close Assam’s workshops almost every monsoon. The news moves on in days. Reopening takes months.</p>
+  <p class="board-head label gap-xl rv"><span>01</span><span class="muted">After the water</span></p>
+  <div class="board b2 rv">
+    <figure class="full"><img src="assets/editions/scenes/s1-aerial.jpg" alt="Aerial view of flooded paddy fields in Assam" loading="lazy"></figure>
+    <figure class="t32"><img src="assets/film-street.jpg" alt="Closed shutters after the flood" loading="lazy"><figcaption class="label">Closed</figcaption></figure>
+    <figure class="t32"><img src="assets/film-reopen.jpg" alt="A shopkeeper lifts his shutter" loading="lazy"><figcaption class="label">Reopening</figcaption></figure>
+  </div>
+  <div class="board b12 rv">
+    <div class="panel green"><span class="label muted">The idea</span><h3>Not a donation. An order.</h3><p>The news moves on in days. Reopening takes months. An order keeps a maker going; a buyer can come back.</p></div>
+    <figure class="t32"><img src="assets/film-weaver.jpg" alt="A weaver at her loom" loading="lazy"></figure>
+  </div>
 
-  <section class="wrap gap-xl pair rv" aria-label="Reopening">
-    <figure><img src="assets/film-street.jpg" alt="Closed shutters on a muddy street after the flood" loading="lazy"><figcaption class="label muted">Closed</figcaption></figure>
-    <figure class="drop"><img src="assets/film-reopen.jpg" alt="A shopkeeper lifts his shutter" loading="lazy"><figcaption class="label muted">Reopening</figcaption></figure>
-  </section>
+  <p class="board-head label gap-xl rv"><span>02</span><span class="muted">The makers</span></p>
+  <div class="board b3 rv">
+    <figure class="t45"><img src="assets/editions/scenes/p1-tea.jpg" alt="A tea plucker at dawn" loading="lazy"><figcaption class="label">Tea tribe pluckers</figcaption></figure>
+    <figure class="t45"><img src="assets/editions/scenes/p4-majuli.jpg" alt="A Majuli mask maker painting a mask" loading="lazy"><figcaption class="label">Majuli mask makers</figcaption></figure>
+    <figure class="t45"><img src="assets/editions/scenes/p5-bellmetal.jpg" alt="A Sarthebari bell-metal smith" loading="lazy"><figcaption class="label">Sarthebari bell metal</figcaption></figure>
+  </div>
+  <div class="board b3 rv">
+    <figure class="t11"><img src="assets/editions/patterns/ed-tea-pattern.jpg" alt="The tea tribe pattern" loading="lazy"></figure>
+    <figure class="t11"><img src="assets/editions/patterns/ed-mising-pattern.jpg" alt="The Mising pattern" loading="lazy"></figure>
+    <figure class="t11"><img src="assets/editions/patterns/ed-majuli-pattern.jpg" alt="The Majuli mask pattern" loading="lazy"></figure>
+  </div>
+  <div class="board b2 rv">
+    <div class="panel"><span class="label muted">From craft to pack</span><h3>Every pattern comes from one craft.</h3><div class="motifs"><img src="assets/editions/motifs/ed-tea-motif-1.png" alt=""> <img src="assets/editions/motifs/ed-mising-motif-1.png" alt=""> <img src="assets/editions/motifs/ed-bodo-motif-1.png" alt=""> <img src="assets/editions/motifs/ed-majuli-motif-1.png" alt=""> <img src="assets/editions/motifs/ed-bellmetal-motif-1.png" alt=""> <img src="assets/editions/motifs/ed-jaapi-motif-1.png" alt=""></div></div>
+    <figure class="t11"><img src="assets/editions/patterns/ed-bellmetal-pattern.jpg" alt="The bell metal pattern" loading="lazy"></figure>
+  </div>
 
-  <section class="wrap gap-xl rv" aria-label="The idea">
-    <h2 class="split-head"><span>Not a donation.</span><span class="muted">An order.</span></h2>
-  </section>
+  <p class="board-head label gap-xl rv"><span>03</span><span class="muted">Six editions</span></p>
+  <div class="board b2 rv">
+    <figure class="wide"><img src="assets/editions/mockups/m4-family.jpg" alt="All six edition packs in a row" loading="lazy"></figure>
+    <figure class="t45"><img src="assets/editions/mockups/m2-world-majuli.jpg" alt="The Majuli pack in a mask workshop" loading="lazy"></figure>
+    <figure class="t45"><img src="assets/editions/mockups/m1-hero-jaapi.jpg" alt="The Jaapi pack on a red plinth" loading="lazy"></figure>
+  </div>
+  <div class="board b3 rv">
+    <figure class="t45"><img src="assets/editions/packs/front-tea.jpg" alt="Tea tribe pluckers pack" loading="lazy"></figure>
+    <figure class="t45"><img src="assets/editions/packs/front-mising.jpg" alt="Mising weavers pack" loading="lazy"></figure>
+    <figure class="t45"><img src="assets/editions/packs/front-bellmetal.jpg" alt="Sarthebari bell metal pack" loading="lazy"></figure>
+  </div>
+  <div class="board b21 rv">
+    <figure class="t32"><img src="assets/editions/packs/backs-lineup.jpg" alt="The backs of all six packs" loading="lazy"></figure>
+    <div class="panel green"><span class="label muted">The back</span><h3>Their story, a source, and a QR.</h3><p>Each back names where the craft is recorded and links to makers open this week.</p></div>
+  </div>
 
-  <section class="wrap gap-xl rv" aria-label="The makers">
-    <p class="line" style="margin-bottom:clamp(32px,4vw,56px)">Six communities. Six crafts.</p>
-    <div class="grid-3">
-      <figure><img src="assets/editions/scenes/p1-tea.jpg" alt="Tea tribe pluckers at work" loading="lazy"><figcaption class="label"><span>Tea tribe pluckers</span> <span class="muted">· Sonitpur</span></figcaption></figure>
-      <figure><img src="assets/editions/portraits/ed-mising-portrait.jpg" alt="Mising weavers at work" loading="lazy"><figcaption class="label"><span>Mising weavers</span> <span class="muted">· Majuli</span></figcaption></figure>
-      <figure><img src="assets/editions/portraits/ed-bodo-portrait.jpg" alt="Bodo eri silk at work" loading="lazy"><figcaption class="label"><span>Bodo eri silk</span> <span class="muted">· Kokrajhar</span></figcaption></figure>
-      <figure><img src="assets/editions/scenes/p4-majuli.jpg" alt="Majuli mask makers at work" loading="lazy"><figcaption class="label"><span>Majuli mask makers</span> <span class="muted">· Majuli</span></figcaption></figure>
-      <figure><img src="assets/editions/scenes/p5-bellmetal.jpg" alt="Sarthebari bell metal at work" loading="lazy"><figcaption class="label"><span>Sarthebari bell metal</span> <span class="muted">· Barpeta</span></figcaption></figure>
-      <figure><img src="assets/editions/portraits/ed-jaapi-portrait.jpg" alt="Jaapi makers at work" loading="lazy"><figcaption class="label"><span>Jaapi makers</span> <span class="muted">· Nalbari</span></figcaption></figure>
-    </div>
-  </section>
+  <p class="board-head label gap-xl rv"><span>04</span><span class="muted">Out in the world</span></p>
+  <div class="board b2 rv">
+    <figure class="full"><img src="assets/editions/mockups/m7-billboard.jpg" alt="A billboard over city traffic" loading="lazy"></figure>
+    <figure class="t45"><img src="assets/editions/mockups/m8-scan.jpg" alt="Scanning the QR on a pack" loading="lazy"></figure>
+    <a href="site/index.html" class="t45" style="display:block;background:#F4F4F2" aria-label="Open the live maker platform"><img src="assets/site-shot.jpg" alt="The maker platform on a phone" loading="lazy" style="object-fit:contain;padding:6% 18%"><span class="label" style="position:absolute;left:14px;bottom:12px">Open the live platform ↗</span></a>
+    <figure class="full"><img src="assets/editions/mockups/m5-giftbox.jpg" alt="A gift box of all six editions with story cards" loading="lazy"></figure>
+  </div>
+  <div class="board b2 rv">
+    <figure class="t32"><img src="assets/bleed-delivery.jpg" alt="A delivery rider crosses the Brahmaputra" loading="lazy"><figcaption class="label">The order goes out</figcaption></figure>
+    <figure class="t32"><img src="assets/bleed-home.jpg" alt="Hands unwrap a handwoven cloth" loading="lazy"><figcaption class="label">And arrives</figcaption></figure>
+  </div>
 
-  <section class="wrap gap-xl rv" aria-labelledby="chain-h">
-    <p class="line" id="chain-h" style="margin-bottom:clamp(32px,4vw,56px)">Each pattern comes from one craft.</p>
-    <div class="chain">
-      <div class="chain-row chain-head"><span></span><span>Maker</span><span>Craft</span><span>Motif</span><span>Pattern</span><span>Pack</span></div>
-      <div class="chain-row"><div class="who"><b>Tea tribe pluckers</b><span class="label muted">Tea gardens, Sonitpur</span></div><img src="assets/editions/scenes/p1-tea.jpg" alt="Tea tribe pluckers" loading="lazy"><img src="assets/editions/closeups/ed-tea-closeup.jpg" alt="Tea tribe pluckers: the craft up close" loading="lazy"><div class="motif"><img src="assets/editions/motifs/ed-tea-motif-1.png" alt="Tea tribe pluckers motif" loading="lazy"></div><img src="assets/editions/patterns/ed-tea-pattern.jpg" alt="Tea tribe pluckers pattern" loading="lazy"><img src="assets/editions/packs/front-tea.jpg" alt="Tea tribe pluckers pack" loading="lazy"></div>
-      <div class="chain-row"><div class="who"><b>Mising weavers</b><span class="label muted">Riverbank villages, Majuli</span></div><img src="assets/editions/portraits/ed-mising-portrait.jpg" alt="Mising weavers" loading="lazy"><img src="assets/editions/closeups/ed-mising-closeup.jpg" alt="Mising weavers: the craft up close" loading="lazy"><div class="motif"><img src="assets/editions/motifs/ed-mising-motif-1.png" alt="Mising weavers motif" loading="lazy"></div><img src="assets/editions/patterns/ed-mising-pattern.jpg" alt="Mising weavers pattern" loading="lazy"><img src="assets/editions/packs/front-mising.jpg" alt="Mising weavers pack" loading="lazy"></div>
-      <div class="chain-row"><div class="who"><b>Bodo eri silk</b><span class="label muted">Kokrajhar</span></div><img src="assets/editions/portraits/ed-bodo-portrait.jpg" alt="Bodo eri silk" loading="lazy"><img src="assets/editions/closeups/ed-bodo-closeup.jpg" alt="Bodo eri silk: the craft up close" loading="lazy"><div class="motif"><img src="assets/editions/motifs/ed-bodo-motif-1.png" alt="Bodo eri silk motif" loading="lazy"></div><img src="assets/editions/patterns/ed-bodo-pattern.jpg" alt="Bodo eri silk pattern" loading="lazy"><img src="assets/editions/packs/front-bodo.jpg" alt="Bodo eri silk pack" loading="lazy"></div>
-      <div class="chain-row"><div class="who"><b>Majuli mask makers</b><span class="label muted">Satras of Majuli</span></div><img src="assets/editions/scenes/p4-majuli.jpg" alt="Majuli mask makers" loading="lazy"><img src="assets/editions/closeups/ed-majuli-closeup.jpg" alt="Majuli mask makers: the craft up close" loading="lazy"><div class="motif"><img src="assets/editions/motifs/ed-majuli-motif-1.png" alt="Majuli mask makers motif" loading="lazy"></div><img src="assets/editions/patterns/ed-majuli-pattern.jpg" alt="Majuli mask makers pattern" loading="lazy"><img src="assets/editions/packs/front-majuli.jpg" alt="Majuli mask makers pack" loading="lazy"></div>
-      <div class="chain-row"><div class="who"><b>Sarthebari bell metal</b><span class="label muted">Sarthebari, Barpeta</span></div><img src="assets/editions/scenes/p5-bellmetal.jpg" alt="Sarthebari bell metal" loading="lazy"><img src="assets/editions/closeups/ed-bellmetal-closeup.jpg" alt="Sarthebari bell metal: the craft up close" loading="lazy"><div class="motif"><img src="assets/editions/motifs/ed-bellmetal-motif-1.png" alt="Sarthebari bell metal motif" loading="lazy"></div><img src="assets/editions/patterns/ed-bellmetal-pattern.jpg" alt="Sarthebari bell metal pattern" loading="lazy"><img src="assets/editions/packs/front-bellmetal.jpg" alt="Sarthebari bell metal pack" loading="lazy"></div>
-      <div class="chain-row"><div class="who"><b>Jaapi makers</b><span class="label muted">Nalbari</span></div><img src="assets/editions/portraits/ed-jaapi-portrait.jpg" alt="Jaapi makers" loading="lazy"><img src="assets/editions/closeups/ed-jaapi-closeup.jpg" alt="Jaapi makers: the craft up close" loading="lazy"><div class="motif"><img src="assets/editions/motifs/ed-jaapi-motif-1.png" alt="Jaapi makers motif" loading="lazy"></div><img src="assets/editions/patterns/ed-jaapi-pattern.jpg" alt="Jaapi makers pattern" loading="lazy"><img src="assets/editions/packs/front-jaapi.jpg" alt="Jaapi makers pack" loading="lazy"></div>
-    </div>
-  </section>
-
-  <figure class="gap-xl bleed rv">
-    <img src="assets/editions/mockups/m4-family.jpg" alt="All six Choose Assam edition packs in a row" loading="lazy">
-  </figure>
-  <p class="wrap gap-md line rv">Six editions. One label. Every front names its makers.</p>
-
-  <section class="wrap gap-lg rv" aria-label="Edition pack fronts">
-    <ol class="row-6">
-      <li><img src="assets/editions/packs/front-tea.jpg" alt="Tea tribe pluckers pack front" loading="lazy"><div class="n label"><span>Tea tribe pluckers</span><span class="muted">Tea gardens, Sonitpur</span></div></li>
-      <li><img src="assets/editions/packs/front-mising.jpg" alt="Mising weavers pack front" loading="lazy"><div class="n label"><span>Mising weavers</span><span class="muted">Riverbank villages, Majuli</span></div></li>
-      <li><img src="assets/editions/packs/front-bodo.jpg" alt="Bodo eri silk pack front" loading="lazy"><div class="n label"><span>Bodo eri silk</span><span class="muted">Kokrajhar</span></div></li>
-      <li><img src="assets/editions/packs/front-majuli.jpg" alt="Majuli mask makers pack front" loading="lazy"><div class="n label"><span>Majuli mask makers</span><span class="muted">Satras of Majuli</span></div></li>
-      <li><img src="assets/editions/packs/front-bellmetal.jpg" alt="Sarthebari bell metal pack front" loading="lazy"><div class="n label"><span>Sarthebari bell metal</span><span class="muted">Sarthebari, Barpeta</span></div></li>
-      <li><img src="assets/editions/packs/front-jaapi.jpg" alt="Jaapi makers pack front" loading="lazy"><div class="n label"><span>Jaapi makers</span><span class="muted">Nalbari</span></div></li>
-    </ol>
-  </section>
-
-  <section class="wrap gap-xl pair rv" aria-label="Packs in their setting">
-    <figure><img src="assets/editions/mockups/m2-world-majuli.jpg" alt="The Majuli mask makers pack in a mask workshop" loading="lazy"><figcaption class="label muted">In the mask workshop, Majuli</figcaption></figure>
-    <figure class="drop"><img src="assets/editions/mockups/m1-hero-jaapi.jpg" alt="The Jaapi makers pack on a red plinth" loading="lazy"><figcaption class="label muted">Jaapi makers</figcaption></figure>
-  </section>
-
-  <section class="wrap gap-xl rv" aria-label="Pattern library">
-    <ol class="row-6">
-      <li><img src="assets/editions/patterns/ed-tea-pattern.jpg" alt="Tea tribe pluckers pattern" loading="lazy" style="aspect-ratio:1"><div class="n label"><span>Tea tribe pluckers</span><span class="muted">Jhumur, the song and dance tea-tribe communities brought from Chotanagpur</span></div></li>
-      <li><img src="assets/editions/patterns/ed-mising-pattern.jpg" alt="Mising weavers pattern" loading="lazy" style="aspect-ratio:1"><div class="n label"><span>Mising weavers</span><span class="muted">Mising handloom · GI, 2024</span></div></li>
-      <li><img src="assets/editions/patterns/ed-bodo-pattern.jpg" alt="Bodo eri silk pattern" loading="lazy" style="aspect-ratio:1"><div class="n label"><span>Bodo eri silk</span><span class="muted">Bodo eri silk · GI, 2024</span></div></li>
-      <li><img src="assets/editions/patterns/ed-majuli-pattern.jpg" alt="Majuli mask makers pattern" loading="lazy" style="aspect-ratio:1"><div class="n label"><span>Majuli mask makers</span><span class="muted">Majuli masks · GI, 2024</span></div></li>
-      <li><img src="assets/editions/patterns/ed-bellmetal-pattern.jpg" alt="Sarthebari bell metal pattern" loading="lazy" style="aspect-ratio:1"><div class="n label"><span>Sarthebari bell metal</span><span class="muted">Sarthebari metal craft · GI, 2024</span></div></li>
-      <li><img src="assets/editions/patterns/ed-jaapi-pattern.jpg" alt="Jaapi makers pattern" loading="lazy" style="aspect-ratio:1"><div class="n label"><span>Jaapi makers</span><span class="muted">Jaapi · GI, 2024</span></div></li>
-    </ol>
-    <div class="motif-strip gap-lg" aria-hidden="true"><img src="assets/editions/motifs/ed-tea-motif-1.png" alt="" loading="lazy"> <img src="assets/editions/motifs/ed-tea-motif-2.png" alt="" loading="lazy"> <img src="assets/editions/motifs/ed-mising-motif-1.png" alt="" loading="lazy"> <img src="assets/editions/motifs/ed-mising-motif-2.png" alt="" loading="lazy"> <img src="assets/editions/motifs/ed-bodo-motif-1.png" alt="" loading="lazy"> <img src="assets/editions/motifs/ed-bodo-motif-2.png" alt="" loading="lazy"> <img src="assets/editions/motifs/ed-majuli-motif-1.png" alt="" loading="lazy"> <img src="assets/editions/motifs/ed-majuli-motif-2.png" alt="" loading="lazy"> <img src="assets/editions/motifs/ed-bellmetal-motif-1.png" alt="" loading="lazy"> <img src="assets/editions/motifs/ed-bellmetal-motif-2.png" alt="" loading="lazy"> <img src="assets/editions/motifs/ed-jaapi-motif-1.png" alt="" loading="lazy"> <img src="assets/editions/motifs/ed-jaapi-motif-2.png" alt="" loading="lazy"></div>
-  </section>
-
-  <figure class="gap-xl bleed rv">
-    <img src="assets/editions/packs/backs-lineup.jpg" alt="The backs of all six packs, each with a story, a QR code and a source line" loading="lazy">
-  </figure>
-  <p class="wrap gap-md line rv">The back tells their story, says where the craft is recorded, and links to makers open this week.</p>
-
-  <section class="wrap gap-xl pair rev rv" aria-label="Scan">
-    <p class="line drop">One scan.</p>
-    <figure><img src="assets/editions/mockups/m8-scan.jpg" alt="Scanning the QR code on the back of a pack" loading="lazy"></figure>
-  </section>
-
-  <figure class="gap-lg web-frame rv">
-    <div class="view"><iframe src="site/index.html" title="Choose Assam microsite, live" loading="lazy"></iframe></div>
-  </figure>
-  <p class="wrap label muted" style="margin-top:12px;display:flex;justify-content:space-between;gap:16px"><span>The maker platform · live, scroll inside</span><a href="site/index.html">Open full screen ↗</a></p>
-
-  <figure class="gap-xl bleed rv">
-    <img src="assets/editions/mockups/m7-billboard.jpg" alt="A billboard over city traffic with the Bodo eri silk pack and a QR code" loading="lazy">
-  </figure>
-
-  <figure class="gap-lg bleed rv">
-    <img src="assets/editions/mockups/m5-giftbox.jpg" alt="A gift box of all six editions with story cards" loading="lazy">
-  </figure>
-
-  <figure class="gap-xl bleed rv">
-    <img src="assets/bleed-delivery.jpg" alt="A delivery rider carries a parcel across a bridge over the Brahmaputra" loading="lazy">
-  </figure>
-  <figure class="gap-lg bleed rv">
-    <img src="assets/bleed-home.jpg" alt="Hands unwrap a handwoven cloth beside a cup of tea" loading="lazy">
-  </figure>
-  <p class="wrap gap-md line rv">The order reaches the maker. The buyer may come back.</p>
-
-  <section class="wrap gap-xl rv" aria-labelledby="engine-h">
-    <p class="line" id="engine-h" style="margin-bottom:clamp(32px,4vw,56px)">What you can do depends on where the maker is.</p>
-    <ol class="row-4">
-      <li><img src="assets/state-closed.jpg" alt="Jonali at her shutter as floodwater fills the workshop" loading="lazy"><div class="n label"><span>Closed</span><span class="muted">Day 1</span></div>
-        <dl><div><dt>Released</dt><dd>Nothing yet. The collective verifies the maker and lists them.</dd></div><div><dt>You can</dt><dd>Lend</dd></div></dl></li>
-      <li><img src="assets/state-rebuilding.jpg" alt="Jonali hangs washed yarn to dry on a mud-cracked floor" loading="lazy"><div class="n label"><span>Rebuilding</span><span class="muted">Day 14</span></div>
-        <dl><div><dt>Released</dt><dd>Repair funds, for silt, looms and stock</dd></div><div><dt>You can</dt><dd>Lend</dd></div></dl></li>
-      <li><img src="assets/state-producing.jpg" alt="Jonali and another weaver at work, finished cloths stacked on shelves" loading="lazy"><div class="n label"><span>Producing</span><span class="muted">Day 40</span></div>
-        <dl><div><dt>Released</dt><dd>Working capital, from pre-orders</dd></div><div><dt>You can</dt><dd>Pre-order, lend</dd></div></dl></li>
-      <li><img src="assets/film-handoff.jpg" alt="A parcel handed to a delivery rider outside the workshop" loading="lazy"><div class="n label"><span>Open</span><span class="muted">Day 90</span></div>
-        <dl><div><dt>Released</dt><dd>Sales go straight to the maker. Loan repayments begin.</dd></div><div><dt>You can</dt><dd>Buy, pre-order</dd></div></dl></li>
-    </ol>
-  </section>
+  <p class="board-head label gap-xl rv"><span>05</span><span class="muted">Maker status</span></p>
+  <div class="board b3 rv" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+    <figure class="t45"><img src="assets/state-closed.jpg" alt="Closed" loading="lazy"><figcaption class="label">Closed · lend</figcaption></figure>
+    <figure class="t45"><img src="assets/state-rebuilding.jpg" alt="Rebuilding" loading="lazy"><figcaption class="label">Rebuilding · lend</figcaption></figure>
+    <figure class="t45"><img src="assets/state-producing.jpg" alt="Producing" loading="lazy"><figcaption class="label">Producing · pre-order</figcaption></figure>
+    <figure class="t45"><img src="assets/film-handoff.jpg" alt="Open" loading="lazy"><figcaption class="label">Open · buy</figcaption></figure>
+  </div>
+  <p class="wrap gap-md line rv">What you can do depends on where the maker is.</p>
 
   <section class="wrap gap-xl rv" aria-label="Project notes">
     <p class="label muted" style="margin-bottom:16px">Project notes</p>
