@@ -110,7 +110,7 @@ export default function Banyan() {
   return (
     <main className="measure min-h-screen pb-28 pt-20 sm:pt-28 lg:pt-36">
       <motion.div {...rise(0)}>
-        <Back />
+        <Back href="/archive" label="← Archive" />
       </motion.div>
 
       {/* ─── what it is, in the first screen ─────────────────────────────── */}
@@ -179,7 +179,7 @@ export default function Banyan() {
 
       <motion.section {...rise(0.26)} className="mt-16">
         <p>
-          Back to <Link href="/#work" className="prose-link">the work index</Link>, or read{' '}
+          Back to <Link href="/archive" className="prose-link">the archive</Link>, or read{' '}
           <Link href="/kizuku" className="prose-link">Kizuku</Link> and{' '}
           <Link href="/case-study" className="prose-link">Hoychoy Cafe</Link>.
         </p>

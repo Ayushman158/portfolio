@@ -4,13 +4,20 @@ import { motion, useReducedMotion } from 'motion/react'
 import WorkIndex from '../components/work-index'
 
 /*
- * Work kept off the homepage: a client website, motion work and
- * small experiments. Kept, and findable, but off the homepage so the
- * selected work reads first.
+ * Work kept off the homepage: client work, an installation, a campaign,
+ * motion and small experiments. Kept, and findable, but off the homepage so
+ * the two selected case studies read first.
  */
 
-const WEBSITES = [
+const CLIENT = [
+  { name: 'Hoychoy Cafe · hoychoycafe.com', year: '2025', href: '/case-study', img: '/shipped/hoychoy-card.jpg', w: 2400, h: 1350 },
   { name: 'Banyan Tree · himanshugarg.in', year: '2026', href: '/banyan', img: '/shipped/banyan.jpg', w: 1600, h: 900 },
+]
+
+// Choose Assam is a static page of its own, so it opens as a plain link.
+const PROJECTS = [
+  { name: 'Koi Wishing Pond', year: '2026', href: '/koi-wishing-pond', img: '/research/koi-loop.jpg', w: 960, h: 540 },
+  { name: 'Choose Assam · Tata Tea Premium', year: '2026', href: '/choose-assam', external: true, img: '/choose-assam/card.jpg', w: 1536, h: 864 },
 ]
 
 const EXPERIMENTS = [
@@ -34,10 +41,11 @@ export default function Archive() {
     <main className="measure min-h-screen pb-28 pt-20 sm:pt-28 lg:pt-36">
       <motion.header {...rise(0)} className="track-wide space-y-4">
         <h1 className="display">Archive</h1>
-        <p className="max-w-[38rem]">A client website, motion work and smaller experiments. Hover a row to see it.</p>
+        <p className="max-w-[38rem]">Client work, an installation, a campaign, motion and smaller experiments. Hover a row to see it.</p>
       </motion.header>
       <motion.div {...rise(0.08)}>
-        <WorkIndex label="Client websites" items={WEBSITES} />
+        <WorkIndex label="Client work" items={CLIENT} />
+        <WorkIndex label="Installation and campaign" items={PROJECTS} />
         <WorkIndex label="Experiments" items={EXPERIMENTS} />
         <WorkIndex label="Motion" items={MOTION} />
       </motion.div>

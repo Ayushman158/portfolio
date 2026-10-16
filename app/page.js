@@ -102,7 +102,7 @@ const RESEARCH = [
 // Ordered for a recruiter: live work with measured results, then tested research, then
 // the product being built, then the speculative campaign, then the installation.
 const byName = Object.fromEntries([...CAMPAIGN, ...SHIPPED, ...RESEARCH].map((p) => [p.name, p]))
-const SELECTED = ['Hoychoy Cafe', 'Signal', 'Kizuku', 'Choose Assam', 'Koi Wishing Pond'].map((n) => byName[n])
+const SELECTED = ['Signal', 'Kizuku'].map((n) => byName[n])
 
 // matter-js is ~30 kB gzipped and only matters once this section is reached, so
 // it is split out of the initial bundle entirely rather than shipped with the fold.
@@ -271,7 +271,7 @@ export default function Home() {
             Everything else is in the Archive (linked under the list and in the nav). */}
         <Shipped label="Selected work" items={SELECTED} rows />
         <p className="track-wide text-faint mt-6" style={{ fontSize: '0.95rem' }}>
-          A client website, motion and smaller experiments are in the <Link href="/archive" className="prose-link">archive</Link>.
+          Client work, the Koi Wishing Pond, the Choose Assam campaign, motion and smaller experiments are in the <Link href="/archive" className="prose-link">archive</Link>.
         </p>
       </motion.div>
 
