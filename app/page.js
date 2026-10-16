@@ -99,9 +99,10 @@ const RESEARCH = [
   },
 ]
 
-// Order chosen by Ayushman: Choose Assam, Signal, Hoychoy, Kizuku, then Koi.
+// Ordered for a recruiter: live work with measured results, then tested research, then
+// the product being built, then the speculative campaign, then the installation.
 const byName = Object.fromEntries([...CAMPAIGN, ...SHIPPED, ...RESEARCH].map((p) => [p.name, p]))
-const SELECTED = ['Choose Assam', 'Signal', 'Hoychoy Cafe', 'Kizuku', 'Koi Wishing Pond'].map((n) => byName[n])
+const SELECTED = ['Hoychoy Cafe', 'Signal', 'Kizuku', 'Choose Assam', 'Koi Wishing Pond'].map((n) => byName[n])
 
 // matter-js is ~30 kB gzipped and only matters once this section is reached, so
 // it is split out of the initial bundle entirely rather than shipped with the fold.
