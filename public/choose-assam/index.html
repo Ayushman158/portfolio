@@ -287,7 +287,7 @@ footer { padding: 28px var(--gutter) 40px; display: flex; justify-content: space
 /* ── ecology diagram ── */
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .eco2 { position: relative; display: grid; grid-template-columns: 1fr 48px 1fr 48px 1fr 48px 1fr; align-items: start; border-top: 1px solid var(--ink); padding: 28px 0 88px; }
-.eco2-col .label { margin-bottom: 18px; }
+
 .eco2-col ul { display: grid; gap: 10px; }
 .eco2-col li { font-size: clamp(20px, 1.8vw, 28px); font-weight: 300; letter-spacing: -0.02em; line-height: 1.1; }
 .eco2-col .status li { display: flex; align-items: center; gap: 10px; }
@@ -296,7 +296,7 @@ footer { padding: 28px var(--gutter) 40px; display: flex; justify-content: space
 .eco2-col .status li:nth-child(3)::before { background: #C8A46A; }
 .eco2-col .status li:nth-child(4)::before { background: #1F4B34; }
 .eco2-note { margin-top: 16px; font-size: 15px; color: var(--ink-2); max-width: 24ch; }
-.eco2-arrow { position: relative; height: 1px; margin-top: 62px; background: var(--ink); transform-origin: left; }
+.eco2-arrow { position: relative; height: 1px; background: var(--ink); transform-origin: left; }
 .eco2-arrow::after { content: ''; position: absolute; right: 0; top: -4px; width: 8px; height: 8px; border-top: 1px solid var(--ink); border-right: 1px solid var(--ink); transform: rotate(45deg); }
 .eco2-qr { position: relative; overflow: hidden; isolation: isolate; aspect-ratio: 1; max-width: 220px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 6px; padding: 20px; background: #F4EFE3; border-radius: 50%; color: var(--ink); }
 .eco2-qr::after { content: ''; position: absolute; inset: 8px; border: 1px solid rgba(200,164,106,.6); border-radius: 50%; }
@@ -308,13 +308,13 @@ footer { padding: 28px var(--gutter) 40px; display: flex; justify-content: space
 .eco2-loop span { position: absolute; left: 50%; bottom: -9px; transform: translateX(-50%); background: var(--bg); padding: 0 14px; white-space: nowrap; }
 .eco2-loop::before { content: ''; position: absolute; left: -4px; top: -2px; width: 8px; height: 8px; border-left: 1px solid var(--red); border-top: 1px solid var(--red); transform: rotate(45deg); }
 @media (prefers-reduced-motion: no-preference) {
-  .rv .eco2-col, .rv .eco2-loop { opacity: 0; transform: translateY(10px); transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out); }
+  .rv .eco2-body, .rv .eco2-col > .label, .rv .eco2-loop { opacity: 0; transform: translateY(10px); transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out); }
   .rv .eco2-arrow { transform: scaleX(0); transition: transform 600ms var(--ease-out); }
-  .rv.in .eco2-col, .rv.in .eco2-loop { opacity: 1; transform: none; }
+  .rv.in .eco2-body, .rv.in .eco2-col > .label, .rv.in .eco2-loop { opacity: 1; transform: none; }
   .rv.in .eco2-arrow { transform: none; }
-  .rv.in .eco2 > :nth-child(3) { transition-delay: 250ms; } .rv.in .eco2 > :nth-child(4) { transition-delay: 400ms; }
-  .rv.in .eco2 > :nth-child(5) { transition-delay: 550ms; } .rv.in .eco2 > :nth-child(6) { transition-delay: 700ms; }
-  .rv.in .eco2 > :nth-child(7) { transition-delay: 850ms; } .rv.in .eco2 > :nth-child(8) { transition-delay: 1000ms; }
+  .rv.in .a1 { transition-delay: 250ms; } .rv.in .c2 > * { transition-delay: 400ms; }
+  .rv.in .a2 { transition-delay: 550ms; } .rv.in .c3 > * { transition-delay: 700ms; }
+  .rv.in .a3 { transition-delay: 850ms; } .rv.in .c4 > * { transition-delay: 1000ms; }
   .rv.in .eco2-loop { transition-delay: 1250ms; }
 }
 @media (max-width: 820px) {
@@ -325,6 +325,25 @@ footer { padding: 28px var(--gutter) 40px; display: flex; justify-content: space
   .eco2-loop { position: static; height: auto; border: 0; border-top: 1px solid var(--red); margin-top: 28px; padding-top: 12px; }
   .eco2-loop::before { display: none; }
   .eco2-loop span { position: static; transform: none; white-space: normal; padding: 0; }
+}
+
+/* ecology diagram: labels on one row, contents on the next, arrows centred on the contents */
+.eco2 { grid-template-rows: auto auto; row-gap: 18px; align-items: center; }
+.eco2-col { display: contents; }
+.eco2-col > .label { grid-row: 1; margin: 0; align-self: end; }
+.eco2-body { grid-row: 2; align-self: center; }
+.c1 > * { grid-column: 1; } .c2 > * { grid-column: 3; } .c3 > * { grid-column: 5; } .c4 > * { grid-column: 7; }
+.a1 { grid-column: 2; } .a2 { grid-column: 4; } .a3 { grid-column: 6; }
+.eco2-arrow { grid-row: 2; align-self: center; margin: 0 8px; }
+.c4 .eco2-body { position: relative; }
+.c4 .eco2-note { position: absolute; top: calc(100% + 14px); left: 0; margin: 0; }
+@media (max-width: 820px) {
+  .eco2-col > *, .eco2-arrow, .eco2-body { grid-column: auto !important; grid-row: auto !important; }
+  .eco2 { grid-template-rows: none; row-gap: 0; }
+  .eco2-col { display: block; }
+  .eco2-col > .label { margin-bottom: 14px; }
+  .c4 .eco2-note { position: static; margin-top: 14px; }
+  .eco2-arrow { margin: 18px 0 18px 24px; }
 }
 </style>
 </head>
@@ -368,25 +387,24 @@ footer { padding: 28px var(--gutter) 40px; display: flex; justify-content: space
   <section class="wrap rv" aria-labelledby="eco-h">
     <div class="eco2">
       <h2 id="eco-h" class="sr-only">The communication ecology</h2>
-      <div class="eco2-col">
+      <div class="eco2-col c1">
         <p class="label muted">Where people see it</p>
-        <ul><li>Film</li><li>Social media</li><li>Tea pack</li><li>Billboards</li><li>Gift box</li></ul>
+        <div class="eco2-body"><ul><li>Film</li><li>Social media</li><li>Tea pack</li><li>Billboards</li><li>Gift box</li></ul></div>
       </div>
-      <span class="eco2-arrow" aria-hidden="true"></span>
-      <div class="eco2-col hub">
+      <span class="eco2-arrow a1" aria-hidden="true"></span>
+      <div class="eco2-col c2 hub">
         <p class="label muted">How they get there</p>
-        <div class="eco2-qr"><span class="medallion" aria-hidden="true"></span><b>One QR code</b><span>The same code on every surface</span></div>
+        <div class="eco2-body"><div class="eco2-qr"><span class="medallion" aria-hidden="true"></span><b>One QR code</b><span>The same code on every surface</span></div></div>
       </div>
-      <span class="eco2-arrow" aria-hidden="true"></span>
-      <div class="eco2-col">
+      <span class="eco2-arrow a2" aria-hidden="true"></span>
+      <div class="eco2-col c3">
         <p class="label muted">What they can do</p>
-        <ul><li>Buy</li><li>Pre-order</li><li>Lend</li></ul>
+        <div class="eco2-body"><ul><li>Buy</li><li>Pre-order</li><li>Lend</li></ul></div>
       </div>
-      <span class="eco2-arrow" aria-hidden="true"></span>
-      <div class="eco2-col">
+      <span class="eco2-arrow a3" aria-hidden="true"></span>
+      <div class="eco2-col c4">
         <p class="label muted">Who it reaches</p>
-        <ul class="status"><li>Closed</li><li>Rebuilding</li><li>Producing</li><li>Open</li></ul>
-        <p class="eco2-note">A maker’s status decides which actions are open.</p>
+        <div class="eco2-body"><ul class="status"><li>Closed</li><li>Rebuilding</li><li>Producing</li><li>Open</li></ul><p class="eco2-note">A maker’s status decides which actions are open.</p></div>
       </div>
       <p class="eco2-loop label"><span>Makers post updates, which appear on social media and the platform and bring people back</span></p>
     </div>
