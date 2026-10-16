@@ -46,7 +46,7 @@ const FACTS = [
   ['Status', 'Live at hoychoycafe.com'],
 ]
 
-// The owner's own figures from the pilot, from the owner's logs and 50+ threads. The
+// The owner's own figures from the pilot, from the owner's logs. The
 // tildes were on the originals — those numbers were estimated, not instrumented.
 const OUTCOMES = [
   ['Handling time per order', '6–8 min', '2–3 min'],
@@ -219,13 +219,11 @@ export default function Hoychoy() {
       <section>
         <Heading n="02">The problem</Heading>
         <p className="mb-8">
-          I read more than 50 of the café’s WhatsApp threads. Most of the owner’s busy hours went on
-          finishing orders, not taking new ones.
+          Most of the owner’s busy hours went on finishing orders, not taking new ones.
         </p>
         <Numbers
-          cols="grid-cols-2"
+          cols="grid-cols-1"
           items={[
-            ['50+', 'WhatsApp threads read from real service'],
             ['50%', 'of peak time spent clarifying, not taking orders'],
           ]}
         />
