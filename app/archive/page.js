@@ -4,13 +4,13 @@ import { motion, useReducedMotion } from 'motion/react'
 import WorkIndex from '../components/work-index'
 
 /*
- * Everything that isn't a full case study: a campaign, motion work and
+ * Work kept off the homepage: a client website, motion work and
  * small experiments. Kept, and findable, but off the homepage so the
  * selected work reads first.
  */
 
-const CAMPAIGNS = [
-  { name: 'Choose Assam · Tata Tea', year: '2026', href: '/choose-assam', external: true, video: '/choose-assam/preview.mp4' },
+const WEBSITES = [
+  { name: 'Banyan Tree · himanshugarg.in', year: '2026', href: '/banyan', img: '/shipped/banyan.jpg', w: 1600, h: 900 },
 ]
 
 const EXPERIMENTS = [
@@ -34,10 +34,10 @@ export default function Archive() {
     <main className="measure min-h-screen pb-28 pt-20 sm:pt-28 lg:pt-36">
       <motion.header {...rise(0)} className="track-wide space-y-4">
         <h1 className="display">Archive</h1>
-        <p className="max-w-[38rem]">A campaign, motion work and smaller experiments. Hover a row to see it.</p>
+        <p className="max-w-[38rem]">A client website, motion work and smaller experiments. Hover a row to see it.</p>
       </motion.header>
       <motion.div {...rise(0.08)}>
-        <WorkIndex label="Campaigns" items={CAMPAIGNS} />
+        <WorkIndex label="Client websites" items={WEBSITES} />
         <WorkIndex label="Experiments" items={EXPERIMENTS} />
         <WorkIndex label="Motion" items={MOTION} />
       </motion.div>

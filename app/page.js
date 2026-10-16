@@ -44,6 +44,22 @@ const SHIPPED = [
   },
 ]
 
+// A campaign and maker platform: a static page of its own, so it opens as a
+// plain link rather than through the case-study card transition.
+const CAMPAIGN = [
+  {
+    name: 'Choose Assam',
+    kind: 'Campaign and maker platform · Tata Tea Premium',
+    href: '/choose-assam',
+    static: true,
+    site: 'M.Des project · Speculative',
+    shot: '/choose-assam/card.jpg',
+    alt: 'A gift box of six Tata Tea Premium packs, each with a pattern from one Assam craft community, and their story cards',
+    what: 'After a flood, Tata Tea points its packs and ads at the makers of Assam, so people buy from them instead of donating. Six community pack editions and a maker platform.',
+    tags: ['Strategy', 'Packaging', 'Campaign', 'Platform'],
+  },
+]
+
 // Case studies of work that is not live, so the right-hand slot names the
 // evidence rather than a domain — but shown, not listed: the screens are the
 // argument, and a hover-only preview hid them from every phone.
@@ -83,9 +99,9 @@ const RESEARCH = [
   },
 ]
 
-// Strongest first: shipped with measured results, then research, then the build.
-const byName = Object.fromEntries([...SHIPPED, ...RESEARCH].map((p) => [p.name, p]))
-const SELECTED = ['Hoychoy Cafe', 'Signal', 'Koi Wishing Pond', 'Kizuku', 'Banyan Tree'].map((n) => byName[n])
+// Order chosen by Ayushman: Choose Assam, Signal, Hoychoy, Kizuku, then Koi.
+const byName = Object.fromEntries([...CAMPAIGN, ...SHIPPED, ...RESEARCH].map((p) => [p.name, p]))
+const SELECTED = ['Choose Assam', 'Signal', 'Hoychoy Cafe', 'Kizuku', 'Koi Wishing Pond'].map((n) => byName[n])
 
 // matter-js is ~30 kB gzipped and only matters once this section is reached, so
 // it is split out of the initial bundle entirely rather than shipped with the fold.
@@ -254,7 +270,7 @@ export default function Home() {
             Everything else is in the Archive (linked under the list and in the nav). */}
         <Shipped label="Selected work" items={SELECTED} rows />
         <p className="track-wide text-faint mt-6" style={{ fontSize: '0.95rem' }}>
-          Campaigns, motion and smaller experiments are in the <Link href="/archive" className="prose-link">archive</Link>.
+          A client website, motion and smaller experiments are in the <Link href="/archive" className="prose-link">archive</Link>.
         </p>
       </motion.div>
 
