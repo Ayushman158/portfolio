@@ -55,7 +55,7 @@ const CAMPAIGN = [
     site: 'M.Des project · Speculative',
     shot: '/choose-assam/card.jpg',
     alt: 'A gift box of six Tata Tea Premium packs, each with a pattern from one Assam craft community, and their story cards',
-    what: 'After a flood, Tata Tea points its packs and ads at the makers of Assam, so people buy from them instead of donating. Six community pack editions and a maker platform.',
+    what: 'After a flood, Tata Tea uses its packs and ads to send people to Assam’s makers, so they can buy from them instead of donating. Six community pack editions and a maker platform.',
     tags: ['Strategy', 'Packaging', 'Campaign', 'Platform'],
   },
 ]
