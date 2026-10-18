@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { Back, Figure, Heading, Tradeoffs } from '../components/case-study'
 import { Arcs, Contrast, Coverage, DailyLoop, DelayMap, Headlines, Journey, Orbit, Timeline } from './charts'
@@ -74,23 +74,29 @@ const PAIRS = [
         ['Time to spare, worked out', 'Arrival against the deadline, so a delay can be read in minutes.']]]],
 ]
 
+/* Stress-test fixes that stand on their own: other situations for the same card. */
 const BREAKS = [
-  ['setup-daily', 'Daily riders tap a card, not a QR ticket', 'So the trip is saved once, with its deadline.'],
-  ['alert-lock', 'They’re working on the way, not watching', 'One alert per trip, with both choices on it.'],
   ['s3-home', 'The fault can hit before they leave', 'The same decision, made from home.'],
   ['s3-train', 'The train can be held between stations', 'The next stop, and what works from there.'],
   ['s3-offline', 'There’s no signal underground', 'It shows what it last knew, and when.'],
   ['s3-restored', 'The first trains back are full', 'It says so, so nobody expects a seat.'],
-  ['ride-booked', 'The gate can fail on the way out', 'What to show at the counter.'],
 ]
 
-const SCREENS = [
-  ['s1-book', 'Night before', 'One new row: arrive by a set time.'],
-  ['s2-home', '8:58', 'A normal day says “On time”.'],
-  ['s3-decision', '9:10, delayed', 'How long backups work, and both choices.'],
-  ['s4-backups', '9:12', 'Every way to get there, with its status.'],
-  ['s5-past', '9:40', 'After 9:31, nothing is pushed.'],
+/* Saving the trip: two ways in, depending on how the rider pays. Not a sequence. */
+const SETUP = [
+  ['s1-book', 'Riders who buy QR tickets', 'One new row while booking: arrive by a set time.'],
+  ['setup-daily', 'Riders who tap a card', 'The trip is saved once, with its days and deadline.'],
 ]
+
+/* The main flow, one delayed morning in order, and the branch if they keep waiting. */
+const FLOW = [
+  ['s2-home', '8:58', 'A normal day says “On time”.'],
+  ['alert-lock', '9:10', 'The line is delayed. One alert, with both choices.'],
+  ['s3-decision', '9:10', 'How long backups work, and both choices.'],
+  ['s4-backups', '9:12', 'Every way to get there, with its status.'],
+  ['ride-booked', '9:14', 'The ride is booked. What to show at the gate.'],
+]
+const BRANCH = ['s5-past', '9:40', 'After 9:31, backups may arrive late. Nothing more is pushed.']
 
 const SKETCHES = [
   ['sketch-c1-signal-card', 'Leave-by card'], ['sketch-c2-journey-thread', 'Journey thread'],
@@ -198,6 +204,19 @@ const Notes = ({ items, tone }) => (
   </ol>
 )
 
+/* A flow drawn as a line with stops: each screen is a stop, in order. */
+const FlowStep = ({ src, time, caption, last, line = 'var(--sig)' }) => (
+  <li className="relative w-[200px] shrink-0 snap-start md:w-auto md:min-w-0 md:flex-1">
+    <div className="relative mb-3 flex h-5 items-center">
+      <span className="relative z-10 h-4 w-4 rounded-full" style={{ border: `4px solid ${line}`, background: 'var(--ground)' }} />
+      {!last && <span aria-hidden="true" className="absolute left-2 top-1/2 h-1 -translate-y-1/2" style={{ width: 'calc(100% + 1.25rem)', background: line }} />}
+    </div>
+    <div className="text-ink mb-2" style={{ fontSize: '0.95rem' }}>{time}</div>
+    <Phone src={src} alt={caption} />
+    <p className="mt-3" style={{ fontSize: '0.9rem' }}>{caption}</p>
+  </li>
+)
+
 export default function Signal() {
   const reduceMotion = useReducedMotion()
   const active = useActive(IDS)
@@ -223,10 +242,13 @@ export default function Signal() {
         </motion.header>
 
         <Network className="track-wide mt-12" />
-        <figure data-case-hero className="track-wide mt-8 overflow-hidden rounded-2xl">
-          <img src={`${V}/hero.jpg`} alt="Three screens from the redesign: a lock-screen alert, the decision screen reading Backups work until 9:31, and a booked bike taxi" width={1536} height={1024} className="sig-light block h-auto w-full" />
-          <img src={`${V}/hero-dark.jpg`} alt="" aria-hidden="true" width={1536} height={1024} className="sig-dark h-auto w-full" />
-        </figure>
+        <Wave className="track-wide mt-8 rounded-2xl">
+          <figure data-case-hero className="flex aspect-[16/10] items-start justify-center gap-[5%] px-[6%] pt-[7%]" aria-label="Three screens from the redesign: a lock-screen alert, the decision screen reading Backups work until 9:31, and a booked bike taxi">
+            <div className="mt-[9%] w-[26%] shrink-0"><Phone src="alert-lock" alt="Lock-screen alert: Yellow Line delayed, backups work until 9:31" /></div>
+            <div className="w-[29%] shrink-0"><Phone src="s3-decision" alt="Decision screen: Backups work until 9:31, with Leave now and Keep waiting" /></div>
+            <div className="mt-[9%] w-[26%] shrink-0"><Phone src="ride-booked" alt="Bike taxi booked: meet at Gate 2" /></div>
+          </figure>
+        </Wave>
 
         <dl className="mt-10 grid gap-x-8 gap-y-6 border-t border-rule pt-7 sm:grid-cols-3">
           <div><dt className="text-ink mb-1">Who it’s for</dt><dd style={{ fontSize: '0.98rem' }}>Office commuters who take the same metro trip every day and can’t be late.</dd></div>
@@ -362,31 +384,53 @@ export default function Signal() {
             <img src={`${V}/d3-backups.webp`} alt="The backups sheet on an iPhone 15 Pro: every way to get there, each with its status" width={663} height={1100} loading="lazy" className="block h-auto w-[43%] max-w-[280px] drop-shadow-2xl" />
           </div>
         </Wave>
-        <div className="track-wide mt-10 rounded-2xl px-5 pb-6 pt-8 sm:px-8" style={{ background: 'radial-gradient(90% 100% at 50% 0%, var(--sig-sky), var(--sig-tint) 55%, var(--ground))' }}>
-          <div className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-3">
-            {SCREENS.map(([f, t, c]) => (
-              <figure key={f} className="w-[200px] shrink-0 snap-start sm:w-[210px]">
-                <div className="mb-2" style={{ fontSize: '0.9rem', color: t.includes('delayed') ? 'var(--sig-late)' : 'var(--faint)' }}>{t}</div>
-                <Phone src={f} alt={c} />
-                <figcaption className="mt-2" style={{ fontSize: '0.9rem' }}>{c}</figcaption>
+        <h3 className="subhead mt-16">1. Saving the trip</h3>
+        <p>Two ways in, depending on how the rider pays. Either one ends with a saved trip and a deadline.</p>
+        <div className="track-wide mt-8 grid grid-cols-[1fr_auto_1fr] items-start gap-4 sm:gap-8 md:mx-auto md:max-w-[520px]">
+          {SETUP.map(([f, t, c], i) => (
+            <Fragment key={f}>
+              {i === 1 && <span className="text-faint self-center" style={{ fontSize: '0.95rem' }}>or</span>}
+              <figure>
+                <Phone src={f} alt={`${t}. ${c}`} />
+                <figcaption className="mt-3" style={{ fontSize: '0.9rem' }}><span className="text-ink block">{t}</span>{c}</figcaption>
               </figure>
-            ))}
+            </Fragment>
+          ))}
+        </div>
+
+        <h3 className="subhead mt-16">2. A delayed morning</h3>
+        <p>The main flow, in order from left to right.</p>
+        <div className="track-wide mt-8 rounded-2xl px-5 pb-6 pt-8 sm:px-8" style={{ background: 'radial-gradient(90% 100% at 50% 0%, var(--sig-sky), var(--sig-tint) 55%, var(--ground))' }}>
+          <ol className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-3">
+            {FLOW.map(([f, t, c], i) => <FlowStep key={f} src={f} time={t} caption={c} last={i === FLOW.length - 1} />)}
+          </ol>
+        </div>
+        <div className="track-wide mt-8 flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10">
+          <figure className="w-[200px] shrink-0">
+            <div className="text-ink mb-2" style={{ fontSize: '0.95rem' }}>{BRANCH[1]}</div>
+            <Phone src={BRANCH[0]} alt={BRANCH[2]} />
+            <figcaption className="mt-3" style={{ fontSize: '0.9rem' }}>{BRANCH[2]}</figcaption>
+          </figure>
+          <div className="space-y-2">
+            <div className="text-ink">If they keep waiting past 9:31</div>
+            <p>A branch off the decision screen, not the next step. The app stops saying backups work, and leaves the choice with the rider.</p>
           </div>
         </div>
 
-        <div className="track-wide mt-14 grid items-center gap-10 md:grid-cols-2">
+        <h3 className="subhead mt-16">On its own: a closure known the night before</h3>
+        <div className="track-wide mt-8 grid items-center gap-10 md:grid-cols-2">
           <div className="overflow-hidden rounded-2xl px-10 pt-10" style={{ background: 'var(--sig-tint)', height: 'clamp(340px, 34vw, 460px)' }}>
             <Phone src="s3b-closure" alt="Closure announced the night before: Rajiv Chowk exits closed tomorrow, nearest open exit Barakhamba Road" className="mx-auto max-w-[260px]" />
           </div>
           <div className="space-y-3">
-            <h3 className="subhead">When the closure is known the night before</h3>
-            <p>Most disruptions from July to October 2026 were planned security closures, announced the evening before. So the choice moves home: which exit is open, and when to leave.</p>
+            <p>Most disruptions from July to October 2026 were planned security closures, announced the evening before. So the choice moves home: which exit is open, and when to leave. It isn’t part of the morning flow.</p>
           </div>
         </div>
       </Section>
 
       {/* ---------- Stress test ---------- */}
       <Section id="stress" line="pink" title="Stress-testing it on a real commute" lede="I took one participant’s commute, three stages and an hour and a half each way, and ran it through the screens one morning at a time. The flow broke in seven places.">
+        <p className="mt-6">Three fixes became part of the flows above: the daily trip for card riders, the lock-screen alert, and what to show at the gate. The other four stand on their own. Each is the same card in a different situation.</p>
         <div className="track-wide mt-10 grid grid-cols-2 gap-x-5 gap-y-9 md:grid-cols-4">
           {BREAKS.map(([f, t, c]) => (
             <figure key={f}>
