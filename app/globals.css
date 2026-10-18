@@ -31,6 +31,8 @@
         --sig: #0A6CB0;
         --sig-sky: #BFE3F8;
         --sig-line: #7CCBF5;
+        --sig-on: #FFFFFF;
+        --sig-quiet: #5E5950;
         --sig-tint: #EAF5FC;
         --sig-late: #C22E00;
         --sig-est: #B45309;
@@ -77,6 +79,8 @@
         --sig: #7CCBF5;
         --sig-sky: #1E4F78;
         --sig-line: #3B97D6;
+        --sig-on: #0B1A24;
+        --sig-quiet: #4A4640;
         --sig-tint: #16242E;
         --sig-late: #FF6B45;
         --sig-est: #F0A35E;

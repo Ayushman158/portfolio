@@ -213,31 +213,22 @@ export function AlertSpeed() {
   )
 }
 
-/* Real headlines, clipped and layered. Each links to its article. */
+/* Real headlines, as screenshots of the articles. Each links to its source. */
 const HEADLINES = [
-  ['Business Standard', '1 Sep 2025', 'Delhi Metro sees third technical snag in a week, commuters face delays', 'https://www.business-standard.com/india-news/delhi-metro-sees-third-snag-in-week-as-signalling-issues-cause-heavy-delays-125090101396_1.html'],
-  ['ETV Bharat', '30 Jun 2026', 'Technical Snag On Delhi Metro’s Blue Line Disrupts Services', 'https://www.etvbharat.com/amp/en/state/technical-snag-on-delhi-metro-blue-line-disrupts-services-enn26063006928'],
-  ['Oneindia', 'Jul 2026', '17 Delhi Metro Stations To Remain Closed For Third Day', 'https://www.oneindia.com/india/17-delhi-metro-stations-to-remain-closed-for-third-day-check-full-list-8155349.html'],
-  ['Business Standard', '9 Oct 2026', 'Delhi Metro to restrict entry, exit at 57 stations from 9 pm', 'https://www.business-standard.com/india-news/delhi-metro-to-restrict-entry-exit-at-57-stations-from-9-pm-check-details-126100900387_1.html'],
-  ['The Quint · reader report', '', 'Delhi Metro’s Yellow Line snag was painful for many like myself', 'https://www.thequint.com/my-report/delhi-metro-yellow-line-chattarpur-technical-glitch'],
+  ['news-snag-week', 'News24', '1 Sep 2025', 'https://news24online.com/india/delhi-metro-faces-third-technical-glitch-in-a-week-commuters-hit-by-delays/624814/', 'Delhi Metro Faces Third Technical Glitch In A Week, Commuters Hit By Delays'],
+  ['news-yellow-line', 'The Quint, reader report', '', 'https://www.thequint.com/my-report/delhi-metro-yellow-line-chattarpur-technical-glitch', 'Delhi Metro’s Yellow Line Snag was Painful for Many Like Me'],
+  ['news-blue-line', 'ETV Bharat', '30 Jun 2026', 'https://www.etvbharat.com/amp/en/state/technical-snag-on-delhi-metro-blue-line-disrupts-services-enn26063006928', 'Technical Snag On Delhi Metro’s Blue Line Disrupts Services'],
+  ['news-closed-july', 'Oneindia', '23 Jul 2026', 'https://www.oneindia.com/india/17-delhi-metro-stations-to-remain-closed-for-third-day-check-full-list-8155349.html', '17 Delhi Metro Stations To Remain Closed For Third Day'],
+  ['news-closure-oct', 'Business Today', '9 Oct 2026', 'https://www.businesstoday.in/india/story/dmrc-issues-revised-metro-closure-update-ahead-of-oct-10-check-affected-stations-560777-2026-10-09', 'DMRC issues revised metro closure update ahead of Oct 10'],
 ]
 export function Headlines() {
-  const tilt = ['-1.2deg', '0.8deg', '-0.6deg', '1.1deg', '-0.9deg']
+  const tilt = ['-1deg', '1.2deg', '0.6deg', '-0.8deg', '0.9deg']
   return (
-    <div className="track-wide mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {HEADLINES.map(([src, date, title, url], i) => (
-        <a
-          key={title}
-          href={url}
-          target="_blank"
-          rel="noreferrer"
-          className={`block rounded-xl p-5 transition-transform duration-200 hover:-translate-y-0.5 ${i === 0 ? 'lg:col-span-2' : ''}`}
-          style={{ background: 'var(--ground)', border: '1px solid var(--rule)', boxShadow: '0 10px 30px rgba(23,22,20,0.07)', transform: `rotate(${tilt[i]})`, textDecoration: 'none' }}
-        >
-          <div className="flex justify-between gap-3 text-faint" style={{ fontSize: '0.78rem', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-            <span>{src}</span><span>{date}</span>
-          </div>
-          <div className="mt-3 font-serif" style={{ color: 'var(--ink)', fontSize: i === 0 ? '1.9rem' : '1.35rem', lineHeight: 1.15 }}>{title}</div>
+    <div className="track-wide mt-10 columns-1 gap-6 sm:columns-2">
+      {HEADLINES.map(([f, src, date, url, title], i) => (
+        <a key={f} href={url} target="_blank" rel="noreferrer" className="mb-6 block break-inside-avoid transition-transform duration-200 hover:-translate-y-0.5" style={{ transform: `rotate(${tilt[i]})`, textDecoration: 'none' }}>
+          <img src={`/signal/v4/${f}.jpg`} alt={`Headline: ${title}`} loading="lazy" className="sig-dim block h-auto w-full rounded-lg" style={{ background: '#fff', border: '1px solid var(--rule)', boxShadow: '0 12px 32px rgba(23,22,20,0.10)' }} />
+          <span className="text-faint mt-2 block" style={{ fontSize: '0.8rem' }}>{src}{date ? ` · ${date}` : ''}</span>
         </a>
       ))}
     </div>
@@ -256,13 +247,13 @@ const STAGES = [
 export function DelayMap() {
   return (
     <figure className="track-wide mt-10">
-      <div className="overflow-x-auto pb-2">
-        <ol className="grid min-w-[760px] grid-cols-6">
+      <div>
+        <ol className="grid grid-cols-2 gap-y-8 sm:grid-cols-3 lg:grid-cols-6">
           {STAGES.map(([name, what, delay, scope], i) => (
             <li key={name} className="flex flex-col gap-3 pr-4">
               <div className="flex items-center">
                 <span style={{ width: 16, height: 16, borderRadius: '50%', border: `4px solid ${scope ? SIG : 'var(--faint)'}`, background: 'var(--ground)', flexShrink: 0 }} />
-                {i < STAGES.length - 1 && <span style={{ flex: 1, height: 3, background: 'var(--rule)' }} />}
+                <span className={i === STAGES.length - 1 ? 'hidden' : 'block'} style={{ flex: 1, height: 3, background: 'var(--rule)' }} />
               </div>
               <div style={{ color: 'var(--ink)', fontSize: '1rem' }}>{name}</div>
               <div className="text-faint" style={{ fontSize: '0.85rem', lineHeight: 1.35 }}>{what}</div>
@@ -282,9 +273,9 @@ export function DelayMap() {
 /* The rule, drawn as one timeline: wait, then the slowest backup, then a margin. */
 export function Timeline() {
   const seg = [
-    [27, 'You can keep waiting', '27 min*', 'var(--sig-line)', 'var(--ink)'],
-    [54, 'Slowest backup: exit, pickup, ride', '54 min*', SIG, '#fff'],
-    [5, 'Margin', '5', 'var(--faint)', '#fff'],
+    [27, 'You can keep waiting', '27 min*', 'var(--sig-sky)', 'var(--ink)'],
+    [54, 'Slowest backup: exit, pickup, ride', '54 min*', SIG, 'var(--sig-on)'],
+    [5, 'Margin', '5', 'var(--sig-quiet)', '#fff'],
   ]
   return (
     <figure className="track-wide mt-8">

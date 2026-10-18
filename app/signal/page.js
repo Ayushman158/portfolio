@@ -320,12 +320,12 @@ export default function Signal() {
         <div className="track-wide mt-10 grid gap-14 md:grid-cols-2">
           <div>
             <div className="text-faint mb-4" style={{ fontSize: '0.9rem' }}>Today</div>
-            <Phone src="before-today" alt="DMRC's app today on a delayed morning: a yellow scrolling alert, empty station fields, and service tiles" className="mx-auto max-w-[280px]" tone="var(--faint)" marks={[[1, '84%', '15.2%'], [2, '84%', '33%'], [3, '38%', '55%']]} />
-            <Notes items={BEFORE} tone="var(--faint)" />
+            <Phone src="before-today" alt="DMRC's app today on a delayed morning: a yellow scrolling alert, empty station fields, and service tiles" className="mx-auto max-w-[280px]" tone="var(--sig-quiet)" marks={[[1, '84%', '15.2%'], [2, '84%', '33%'], [3, '38%', '55%']]} />
+            <Notes items={BEFORE} tone="var(--sig-quiet)" />
           </div>
           <div>
             <div className="mb-4" style={{ fontSize: '0.9rem', color: 'var(--sig)' }}>Redesign</div>
-            <Phone src="s3-decision" alt="The redesign on the same morning: the delay pinned to the trip, backups work until 9:31, and both choices" className="mx-auto max-w-[280px]" marks={[[1, '88%', '19%'], [2, '88%', '33%'], [3, '50%', '54.5%']]} />
+            <Phone src="s3-decision" alt="The redesign on the same morning: the delay pinned to the trip, backups work until 9:31, and both choices" className="mx-auto max-w-[280px]" marks={[[1, '88%', '19%'], [2, '88%', '33%'], [3, '66%', '54.5%']]} />
             <Notes items={AFTER} tone="var(--sig)" />
           </div>
         </div>
