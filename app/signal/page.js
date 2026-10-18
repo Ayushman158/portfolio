@@ -3,7 +3,7 @@
 import { Fragment, useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { Back, Figure, Heading, Tradeoffs } from '../components/case-study'
-import { Arcs, Contrast, Coverage, DailyLoop, DelayMap, Headlines, Journey, Orbit, Timeline } from './charts'
+import { Arcs, Contrast, DailyLoop, DelayMap, Headlines, Journey, Orbit, Timeline } from './charts'
 import { Network, Pill, YellowLine } from './lines'
 import Wave from './wave'
 import dynamic from 'next/dynamic'
@@ -39,7 +39,6 @@ const IDS = STATIONS.map(([id]) => id)
 const METHODS = [
   ['7', 'in-depth interviews', 'Daily commuters with trips of 1 to 4 stages, 15 minutes to 1.5 hours.'],
   ['5', 'usability tests', 'Of the first version, with daily commuters.'],
-  ['244', 'stations modelled', 'Entrances and walking distance, from OpenStreetMap.'],
   ['8', 'press and DMRC sources', 'Punctuality, faults, closures and the last-mile policy.'],
 ]
 
@@ -119,7 +118,7 @@ const EDGES = [
 const DROPPED = [
   ['dropped-leave-by', 'A leave-by time', 'A standalone app that said when to leave home. 4 of 5 commuters read its answer in under 3 seconds.', 'trains run 99.95% on time, and Google Maps already reminds you when to leave.'],
   ['dropped-interchange', 'Help at the interchange', 'Which train to let go at a busy interchange like INA, and whether the transfer works.', 'there’s no reliable live crowd data to build it on.'],
-  ['dropped-station', 'A better station to board from', 'A nearby station that works better, shown while buying a QR ticket.', 'on foot, almost nobody has a second station to choose from.'],
+  ['dropped-station', 'A better station to board from', 'A nearby station that works better, shown while buying a QR ticket.', 'one participant said they’d only use it with another station close by, and daily riders who tap a card never open QR booking.'],
 ]
 
 const SKETCHES = [
@@ -307,7 +306,7 @@ export default function Signal() {
 
       {/* ---------- Research ---------- */}
       <Section id="found" line="magenta" title="Research" lede="I’m not from Delhi, so I built the picture from people who ride every day, and checked it against data.">
-        <dl className="track-wide mt-10 grid grid-cols-2 gap-x-8 gap-y-8 md:grid-cols-4">
+        <dl className="track-wide mt-10 grid grid-cols-2 gap-x-8 gap-y-8 md:grid-cols-3">
           {METHODS.map(([n, t, d]) => (
             <div key={t} className="border-t border-rule pt-4">
               <dt><span className="font-serif" style={{ fontSize: '2.4rem', lineHeight: 1, color: 'var(--ink)' }}>{n}</span><span className="text-ink mt-1 block">{t}</span></dt>
@@ -374,9 +373,6 @@ export default function Signal() {
         </div>
         <Figure src={`${V}/sketch-c1-three-states.jpg`} alt="Pencil sketch: the leave-by card in three states, the default, a pre-filled ride prompt, and searching for a driver" caption="The ride is pre-filled, never booked for the rider. That rule carried into this version." track="track-wide mt-6" />
 
-        <h3 className="subhead mt-14">Behind the better station</h3>
-        <p>I mapped every station and entrance from OpenStreetMap and modelled walking times.</p>
-        <Coverage />
       </Section>
 
       {/* ---------- The idea ---------- */}
@@ -385,12 +381,12 @@ export default function Signal() {
         <p className="mt-6">The example trip runs on the Yellow Line. A fault between Hauz Khas and Central Secretariat comes with no time. The backups leave from where the rider is, and they only work for a while.</p>
         <h3 className="subhead mt-16">How long the backups work</h3>
         <Timeline />
-        <p className="mt-8">The rule: take the deadline, subtract the slowest likely backup (getting out of the station, waiting for a pickup, the ride), and keep 5 minutes spare. It uses the slowest end of every estimate, because traffic is what made the student late.</p>
+        <p className="mt-8">The rule: take the deadline, subtract the time the quickest backup takes on a bad run (getting out of the station, waiting for a pickup, the ride, each at the slow end of its range), and keep 5 minutes spare. Why a bad run: if the app planned on a good one and the pickup or traffic was slow, it would have said waiting was fine when it wasn’t. Leaving a little early costs less than arriving late, and traffic is what made the student late.</p>
 
         <div className="track-wide mt-10 grid gap-8 md:grid-cols-2">
           <div className="rounded-2xl p-6" style={{ background: 'var(--sig-tint)' }}>
             <div className="text-ink" style={{ fontSize: '1.05rem' }}>What “backups work until 9:31” means</div>
-            <p className="mt-2" style={{ fontSize: '0.95rem' }}>9:31 is the latest time to start leaving the station. Leave by then, and even the slowest backup should get them to work by 10:30 with 5 minutes spare. After 9:31, a backup might still make it, but the app can no longer say so.</p>
+            <p className="mt-2" style={{ fontSize: '0.95rem' }}>9:31 is the latest time to start leaving the station. Leave by then, and the quickest backup should get them to work by 10:30 even on a bad run, with 5 minutes spare. After 9:31, a backup might still make it, but the app can no longer say so.</p>
           </div>
           <div className="rounded-2xl p-6" style={{ background: 'var(--raised)' }}>
             <div className="text-ink" style={{ fontSize: '1.05rem' }}>It isn’t a guarantee</div>
@@ -576,7 +572,7 @@ export default function Signal() {
       </Section>
 
       <footer className="mt-20 space-y-3 border-t border-rule pt-6 text-faint" style={{ fontSize: '0.85rem', lineHeight: 1.55 }}>
-        <p><span style={{ color: 'var(--sig-est)' }}>*</span> Times and percentages with an asterisk are simulated: the trip example, and walking coverage modelled on OpenStreetMap. They’re shown the way DMRC’s app shows estimates.</p>
+        <p><span style={{ color: 'var(--sig-est)' }}>*</span> Times with an asterisk are simulated: the example trip. They’re shown the way DMRC’s app shows estimates.</p>
         <p>
           Participant findings come from seven interviews. Punctuality:{' '}
           <a className="prose-link" href="https://www.tribuneindia.com/news/delhi/delhi-metro-records-99-95-train-punctuality-in-2026-dmrc/" target="_blank" rel="noreferrer">The Tribune</a>. Faults and closures: the articles linked above. Last mile:{' '}

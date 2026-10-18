@@ -59,7 +59,7 @@ export function DailyLoop() {
     <svg viewBox="-40 0 580 500" className="mx-auto block w-full max-w-[480px]" role="img" aria-label="A loop: leave early with a buffer, ride the metro, a delay with no time given, wait or leave, arrive late or far too early, add more buffer tomorrow">
       <circle cx="250" cy="250" r="188" fill="none" stroke={SKY} strokeWidth="5" strokeDasharray="10 10" />
       <text x="250" y="246" textAnchor="middle" style={{ font: '400 48px var(--font-serif), serif', fill: 'var(--ink)' }}>34 min</text>
-      <text x="250" y="276" textAnchor="middle" style={{ font: '400 14px var(--font-sans), sans-serif', fill: 'var(--faint)' }}>a day, spent on a bad day</text>
+      <text x="250" y="276" textAnchor="middle" style={{ font: '400 14px var(--font-sans), sans-serif', fill: 'var(--faint)' }}>of buffer a day, self-reported</text>
       {nodes.map(([x, y, t], i) => {
         const key = i === 3
         const late = i === 2
@@ -145,14 +145,14 @@ export function Arcs() {
 }
 
 
-/* Five things she has during a delay, and the one she doesn't. */
+/* Five things a rider has during a delay, and the one they don't. */
 export function Orbit() {
   const nodes = [
-    [300, 62, 'What she knows'], [500, 180, 'What DMRC knows'], [500, 400, 'The backups'],
-    [100, 400, 'Cost of leaving'], [100, 180, 'Her deadline'],
+    [300, 62, 'What they’ve learned'], [500, 180, 'What DMRC knows'], [500, 400, 'The backups'],
+    [100, 400, 'Cost of leaving'], [100, 180, 'Their deadline'],
   ]
   return (
-    <svg viewBox="0 0 600 560" className="mx-auto block w-full max-w-[560px]" role="img" aria-label="Around the decision to wait or leave: what she knows, what DMRC knows, the backups, the cost of leaving, her deadline, and time, the one thing nothing shows her">
+    <svg viewBox="0 0 600 560" className="mx-auto block w-full max-w-[560px]" role="img" aria-label="Around the decision to wait or leave: what they’ve learned, what DMRC knows, the backups, the cost of leaving, their deadline, and time, the one thing nothing shows them">
       <circle cx="300" cy="280" r="215" fill="none" stroke="var(--rule)" strokeWidth="1.5" />
       <circle cx="300" cy="280" r="96" fill="var(--sig-panel)" stroke="var(--rule)" />
       <text x="300" y="274" textAnchor="middle" style={{ font: '400 30px var(--font-serif), serif', fill: 'var(--sig-panel-ink)' }}>Wait or</text>
@@ -173,27 +173,6 @@ export function Orbit() {
 }
 
 /* How often a second station is in reach. */
-export function Coverage() {
-  const rows = [[8, '10-minute walk', SIG], [30, '15-minute walk', '#3B97D6'], [81, 'By auto, about 2.5 km', '#7CCBF5']]
-  return (
-    <figure className="mt-6">
-      <div className="grid grid-cols-3 gap-4">
-        {rows.map(([v, t, c]) => (
-          <div key={t} className="flex flex-col items-center gap-3 text-center">
-            <div className="grid aspect-square w-full max-w-[150px] place-items-center rounded-full" style={{ background: `conic-gradient(${c} 0 ${v}%, var(--raised) ${v}% 100%)` }}>
-              <div className="grid aspect-square w-[70%] place-items-center rounded-full" style={{ background: 'var(--ground)' }}>
-                <span className="font-serif" style={{ fontSize: 'clamp(1.4rem, 1rem + 1.5vw, 2rem)', color: EST }}>{v}%*</span>
-              </div>
-            </div>
-            <span style={{ fontSize: '0.9rem' }}>{t}</span>
-          </div>
-        ))}
-      </div>
-    </figure>
-  )
-}
-
-
 /* Two leave-by lines: with a tight deadline the window closes before the alert. */
 export function AlertSpeed() {
   const Row = ({ label, at, pct, tone, note }) => (
@@ -273,11 +252,11 @@ export function DelayMap() {
   )
 }
 
-/* The rule, drawn as one timeline: wait, then the slowest backup, then a margin. */
+/* The rule, drawn as one timeline: wait, then the quickest backup on a bad run, then a margin. */
 export function Timeline() {
   const seg = [
     [27, 'You can keep waiting', '27 min*', 'var(--sig-sky)', 'var(--ink)'],
-    [54, 'Slowest backup: exit, pickup, ride', '54 min*', SIG, 'var(--sig-on)'],
+    [54, 'Quickest backup on a bad run: exit, pickup, ride', '54 min*', SIG, 'var(--sig-on)'],
     [5, 'Margin', '5', 'var(--sig-quiet)', '#fff'],
   ]
   return (

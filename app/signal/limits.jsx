@@ -6,7 +6,7 @@ import { useState } from 'react'
  * Limits, and the system change they point to. The redesign can only be as
  * early as DMRC's alerts, so the section lets the reader move the deadline and
  * the alert's delay, then shows the alert flow today next to the one proposed.
- * The model uses the example trip: slowest backup 54 min, 5 min margin, fault
+ * The model uses the example trip: quickest backup 54 min on a bad run, 5 min margin, fault
  * logged at 9:04. Everything it prints is simulated, so it carries the *.
  */
 
@@ -66,7 +66,7 @@ export function AlertWindow() {
         {ok ? `${left} min to decide*` : 'The backups stopped working before the alert arrived*'}
       </p>
       <figcaption className="text-faint mt-2" style={{ fontSize: '0.88rem' }}>
-        Simulated on the example trip: slowest backup {BACKUP} min, {MARGIN} min spare. With a tight deadline, even an instant alert leaves no time.
+        Simulated on the example trip: the quickest backup takes {BACKUP} min on a bad run, {MARGIN} min spare. With a tight deadline, even an instant alert leaves no time.
       </figcaption>
     </figure>
   )
@@ -145,7 +145,7 @@ const IN = [
   ['Ride and pickup times', 'Ride partners', 2],
   ['Gates and exits', 'DMRC station data', 2],
 ]
-const WORK = ['Does the fault hit this trip?', 'Backups work until = deadline − slowest backup − 5 min', 'Nearest open gate to the pickup']
+const WORK = ['Does the fault hit this trip?', 'Backups work until = deadline − quickest backup on a bad run − 5 min', 'Nearest open gate to the pickup']
 const OUT = [['On time', 'Home card'], ['Backups work until 9:31', 'Decision screen'], ['Every backup, with its status', 'Backups sheet'], ['Closure ahead', 'The night before']]
 
 export function SystemMap() {
