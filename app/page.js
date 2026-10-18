@@ -89,13 +89,13 @@ const RESEARCH = [
   },
   {
     name: 'Signal',
-    kind: 'Service concept for DMRC · Research and redesign',
+    kind: 'Concept feature for DMRC · Research and interaction design',
     href: '/signal',
-    site: '7 interviews · 5 tests',
-    shot: '/signal/photos/in-hand.jpg',
-    alt: 'A phone on a crowded metro platform showing Signal’s answer near INA: let one go, coach 7 has room',
-    what: 'Delhi Metro trains run on time; the trip around them doesn’t. Signal, a concept feature for DMRC’s own app, tells commuters what the timetable can’t: whether they’ll get on at the interchange, and what’s waiting at the exit.',
-    tags: ['Research', 'Service design', 'Interaction', 'Prototype'],
+    site: '7 interviews · 3 directions dropped',
+    shot: '/signal/v4/hero.jpg',
+    alt: 'Three Signal screens on a pale blue sky: a lock-screen alert, the decision screen reading Backups work until 9:31, and a booked bike taxi',
+    what: 'When the Delhi Metro is disrupted on a day you can’t be late, Signal shows how long your other ways of getting there still work. The choice stays yours.',
+    tags: ['Research', 'Interaction', 'Systems', 'Prototype'],
   },
 ]
 

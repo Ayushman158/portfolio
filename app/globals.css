@@ -26,6 +26,14 @@
         --signal-text: #C22E00;
         --telegram-text: #16719E;
         --accent: #1D4ED8;
+        /* Signal (DMRC case study): its blue, its delay red, DMRC's estimate
+           orange, and a pale sky tint for stages. Text cuts pass AA on paper. */
+        --sig: #0A6CB0;
+        --sig-sky: #BFE3F8;
+        --sig-line: #7CCBF5;
+        --sig-tint: #EAF5FC;
+        --sig-late: #C22E00;
+        --sig-est: #B45309;
         /* Warm emphasis. Ink stays solid on top of these, so contrast never
            depends on where the sweep happens to be: 13.4:1 on paper. */
         --warm-a: #FED7AA;
@@ -63,6 +71,12 @@
         --signal-text: #FF3E00;
         --telegram-text: #229ED9;
         --accent: #8FB0FF;
+        --sig: #7CCBF5;
+        --sig-sky: #1E4F78;
+        --sig-line: #3B97D6;
+        --sig-tint: #16242E;
+        --sig-late: #FF6B45;
+        --sig-est: #F0A35E;
         --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.6 0 0 0 -0.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
         /* Deep on dark rather than pale, so off-white ink still reads: 8.2:1. */
         --warm-a: #7C2D12;
@@ -791,3 +805,8 @@ html[data-room] .lamp-glow-anchor { display: none; }
    narrow screen where the right edge is too close. */
 .map-label-cafe { transform: translate(-50%, 70%); }
 @media (min-width: 640px) { .map-label-cafe { transform: translate(16px, -50%); } }
+
+/* Signal's line-map menu: in the left margin only where the margin is wide
+   enough for it beside the wide track. */
+.sig-map { display: none; }
+@media (min-width: 86rem) { .sig-map { display: block; } }
