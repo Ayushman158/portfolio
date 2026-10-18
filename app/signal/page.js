@@ -105,8 +105,33 @@ function Section({ id, title, lede, children }) {
   )
 }
 
+/*
+ * An iPhone frame around a 390 × 844 screen. Everything is in percentages of
+ * the frame's width, so it holds its proportions at any size: a 4.2% bezel,
+ * the screen's corner matched to the frame's, the Dynamic Island over the
+ * status bar's empty middle, and the side buttons.
+ */
+const BUTTONS = [
+  ['left', '16.5%', '3.6%'], ['left', '24%', '7%'], ['left', '32.5%', '7%'], ['right', '27%', '10.5%'],
+]
 const Phone = ({ src, alt, className = '' }) => (
-  <img src={`${V}/${src}.png`} alt={alt} loading="lazy" className={`sig-dim block h-auto w-full rounded-[22px] ${className}`} style={{ boxShadow: '0 2px 14px rgba(23,22,20,0.07)' }} />
+  <div
+    className={`relative ${className}`}
+    style={{
+      padding: '4.2%',
+      borderRadius: '17% / 8.2%',
+      background: 'linear-gradient(145deg, #4a4a4d 0%, #1c1c1e 38%, #2a2a2c 100%)',
+      boxShadow: '0 0 0 1px rgba(0,0,0,0.55), inset 0 0 0 1.5px rgba(255,255,255,0.14), 0 18px 40px rgba(23,22,20,0.16)',
+    }}
+  >
+    {BUTTONS.map(([side, top, h]) => (
+      <span key={side + top} aria-hidden="true" className="absolute w-[1.1%] rounded-sm" style={{ [side]: '-0.8%', top, height: h, background: '#2c2c2e' }} />
+    ))}
+    <div className="relative overflow-hidden" style={{ borderRadius: '14% / 6.47%', background: '#000' }}>
+      <img src={`${V}/${src}.png`} alt={alt} loading="lazy" className="sig-dim block h-auto w-full" />
+      <span aria-hidden="true" className="absolute rounded-full" style={{ top: '1.3%', left: '34.6%', width: '30.8%', height: '4%', background: '#000' }} />
+    </div>
+  </div>
 )
 
 export default function Signal() {
@@ -246,8 +271,8 @@ export default function Signal() {
         </div>
 
         <div className="track-wide mt-14 grid items-center gap-10 md:grid-cols-2">
-          <div className="rounded-2xl px-10 pt-10" style={{ background: 'var(--sig-tint)' }}>
-            <img src={`${V}/s3b-closure.png`} alt="Closure announced the night before: Rajiv Chowk exits closed tomorrow, nearest open exit Barakhamba Road" loading="lazy" className="sig-dim mx-auto block h-auto w-full max-w-[260px] rounded-t-[24px]" />
+          <div className="overflow-hidden rounded-2xl px-10 pt-10" style={{ background: 'var(--sig-tint)', height: 'clamp(340px, 34vw, 460px)' }}>
+            <Phone src="s3b-closure" alt="Closure announced the night before: Rajiv Chowk exits closed tomorrow, nearest open exit Barakhamba Road" className="mx-auto max-w-[260px]" />
           </div>
           <div className="space-y-3">
             <h3 className="subhead">When the closure is known the night before</h3>
