@@ -25,7 +25,7 @@ const TEST = 'https://signal-scenario-test.vercel.app'
 const STATIONS = [
   ['overview', 'Overview'], ['problem', 'The problem'], ['found', 'Research'], ['tried', 'What I tried first'],
   ['idea', 'The idea'], ['change', 'Before and after'], ['screens', 'The screens'], ['stress', 'Stress test'],
-  ['system', 'How it works'], ['limits', 'Limits and asks'], ['next', 'Future scope'],
+  ['system', 'How it works'], ['limits', 'Asks for DMRC'], ['next', 'Future scope'],
 ]
 const IDS = STATIONS.map(([id]) => id)
 
@@ -48,7 +48,7 @@ const SYNTHESIS = [
 const TRADEOFFS = [
   ['Nobody knows how long the delay will last', 'Count down to the backups, not the train', 'It can’t say whether the train will come'],
   ['Ride times vary, and traffic can add 20 minutes', 'Use the slowest end of every range', 'Some riders leave when waiting would have worked'],
-  ['DMRC earns from the rides it shows', '“Keep waiting” is an equal choice, and the bus is listed too', 'It’s less useful as a sales channel'],
+  ['The app also sells bike taxi rides', '“Keep waiting” is an equal choice, and the bus is listed too', 'It’s less useful as a sales channel'],
   ['Alerts pile up and get ignored', 'One alert per trip, only for trips with a deadline', 'Miss it, and the rider has to open the app'],
 ]
 
@@ -398,7 +398,7 @@ export default function Signal() {
         <Figure src={`${V}/s6-states.png`} alt="States board: every number says where it came from and how old it is" caption="All seven are states of one card. Every number says where it came from and how old it is." track="track-wide mt-12" />
 
         <h3 className="subhead mt-16">Testing it with riders</h3>
-        <p>A scenario test with daily commuters is running. Each rider lives the same delayed morning on their own trip twice: with today’s app, then with the redesign. Results will be added here.</p>
+        <p>I built a scenario test for daily commuters. Each rider lives the same delayed morning on their own trip twice: with today’s app, then with the redesign.</p>
         <p className="mt-3"><a className="prose-link" href={TEST} target="_blank" rel="noreferrer">Try the test</a></p>
       </Section>
 
@@ -407,13 +407,13 @@ export default function Signal() {
         <Figure src={`${V}/s7-system.png`} alt="System board: service alerts, the rider's deadline, ride times and gates feed one rule, which drives the home card, the decision and the backups sheet" track="track-wide mt-10" />
         <div className="track-wide mt-10 grid gap-8 sm:grid-cols-3">
           <div className="space-y-2"><div className="h-1 rounded-full" style={{ background: 'var(--sig-sky)' }} /><div className="text-ink">Now</div><p style={{ fontSize: '0.95rem' }}>Works with alerts, partner ride times and gates as they are.</p></div>
-          <div className="space-y-2"><div className="h-1 rounded-full" style={{ background: 'var(--sig)' }} /><div className="text-ink">Needs DMRC</div><p style={{ fontSize: '0.95rem' }}>Alerts the moment they’re logged. A delay given as a time. No exit charge during a declared fault.</p></div>
+          <div className="space-y-2"><div className="h-1 rounded-full" style={{ background: 'var(--sig)' }} /><div className="text-ink">Needs DMRC</div><p style={{ fontSize: '0.95rem' }}>Alerts the moment they’re logged. A delay given as a time.</p></div>
           <div className="space-y-2"><div className="h-0" style={{ borderTop: '4px dashed var(--rule)' }} /><div className="text-ink">Later</div><p style={{ fontSize: '0.95rem' }}>Live gaps between trains, so “longer than usual” is measured.</p></div>
         </div>
       </Section>
 
       {/* ---------- Limits ---------- */}
-      <Section id="limits" line="grey" title="Limits, and what I’d ask DMRC to change" lede="The screens can only be as early as DMRC’s alerts. The bigger fix is in the system behind them.">
+      <Section id="limits" line="grey" title="What I’d ask DMRC to change" lede="The screens can only be as early as DMRC’s alerts. The bigger fix is in the system behind them.">
         <h3 className="subhead mt-10">It’s only as fast as the alert</h3>
         <p>Move the deadline and the alert’s delay. Every minute the alert spends getting to the rider comes out of the time they have to decide.</p>
         <AlertWindow />
@@ -425,7 +425,6 @@ export default function Signal() {
           {[
             ['Send alerts the moment they’re logged', 'The same second for the app, the displays and ride partners.'],
             ['Give the delay as a time, or say it’s unknown', 'Riders can plan around “unknown”. They can’t plan around silence.'],
-            ['Waive the exit charge during a declared fault', 'So leaving the station isn’t a penalty for taking a backup.'],
           ].map(([t, d], i) => (
             <li key={t} className="flex gap-3">
               <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full text-[0.85rem] font-semibold" style={{ background: 'var(--sig)', color: 'var(--sig-on)' }}>{i + 1}</span>
@@ -433,14 +432,6 @@ export default function Signal() {
             </li>
           ))}
         </ol>
-
-        <h3 className="subhead mt-16">What it still doesn’t cover</h3>
-        <div className="mt-6 grid gap-6 sm:grid-cols-2">
-          <p><span className="text-ink">How often faults happen is unknown.</span> If they’re rare, the daily setup has to be very light to be worth it.</p>
-          <p><span className="text-ink">It covers one stage of the trip.</span> Not the bus before the metro or the auto after it.</p>
-          <p><span className="text-ink">The exit-fare rule is unconfirmed.</span> The note on the backups sheet is placeholder copy.</p>
-          <p><span className="text-ink">It hasn’t been tested with riders yet.</span> The scenario test is running.</p>
-        </div>
       </Section>
 
       {/* ---------- Future scope ---------- */}
