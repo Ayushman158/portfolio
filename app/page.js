@@ -93,7 +93,7 @@ const RESEARCH = [
     href: '/signal',
     site: '7 interviews · 3 directions dropped',
     shot: '/signal/v4/hero.jpg',
-    alt: 'Three screens from the feature on a pale blue sky: a lock-screen alert, the decision screen reading Backups work until 9:31, and a booked bike taxi',
+    alt: 'Three screens from the feature on a dark blue stage: a lock-screen alert, the decision screen reading Backups work until 9:31, and a booked bike taxi',
     what: 'For people who take the Delhi Metro to work every day. When their line is delayed, DMRC’s app shows how long their other ways to work still get them there on time.',
     tags: ['Research', 'Interaction', 'Systems', 'Prototype'],
   },
