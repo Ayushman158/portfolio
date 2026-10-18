@@ -88,13 +88,13 @@ const RESEARCH = [
     tags: ['Brand', 'Design system', 'Interaction', 'iOS build'],
   },
   {
-    name: 'Signal',
-    kind: 'Concept feature for DMRC · Research and interaction design',
+    name: 'Personalising the Delhi Metro app for daily commuters',
+    kind: 'DMRC app redesign · Research and interaction design',
     href: '/signal',
     site: '7 interviews · 3 directions dropped',
     shot: '/signal/v4/hero.jpg',
-    alt: 'Three Signal screens on a pale blue sky: a lock-screen alert, the decision screen reading Backups work until 9:31, and a booked bike taxi',
-    what: 'For people who take the Delhi Metro to work every day. When their line is delayed, Signal shows how long their other ways to work still get them there on time.',
+    alt: 'Three screens from the feature on a pale blue sky: a lock-screen alert, the decision screen reading Backups work until 9:31, and a booked bike taxi',
+    what: 'For people who take the Delhi Metro to work every day. When their line is delayed, DMRC’s app shows how long their other ways to work still get them there on time.',
     tags: ['Research', 'Interaction', 'Systems', 'Prototype'],
   },
 ]
@@ -102,7 +102,7 @@ const RESEARCH = [
 // Ordered for a recruiter: live work with measured results, then tested research, then
 // the product being built, then the speculative campaign, then the installation.
 const byName = Object.fromEntries([...CAMPAIGN, ...SHIPPED, ...RESEARCH].map((p) => [p.name, p]))
-const SELECTED = ['Signal', 'Kizuku'].map((n) => byName[n])
+const SELECTED = ['Personalising the Delhi Metro app for daily commuters', 'Kizuku'].map((n) => byName[n])
 
 // matter-js is ~30 kB gzipped and only matters once this section is reached, so
 // it is split out of the initial bundle entirely rather than shipped with the fold.

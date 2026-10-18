@@ -6,7 +6,7 @@ import { Back, Figure, Heading, Tradeoffs } from '../components/case-study'
 import { AlertSpeed, Arcs, Contrast, Coverage, DailyLoop, Disruptions, Journey, Orbit, ReviewBars, Slack } from './charts'
 
 /*
- * Signal v4: when the metro is disrupted on a deadline trip, it shows how long
+ * How long can I wait? (Signal v4): when the metro is disrupted on a deadline trip, it shows how long
  * the other ways of getting there still work, and leaves the choice to her.
  * Minimal on purpose: one light blue, plain section titles, no tags. Times
  * marked * are the simulated example (Malviya Nagar to Rajiv Chowk, work at
@@ -126,15 +126,15 @@ export default function Signal() {
       {/* ---------- Overview ---------- */}
       <section id="overview" className="scroll-mt-24">
         <motion.header {...rise(0.06)} className="mt-10 space-y-5">
-          <h1 className="display">Signal</h1>
+          <h1 className="display">Personalising the Delhi Metro app for daily commuters</h1>
           <p className="text-ink" style={{ fontSize: '1.3rem', lineHeight: 1.45 }}>
-            Signal is for people who take the Delhi Metro to work every day. When their line is delayed,
-            it shows how long their other ways to work still get them there on time. The choice stays theirs.
+            A redesign of DMRC’s app around a commuter’s own daily trip. When their line is delayed, it shows
+            how long their other ways to work still get them there on time. The choice stays theirs.
           </p>
         </motion.header>
 
         <figure data-case-hero className="track-wide mt-12 overflow-hidden rounded-2xl">
-          <img src={`${V}/hero.jpg`} alt="Three Signal screens: a lock-screen alert, the decision screen reading Backups work until 9:31, and a booked bike taxi" width={1536} height={1024} className="sig-light block h-auto w-full" />
+          <img src={`${V}/hero.jpg`} alt="Three screens from the feature: a lock-screen alert, the decision screen reading Backups work until 9:31, and a booked bike taxi" width={1536} height={1024} className="sig-light block h-auto w-full" />
           <img src={`${V}/hero-dark.jpg`} alt="" aria-hidden="true" width={1536} height={1024} className="sig-dark h-auto w-full" />
         </figure>
 
@@ -269,7 +269,7 @@ export default function Signal() {
         <Figure src={`${V}/s6-states.png`} alt="States board: every number says where it came from and how old it is" caption="All seven are states of one card. Every number says where it came from and how old it is." track="track-wide mt-12" />
 
         <h3 className="subhead mt-16">Testing it with riders</h3>
-        <p>A scenario test with daily commuters is running. Each rider lives the same delayed morning on their own trip twice: with today’s app, then with Signal. Results will be added here.</p>
+        <p>A scenario test with daily commuters is running. Each rider lives the same delayed morning on their own trip twice: with today’s app, then with the new feature. Results will be added here.</p>
         <p className="mt-3"><a className="prose-link" href={TEST} target="_blank" rel="noreferrer">Try the test</a></p>
       </Section>
 
