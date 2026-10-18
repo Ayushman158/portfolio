@@ -62,8 +62,11 @@ void main() {
   gl_FragColor = vec4(col, 1.0);
 }`
 
-const hex = (s) => {
-  const h = s.trim().replace('#', '')
+/* Minified CSS can shorten #FFFFFF to #fff, so expand three-digit hex. */
+const hex = (s, fallback = '#BFE3F8') => {
+  let h = (s || '').trim().replace('#', '')
+  if (h.length === 3) h = h.split('').map((c) => c + c).join('')
+  if (!/^[0-9a-f]{6}$/i.test(h)) h = fallback.slice(1)
   return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16) / 255)
 }
 
@@ -93,7 +96,7 @@ export default function Wave({ className = '', children }) {
 
     const colours = () => {
       const cs = getComputedStyle(canvas)
-      uC.forEach((loc, i) => gl.uniform3fv(loc, hex(cs.getPropertyValue(`--wave-${i}`) || '#BFE3F8')))
+      uC.forEach((loc, i) => gl.uniform3fv(loc, hex(cs.getPropertyValue(`--wave-${i}`))))
     }
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2)
