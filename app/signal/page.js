@@ -178,41 +178,27 @@ function Section({ id, title, lede, line, children }) {
 }
 
 /*
- * An iPhone 15 Pro frame, built to the mobile-app-screen-mockup skill's
- * device spec (390 px body, 12 px bezel, 56 px outer and 44 px screen corners,
- * a 124 × 36 Dynamic Island 22 px from the top, side buttons, metallic rails,
- * a home indicator), with the real screen inside. Every measure is a
- * percentage of the frame, so it holds its proportions at any width.
- * `marks` pins numbered callouts onto the screen: [n, x%, y%].
+ * The iPhone frame from the "iPhone mockups (Community)" Figma file
+ * (Pill, Deep Purple), exported with its screen area cut out. The screen sits
+ * under the frame in the cut-out: 4.81% / 2.15% in, 90.31% × 95.89% of the
+ * frame. `marks` pins numbered callouts onto the screen: [n, x%, y%].
  */
-const BUTTONS = [
-  ['left', '21.3%', '3.9%'], ['left', '27%', '7.35%'], ['left', '35.5%', '7.35%'], ['right', '30.6%', '12.25%'],
-]
+const SCREEN = { left: '4.81%', top: '2.15%', width: '90.31%', height: '95.89%' }
 const DARK_SCREENS = ['alert-lock']
 const Phone = ({ src, alt, className = '', marks = [], tone = 'var(--sig)', bare = false }) => (
-  <div
-    className={`relative isolate ${className}`}
-    style={{
-      padding: '3.08%',
-      borderRadius: '14.4% / 6.86%',
-      background: 'linear-gradient(160deg, #2a2a2c 0%, #1a1a1c 50%, #0e0e10 100%)',
-      boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06), inset 0 0 0 2px #000, 0 28px 60px -12px rgba(0,0,0,0.38), 0 8px 20px -8px rgba(0,0,0,0.3)',
-    }}
-  >
-    {BUTTONS.map(([side, top, h]) => (
-      <span key={side + top} aria-hidden="true" className="absolute w-[1.03%] rounded-sm" style={{ [side]: '-0.77%', top, height: h, background: '#0a0a0c' }} />
-    ))}
-    {['left', 'right'].map((side) => (
-      <span key={side} aria-hidden="true" className="pointer-events-none absolute w-[0.8%]" style={{ [side]: '-0.25%', top: '12%', bottom: '12%', background: 'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.08) 8%, transparent 16%, transparent 84%, rgba(255,255,255,0.05) 92%, transparent 100%)' }} />
-    ))}
-    <div className="relative overflow-hidden" style={{ borderRadius: '12% / 5.56%', background: '#000' }}>
-      <img src={`${V}/${src}.png`} alt={alt} loading="lazy" className="sig-dim block h-auto w-full" />
-      <span aria-hidden="true" className="absolute rounded-full" style={{ top: '1.26%', left: '33.05%', width: '33.9%', height: '4.55%', background: '#000' }} />
+  <div className={`relative isolate ${className}`} style={{ filter: 'drop-shadow(0 24px 30px rgba(0,0,0,0.28)) drop-shadow(0 6px 10px rgba(0,0,0,0.18))' }}>
+    <div className="absolute overflow-hidden" style={{ ...SCREEN, borderRadius: '13% / 6%', background: '#000' }}>
+      <img src={`${V}/${src}.png`} alt={alt} loading="lazy" className="sig-dim block h-full w-full object-cover" />
       {!bare && <span aria-hidden="true" className="absolute rounded-full" style={{ bottom: '1%', left: '31.7%', width: '36.6%', height: '0.63%', minHeight: 3, background: DARK_SCREENS.includes(src) ? 'rgba(255,255,255,0.85)' : 'rgba(26,25,22,0.85)' }} />}
-      {marks.map(([n, x, y]) => (
-        <span key={n} aria-hidden="true" className="absolute grid h-7 w-7 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full text-[0.85rem] font-semibold" style={{ left: x, top: y, background: tone, color: '#fff', boxShadow: '0 0 0 3px rgba(255,255,255,0.9), 0 4px 12px rgba(0,0,0,0.25)' }}>{n}</span>
-      ))}
     </div>
+    <img src={`${V}/frame.png`} alt="" aria-hidden="true" width={834} height={1700} className="pointer-events-none relative block h-auto w-full select-none" />
+    {marks.length > 0 && (
+      <div aria-hidden="true" className="pointer-events-none absolute" style={SCREEN}>
+        {marks.map(([n, x, y]) => (
+          <span key={n} className="absolute grid h-7 w-7 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full text-[0.85rem] font-semibold" style={{ left: x, top: y, background: tone, color: '#fff', boxShadow: '0 0 0 3px rgba(255,255,255,0.9), 0 4px 12px rgba(0,0,0,0.25)' }}>{n}</span>
+        ))}
+      </div>
+    )}
   </div>
 )
 
@@ -265,13 +251,23 @@ export default function Signal() {
         </motion.header>
 
         <Network className="track-wide mt-12" />
-        <Wave className="track-wide mt-8 rounded-2xl">
-          <figure data-case-hero className="flex aspect-[16/10] items-start justify-center gap-[5%] px-[6%] pt-[7%]" aria-label="Three screens from the redesign: a lock-screen alert, the decision screen reading Backups work until 9:31, and a booked bike taxi">
-            <div className="mt-[9%] w-[26%] shrink-0"><Phone src="alert-lock" alt="Lock-screen alert: Yellow Line delayed, backups work until 9:31" /></div>
-            <div className="w-[29%] shrink-0"><Phone src="s3-decision" alt="Decision screen: Backups work until 9:31, with Leave now and Keep waiting" /></div>
-            <div className="mt-[9%] w-[26%] shrink-0"><Phone src="ride-booked" alt="Bike taxi booked: meet at Gate 2" /></div>
-          </figure>
-        </Wave>
+        <figure
+          data-case-hero
+          className="track-wide relative mt-8 aspect-[16/10] overflow-hidden rounded-2xl"
+          style={{ background: 'radial-gradient(55% 45% at 50% 0%, rgba(46,128,255,0.55), transparent 70%), radial-gradient(35% 55% at 88% 35%, rgba(28,96,230,0.45), transparent 70%), radial-gradient(35% 55% at 12% 35%, rgba(28,96,230,0.4), transparent 70%), radial-gradient(70% 35% at 50% 100%, rgba(22,70,190,0.55), transparent 70%), #040814' }}
+          aria-label="Three screens from the redesign: a lock-screen alert, the decision screen reading Backups work until 9:31, and a booked bike taxi"
+        >
+          <svg aria-hidden="true" viewBox="0 0 1600 1000" preserveAspectRatio="none" className="absolute inset-0 h-full w-full" fill="none" style={{ filter: 'blur(2px)' }}>
+            <path d="M-100 700 C 300 420, 560 200, 640 -60" stroke="rgba(120,180,255,0.5)" strokeWidth="3" />
+            <path d="M1700 700 C 1300 420, 1040 200, 960 -60" stroke="rgba(120,180,255,0.5)" strokeWidth="3" />
+            <path d="M-100 900 C 500 760, 1100 760, 1700 900" stroke="rgba(90,150,255,0.35)" strokeWidth="2" />
+          </svg>
+          <div className="absolute inset-x-[7%] top-[8%] flex items-start justify-center gap-[4%]" style={{ perspective: '1400px' }}>
+            <div className="mt-[8%] w-[27%] shrink-0" style={{ transform: 'rotateY(16deg)', transformOrigin: 'right center' }}><Phone src="alert-lock" alt="Lock-screen alert: Yellow Line delayed, backups work until 9:31" /></div>
+            <div className="w-[30%] shrink-0"><Phone src="s3-decision" alt="Decision screen: Backups work until 9:31, with Leave now and Keep waiting" /></div>
+            <div className="mt-[8%] w-[27%] shrink-0" style={{ transform: 'rotateY(-16deg)', transformOrigin: 'left center' }}><Phone src="ride-booked" alt="Bike taxi booked: meet at Gate 2" /></div>
+          </div>
+        </figure>
 
         <dl className="mt-10 grid gap-x-8 gap-y-6 border-t border-rule pt-7 sm:grid-cols-3">
           <div><dt className="text-ink mb-1">Who it’s for</dt><dd style={{ fontSize: '0.98rem' }}>Office commuters who take the same metro trip every day and can’t be late.</dd></div>
