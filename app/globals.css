@@ -39,6 +39,22 @@
         --sig-panel: #171614;
         --sig-panel-ink: #FBFAF7;
         --sig-panel-accent: #9FD3F3;
+        /* Delhi Metro line colours, used as accents and as the line graphic. */
+        --line-red: #E2231A;
+        --line-yellow: #F2B705;
+        --line-blue: #1A6FC0;
+        --line-green: #00964A;
+        --line-violet: #7B3F98;
+        --line-magenta: #B5156B;
+        --line-pink: #E66FA5;
+        --line-grey: #8C8C8C;
+        --line-orange: #EE7A1A;
+        --line-aqua: #12A3B4;
+        /* Blue wave behind the 3D mockups. */
+        --wave-0: #EAF5FC;
+        --wave-1: #8FD0F6;
+        --wave-2: #D3ECFB;
+        --wave-3: #FFFFFF;
         /* Warm emphasis. Ink stays solid on top of these, so contrast never
            depends on where the sweep happens to be: 13.4:1 on paper. */
         --warm-a: #FED7AA;
@@ -87,6 +103,20 @@
         --sig-panel: #1C1A18;
         --sig-panel-ink: #F2EFE9;
         --sig-panel-accent: #7CCBF5;
+        --line-red: #F0453D;
+        --line-yellow: #FFCB05;
+        --line-blue: #4A9CE8;
+        --line-green: #2DBE6C;
+        --line-violet: #A56CC9;
+        --line-magenta: #E04A97;
+        --line-pink: #F28FBF;
+        --line-grey: #9A9A9A;
+        --line-orange: #F79A45;
+        --line-aqua: #3CC4D4;
+        --wave-0: #0D1820;
+        --wave-1: #1E5584;
+        --wave-2: #142634;
+        --wave-3: #2E86C8;
         --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.6 0 0 0 -0.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
         /* Deep on dark rather than pale, so off-white ink still reads: 8.2:1. */
         --warm-a: #7C2D12;

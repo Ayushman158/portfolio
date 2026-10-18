@@ -110,10 +110,10 @@ export function Journey() {
 /* What seven commuters told me, as concentric arcs. */
 export function Arcs() {
   const arcs = [
-    [200, 1, '7 of 7', 'add a buffer every day', SIG],
-    [165, 4 / 7, '4 of 7', 'struggle with the last mile', '#3B97D6'],
-    [130, 4 / 7, '4 of 7', 'pick routes for safety', '#7CCBF5'],
-    [95, 2 / 7, '2 of 7', 'moved or switched stations', 'var(--sig-sky)'],
+    [200, 1, '7 of 7', 'add a buffer every day', 'var(--line-blue)'],
+    [165, 4 / 7, '4 of 7', 'struggle with the last mile', 'var(--line-magenta)'],
+    [130, 4 / 7, '4 of 7', 'pick routes for safety', 'var(--line-pink)'],
+    [95, 2 / 7, '2 of 7', 'moved or switched stations', 'var(--line-violet)'],
   ]
   return (
     <figure className="grid items-center gap-6 sm:grid-cols-[minmax(0,1fr)_200px]">
@@ -130,10 +130,13 @@ export function Arcs() {
         })}
       </svg>
       <dl className="space-y-3">
-        {arcs.map(([r, , n, t]) => (
-          <div key={r}>
-            <dt className="font-serif leading-none" style={{ fontSize: '1.6rem', color: 'var(--ink)' }}>{n}</dt>
-            <dd className="text-faint" style={{ fontSize: '0.92rem' }}>{t}</dd>
+        {arcs.map(([r, , n, t, c]) => (
+          <div key={r} className="flex gap-3">
+            <span aria-hidden="true" className="mt-1 h-6 w-[5px] shrink-0 rounded-full" style={{ background: c }} />
+            <div>
+              <dt className="font-serif leading-none" style={{ fontSize: '1.6rem', color: 'var(--ink)' }}>{n}</dt>
+              <dd className="text-faint" style={{ fontSize: '0.92rem' }}>{t}</dd>
+            </div>
           </div>
         ))}
       </dl>

@@ -3,14 +3,17 @@
 import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { Back, Figure, Heading, Tradeoffs } from '../components/case-study'
-import { AlertSpeed, Arcs, Contrast, Coverage, DailyLoop, DelayMap, Disruptions, Headlines, Journey, Orbit, Timeline } from './charts'
+import { AlertSpeed, Arcs, Contrast, Coverage, DailyLoop, DelayMap, Headlines, Journey, Orbit, Timeline } from './charts'
+import { Network, Pill, YellowLine } from './lines'
+import Wave from './wave'
 
 /*
  * Personalising the Delhi Metro app for daily commuters (Signal v4). When a
  * commuter's line is delayed, DMRC's app shows how long their other ways to
  * work still get them there on time, and leaves the choice to them.
- * Minimal on purpose: one light blue, plain section titles, no tags, no
- * participant names a reader has no context for. Times marked * are the
+ * Minimal on purpose: one light blue for the product, Delhi Metro's line
+ * colours as accents and as the line graphic, plain section titles, no tags,
+ * no participant names a reader has no context for. Times marked * are the
  * simulated example (Malviya Nagar to Rajiv Chowk, work at 10:30). Copy
  * informs, never instructs: "Backups work until 9:31", never "Switch by 9:31".
  */
@@ -48,15 +51,26 @@ const TRADEOFFS = [
   ['Alerts pile up and get ignored', 'One alert per trip, only for trips with a deadline', 'Miss it, and the rider has to open the app'],
 ]
 
-const BEFORE = [
-  ['The delay is a scrolling line of text', 'It gives no time, and it isn’t tied to anyone’s trip.'],
-  ['The app doesn’t know your trip', 'Every morning starts from empty stations, so a delay can’t be measured against a deadline.'],
-  ['Backups sit in a separate tile', 'Bike taxis are bookable, but nothing says whether one would still get you there on time.'],
-]
-const AFTER = [
-  ['The delay sits on your trip', 'Which stretch, who said so, and how old the update is.'],
-  ['One time instead of a guess', '“Backups work until 9:31”, worked out from your deadline and the slowest backup.'],
-  ['Both choices, each with a status', 'Leave now shows when you’d arrive. Keep waiting says honestly that it’s unknown.'],
+/* [title, today: [screen, alt, marks, notes], redesign: [screen, alt, marks, notes]] */
+const PAIRS = [
+  ['Booking a trip',
+    ['dmrc-book', 'DMRC’s Book QR Ticket screen today: two empty Select Station fields, and an App Store ad for a QR scanner below them',
+      [[1, '93%', '17.5%'], [2, '93%', '44.8%']],
+      [['Every trip starts from empty stations', 'Someone who rides the same trip daily picks both stations again each time.'],
+        ['An ad sits where the trip could be', 'A third-party app ad fills the space below the form.']]],
+    ['s1-book', 'The redesign: the trip filled in with its line, time and fare, and a new row to arrive by a set time',
+      [[1, '93%', '14.6%'], [2, '93%', '42.4%']],
+      [['The trip is filled in', 'Stations, line, time and fare.'],
+        ['One new row: arrive by a set time', 'Set once. Now a delay has a deadline to be measured against.']]]],
+  ['Opening the app on a normal morning',
+    ['dmrc-tickets', 'DMRC’s Ticket tab today: an illustration, No Tickets Booked Yet, and a Book QR Ticket button',
+      [[1, '93%', '25.2%'], [2, '89%', '63.6%']],
+      [['No trip, no status', '“No tickets booked yet”, even for someone who rides every day.'],
+        ['Booking is the only action', 'The screen points back to buying a ticket.']]],
+    ['s2-home', 'The redesign’s home: the saved work trip says On time, with arrival and time to spare',
+      [[1, '93%', '14.6%'], [2, '91%', '31.4%']],
+      [['The day starts with a status', '“On time”, on the rider’s own line.'],
+        ['Time to spare, worked out', 'Arrival against the deadline, so a delay can be read in minutes.']]]],
 ]
 
 const BREAKS = [
@@ -122,9 +136,10 @@ function LineMap({ active }) {
   )
 }
 
-function Section({ id, title, lede, children }) {
+function Section({ id, title, lede, line, children }) {
   return (
     <section id={id} className="scroll-mt-24 pt-24">
+      {line && <Pill line={line} />}
       <Heading>{title}</Heading>
       {lede && <p className="text-ink" style={{ fontSize: '1.2rem', lineHeight: 1.5 }}>{lede}</p>}
       {children}
@@ -144,7 +159,7 @@ const BUTTONS = [
   ['left', '21.3%', '3.9%'], ['left', '27%', '7.35%'], ['left', '35.5%', '7.35%'], ['right', '30.6%', '12.25%'],
 ]
 const DARK_SCREENS = ['alert-lock']
-const Phone = ({ src, alt, className = '', marks = [], tone = 'var(--sig)' }) => (
+const Phone = ({ src, alt, className = '', marks = [], tone = 'var(--sig)', bare = false }) => (
   <div
     className={`relative isolate ${className}`}
     style={{
@@ -163,7 +178,7 @@ const Phone = ({ src, alt, className = '', marks = [], tone = 'var(--sig)' }) =>
     <div className="relative overflow-hidden" style={{ borderRadius: '12% / 5.56%', background: '#000' }}>
       <img src={`${V}/${src}.png`} alt={alt} loading="lazy" className="sig-dim block h-auto w-full" />
       <span aria-hidden="true" className="absolute rounded-full" style={{ top: '1.26%', left: '33.05%', width: '33.9%', height: '4.55%', background: '#000' }} />
-      <span aria-hidden="true" className="absolute rounded-full" style={{ bottom: '1%', left: '31.7%', width: '36.6%', height: '0.63%', minHeight: 3, background: DARK_SCREENS.includes(src) ? 'rgba(255,255,255,0.85)' : 'rgba(26,25,22,0.85)' }} />
+      {!bare && <span aria-hidden="true" className="absolute rounded-full" style={{ bottom: '1%', left: '31.7%', width: '36.6%', height: '0.63%', minHeight: 3, background: DARK_SCREENS.includes(src) ? 'rgba(255,255,255,0.85)' : 'rgba(26,25,22,0.85)' }} />}
       {marks.map(([n, x, y]) => (
         <span key={n} aria-hidden="true" className="absolute grid h-7 w-7 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full text-[0.85rem] font-semibold" style={{ left: x, top: y, background: tone, color: '#fff', boxShadow: '0 0 0 3px rgba(255,255,255,0.9), 0 4px 12px rgba(0,0,0,0.25)' }}>{n}</span>
       ))}
@@ -206,7 +221,8 @@ export default function Signal() {
           </p>
         </motion.header>
 
-        <figure data-case-hero className="track-wide mt-12 overflow-hidden rounded-2xl">
+        <Network className="track-wide mt-12" />
+        <figure data-case-hero className="track-wide mt-8 overflow-hidden rounded-2xl">
           <img src={`${V}/hero.jpg`} alt="Three screens from the redesign: a lock-screen alert, the decision screen reading Backups work until 9:31, and a booked bike taxi" width={1536} height={1024} className="sig-light block h-auto w-full" />
           <img src={`${V}/hero-dark.jpg`} alt="" aria-hidden="true" width={1536} height={1024} className="sig-dark h-auto w-full" />
         </figure>
@@ -220,7 +236,7 @@ export default function Signal() {
       </section>
 
       {/* ---------- The problem ---------- */}
-      <Section id="problem" title="The problem" lede="Delhi Metro trains run on time 99.95% of the time. But a commute is more than the train, and the bad days keep making the news.">
+      <Section id="problem" line="red" title="The problem" lede="Delhi Metro trains run on time 99.95% of the time. But a commute is more than the train, and the bad days keep making the news.">
         <Headlines />
         <Contrast />
 
@@ -243,7 +259,7 @@ export default function Signal() {
       </Section>
 
       {/* ---------- Research ---------- */}
-      <Section id="found" title="Research" lede="I’m not from Delhi, so I built the picture from people who ride every day, and checked it against data.">
+      <Section id="found" line="magenta" title="Research" lede="I’m not from Delhi, so I built the picture from people who ride every day, and checked it against data.">
         <dl className="track-wide mt-10 grid grid-cols-2 gap-x-8 gap-y-8 md:grid-cols-4">
           {METHODS.map(([n, t, d]) => (
             <div key={t} className="border-t border-rule pt-4">
@@ -285,7 +301,7 @@ export default function Signal() {
       </Section>
 
       {/* ---------- What I tried first ---------- */}
-      <Section id="tried" title="What I tried first" lede="Three directions before this one. Each ended at something I found.">
+      <Section id="tried" line="violet" title="What I tried first" lede="Three directions before this one. Each ended at something I found.">
         <h3 className="subhead mt-10">A leave-by time</h3>
         <p>I sketched five concepts and tested the best one with five commuters: 4 of 5 read its answer in under 3 seconds. Then I checked: trains run 99.95% on time, and Google Maps already reminds you when to leave.</p>
         <div className="track-wide mt-8 grid grid-cols-2 gap-5 md:grid-cols-4">
@@ -307,7 +323,10 @@ export default function Signal() {
       </Section>
 
       {/* ---------- The idea ---------- */}
-      <Section id="idea" title="The idea" lede="Nobody can say how long a delay will last. What can be worked out is how long the other ways still get you there on time.">
+      <Section id="idea" line="yellow" title="The idea" lede="Nobody can say how long a delay will last. What can be worked out is how long the other ways still get you there on time.">
+        <YellowLine />
+        <p className="mt-6">The example trip runs on the Yellow Line. A fault between Hauz Khas and Central Secretariat comes with no time. The backups leave from where the rider is, and they only work for a while.</p>
+        <h3 className="subhead mt-16">How long the backups work</h3>
         <Timeline />
         <p className="mt-8">The rule: take the deadline, subtract the slowest likely backup (getting out of the station, waiting for a pickup, the ride), and keep 5 minutes spare. It uses the slowest end of every estimate, because traffic is what made the student late.</p>
 
@@ -316,24 +335,32 @@ export default function Signal() {
       </Section>
 
       {/* ---------- Before and after ---------- */}
-      <Section id="change" title="Before and after" lede="The same delayed morning in DMRC’s app today, and in the redesign.">
-        <div className="track-wide mt-10 grid gap-14 md:grid-cols-2">
-          <div>
-            <div className="text-faint mb-4" style={{ fontSize: '0.9rem' }}>Today</div>
-            <Phone src="before-today" alt="DMRC's app today on a delayed morning: a yellow scrolling alert, empty station fields, and service tiles" className="mx-auto max-w-[280px]" tone="var(--sig-quiet)" marks={[[1, '84%', '15.2%'], [2, '84%', '33%'], [3, '38%', '55%']]} />
-            <Notes items={BEFORE} tone="var(--sig-quiet)" />
+      <Section id="change" line="blue" title="Before and after" lede="DMRC’s app today, next to the redesign.">
+        {PAIRS.map(([title, today, redesign]) => (
+          <div key={title}>
+            <h3 className="subhead mt-14">{title}</h3>
+            <div className="track-wide mt-6 grid gap-14 md:grid-cols-2">
+              {[[today, 'Today', 'var(--sig-quiet)'], [redesign, 'Redesign', 'var(--sig)']].map(([[src, alt, marks, notes], label, tone]) => (
+                <div key={label}>
+                  <div className="mb-4" style={{ fontSize: '0.9rem', color: label === 'Today' ? 'var(--faint)' : 'var(--sig)' }}>{label}</div>
+                  <Phone src={src} alt={alt} className="mx-auto max-w-[280px]" tone={tone} marks={marks} bare={src.startsWith('dmrc-')} />
+                  <Notes items={notes} tone={tone} />
+                </div>
+              ))}
+            </div>
           </div>
-          <div>
-            <div className="mb-4" style={{ fontSize: '0.9rem', color: 'var(--sig)' }}>Redesign</div>
-            <Phone src="s3-decision" alt="The redesign on the same morning: the delay pinned to the trip, backups work until 9:31, and both choices" className="mx-auto max-w-[280px]" marks={[[1, '88%', '19%'], [2, '88%', '33%'], [3, '66%', '54.5%']]} />
-            <Notes items={AFTER} tone="var(--sig)" />
-          </div>
-        </div>
-        <p className="text-faint mt-8" style={{ fontSize: '0.85rem' }}>Today’s screen is recreated from DMRC’s App Store screenshots, October 2026.</p>
+        ))}
+        <p className="text-faint mt-8" style={{ fontSize: '0.85rem' }}>Today’s screens are screenshots of DMRC’s app on iPhone.</p>
       </Section>
 
       {/* ---------- The screens ---------- */}
-      <Section id="screens" title="The screens" lede="Built on DMRC’s own app, with its contrast fixed, so it reads as an update rather than a new app.">
+      <Section id="screens" line="aqua" title="The screens" lede="Built on DMRC’s own app, with its contrast fixed, so it reads as an update rather than a new app.">
+        <Wave className="track-wide mt-10 rounded-2xl">
+          <div className="flex items-end justify-center gap-2 px-4 pt-10 sm:gap-6 sm:px-10 sm:pt-14">
+            <img src={`${V}/d3-decision.webp`} alt="The decision screen on an iPhone 15 Pro: Yellow Line delayed, backups work until 9:31" width={711} height={1100} loading="lazy" className="block h-auto w-[46%] max-w-[300px] translate-y-6 drop-shadow-2xl" />
+            <img src={`${V}/d3-backups.webp`} alt="The backups sheet on an iPhone 15 Pro: every way to get there, each with its status" width={663} height={1100} loading="lazy" className="block h-auto w-[43%] max-w-[280px] drop-shadow-2xl" />
+          </div>
+        </Wave>
         <div className="track-wide mt-10 rounded-2xl px-5 pb-6 pt-8 sm:px-8" style={{ background: 'radial-gradient(90% 100% at 50% 0%, var(--sig-sky), var(--sig-tint) 55%, var(--ground))' }}>
           <div className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-3">
             {SCREENS.map(([f, t, c]) => (
@@ -358,7 +385,7 @@ export default function Signal() {
       </Section>
 
       {/* ---------- Stress test ---------- */}
-      <Section id="stress" title="Stress-testing it on a real commute" lede="I took one participant’s commute, three stages and an hour and a half each way, and ran it through the screens one morning at a time. The flow broke in seven places.">
+      <Section id="stress" line="pink" title="Stress-testing it on a real commute" lede="I took one participant’s commute, three stages and an hour and a half each way, and ran it through the screens one morning at a time. The flow broke in seven places.">
         <div className="track-wide mt-10 grid grid-cols-2 gap-x-5 gap-y-9 md:grid-cols-4">
           {BREAKS.map(([f, t, c]) => (
             <figure key={f}>
@@ -375,7 +402,7 @@ export default function Signal() {
       </Section>
 
       {/* ---------- How it works ---------- */}
-      <Section id="system" title="How it works" lede="No new data to start. Alerts, ride times and gates already exist inside DMRC and its partners.">
+      <Section id="system" line="green" title="How it works" lede="No new data to start. Alerts, ride times and gates already exist inside DMRC and its partners.">
         <Figure src={`${V}/s7-system.png`} alt="System board: service alerts, the rider's deadline, ride times and gates feed one rule, which drives the home card, the decision and the backups sheet" track="track-wide mt-10" />
         <div className="track-wide mt-10 grid gap-8 sm:grid-cols-3">
           <div className="space-y-2"><div className="h-1 rounded-full" style={{ background: 'var(--sig-sky)' }} /><div className="text-ink">Now</div><p style={{ fontSize: '0.95rem' }}>Works with alerts, partner ride times and gates as they are.</p></div>
@@ -385,7 +412,7 @@ export default function Signal() {
       </Section>
 
       {/* ---------- Limits ---------- */}
-      <Section id="limits" title="Limits">
+      <Section id="limits" line="grey" title="Limits">
         <h3 className="subhead mt-6">It’s only as fast as DMRC’s alerts</h3>
         <AlertSpeed />
         <p className="mt-8">With a tighter deadline, backups stop working before the alert arrives. That needs faster alerts from DMRC, not a better screen.</p>
@@ -398,7 +425,7 @@ export default function Signal() {
       </Section>
 
       {/* ---------- Future scope ---------- */}
-      <Section id="next" title="Future scope" lede="The other places a commute breaks, in the order I’d take them on.">
+      <Section id="next" line="orange" title="Future scope" lede="The other places a commute breaks, in the order I’d take them on.">
         <ol className="mt-8 space-y-5">
           {[
             ['Delays at the gates', 'QR tickets and cards that fail at the gate, and security queues. These need DMRC’s gate data.'],
