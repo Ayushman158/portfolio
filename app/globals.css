@@ -34,6 +34,9 @@
         --sig-tint: #EAF5FC;
         --sig-late: #C22E00;
         --sig-est: #B45309;
+        --sig-panel: #171614;
+        --sig-panel-ink: #FBFAF7;
+        --sig-panel-accent: #9FD3F3;
         /* Warm emphasis. Ink stays solid on top of these, so contrast never
            depends on where the sweep happens to be: 13.4:1 on paper. */
         --warm-a: #FED7AA;
@@ -77,6 +80,9 @@
         --sig-tint: #16242E;
         --sig-late: #FF6B45;
         --sig-est: #F0A35E;
+        --sig-panel: #1C1A18;
+        --sig-panel-ink: #F2EFE9;
+        --sig-panel-accent: #7CCBF5;
         --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.6 0 0 0 -0.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
         /* Deep on dark rather than pale, so off-white ink still reads: 8.2:1. */
         --warm-a: #7C2D12;
@@ -810,3 +816,10 @@ html[data-room] .lamp-glow-anchor { display: none; }
    enough for it beside the wide track. */
 .sig-map { display: none; }
 @media (min-width: 86rem) { .sig-map { display: block; } }
+
+/* Signal: swap the hero for its dark twin, and take the glare off light
+   screenshots, in dark mode. */
+.sig-dark { display: none; }
+[data-theme="dark"]:not([data-light-only]) .sig-light { display: none; }
+[data-theme="dark"]:not([data-light-only]) .sig-dark { display: block; }
+[data-theme="dark"]:not([data-light-only]) .sig-dim { filter: brightness(0.88); }

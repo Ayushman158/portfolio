@@ -36,13 +36,13 @@ export function Disruptions() {
 /* The two numbers the problem rests on. */
 export function Contrast() {
   return (
-    <figure className="track-wide mt-10 grid gap-8 rounded-2xl p-8 sm:grid-cols-2 sm:p-10" style={{ background: 'var(--ink)', color: 'var(--ground)' }}>
+    <figure className="track-wide mt-10 grid gap-8 rounded-2xl p-8 sm:grid-cols-2 sm:p-10" style={{ background: 'var(--sig-panel)', color: 'var(--sig-panel-ink)', border: '1px solid var(--rule)' }}>
       <div>
         <div className="font-serif leading-none" style={{ fontSize: 'clamp(4rem, 3rem + 4vw, 6.5rem)', letterSpacing: '-0.03em' }}>99.95%</div>
         <p className="mt-3" style={{ color: 'inherit', opacity: 0.75 }}>of trains ran on time in 2026</p>
       </div>
       <div>
-        <div className="font-serif leading-none" style={{ fontSize: 'clamp(4rem, 3rem + 4vw, 6.5rem)', letterSpacing: '-0.03em', color: 'var(--sig-sky)' }}>34 min</div>
+        <div className="font-serif leading-none" style={{ fontSize: 'clamp(4rem, 3rem + 4vw, 6.5rem)', letterSpacing: '-0.03em', color: 'var(--sig-panel-accent)' }}>34 min</div>
         <p className="mt-3" style={{ color: 'inherit', opacity: 0.75 }}>of buffer riders add, every day</p>
       </div>
     </figure>
@@ -168,9 +168,9 @@ export function Orbit() {
   return (
     <svg viewBox="0 0 600 560" className="mx-auto block w-full max-w-[560px]" role="img" aria-label="Around the decision to wait or leave: what she knows, what DMRC knows, the backups, the cost of leaving, her deadline, and time, the one thing nothing shows her">
       <circle cx="300" cy="280" r="215" fill="none" stroke="var(--rule)" strokeWidth="1.5" />
-      <circle cx="300" cy="280" r="96" fill="var(--ink)" />
-      <text x="300" y="274" textAnchor="middle" style={{ font: '400 30px var(--font-serif), serif', fill: 'var(--ground)' }}>Wait or</text>
-      <text x="300" y="306" textAnchor="middle" style={{ font: '400 30px var(--font-serif), serif', fill: 'var(--ground)' }}>leave?</text>
+      <circle cx="300" cy="280" r="96" fill="var(--sig-panel)" stroke="var(--rule)" />
+      <text x="300" y="274" textAnchor="middle" style={{ font: '400 30px var(--font-serif), serif', fill: 'var(--sig-panel-ink)' }}>Wait or</text>
+      <text x="300" y="306" textAnchor="middle" style={{ font: '400 30px var(--font-serif), serif', fill: 'var(--sig-panel-ink)' }}>leave?</text>
       {nodes.map(([x, y, t]) => {
         const w = t.length * 8 + 32
         return (

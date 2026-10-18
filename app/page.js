@@ -94,7 +94,7 @@ const RESEARCH = [
     site: '7 interviews · 3 directions dropped',
     shot: '/signal/v4/hero.jpg',
     alt: 'Three Signal screens on a pale blue sky: a lock-screen alert, the decision screen reading Backups work until 9:31, and a booked bike taxi',
-    what: 'When the Delhi Metro is disrupted on a day you can’t be late, Signal shows how long your other ways of getting there still work. The choice stays yours.',
+    what: 'For people who take the Delhi Metro to work every day. When their line is delayed, Signal shows how long their other ways to work still get them there on time.',
     tags: ['Research', 'Interaction', 'Systems', 'Prototype'],
   },
 ]

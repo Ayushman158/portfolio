@@ -23,6 +23,8 @@ const STATIONS = [
   ['limits', 'Limits'], ['next', 'What’s next'],
 ]
 
+const IDS = STATIONS.map(([id]) => id)
+
 const TRADEOFFS = [
   ['Nobody knows how long the delay will last', 'Count down to the backups, not the train', 'It can’t say whether the train will come'],
   ['Ride times vary, and Ajeet hit traffic', 'Use the slowest end of every range', 'Some riders leave when waiting would have worked'],
@@ -104,12 +106,12 @@ function Section({ id, title, lede, children }) {
 }
 
 const Phone = ({ src, alt, className = '' }) => (
-  <img src={`${V}/${src}.png`} alt={alt} loading="lazy" className={`block h-auto w-full rounded-[22px] ${className}`} style={{ boxShadow: '0 2px 14px rgba(23,22,20,0.07)' }} />
+  <img src={`${V}/${src}.png`} alt={alt} loading="lazy" className={`sig-dim block h-auto w-full rounded-[22px] ${className}`} style={{ boxShadow: '0 2px 14px rgba(23,22,20,0.07)' }} />
 )
 
 export default function Signal() {
   const reduceMotion = useReducedMotion()
-  const active = useActive(STATIONS.map(([id]) => id))
+  const active = useActive(IDS)
   const rise = (delay) => ({
     initial: reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 },
     animate: { opacity: 1, y: 0 },
@@ -126,47 +128,49 @@ export default function Signal() {
         <motion.header {...rise(0.06)} className="mt-10 space-y-5">
           <h1 className="display">Signal</h1>
           <p className="text-ink" style={{ fontSize: '1.3rem', lineHeight: 1.45 }}>
-            When the Delhi Metro is disrupted on a day you can’t be late, Signal shows how long your other
-            ways of getting there still work. The choice stays yours.
+            Signal is for people who take the Delhi Metro to work every day. When their line is delayed,
+            it shows how long their other ways to work still get them there on time. The choice stays theirs.
           </p>
         </motion.header>
 
-        <motion.figure {...rise(0.1)} data-case-hero className="track-wide mt-12 overflow-hidden rounded-2xl">
-          <img src={`${V}/hero.jpg`} alt="Three Signal screens on a pale blue sky: a lock-screen alert, the decision screen reading Backups work until 9:31, and a booked bike taxi" width={1536} height={1024} className="block h-auto w-full" />
-        </motion.figure>
+        <figure data-case-hero className="track-wide mt-12 overflow-hidden rounded-2xl">
+          <img src={`${V}/hero.jpg`} alt="Three Signal screens: a lock-screen alert, the decision screen reading Backups work until 9:31, and a booked bike taxi" width={1536} height={1024} className="sig-light block h-auto w-full" />
+          <img src={`${V}/hero-dark.jpg`} alt="" aria-hidden="true" width={1536} height={1024} className="sig-dark h-auto w-full" />
+        </figure>
 
         <dl className="mt-10 grid gap-x-8 gap-y-6 border-t border-rule pt-7 sm:grid-cols-3">
-          <div><dt className="text-ink mb-1">The problem</dt><dd style={{ fontSize: '0.98rem' }}>During a delay, riders with a deadline can’t tell how long they can wait before their backups stop working.</dd></div>
-          <div><dt className="text-ink mb-1">What I made</dt><dd style={{ fontSize: '0.98rem' }}>A feature inside DMRC’s app that turns a delay into one time: when the backups stop working.</dd></div>
-          <div><dt className="text-ink mb-1">Project</dt><dd style={{ fontSize: '0.98rem' }}>Solo, 14 weeks, M.Des at UPES. A concept for DMRC, not affiliated with it.</dd></div>
+          <div><dt className="text-ink mb-1">Who it’s for</dt><dd style={{ fontSize: '0.98rem' }}>Office commuters who take the same metro trip every day and can’t be late.</dd></div>
+          <div><dt className="text-ink mb-1">The problem</dt><dd style={{ fontSize: '0.98rem' }}>When the line is delayed, they can’t tell how long they can wait before their other options stop working.</dd></div>
+          <div><dt className="text-ink mb-1">What I made</dt><dd style={{ fontSize: '0.98rem' }}>A feature in DMRC’s app that turns a delay into one time: when the backups stop working.</dd></div>
         </dl>
+        <p className="text-faint mt-6" style={{ fontSize: '0.9rem' }}>Solo, 14 weeks, M.Des at UPES. A student concept, not made with or for DMRC.</p>
       </section>
 
       {/* ---------- The problem ---------- */}
-      <Section id="problem" title="The problem" lede="The trains are on time 99.95% of the time. The people I spoke to still lose 34 minutes every day, leaving early in case today is the bad day.">
+      <Section id="problem" title="The problem" lede="Trains run on time 99.95% of the time. Daily commuters still leave 34 minutes early, every day, in case today is the day they don’t.">
         <Disruptions />
         <Contrast />
         <div className="track-wide mt-16 grid items-center gap-10 md:grid-cols-2">
           <DailyLoop />
           <div className="space-y-3">
             <h3 className="subhead">The buffer is how riders cope with not knowing</h3>
-            <p>Nobody tells them how long a delay will last, so they pay for it in advance, every day. One bad morning makes tomorrow’s buffer bigger. The one place better information could break the loop is the moment of “wait or leave?”.</p>
+            <p>Nobody tells them how long a delay will last, so they pay for it in advance, every morning. One bad day makes the next buffer bigger. Better information can only help at one moment: “wait or leave?”.</p>
           </div>
         </div>
-        <h3 className="subhead mt-16">Ajeet’s exam morning</h3>
+        <h3 className="subhead mt-16">When the bad day comes: Ajeet’s exam</h3>
         <Journey />
-        <p className="mt-6">He had other ways to get there. He didn’t know how long they would still get him there on time.</p>
+        <p className="mt-6">He had other ways to get there. He didn’t know how long they would still work.</p>
       </Section>
 
       {/* ---------- What I found ---------- */}
-      <Section id="found" title="What I found" lede="I’m not from Delhi. I learned most from one ride, seven interviews and fifty angry app reviews.">
-        <div className="track-wide mt-10 grid items-center gap-10 md:grid-cols-2">
+      <Section id="found" title="What I found" lede="I’m not from Delhi. I learned from a few rides on visits to the city, seven interviews and fifty app reviews.">
+        <div className="track-wide mt-10 grid items-center gap-10 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
           <figure>
-            <img src={`${V}/metro-ride.jpg`} alt="My friends inside a Delhi Metro coach on the way to a concert" loading="lazy" className="block aspect-[4/5] w-full rounded-2xl object-cover" />
+            <img src={`${V}/metro-ride.jpg`} alt="Riders inside a Delhi Metro coach, faces blurred" loading="lazy" className="sig-dim block aspect-[4/5] w-full max-w-[320px] rounded-2xl object-cover" />
           </figure>
           <div className="space-y-4">
-            <p className="text-ink" style={{ fontSize: '1.15rem' }}>We were late for a concert. My friend, who rides every day, said to skip our stop and get off two stations later. I would have followed DMRC’s route.</p>
-            <p>That’s when I saw that regulars ride on experience, not the map. Jasleen knows “the second train is emptier”. Satabdee moved house to skip a change at Rajiv Chowk.</p>
+            <p className="text-ink" style={{ fontSize: '1.15rem' }}>Daily riders don’t follow the map. They ride on what they’ve learned: which train to let go, which exit to use, which stop to skip.</p>
+            <p>Jasleen knows “the second train is emptier”. Satabdee moved house to avoid a change at Rajiv Chowk. On one of my rides, the regular among my friends skipped our stop to save time. I would have followed the map.</p>
           </div>
         </div>
 
@@ -190,11 +194,11 @@ export default function Signal() {
       {/* ---------- What I tried first ---------- */}
       <Section id="tried" title="What I tried first" lede="Three directions before this one. Each ended at something I found.">
         <h3 className="subhead mt-10">A leave-by time</h3>
-        <p>I sketched five concepts and scored them against the research. The Signal Card won, and 4 of 5 commuters read its answer in under 3 seconds. Then I checked: trains run 99.95% on time, and Google Maps already reminds you to leave.</p>
+        <p>I sketched five concepts and tested the best one with five commuters: 4 of 5 read its answer in under 3 seconds. Then I checked: trains run 99.95% on time, and Google Maps already reminds you when to leave.</p>
         <div className="track-wide mt-8 grid grid-cols-2 gap-5 md:grid-cols-4">
           {SKETCHES.map(([f, t]) => (
             <figure key={f}>
-              <img src={`${V}/${f}.jpg`} alt={`Pencil sketch: ${t}`} loading="lazy" className="block h-auto w-full rounded-xl" />
+              <img src={`${V}/${f}.jpg`} alt={`Pencil sketch: ${t}`} loading="lazy" className="sig-dim block h-auto w-full rounded-xl" />
               <figcaption className="text-faint mt-2" style={{ fontSize: '0.88rem' }}>{t}</figcaption>
             </figure>
           ))}
@@ -202,10 +206,10 @@ export default function Signal() {
         <Figure src={`${V}/sketch-c1-three-states.jpg`} alt="Pencil sketch: the Signal Card in three states, the default, a pre-filled ride prompt, and searching for a driver" caption="The ride is pre-filled, never booked for her. That rule survived into this version." track="track-wide mt-6" />
 
         <h3 className="subhead mt-16">Crowding at the interchange</h3>
-        <p>A crowdsourced app for INA, then a tab inside DMRC’s app. A lead designer at Blinkit called it unbacked. The coach data I relied on was one undated trial on another line.</p>
+        <p>A crowdsourced app for the INA interchange. A lead designer at Blinkit called it unbacked, and the coach data behind it was one undated trial.</p>
 
         <h3 className="subhead mt-14">A better station to board from</h3>
-        <p>I mapped every station and entrance from OpenStreetMap and modelled walking times. On foot, almost nobody has a second station in reach.</p>
+        <p>I mapped every station and entrance and modelled walking times. On foot, almost nobody has a second station to choose from.</p>
         <Coverage />
       </Section>
 
@@ -213,7 +217,7 @@ export default function Signal() {
       <Section id="idea" title="The idea" lede="Nobody can say how long a delay will last. What can be worked out is how long the other ways still get you there on time.">
         <Slack />
         <p className="text-ink mt-10 font-serif" style={{ fontSize: '1.7rem', lineHeight: 1.25 }}>deadline − the slowest likely backup − a 5 minute margin</p>
-        <p className="mt-4">It uses the slow end of every estimate, because Ajeet hit traffic. In the example, an auto could take up to 54 minutes from the platform, so backups work until 9:31.</p>
+        <p className="mt-4">It uses the slowest end of every estimate, because Ajeet hit traffic. Here, an auto could take 54 minutes from the platform, so backups work until 9:31.</p>
 
         <div className="track-wide mt-14 grid items-start gap-12 md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
           <div className="space-y-4">
@@ -228,7 +232,7 @@ export default function Signal() {
       </Section>
 
       {/* ---------- The screens ---------- */}
-      <Section id="screens" title="The screens" lede="Built on DMRC’s app as it is, fixed to pass accessibility checks, so it reads as an update to the app people already have.">
+      <Section id="screens" title="The screens" lede="Built on DMRC’s own app, with its contrast fixed, so it reads as an update rather than a new app.">
         <div className="track-wide mt-10 rounded-2xl px-5 pb-6 pt-8 sm:px-8" style={{ background: 'radial-gradient(90% 100% at 50% 0%, var(--sig-sky), var(--sig-tint) 55%, var(--ground))' }}>
           <div className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-3">
             {SCREENS.map(([f, t, c]) => (
@@ -243,17 +247,17 @@ export default function Signal() {
 
         <div className="track-wide mt-14 grid items-center gap-10 md:grid-cols-2">
           <div className="rounded-2xl px-10 pt-10" style={{ background: 'var(--sig-tint)' }}>
-            <img src={`${V}/s3b-closure.png`} alt="Closure announced the night before: Rajiv Chowk exits closed tomorrow, nearest open exit Barakhamba Road" loading="lazy" className="mx-auto block h-auto w-full max-w-[260px] rounded-t-[24px]" />
+            <img src={`${V}/s3b-closure.png`} alt="Closure announced the night before: Rajiv Chowk exits closed tomorrow, nearest open exit Barakhamba Road" loading="lazy" className="sig-dim mx-auto block h-auto w-full max-w-[260px] rounded-t-[24px]" />
           </div>
           <div className="space-y-3">
             <h3 className="subhead">When the closure is known the night before</h3>
-            <p>From July to October 2026, most disruptions on record were planned security closures. Those are announced the evening before, so the choice moves home: which exit is open, and when to set out.</p>
+            <p>Most disruptions from July to October 2026 were planned security closures, announced the evening before. So the choice moves home: which exit is open, and when to leave.</p>
           </div>
         </div>
       </Section>
 
       {/* ---------- Stress test ---------- */}
-      <Section id="stress" title="Stress test with Satabdee" lede="I ran Satabdee’s real commute through the screens, one morning at a time. Three stages, an hour and a half, laptop open. The flow broke in seven places.">
+      <Section id="stress" title="Stress test with Satabdee" lede="Satabdee rides an hour and a half each way, laptop open. I ran her daily commute through the screens, one morning at a time. It broke in seven places.">
         <div className="track-wide mt-10 grid grid-cols-2 gap-x-5 gap-y-9 md:grid-cols-4">
           {BREAKS.map(([f, t, c]) => (
             <figure key={f}>
@@ -265,7 +269,7 @@ export default function Signal() {
         <Figure src={`${V}/s6-states.png`} alt="States board: every number says where it came from and how old it is" caption="All seven are states of one card. Every number says where it came from and how old it is." track="track-wide mt-12" />
 
         <h3 className="subhead mt-16">Testing it with riders</h3>
-        <p>A scenario test is running now. Riders pick their own trip and live the same disrupted morning twice: once with DMRC’s app as it is, once with Signal. Each time they say whether they’d wait or leave, and how sure they are. Results will be added here.</p>
+        <p>A scenario test with daily commuters is running. Each rider lives the same delayed morning on their own trip twice: with today’s app, then with Signal. Results will be added here.</p>
         <p className="mt-3"><a className="prose-link" href={TEST} target="_blank" rel="noreferrer">Try the test</a></p>
       </Section>
 
@@ -283,7 +287,7 @@ export default function Signal() {
       <Section id="limits" title="Limits">
         <h3 className="subhead mt-6">It’s only as fast as DMRC’s alerts</h3>
         <AlertSpeed />
-        <p className="mt-8">With a tighter deadline, backups stop working before the alert even arrives. The bigger fix is DMRC sending alerts sooner, and a screen can’t do that.</p>
+        <p className="mt-8">With a tighter deadline, backups stop working before the alert arrives. That needs faster alerts from DMRC, not a better screen.</p>
         <div className="mt-10 grid gap-6 border-t border-rule pt-8 sm:grid-cols-2">
           <p><span className="text-ink">How often faults happen is unknown.</span> If they’re rare, the daily setup has to be very light to be worth it.</p>
           <p><span className="text-ink">It can’t see crowding.</span> It can’t tell her if the first train back is too full to board.</p>
