@@ -39,11 +39,11 @@ export function Contrast() {
     <figure className="track-wide mt-10 grid gap-8 rounded-2xl p-8 sm:grid-cols-2 sm:p-10" style={{ background: 'var(--sig-panel)', color: 'var(--sig-panel-ink)', border: '1px solid var(--rule)' }}>
       <div>
         <div className="font-serif leading-none" style={{ fontSize: 'clamp(4rem, 3rem + 4vw, 6.5rem)', letterSpacing: '-0.03em' }}>99.95%</div>
-        <p className="mt-3" style={{ color: 'inherit', opacity: 0.75 }}>of trains ran on time in 2026</p>
+        <p className="mt-3" style={{ color: 'inherit', opacity: 0.75 }}>of trains ran on time in 2026, by DMRC’s count. That’s trains, not door-to-door trips.</p>
       </div>
       <div>
         <div className="font-serif leading-none" style={{ fontSize: 'clamp(4rem, 3rem + 4vw, 6.5rem)', letterSpacing: '-0.03em', color: 'var(--sig-panel-accent)' }}>34 min</div>
-        <p className="mt-3" style={{ color: 'inherit', opacity: 0.75 }}>of buffer riders add, every day</p>
+        <p className="mt-3" style={{ color: 'inherit', opacity: 0.75 }}>of buffer a day, on average, that the seven riders I interviewed say they add</p>
       </div>
     </figure>
   )

@@ -6,7 +6,7 @@ import { Back, Figure, Heading, Tradeoffs } from '../components/case-study'
 import { Arcs, Contrast, Coverage, DailyLoop, DelayMap, Headlines, Journey, Orbit, Timeline } from './charts'
 import { Network, Pill, YellowLine } from './lines'
 import Wave from './wave'
-import { AlertFlow, AlertWindow } from './limits'
+import { AlertFlow, AlertWindow, SystemMap } from './limits'
 
 /*
  * Personalising the Delhi Metro app for daily commuters (Signal v4). When a
@@ -37,16 +37,16 @@ const METHODS = [
 ]
 
 const SYNTHESIS = [
-  ['Delays add up across stages', 'Most trips have two to four stages. A late train means a missed bus or a later auto. This was the pain point people raised first.', 'Top pain point'],
-  ['Everyone pays for the bad day in advance', 'All seven add a buffer to every trip, 34 minutes a day on average by their own estimate.', '7 of 7'],
-  ['Nobody says how long a delay will last', 'One display said 6 minutes while a participant waited 20 to 25. Alerts often reach X before they reach the station.', 'Interviews and press'],
+  ['Delays add up across stages', 'Most trips have two to four stages. A late train means a missed bus or a later auto.', 'Top pain point in synthesis'],
+  ['Everyone pays for the bad day in advance', 'All seven said they build a buffer into their trip. Their own estimates averaged 34 minutes a day.', '7 of 7, self-reported'],
+  ['The information is late, vague or not about their trip', 'One display said 6 minutes while a participant waited 20 to 25. Alerts often reach X before they reach the station.', 'Interviews and press'],
   ['Riders trust experience over the map', 'They know which train to let go and which exit to use. Two changed where they live or board to avoid an interchange.', '2 of 7'],
   ['The last mile is fragile', 'Surge prices, no ride found, shared autos that wait to fill.', '4 of 7'],
   ['Safety shapes routes for women', 'Lighting, crowding and guards decide which station and which hour. Its own project, so it sits in future scope.', '4 of 7'],
 ]
 
 const TRADEOFFS = [
-  ['Nobody knows how long the delay will last', 'Count down to the backups, not the train', 'It can’t say whether the train will come'],
+  ['A delay often comes with no end time', 'Count down to the backups, not the train', 'It can’t say whether the train will come'],
   ['Ride times vary, and traffic can add 20 minutes', 'Use the slowest end of every range', 'Some riders leave when waiting would have worked'],
   ['The app also sells bike taxi rides', '“Keep waiting” is an equal choice, and the bus is listed too', 'It’s less useful as a sales channel'],
   ['Alerts pile up and get ignored', 'One alert per trip, only for trips with a deadline', 'Miss it, and the rider has to open the app'],
@@ -97,6 +97,16 @@ const FLOW = [
   ['ride-booked', '9:14', 'The ride is booked. What to show at the gate.'],
 ]
 const BRANCH = ['s5-past', '9:40', 'After 9:31, backups may arrive late. Nothing more is pushed.']
+
+/* Hard cases: what the screens do, and where each is shown. */
+const EDGES = [
+  ['No backup works any more', 'It says so: “Backups may now arrive after 10:30”, marked Maybe late. No countdown, and nothing more is pushed.', 'The 9:40 branch'],
+  ['The update is old, or there’s no signal', 'It shows what it last knew, and how old that is.', 'Stress test'],
+  ['The fault clears', 'It says trains are running again, and that the first ones are full.', 'Stress test'],
+  ['They’re already on the train', 'The next stop, and what works from there.', 'Stress test'],
+  ['The fault hits before they leave home', 'The same decision, made from home.', 'Stress test'],
+  ['A ride disappears after it’s shown', 'Not handled yet.', 'Future scope'],
+]
 
 const SKETCHES = [
   ['sketch-c1-signal-card', 'Leave-by card'], ['sketch-c2-journey-thread', 'Journey thread'],
@@ -259,7 +269,7 @@ export default function Signal() {
       </section>
 
       {/* ---------- The problem ---------- */}
-      <Section id="problem" line="red" title="The problem" lede="Delhi Metro trains run on time 99.95% of the time. But a commute is more than the train, and the bad days keep making the news.">
+      <Section id="problem" line="red" title="The problem" lede="Delhi Metro trains run on time 99.95% of the time. That counts trains, not whether a commuter reaches work by their deadline. And the bad days keep making the news.">
         <Headlines />
         <Contrast />
 
@@ -271,12 +281,12 @@ export default function Signal() {
           <DailyLoop />
           <div className="space-y-3">
             <h3 className="subhead">So commuters pay for the bad day in advance</h3>
-            <p>Nobody tells them how long a delay will last, so they leave 34 minutes early every morning. One bad day makes the next buffer bigger. Better information can only help at one moment: when they decide to wait or leave.</p>
+            <p>The information they get is late, vague or not about their trip. So all seven build in a buffer, about 34 minutes a day by their own estimate. Better information can only help at one moment: when they decide to wait or leave.</p>
           </div>
         </div>
 
         <h3 className="subhead mt-16">When the bad day comes</h3>
-        <p>One participant, a student on his exam day: bus, then metro, then auto.</p>
+        <p>One participant’s morning, a student on his exam day: bus, then metro, then auto. It shows what a bad day looks like, not how often it happens.</p>
         <Journey />
         <p className="mt-6">He had other ways to get there. He didn’t know how long they would still work.</p>
       </Section>
@@ -346,12 +356,38 @@ export default function Signal() {
       </Section>
 
       {/* ---------- The idea ---------- */}
-      <Section id="idea" line="yellow" title="The idea" lede="Nobody can say how long a delay will last. What can be worked out is how long the other ways still get you there on time.">
+      <Section id="idea" line="yellow" title="The idea" lede="Often nobody can say how long a delay will last. What can be worked out is how long the other ways still get you there on time.">
         <YellowLine />
         <p className="mt-6">The example trip runs on the Yellow Line. A fault between Hauz Khas and Central Secretariat comes with no time. The backups leave from where the rider is, and they only work for a while.</p>
         <h3 className="subhead mt-16">How long the backups work</h3>
         <Timeline />
         <p className="mt-8">The rule: take the deadline, subtract the slowest likely backup (getting out of the station, waiting for a pickup, the ride), and keep 5 minutes spare. It uses the slowest end of every estimate, because traffic is what made the student late.</p>
+
+        <div className="track-wide mt-10 grid gap-8 md:grid-cols-2">
+          <div className="rounded-2xl p-6" style={{ background: 'var(--sig-tint)' }}>
+            <div className="text-ink" style={{ fontSize: '1.05rem' }}>What “backups work until 9:31” means</div>
+            <p className="mt-2" style={{ fontSize: '0.95rem' }}>9:31 is the latest time to start leaving the station. Leave by then, and even the slowest backup should get them to work by 10:30 with 5 minutes spare. After 9:31, a backup might still make it, but the app can no longer say so.</p>
+          </div>
+          <div className="rounded-2xl p-6" style={{ background: 'var(--raised)' }}>
+            <div className="text-ink" style={{ fontSize: '1.05rem' }}>It isn’t a guarantee</div>
+            <p className="mt-2" style={{ fontSize: '0.95rem' }}>Ride times, traffic and pickups can all be wrong, even at their slowest. So the screens say “may”, mark every estimate with *, keep ride times as ranges, and show who sent each update and when.</p>
+          </div>
+        </div>
+
+        <h3 className="subhead mt-16">Why a time, and not just an alert</h3>
+        <p>An alert says there’s a fault. It doesn’t say whether waiting ten more minutes still works. The student on his exam day had other ways to get there. What he didn’t know was when they would stop working.</p>
+
+        <h3 className="subhead mt-16">When the answer isn’t simple</h3>
+        <p>The rule I hold the screens to: they shouldn’t look more certain than the information behind them.</p>
+        <div className="track-wide mt-6">
+          {EDGES.map(([q, a, where]) => (
+            <div key={q} className="grid gap-1 border-t border-rule py-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)_10rem] sm:gap-6">
+              <div className="text-ink">{q}</div>
+              <div style={{ fontSize: '0.95rem' }}>{a}</div>
+              <div className="text-faint" style={{ fontSize: '0.88rem' }}>{where}</div>
+            </div>
+          ))}
+        </div>
 
         <h3 className="subhead mt-16">What I chose, and what it cost</h3>
         <div className="mt-4"><Tradeoffs items={TRADEOFFS} /></div>
@@ -438,25 +474,44 @@ export default function Signal() {
             </figure>
           ))}
         </div>
-        <Figure src={`${V}/s6-states.png`} alt="States board: every number says where it came from and how old it is" caption="All seven are states of one card. Every number says where it came from and how old it is." track="track-wide mt-12" />
+        <Figure src={`${V}/s6-states.png`} alt="States board: every number says where it came from and how old it is" caption="How sure the card is. A confirmed closure, a DMRC estimate, a delay with no time and an old update each look different, and every number says who sent it and how old it is." track="track-wide mt-12" />
 
         <h3 className="subhead mt-16">Testing it with riders</h3>
-        <p>I built a scenario test for daily commuters. Each rider lives the same delayed morning on their own trip twice: with today’s app, then with the redesign.</p>
-        <p className="mt-3"><a className="prose-link" href={TEST} target="_blank" rel="noreferrer">Try the test</a></p>
+        <p>I built a scenario test for daily commuters. Each rider lives the same delayed morning on their own trip twice: with today’s app, then with the redesign. It checks five things:</p>
+        <ol className="mt-4 space-y-2">
+          {[
+            ['Comprehension', 'Can they explain “backups work until 9:31” without help?'],
+            ['Decision', 'With a fixed deadline, do they choose to wait or switch, and can they say why?'],
+            ['Trust', 'Can they tell estimates from confirmed facts, and see when each was updated?'],
+            ['Failure', 'What do they do when no backup works, or the information is old?'],
+            ['Value', 'Does it help with a decision they struggled to make with today’s tools?'],
+          ].map(([t, d], i) => (
+            <li key={t} className="flex gap-3"><span className="text-faint w-5 shrink-0">{i + 1}</span><span><span className="text-ink">{t}.</span> {d}</span></li>
+          ))}
+        </ol>
+        <p className="mt-4"><a className="prose-link" href={TEST} target="_blank" rel="noreferrer">Try the test</a></p>
       </Section>
 
       {/* ---------- How it works ---------- */}
-      <Section id="system" line="green" title="How it works" lede="No new data to start. Alerts, ride times and gates already exist inside DMRC and its partners.">
-        <Figure src={`${V}/s7-system.png`} alt="System board: service alerts, the rider's deadline, ride times and gates feed one rule, which drives the home card, the decision and the backups sheet" track="track-wide mt-10" />
-        <div className="track-wide mt-10 grid gap-8 sm:grid-cols-3">
-          <div className="space-y-2"><div className="h-1 rounded-full" style={{ background: 'var(--sig-sky)' }} /><div className="text-ink">Now</div><p style={{ fontSize: '0.95rem' }}>Works with alerts, partner ride times and gates as they are.</p></div>
-          <div className="space-y-2"><div className="h-1 rounded-full" style={{ background: 'var(--sig)' }} /><div className="text-ink">Needs DMRC</div><p style={{ fontSize: '0.95rem' }}>Alerts the moment they’re logged. A delay given as a time.</p></div>
-          <div className="space-y-2"><div className="h-0" style={{ borderTop: '4px dashed var(--rule)' }} /><div className="text-ink">Later</div><p style={{ fontSize: '0.95rem' }}>Live gaps between trains, so “longer than usual” is measured.</p></div>
-        </div>
+      <Section id="system" line="green" title="How it works" lede="It needs three layers. Only the first is mine to build.">
+        <SystemMap />
+        <ol className="track-wide mt-10 grid gap-8 sm:grid-cols-3">
+          {[
+            ['1', 'My design', 'A saved trip with a deadline, the decision screen, the backups with their status, and a clear choice to wait or switch.', 'var(--sig)'],
+            ['2', 'Integration it needs', 'DMRC’s alerts, partner ride and pickup estimates, and gate status. These exist inside DMRC and its partners, but I haven’t had access to them. The prototype uses simulated values.', 'var(--sig-line)'],
+            ['3', 'A change at DMRC', 'One shared alert for the app, station displays and ride partners, sent when it’s logged. A recommendation, not something I can build. It’s the next section.', 'var(--rule)'],
+          ].map(([n, t, d, c]) => (
+            <li key={n} className="space-y-2">
+              <div className="h-1 rounded-full" style={{ background: c }} />
+              <div className="text-ink"><span className="text-faint mr-2">Layer {n}</span>{t}</div>
+              <p style={{ fontSize: '0.95rem' }}>{d}</p>
+            </li>
+          ))}
+        </ol>
       </Section>
 
       {/* ---------- Limits ---------- */}
-      <Section id="limits" line="grey" title="What I’d ask DMRC to change" lede="The screens can only be as early as DMRC’s alerts. The bigger fix is in the system behind them.">
+      <Section id="limits" line="grey" title="What I’d ask DMRC to change" lede="Layer 3. The screens can only be as early as DMRC’s alerts, so the bigger fix is in the system behind them. This is a service-design recommendation, not a feature I can ship.">
         <h3 className="subhead mt-10">It’s only as fast as the alert</h3>
         <p>Move the deadline and the alert’s delay. Every minute the alert spends getting to the rider comes out of the time they have to decide.</p>
         <AlertWindow />
@@ -485,6 +540,7 @@ export default function Signal() {
             ['Crowding', 'Whether the next train is worth boarding. This needs live load data, which DMRC only trials today.'],
             ['The last mile', 'Rides that surge or never arrive, so the backup time reflects what’s really available.'],
             ['Occasional riders', 'The same idea in QR booking, for people without a saved trip.'],
+            ['Live gaps between trains', 'So “longer than usual” is measured, not guessed.'],
             ['Safety at night', 'How women choose stations and hours. Its own project.'],
           ].map(([t, d], i) => (
             <li key={t} className="flex gap-4 border-t border-rule pt-4">

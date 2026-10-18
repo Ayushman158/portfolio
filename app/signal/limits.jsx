@@ -137,3 +137,54 @@ export function AlertFlow() {
     </div>
   )
 }
+
+/* The rule as a system: what goes in, what's worked out, what the rider sees. */
+const IN = [
+  ['Service alerts', 'DMRC control room', 2],
+  ['Your deadline', 'Set by the rider, once', 1],
+  ['Ride and pickup times', 'Ride partners', 2],
+  ['Gates and exits', 'DMRC station data', 2],
+]
+const WORK = ['Does the fault hit this trip?', 'Backups work until = deadline − slowest backup − 5 min', 'Nearest open gate to the pickup']
+const OUT = [['On time', 'Home card'], ['Backups work until 9:31', 'Decision screen'], ['Every backup, with its status', 'Backups sheet'], ['Closure ahead', 'The night before']]
+
+export function SystemMap() {
+  const box = 'rounded-xl px-4 py-3'
+  const Col = ({ title, children }) => (
+    <div className="min-w-0">
+      <div className="text-faint mb-3" style={{ fontSize: '0.85rem' }}>{title}</div>
+      <ul className="grid gap-2.5">{children}</ul>
+    </div>
+  )
+  const Arrow = () => <span aria-hidden="true" className="text-faint hidden self-center md:block" style={{ fontSize: '1.4rem' }}>→</span>
+  return (
+    <figure className="track-wide mt-10 rounded-2xl p-5 sm:p-8" style={{ border: '1px solid var(--rule)' }}>
+      <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1.1fr)_auto_minmax(0,1fr)] md:gap-4">
+        <Col title="In">
+          {IN.map(([t, d, layer]) => (
+            <li key={t} className={box} style={{ background: 'var(--raised)' }}>
+              <div className="text-ink" style={{ fontSize: '0.95rem' }}>{t}</div>
+              <div style={{ fontSize: '0.82rem' }}>{d}</div>
+              <div className="mt-1" style={{ fontSize: '0.78rem', color: layer === 1 ? 'var(--sig)' : 'var(--sig-est)' }}>{layer === 1 ? 'Layer 1 · in the design' : 'Layer 2 · simulated in the prototype'}</div>
+            </li>
+          ))}
+        </Col>
+        <Arrow />
+        <Col title="Worked out">
+          {WORK.map((t) => (
+            <li key={t} className={box} style={{ background: 'var(--sig-tint)', border: '1.5px solid var(--sig)', fontSize: '0.92rem', color: 'var(--ink)' }}>{t}</li>
+          ))}
+        </Col>
+        <Arrow />
+        <Col title="The rider sees">
+          {OUT.map(([t, d]) => (
+            <li key={t} className={box} style={{ border: '1px solid var(--rule)' }}>
+              <div className="text-ink" style={{ fontSize: '0.95rem' }}>{t}</div>
+              <div style={{ fontSize: '0.82rem' }}>{d}</div>
+            </li>
+          ))}
+        </Col>
+      </div>
+    </figure>
+  )
+}
