@@ -205,16 +205,16 @@ const Notes = ({ items, tone }) => (
 )
 
 /* A flow drawn as a line with stops: each screen is a stop, in order. */
-const FlowStep = ({ src, time, caption, last, line = 'var(--sig)' }) => (
-  <li className="relative w-[200px] shrink-0 snap-start md:w-auto md:min-w-0 md:flex-1">
+const FlowStep = ({ src, time, caption, last, line = 'var(--sig)', dashed = false, as: Tag = 'li' }) => (
+  <Tag className="relative w-[200px] shrink-0 snap-start md:w-auto md:min-w-0 md:flex-1">
     <div className="relative mb-3 flex h-5 items-center">
       <span className="relative z-10 h-4 w-4 rounded-full" style={{ border: `4px solid ${line}`, background: 'var(--ground)' }} />
-      {!last && <span aria-hidden="true" className="absolute left-2 top-1/2 h-1 -translate-y-1/2" style={{ width: 'calc(100% + 1.25rem)', background: line }} />}
+      {!last && <span aria-hidden="true" className="absolute left-2 top-1/2 h-1 -translate-y-1/2" style={{ width: 'calc(100% + 1.25rem)', background: dashed ? `repeating-linear-gradient(90deg, ${line} 0 8px, transparent 8px 14px)` : line }} />}
     </div>
     <div className="text-ink mb-2" style={{ fontSize: '0.95rem' }}>{time}</div>
     <Phone src={src} alt={caption} />
     <p className="mt-3" style={{ fontSize: '0.9rem' }}>{caption}</p>
-  </li>
+  </Tag>
 )
 
 export default function Signal() {
@@ -404,16 +404,15 @@ export default function Signal() {
           <ol className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-3">
             {FLOW.map(([f, t, c], i) => <FlowStep key={f} src={f} time={t} caption={c} last={i === FLOW.length - 1} />)}
           </ol>
-        </div>
-        <div className="track-wide mt-8 flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10">
-          <figure className="w-[200px] shrink-0">
-            <div className="text-ink mb-2" style={{ fontSize: '0.95rem' }}>{BRANCH[1]}</div>
-            <Phone src={BRANCH[0]} alt={BRANCH[2]} />
-            <figcaption className="mt-3" style={{ fontSize: '0.9rem' }}>{BRANCH[2]}</figcaption>
-          </figure>
-          <div className="space-y-2">
-            <div className="text-ink">If they keep waiting past 9:31</div>
-            <p>A branch off the decision screen, not the next step. The app stops saying backups work, and leaves the choice with the rider.</p>
+          <div className="mt-6 border-t pt-8" style={{ borderColor: 'var(--rule)' }}>
+            <div className="flex flex-col gap-6 md:flex-row md:items-start md:gap-5">
+              <span aria-hidden="true" className="hidden md:block md:flex-[2]" />
+              <FlowStep as="div" src={BRANCH[0]} time={BRANCH[1]} caption={BRANCH[2]} line="var(--sig-quiet)" dashed />
+              <div className="space-y-2 md:flex-[2] md:pt-12 md:pl-[1.25rem]">
+                <div className="text-ink">Branch: if they keep waiting past 9:31</div>
+                <p style={{ fontSize: '0.95rem' }}>It comes off the 9:10 decision, not after the ride. The app stops saying backups work, and leaves the choice with the rider.</p>
+              </div>
+            </div>
           </div>
         </div>
 
