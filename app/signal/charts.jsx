@@ -141,23 +141,6 @@ export function Arcs() {
   )
 }
 
-/* What 50 recent app reviews complain about. */
-export function ReviewBars() {
-  const rows = [['Gate failure or wrong fare', 46, SIG], ['Crashes and bugs', 22, '#3B97D6'], ['Clutter and pop-ups', 16, '#7CCBF5'], ['Made me late', 12, LATE]]
-  return (
-    <figure className="space-y-3">
-      {rows.map(([t, v, c]) => (
-        <div key={t}>
-          <div className="flex justify-between" style={{ fontSize: '0.95rem' }}><span>{t}</span><span style={{ color: 'var(--ink)' }}>{v}%</span></div>
-          <div className="mt-1 h-2.5 rounded-full" style={{ background: 'var(--raised)' }}>
-            <div className="h-2.5 rounded-full" style={{ width: `${v * 2}%`, background: c }} />
-          </div>
-        </div>
-      ))}
-      <figcaption className="text-faint pt-1" style={{ fontSize: '0.85rem' }}>My coding of the 50 most recent iOS reviews, May to October 2026.</figcaption>
-    </figure>
-  )
-}
 
 /* Five things she has during a delay, and the one she doesn't. */
 export function Orbit() {
@@ -207,32 +190,6 @@ export function Coverage() {
   )
 }
 
-/* Minutes of slack left during the delay: 27 at 9:04, none by 9:31. */
-export function Slack() {
-  return (
-    <figure className="track-wide mt-8">
-      <div className="mb-3 flex items-baseline gap-3">
-        <span className="whitespace-nowrap font-serif leading-none" style={{ fontSize: 'clamp(2.4rem, 2rem + 2vw, 3.4rem)', color: EST }}>27 min*</span>
-        <span className="text-faint" style={{ fontSize: '0.95rem' }}>of slack at the 9:04 alert, for a 10:30 deadline</span>
-      </div>
-      <svg viewBox="0 0 900 260" className="block w-full" role="img" aria-label="Slack falls from 27 minutes at the 9:04 alert to zero at 9:31, then backups may arrive late">
-        <defs>
-          <linearGradient id="sig-up" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#7CCBF5" stopOpacity="0.6" /><stop offset="1" stopColor="#7CCBF5" stopOpacity="0.04" /></linearGradient>
-          <linearGradient id="sig-down" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#C22E00" stopOpacity="0.04" /><stop offset="1" stopColor="#C22E00" stopOpacity="0.28" /></linearGradient>
-        </defs>
-        <line x1="0" y1="190" x2="900" y2="190" stroke="var(--rule)" />
-        <polygon points="0,190 0,30 540,190" fill="url(#sig-up)" />
-        <polygon points="540,190 900,250 900,190" fill="url(#sig-down)" />
-        <line x1="0" y1="30" x2="900" y2="250" stroke="var(--ink)" strokeWidth="2" />
-        <line x1="540" y1="0" x2="540" y2="280" stroke={SIG} strokeWidth="2" strokeDasharray="4 6" />
-      </svg>
-      <figcaption className="mt-2 grid grid-cols-[60fr_40fr]" style={{ fontSize: '0.88rem' }}>
-        <span className="text-faint">9:04 alert</span>
-        <span style={{ color: SIG }}>9:31* backups stop working</span>
-      </figcaption>
-    </figure>
-  )
-}
 
 /* Two leave-by lines: with a tight deadline the window closes before the alert. */
 export function AlertSpeed() {
@@ -253,5 +210,104 @@ export function AlertSpeed() {
       <Row label="Deadline 10:30" at="9:31*" pct={34.4} tone={SIG} note="" />
       <Row label="Deadline 10:00" at="9:02*" pct={2.2} tone={LATE} note="already gone" />
     </div>
+  )
+}
+
+/* Real headlines, clipped and layered. Each links to its article. */
+const HEADLINES = [
+  ['Business Standard', '1 Sep 2025', 'Delhi Metro sees third technical snag in a week, commuters face delays', 'https://www.business-standard.com/india-news/delhi-metro-sees-third-snag-in-week-as-signalling-issues-cause-heavy-delays-125090101396_1.html'],
+  ['ETV Bharat', '30 Jun 2026', 'Technical Snag On Delhi Metro’s Blue Line Disrupts Services', 'https://www.etvbharat.com/amp/en/state/technical-snag-on-delhi-metro-blue-line-disrupts-services-enn26063006928'],
+  ['Oneindia', 'Jul 2026', '17 Delhi Metro Stations To Remain Closed For Third Day', 'https://www.oneindia.com/india/17-delhi-metro-stations-to-remain-closed-for-third-day-check-full-list-8155349.html'],
+  ['Business Standard', '9 Oct 2026', 'Delhi Metro to restrict entry, exit at 57 stations from 9 pm', 'https://www.business-standard.com/india-news/delhi-metro-to-restrict-entry-exit-at-57-stations-from-9-pm-check-details-126100900387_1.html'],
+  ['The Quint · reader report', '', 'Delhi Metro’s Yellow Line snag was painful for many like myself', 'https://www.thequint.com/my-report/delhi-metro-yellow-line-chattarpur-technical-glitch'],
+]
+export function Headlines() {
+  const tilt = ['-1.2deg', '0.8deg', '-0.6deg', '1.1deg', '-0.9deg']
+  return (
+    <div className="track-wide mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {HEADLINES.map(([src, date, title, url], i) => (
+        <a
+          key={title}
+          href={url}
+          target="_blank"
+          rel="noreferrer"
+          className={`block rounded-xl p-5 transition-transform duration-200 hover:-translate-y-0.5 ${i === 0 ? 'lg:col-span-2' : ''}`}
+          style={{ background: 'var(--ground)', border: '1px solid var(--rule)', boxShadow: '0 10px 30px rgba(23,22,20,0.07)', transform: `rotate(${tilt[i]})`, textDecoration: 'none' }}
+        >
+          <div className="flex justify-between gap-3 text-faint" style={{ fontSize: '0.78rem', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+            <span>{src}</span><span>{date}</span>
+          </div>
+          <div className="mt-3 font-serif" style={{ color: 'var(--ink)', fontSize: i === 0 ? '1.9rem' : '1.35rem', lineHeight: 1.15 }}>{title}</div>
+        </a>
+      ))}
+    </div>
+  )
+}
+
+/* A daily trip has several stages, and a delay can start at any of them. */
+const STAGES = [
+  ['Home', 'Bus or auto to the station', 'Traffic, no auto', false],
+  ['Station gate', 'Security check, QR or card', 'Queue, QR or card fails', false],
+  ['Platform', 'Wait for the train', 'Fault or closure', true],
+  ['Train', 'Ride, maybe change lines', 'First train too full', false],
+  ['Exit gate', 'Tap out', 'Exit not registered', false],
+  ['Last mile', 'Auto, bike taxi, walk', 'Surge, no ride found', false],
+]
+export function DelayMap() {
+  return (
+    <figure className="track-wide mt-10">
+      <div className="overflow-x-auto pb-2">
+        <ol className="grid min-w-[760px] grid-cols-6">
+          {STAGES.map(([name, what, delay, scope], i) => (
+            <li key={name} className="flex flex-col gap-3 pr-4">
+              <div className="flex items-center">
+                <span style={{ width: 16, height: 16, borderRadius: '50%', border: `4px solid ${scope ? SIG : 'var(--faint)'}`, background: 'var(--ground)', flexShrink: 0 }} />
+                {i < STAGES.length - 1 && <span style={{ flex: 1, height: 3, background: 'var(--rule)' }} />}
+              </div>
+              <div style={{ color: 'var(--ink)', fontSize: '1rem' }}>{name}</div>
+              <div className="text-faint" style={{ fontSize: '0.85rem', lineHeight: 1.35 }}>{what}</div>
+              <div className="rounded-lg px-2.5 py-1.5" style={{ fontSize: '0.85rem', lineHeight: 1.3, background: scope ? 'var(--sig-tint)' : 'var(--raised)', color: scope ? 'var(--ink)' : 'var(--muted)', border: scope ? `1.5px solid ${SIG}` : '1px solid transparent' }}>{delay}</div>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <figcaption className="mt-4 flex flex-wrap gap-x-6 gap-y-2" style={{ fontSize: '0.88rem' }}>
+        <span className="flex items-center gap-2"><span style={{ width: 12, height: 12, borderRadius: 3, border: `1.5px solid ${SIG}`, background: 'var(--sig-tint)' }} />Designed for now</span>
+        <span className="text-faint flex items-center gap-2"><span style={{ width: 12, height: 12, borderRadius: 3, background: 'var(--raised)' }} />Future scope</span>
+      </figcaption>
+    </figure>
+  )
+}
+
+/* The rule, drawn as one timeline: wait, then the slowest backup, then a margin. */
+export function Timeline() {
+  const seg = [
+    [27, 'You can keep waiting', '27 min*', 'var(--sig-line)', 'var(--ink)'],
+    [54, 'Slowest backup: exit, pickup, ride', '54 min*', SIG, '#fff'],
+    [5, 'Margin', '5', 'var(--faint)', '#fff'],
+  ]
+  return (
+    <figure className="track-wide mt-8">
+      <div className="flex justify-between font-medium" style={{ fontSize: '0.95rem' }}>
+        <span style={{ color: 'var(--ink)' }}>9:04 · alert, no time given</span>
+        <span style={{ color: 'var(--ink)' }}>10:30 · deadline</span>
+      </div>
+      <div className="mt-3 flex h-14 overflow-hidden rounded-xl">
+        {seg.map(([w, , v, bg, fg]) => (
+          <div key={v + w} className="flex items-center px-3" style={{ flex: w, background: bg, color: fg, fontSize: '0.95rem', fontWeight: 600, whiteSpace: 'nowrap' }}>{w > 6 ? v : ''}</div>
+        ))}
+      </div>
+      <div className="relative mt-2 h-6" style={{ fontSize: '0.92rem' }}>
+        <span className="absolute -translate-x-1/2 font-semibold" style={{ left: `${27 / 86 * 100}%`, color: SIG }}>9:31*</span>
+      </div>
+      <dl className="mt-4 grid gap-4 sm:grid-cols-3" style={{ fontSize: '0.95rem' }}>
+        {seg.map(([, t, v, bg]) => (
+          <div key={t} className="flex gap-3">
+            <span style={{ width: 14, height: 14, borderRadius: 4, background: bg, marginTop: 4, flexShrink: 0 }} />
+            <div><dt style={{ color: 'var(--ink)' }}>{t}</dt><dd className="text-faint">{v === '5' ? '5 min, in case' : v}</dd></div>
+          </div>
+        ))}
+      </dl>
+    </figure>
   )
 }
