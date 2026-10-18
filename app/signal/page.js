@@ -3,9 +3,10 @@
 import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { Back, Figure, Heading, Tradeoffs } from '../components/case-study'
-import { AlertSpeed, Arcs, Contrast, Coverage, DailyLoop, DelayMap, Headlines, Journey, Orbit, Timeline } from './charts'
+import { Arcs, Contrast, Coverage, DailyLoop, DelayMap, Headlines, Journey, Orbit, Timeline } from './charts'
 import { Network, Pill, YellowLine } from './lines'
 import Wave from './wave'
+import { AlertFlow, AlertWindow } from './limits'
 
 /*
  * Personalising the Delhi Metro app for daily commuters (Signal v4). When a
@@ -24,7 +25,7 @@ const TEST = 'https://signal-scenario-test.vercel.app'
 const STATIONS = [
   ['overview', 'Overview'], ['problem', 'The problem'], ['found', 'Research'], ['tried', 'What I tried first'],
   ['idea', 'The idea'], ['change', 'Before and after'], ['screens', 'The screens'], ['stress', 'Stress test'],
-  ['system', 'How it works'], ['limits', 'Limits'], ['next', 'Future scope'],
+  ['system', 'How it works'], ['limits', 'Limits and asks'], ['next', 'Future scope'],
 ]
 const IDS = STATIONS.map(([id]) => id)
 
@@ -412,11 +413,29 @@ export default function Signal() {
       </Section>
 
       {/* ---------- Limits ---------- */}
-      <Section id="limits" line="grey" title="Limits">
-        <h3 className="subhead mt-6">It’s only as fast as DMRC’s alerts</h3>
-        <AlertSpeed />
-        <p className="mt-8">With a tighter deadline, backups stop working before the alert arrives. That needs faster alerts from DMRC, not a better screen.</p>
-        <div className="mt-10 grid gap-6 border-t border-rule pt-8 sm:grid-cols-2">
+      <Section id="limits" line="grey" title="Limits, and what I’d ask DMRC to change" lede="The screens can only be as early as DMRC’s alerts. The bigger fix is in the system behind them.">
+        <h3 className="subhead mt-10">It’s only as fast as the alert</h3>
+        <p>Move the deadline and the alert’s delay. Every minute the alert spends getting to the rider comes out of the time they have to decide.</p>
+        <AlertWindow />
+
+        <h3 className="subhead mt-16">The system change I’d propose</h3>
+        <p>Today a fault reaches riders through a chain of hand-offs, each one slower and vaguer than the last. I’d replace the chain with one alert, written once and sent everywhere when it’s logged.</p>
+        <AlertFlow />
+        <ol className="mt-10 space-y-4">
+          {[
+            ['Send alerts the moment they’re logged', 'The same second for the app, the displays and ride partners.'],
+            ['Give the delay as a time, or say it’s unknown', 'Riders can plan around “unknown”. They can’t plan around silence.'],
+            ['Waive the exit charge during a declared fault', 'So leaving the station isn’t a penalty for taking a backup.'],
+          ].map(([t, d], i) => (
+            <li key={t} className="flex gap-3">
+              <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full text-[0.85rem] font-semibold" style={{ background: 'var(--sig)', color: 'var(--sig-on)' }}>{i + 1}</span>
+              <div><div className="text-ink">{t}</div><div style={{ fontSize: '0.95rem' }}>{d}</div></div>
+            </li>
+          ))}
+        </ol>
+
+        <h3 className="subhead mt-16">What it still doesn’t cover</h3>
+        <div className="mt-6 grid gap-6 sm:grid-cols-2">
           <p><span className="text-ink">How often faults happen is unknown.</span> If they’re rare, the daily setup has to be very light to be worth it.</p>
           <p><span className="text-ink">It covers one stage of the trip.</span> Not the bus before the metro or the auto after it.</p>
           <p><span className="text-ink">The exit-fare rule is unconfirmed.</span> The note on the backups sheet is placeholder copy.</p>
