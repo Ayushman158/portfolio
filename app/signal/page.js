@@ -6,6 +6,13 @@ import { Back, Figure, Heading, Tradeoffs } from '../components/case-study'
 import { Arcs, Contrast, Coverage, DailyLoop, DelayMap, Headlines, Journey, Orbit, Timeline } from './charts'
 import { Network, Pill, YellowLine } from './lines'
 import Wave from './wave'
+import dynamic from 'next/dynamic'
+
+/* WebGL paper, loaded on the client only; a plain sheet holds its place. */
+const Crumple = dynamic(() => import('./crumple'), {
+  ssr: false,
+  loading: () => <div className="aspect-[4/5] w-full rounded-sm" style={{ background: '#F4F0E7' }} />,
+})
 import { AlertFlow, AlertWindow, SystemMap } from './limits'
 
 /*
@@ -23,7 +30,7 @@ const V = '/signal/v4'
 const TEST = 'https://signal-scenario-test.vercel.app'
 
 const STATIONS = [
-  ['overview', 'Overview'], ['problem', 'The problem'], ['found', 'Research'], ['tried', 'What I tried first'],
+  ['overview', 'Overview'], ['problem', 'The problem'], ['found', 'Research'], ['tried', 'Ideas I dropped'],
   ['idea', 'The idea'], ['change', 'Before and after'], ['screens', 'The screens'], ['stress', 'Stress test'],
   ['system', 'How it works'], ['limits', 'Asks for DMRC'], ['next', 'Future scope'],
 ]
@@ -106,6 +113,13 @@ const EDGES = [
   ['They’re already on the train', 'The next stop, and what works from there.', 'Stress test'],
   ['The fault hits before they leave home', 'The same decision, made from home.', 'Stress test'],
   ['A ride disappears after it’s shown', 'Not handled yet.', 'Future scope'],
+]
+
+/* Directions dropped before this one: [sheet, title, what it was, why it was dropped]. */
+const DROPPED = [
+  ['dropped-leave-by', 'A leave-by time', 'A standalone app that said when to leave home. 4 of 5 commuters read its answer in under 3 seconds.', 'trains run 99.95% on time, and Google Maps already reminds you when to leave.'],
+  ['dropped-interchange', 'Help at the interchange', 'Which train to let go at a busy interchange like INA, and whether the transfer works.', 'there’s no reliable live crowd data to build it on.'],
+  ['dropped-station', 'A better station to board from', 'A nearby station that works better, shown while buying a QR ticket.', 'on foot, almost nobody has a second station to choose from.'],
 ]
 
 const SKETCHES = [
@@ -333,10 +347,23 @@ export default function Signal() {
         <div className="track-wide mt-6"><Orbit /></div>
       </Section>
 
-      {/* ---------- What I tried first ---------- */}
-      <Section id="tried" line="violet" title="What I tried first" lede="Three directions before this one. Each ended at something I found.">
-        <h3 className="subhead mt-10">A leave-by time</h3>
-        <p>I sketched five concepts and tested the best one with five commuters: 4 of 5 read its answer in under 3 seconds. Then I checked: trains run 99.95% on time, and Google Maps already reminds you when to leave.</p>
+      {/* ---------- Ideas I dropped ---------- */}
+      <Section id="tried" line="violet" title="Ideas I dropped" lede="Three directions before this one. Each ended at something I found, not at taste. Hover or tap a sheet to open it.">
+        <div className="track-wide mt-10 grid gap-x-8 gap-y-12 sm:grid-cols-2 md:grid-cols-3">
+          {DROPPED.map(([f, t, what, why], i) => (
+            <figure key={f}>
+              <Crumple image={{ src: `${V}/${f}.jpg`, alt: t }} alt={`${t}. ${what}`} fold="thirds" trigger="hover" shape={i * 4 + 2} ratio="4:5" creases={35} style={{ width: '100%' }} />
+              <figcaption className="mt-5 space-y-1.5">
+                <span className="text-ink block" style={{ fontSize: '1.05rem' }}>{t}</span>
+                <span className="block" style={{ fontSize: '0.95rem' }}>{what}</span>
+                <span className="block" style={{ fontSize: '0.95rem', color: 'var(--sig-late)' }}>Dropped: {why}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+
+        <h3 className="subhead mt-16">Behind the leave-by time</h3>
+        <p>Five sketched concepts. The best one went into testing.</p>
         <div className="track-wide mt-8 grid grid-cols-2 gap-5 md:grid-cols-4">
           {SKETCHES.map(([f, t]) => (
             <figure key={f}>
@@ -347,11 +374,8 @@ export default function Signal() {
         </div>
         <Figure src={`${V}/sketch-c1-three-states.jpg`} alt="Pencil sketch: the leave-by card in three states, the default, a pre-filled ride prompt, and searching for a driver" caption="The ride is pre-filled, never booked for the rider. That rule carried into this version." track="track-wide mt-6" />
 
-        <h3 className="subhead mt-16">Crowding at the interchange</h3>
-        <p>An app that would tell riders which train to let go at a busy interchange. There’s no reliable live crowd data to build it on, so crowding moved to future scope.</p>
-
-        <h3 className="subhead mt-14">A better station to board from</h3>
-        <p>I mapped every station and entrance and modelled walking times. On foot, almost nobody has a second station to choose from.</p>
+        <h3 className="subhead mt-14">Behind the better station</h3>
+        <p>I mapped every station and entrance from OpenStreetMap and modelled walking times.</p>
         <Coverage />
       </Section>
 
