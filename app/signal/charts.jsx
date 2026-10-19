@@ -166,8 +166,8 @@ export function Orbit() {
           </g>
         )
       })}
-      <rect x="208" y="476" width="184" height="40" rx="20" fill={SIG} />
-      <text x="300" y="501" textAnchor="middle" style={{ font: '600 15px var(--font-sans), sans-serif', fill: 'var(--ground)' }}>Time, the missing one</text>
+      <rect x="170" y="476" width="260" height="40" rx="20" fill={SIG} />
+      <text x="300" y="501" textAnchor="middle" style={{ font: '600 15px var(--font-sans), sans-serif', fill: 'var(--ground)' }}>Missing: how long they can wait</text>
     </svg>
   )
 }

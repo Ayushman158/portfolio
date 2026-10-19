@@ -83,9 +83,9 @@ const TODAY = [
 /* The proposal: one structured alert, sent everywhere at the moment it's logged. */
 const FIELDS = ['Line and stretch', 'Logged at 9:04', 'Expected time, or “unknown”', 'Source']
 const TARGETS = [
-  ['Riders’ saved trips', 'Only riders whose trip uses the stretch', SIG],
+  ['Riders’ saved trips', 'Only riders whose trip crosses the delayed part of the line', SIG],
   ['Station displays', 'The same words and time as the app', 'var(--line-yellow)'],
-  ['Ride partners', 'Pickups ready at the open gates', 'var(--line-green)'],
+  ['Bike taxi and auto apps', 'Drivers can wait at the open gates', 'var(--line-green)'],
 ]
 
 export function AlertFlow() {
@@ -165,7 +165,7 @@ export function SystemMap() {
             <li key={t} className={box} style={{ background: 'var(--raised)' }}>
               <div className="text-ink" style={{ fontSize: '0.95rem' }}>{t}</div>
               <div style={{ fontSize: '0.82rem' }}>{d}</div>
-              <div className="mt-1" style={{ fontSize: '0.78rem', color: layer === 1 ? 'var(--sig)' : 'var(--sig-est)' }}>{layer === 1 ? 'Layer 1 · in the design' : 'Layer 2 · simulated in the prototype'}</div>
+              <div className="mt-1" style={{ fontSize: '0.78rem', color: layer === 1 ? 'var(--sig)' : 'var(--sig-est)' }}>{layer === 1 ? 'Part of my design' : 'Needs DMRC data · faked in the prototype'}</div>
             </li>
           ))}
         </Col>
