@@ -3,7 +3,7 @@
 import { Fragment, useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { Back, Figure, Heading, Tradeoffs } from '../components/case-study'
-import { Arcs, Contrast, DailyLoop, DelayMap, Headlines, Journey, Orbit, Timeline } from './charts'
+import { DailyLoop, DelayMap, Headlines, Journey, Timeline } from './charts'
 import { Network, Pill, YellowLine } from './lines'
 import Wave from './wave'
 import dynamic from 'next/dynamic'
@@ -41,7 +41,7 @@ const USER = [
   ['They ride the same route most days', 'They know which train to let go and which exit to use. The app still asks for both stations every time.'],
   ['They have a time to arrive by', 'Work, a class, an exam. All seven people I interviewed build a buffer into the trip.'],
   ['Their line is delayed, and nobody says for how long', 'The alert says there’s a fault. It doesn’t say whether waiting still works.'],
-  ['They have another way to get there', 'An auto, a bike taxi, a bus. The student on his exam day had backups. He didn’t know how long they’d work.'],
+  ['They have another way to get there', 'An auto, a bike taxi, a bus.'],
 ]
 
 const METHODS = [
@@ -61,7 +61,7 @@ const SYNTHESIS = [
 
 const TRADEOFFS = [
   ['A delay often comes with no end time', 'Show when backups stop working, not when the train comes', 'It can’t say whether the train will come'],
-  ['Ride times vary, and traffic can add 20 minutes', 'Use the slowest end of every range', 'Some riders leave when waiting would have worked'],
+  ['Ride times vary with traffic and pickups', 'Use the slowest end of every range', 'Some riders leave when waiting would have worked'],
   ['The app also sells bike taxi rides', '“Keep waiting” is an equal choice, and the bus is listed too', 'The app sells fewer rides'],
   ['Alerts pile up and get ignored', 'One alert per trip, only for trips with a deadline', 'Miss it, and the rider has to open the app'],
 ]
@@ -307,8 +307,6 @@ export default function Signal() {
       {/* ---------- The problem ---------- */}
       <Section id="problem" line="red" title="The problem" lede="Delhi Metro trains run on time 99.95% of the time. That counts trains, not whether a commuter reaches work by their deadline. And the bad days keep making the news.">
         <Headlines />
-        <Contrast />
-
         <h3 className="subhead mt-16">A commute has several stages, and delays add up</h3>
         <p>A daily trip is a bus or auto, a gate, a platform, maybe a change of line, another gate and a last ride. A delay at any stage carries into the next. This project covers one stage: waiting on the platform when the line has a fault or a closure. The other stages are future scope.</p>
         <DelayMap />
@@ -348,9 +346,6 @@ export default function Signal() {
           </div>
         </div>
 
-        <h3 className="subhead mt-16">What seven daily commuters told me</h3>
-        <div className="track-wide mt-6"><Arcs /></div>
-
         <Figure src="/signal/proof/synthesis-board.jpg" alt="FigJam synthesis board from the seven interviews" caption="Affinity mapping of the seven interviews, in FigJam." track="track-wide mt-16" />
         <h3 className="subhead mt-10">What the synthesis showed</h3>
         <div className="track-wide mt-6 grid gap-x-10 gap-y-8 md:grid-cols-2">
@@ -364,9 +359,6 @@ export default function Signal() {
             </div>
           ))}
         </div>
-
-        <h3 className="subhead mt-16">Five things a rider has during a delay, and one they don’t</h3>
-        <div className="track-wide mt-6"><Orbit /></div>
       </Section>
 
       {/* ---------- Ideas I dropped ---------- */}
@@ -418,7 +410,7 @@ export default function Signal() {
         </div>
 
         <h3 className="subhead mt-16">Why a time, and not just an alert</h3>
-        <p>An alert says there’s a fault. It doesn’t say whether waiting ten more minutes still works. The student on his exam day had other ways to get there. What he didn’t know was when they would stop working.</p>
+        <p>An alert says there’s a fault. It doesn’t say whether waiting ten more minutes still works. That is the decision riders make alone today, and the one this design supports.</p>
 
         <h3 className="subhead mt-16">When the answer isn’t simple</h3>
         <p>The rule I hold the screens to: they shouldn’t look more certain than the information behind them.</p>

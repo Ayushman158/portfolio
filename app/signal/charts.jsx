@@ -11,44 +11,6 @@ const SIG = 'var(--sig)'
 const LATE = 'var(--sig-late)'
 const EST = 'var(--sig-est)'
 
-/* Three disruptions, as plain rows. */
-export function Disruptions() {
-  const rows = [
-    ['Yellow Line: third technical snag in one week', '2025'],
-    ['Blue Line: overhead wire failure stops services', 'June 2026'],
-    ['45 of 303 stations closed for security', '10 Oct 2026'],
-  ]
-  return (
-    <ul className="track-wide mt-8">
-      {rows.map(([t, d]) => (
-        <li key={t} className="flex items-center gap-3 py-3.5" style={{ borderBottom: '1px solid var(--rule)' }}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ color: 'var(--ink)', flexShrink: 0 }}>
-            <path d="M12 3.5l9.5 16.5h-19z" /><path d="M12 10v4.5M12 17.2v.3" />
-          </svg>
-          <span style={{ color: 'var(--ink)' }}>{t}</span>
-          <span className="text-faint ml-auto shrink-0" style={{ fontSize: '0.9rem' }}>{d}</span>
-        </li>
-      ))}
-    </ul>
-  )
-}
-
-/* The two numbers the problem rests on. */
-export function Contrast() {
-  return (
-    <figure className="track-wide mt-10 grid gap-8 rounded-2xl p-8 sm:grid-cols-2 sm:p-10" style={{ background: 'var(--sig-panel)', color: 'var(--sig-panel-ink)', border: '1px solid var(--rule)' }}>
-      <div>
-        <div className="font-serif leading-none" style={{ fontSize: 'clamp(4rem, 3rem + 4vw, 6.5rem)', letterSpacing: '-0.03em' }}>99.95%</div>
-        <p className="mt-3" style={{ color: 'inherit', opacity: 0.75 }}>of trains ran on time in 2026, by DMRC’s count. That’s trains, not door-to-door trips.</p>
-      </div>
-      <div>
-        <div className="font-serif leading-none" style={{ fontSize: 'clamp(4rem, 3rem + 4vw, 6.5rem)', letterSpacing: '-0.03em', color: 'var(--sig-panel-accent)' }}>34 min</div>
-        <p className="mt-3" style={{ color: 'inherit', opacity: 0.75 }}>of buffer a day, on average, that the seven riders I interviewed say they add</p>
-      </div>
-    </figure>
-  )
-}
-
 /* The buffer loop: leave early, delay, wait or leave, add more buffer. */
 export function DailyLoop() {
   const nodes = [
@@ -75,7 +37,7 @@ export function DailyLoop() {
   )
 }
 
-/* Ajeet's exam morning, as a journey line. */
+/* One participant's exam morning, as a journey line. */
 export function Journey() {
   const stops = [
     ['Bus to the metro', SKY, 'solid'],
@@ -103,94 +65,6 @@ export function Journey() {
           </li>
         ))}
       </ol>
-    </div>
-  )
-}
-
-/* What seven commuters told me, as concentric arcs. */
-export function Arcs() {
-  const arcs = [
-    [200, 1, '7 of 7', 'add a buffer every day', 'var(--line-blue)'],
-    [165, 4 / 7, '4 of 7', 'struggle with the last mile', 'var(--line-magenta)'],
-    [130, 4 / 7, '4 of 7', 'pick routes for safety', 'var(--line-pink)'],
-    [95, 2 / 7, '2 of 7', 'moved or switched stations', 'var(--line-violet)'],
-  ]
-  return (
-    <figure className="grid items-center gap-6 sm:grid-cols-[minmax(0,1fr)_200px]">
-      <svg viewBox="0 0 420 240" className="block w-full" role="img" aria-label="Seven of seven add a buffer; four of seven struggle with the last mile; four pick routes for safety; two moved or switched stations">
-        {arcs.map(([r, p, , , c]) => {
-          const d = `M${210 - r} 230 A${r} ${r} 0 0 1 ${210 + r} 230`
-          const len = Math.PI * r
-          return (
-            <g key={r} fill="none" strokeWidth="24">
-              <path d={d} stroke="var(--rule)" strokeOpacity="0.45" />
-              <path d={d} stroke={c} strokeDasharray={`${len * p} ${len}`} />
-            </g>
-          )
-        })}
-      </svg>
-      <dl className="space-y-3">
-        {arcs.map(([r, , n, t, c]) => (
-          <div key={r} className="flex gap-3">
-            <span aria-hidden="true" className="mt-1 h-6 w-[5px] shrink-0 rounded-full" style={{ background: c }} />
-            <div>
-              <dt className="font-serif leading-none" style={{ fontSize: '1.6rem', color: 'var(--ink)' }}>{n}</dt>
-              <dd className="text-faint" style={{ fontSize: '0.92rem' }}>{t}</dd>
-            </div>
-          </div>
-        ))}
-      </dl>
-    </figure>
-  )
-}
-
-
-/* Five things a rider has during a delay, and the one they don't. */
-export function Orbit() {
-  const nodes = [
-    [300, 62, 'What they’ve learned'], [500, 180, 'What DMRC knows'], [500, 400, 'The backups'],
-    [100, 400, 'Cost of leaving'], [100, 180, 'Their deadline'],
-  ]
-  return (
-    <svg viewBox="0 0 600 560" className="mx-auto block w-full max-w-[560px]" role="img" aria-label="Around the decision to wait or leave: what they’ve learned, what DMRC knows, the backups, the cost of leaving, their deadline, and time, the one thing nothing shows them">
-      <circle cx="300" cy="280" r="215" fill="none" stroke="var(--rule)" strokeWidth="1.5" />
-      <circle cx="300" cy="280" r="96" fill="var(--sig-panel)" stroke="var(--rule)" />
-      <text x="300" y="274" textAnchor="middle" style={{ font: '400 30px var(--font-serif), serif', fill: 'var(--sig-panel-ink)' }}>Wait or</text>
-      <text x="300" y="306" textAnchor="middle" style={{ font: '400 30px var(--font-serif), serif', fill: 'var(--sig-panel-ink)' }}>leave?</text>
-      {nodes.map(([x, y, t]) => {
-        const w = t.length * 8 + 32
-        return (
-          <g key={t}>
-            <rect x={x - w / 2} y={y - 19} width={w} height="38" rx="19" fill="var(--ground)" stroke="var(--rule)" />
-            <text x={x} y={y + 5} textAnchor="middle" style={{ font: '400 15px var(--font-sans), sans-serif', fill: 'var(--ink)' }}>{t}</text>
-          </g>
-        )
-      })}
-      <rect x="170" y="476" width="260" height="40" rx="20" fill={SIG} />
-      <text x="300" y="501" textAnchor="middle" style={{ font: '600 15px var(--font-sans), sans-serif', fill: 'var(--ground)' }}>Missing: how long they can wait</text>
-    </svg>
-  )
-}
-
-/* How often a second station is in reach. */
-/* Two leave-by lines: with a tight deadline the window closes before the alert. */
-export function AlertSpeed() {
-  const Row = ({ label, at, pct, tone, note }) => (
-    <div className="space-y-1.5">
-      <div style={{ fontSize: '0.95rem', color: 'var(--ink)' }}>{label}</div>
-      <div className="relative h-11">
-        <div className="absolute inset-x-0 top-[18px] h-1 rounded-full" style={{ background: 'var(--rule)' }} />
-        {pct > 4.4 && <div className="absolute top-[18px] h-1" style={{ left: '4.4%', width: `${pct - 4.4}%`, background: tone }} />}
-        <span className="text-faint absolute top-[-4px] -translate-x-1/2" style={{ left: '4.4%', fontSize: '0.8rem' }}>alert 9:04</span>
-        <span className="absolute top-[11px] h-[18px] w-[18px] -translate-x-1/2 rounded-full" style={{ left: `${pct}%`, border: `4px solid ${tone}`, background: 'var(--ground)' }} />
-        <span className="absolute top-[30px] whitespace-nowrap" style={{ left: `${pct}%`, transform: pct < 10 ? 'translateX(-20%)' : 'translateX(-50%)', fontSize: '0.85rem', color: tone }}>{at} {note}</span>
-      </div>
-    </div>
-  )
-  return (
-    <div className="track-wide mt-8 space-y-7">
-      <Row label="Deadline 10:30" at="9:31*" pct={34.4} tone={SIG} note="" />
-      <Row label="Deadline 10:00" at="9:02*" pct={2.2} tone={LATE} note="already gone" />
     </div>
   )
 }
