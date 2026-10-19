@@ -36,6 +36,14 @@ const STATIONS = [
 ]
 const IDS = STATIONS.map(([id]) => id)
 
+/* The user, defined by situation rather than demographics. */
+const USER = [
+  ['They ride the same route most days', 'They know which train to let go and which exit to use. The app still asks for both stations every time.'],
+  ['They have a time to arrive by', 'Work, a class, an exam. All seven people I interviewed build a buffer into the trip.'],
+  ['Their line is delayed, with no end time', 'The alert says there’s a fault. It doesn’t say whether waiting still works.'],
+  ['They have another way to get there', 'An auto, a bike taxi, a bus. The student on his exam day had backups. He didn’t know how long they’d work.'],
+]
+
 const METHODS = [
   ['7', 'in-depth interviews', 'Daily commuters with trips of 1 to 4 stages, 15 minutes to 1.5 hours.'],
   ['5', 'usability tests', 'Of the first version, with daily commuters.'],
@@ -270,11 +278,30 @@ export default function Signal() {
         </figure>
 
         <dl className="mt-10 grid gap-x-8 gap-y-6 border-t border-rule pt-7 sm:grid-cols-3">
-          <div><dt className="text-ink mb-1">Who it’s for</dt><dd style={{ fontSize: '0.98rem' }}>Office commuters who take the same metro trip every day and can’t be late.</dd></div>
+          <div><dt className="text-ink mb-1">Who it’s for</dt><dd style={{ fontSize: '0.98rem' }}>People who ride the same Metro route most days and have a time they can’t afford to miss: work, a class, an exam.</dd></div>
           <div><dt className="text-ink mb-1">The problem</dt><dd style={{ fontSize: '0.98rem' }}>When their line is delayed, they can’t tell how long they can wait before their other options stop working.</dd></div>
           <div><dt className="text-ink mb-1">What I made</dt><dd style={{ fontSize: '0.98rem' }}>A saved daily trip in DMRC’s app that turns a delay into one time: when the backups stop working.</dd></div>
         </dl>
-        <p className="text-faint mt-6" style={{ fontSize: '0.9rem' }}>Solo, 14 weeks, M.Des at UPES. A student concept, not made with or for DMRC.</p>
+        <div className="mt-14">
+          <h2 className="subhead">Who I designed for</h2>
+          <p className="mt-2">Not “Delhi Metro users”. Four things have to be true at once.</p>
+          <ol className="track-wide mt-8 grid gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+            {USER.map(([t, d], i) => (
+              <li key={t} className="flex flex-col gap-3 pr-5">
+                <div className="flex items-center">
+                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full text-[0.85rem] font-semibold" style={{ background: 'var(--sig)', color: 'var(--sig-on)' }}>{i + 1}</span>
+                  <span aria-hidden="true" className={i === USER.length - 1 ? 'hidden' : 'hidden h-1 flex-1 lg:block'} style={{ background: 'var(--sig-line)' }} />
+                </div>
+                <div className="text-ink" style={{ fontSize: '1.05rem' }}>{t}</div>
+                <p style={{ fontSize: '0.95rem' }}>{d}</p>
+              </li>
+            ))}
+          </ol>
+          <p className="mt-10 font-serif text-ink" style={{ fontSize: 'clamp(1.6rem, 1.2rem + 1.4vw, 2.2rem)', lineHeight: 1.2 }}>They know every part of their commute, except when to give up waiting.</p>
+          <p className="text-faint mt-4" style={{ fontSize: '0.95rem' }}>Not designed for yet: occasional riders and visitors, who have no saved trip. They’re in future scope.</p>
+        </div>
+
+        <p className="text-faint mt-10" style={{ fontSize: '0.9rem' }}>Solo, 14 weeks, M.Des at UPES. A student concept, not made with or for DMRC.</p>
       </section>
 
       {/* ---------- The problem ---------- */}
