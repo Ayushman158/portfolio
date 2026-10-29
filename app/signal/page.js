@@ -192,7 +192,7 @@ export default function Signal() {
             <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem', lineHeight: 1.45 }}>The ticket prints your platform. Same printer, black only.</figcaption>
           </figure>
           <figure>
-            <img src={`${W}/scan.jpg`} alt="Concept render: a rider scans the Lost? board at a station entrance; her phone shows where to go" loading="lazy" className="block w-full rounded-xl" style={{ border: '1px solid var(--rule)' }} />
+            <img src={`${W}/scan.jpg`} alt="Concept render: a rider scans the Lost? board at a station entrance; her phone shows the route: Platform 5, and which way the train goes" loading="lazy" className="block w-full rounded-xl" style={{ border: '1px solid var(--rule)' }} />
             <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem', lineHeight: 1.45 }}>The Lost? board, at the entrance where there’s signal. Scan it, plan the trip, and the route stays on the phone underground. Concept render.</figcaption>
           </figure>
         </div>
