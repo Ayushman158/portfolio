@@ -18,7 +18,7 @@ const CHAPTERS = [
   { at: 0, name: 'A question mark, and a camera slam' },
   { at: 1, name: 'The avatar, the grid, a handwritten hello' },
   { at: 2.5, name: 'Kinetic type: “figuring” resolves from mono into serif' },
-  { at: 5, name: 'Signal: the departure time rolls in like an odometer' },
+  { at: 5, name: 'Delhi Metro app: the departure time rolls in like an odometer' },
   { at: 7, name: 'Kizuku: a tree grows branch by branch' },
   { at: 9, name: 'Hoychoy: the owner’s steps flip to automatic' },
   { at: 11, name: 'A corridor through the work' },

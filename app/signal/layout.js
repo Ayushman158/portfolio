@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'Personalising the Delhi Metro app for daily commuters',
-  description: 'A redesign of DMRC’s app for people who ride the same Metro route daily and have a time they can’t miss. When their line is delayed, it shows how long their other ways to work still get them there on time.',
+  title: 'Finding the right platform on the Delhi Metro',
+  description: 'Delhi Metro signs name a train by its last station. A redesign around where riders actually go, tested with 56 riders: 45% to 80% picked the right platform first try.',
 };
 
 export default function SignalLayout({ children }) {
