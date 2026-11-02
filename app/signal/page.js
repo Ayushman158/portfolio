@@ -112,13 +112,13 @@ export default function Signal() {
         </motion.div>
 
         <Impact
+          label="Impact"
           items={[
-            ['80%', 'picked the right platform first try with the new signs', '45%'],
-            ['56 of 66', 'riders whose score changed did better with the new sign'],
-            ['10%', 'answered “Not sure”', '26%'],
-            ['84', 'riders, on their own phones'],
+            ['80%', 'picked the right platform first try', '45%'],
+            ['56 of 66', 'riders who changed did better'],
+            ['10%', 'said “Not sure”', '26%'],
+            ['84', 'riders on their own phones'],
           ]}
-          note="Each rider saw today’s sign at one station and the redesign at the other, at random."
         />
 
         <Facts rows={[
@@ -157,7 +157,7 @@ export default function Signal() {
           <img src={`${W}/render-fork.jpg`} alt="Concept render: the redesigned Kashmere Gate sign hanging where the concourse splits three ways, each arrow over its path" className="block aspect-[3/1] w-full rounded-xl object-cover" style={{ objectPosition: '50% 8%', border: '1px solid var(--rule)' }} />
         </figure>
         <figure className="track-wide mt-6">
-          <img src={`${W}/render-totem.jpg`} alt="Concept render: a platform totem for platform 5, Violet Line, listing the next five stops" loading="lazy" className="block w-full rounded-xl" style={{ border: '1px solid var(--rule)' }} />
+          <img src={`${W}/render-totem.jpg`} alt="Concept render: a platform totem for platform 5, Violet Line, listing the next five stops" loading="lazy" className="block aspect-[16/10] w-full rounded-xl object-cover" style={{ objectPosition: '50% 50%', border: '1px solid var(--rule)' }} />
         </figure>
         <Note className="mt-4">Concept renders. The sign faces are the real artwork.</Note>
       </Section>
