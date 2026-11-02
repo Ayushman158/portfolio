@@ -1,0 +1,103 @@
+{
+  "saathi-trip": {
+    "duration": 15.78,
+    "steps": [
+      {
+        "label": "Saathi asks where you’re going",
+        "t": 0.14
+      },
+      {
+        "label": "You type a place, not a station",
+        "t": 2.74
+      },
+      {
+        "label": "Platform first, in the sign’s own words",
+        "t": 5.93
+      },
+      {
+        "label": "On the train: your stop, and the stops to count",
+        "t": 9.16
+      },
+      {
+        "label": "On arrival: the right gate and the walk",
+        "t": 12.17
+      }
+    ]
+  },
+  "saathi-change": {
+    "duration": 8.82,
+    "steps": [
+      {
+        "label": "Going to Vinobapuri, one change",
+        "t": 0.12
+      },
+      {
+        "label": "Platform 5 first",
+        "t": 1.8
+      },
+      {
+        "label": "Your change: Lajpat Nagar, then Platform 3",
+        "t": 4.42
+      }
+    ]
+  },
+  "saathi-language": {
+    "duration": 8.9,
+    "steps": [
+      {
+        "label": "English",
+        "t": 0.13
+      },
+      {
+        "label": "हिंदी: every line switches, nothing doubles up",
+        "t": 1.52
+      },
+      {
+        "label": "Listen reads it aloud, offline",
+        "t": 4.24
+      }
+    ]
+  },
+  "detail-typed": {
+    "duration": 4.97,
+    "steps": []
+  },
+  "detail-morph": {
+    "duration": 4.45,
+    "steps": []
+  },
+  "test-today": {
+    "duration": 8.71,
+    "steps": [
+      {
+        "label": "“You’re going to Lajpat Nagar”",
+        "t": 0.12
+      },
+      {
+        "label": "Today’s sign: which platform?",
+        "t": 2.42
+      },
+      {
+        "label": "How sure are you?",
+        "t": 6.71
+      }
+    ]
+  },
+  "test-redesign": {
+    "duration": 6.62,
+    "steps": [
+      {
+        "label": "“You’re going to Lajpat Nagar”",
+        "t": 0.13
+      },
+      {
+        "label": "The redesign: which platform?",
+        "t": 2.44
+      },
+      {
+        "label": "How sure are you?",
+        "t": 5.33
+      }
+    ]
+  }
+}

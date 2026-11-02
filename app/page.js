@@ -91,10 +91,10 @@ const RESEARCH = [
     name: 'Finding the right platform on the Delhi Metro',
     kind: 'Wayfinding · Research, sign design and testing',
     href: '/signal',
-    site: '56 riders · 45% → 80% right platform',
+    site: '84 riders · 45% → 80% right platform',
     shot: '/signal/wayfinding/kg-new.jpg',
     alt: 'The redesigned Kashmere Gate sign in place: each platform as a coloured number with two stations it goes to',
-    what: 'For first-time and occasional riders. Signs name a train by its last station; I redesigned them around where riders actually go and tested them with 56 riders.',
+    what: 'For first-time and occasional riders. Signs name a train by its last station; I redesigned them around where riders actually go and tested them with 84 riders.',
     tags: ['Research', 'Interaction', 'Systems', 'Prototype'],
   },
 ]
