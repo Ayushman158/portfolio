@@ -129,76 +129,29 @@ export function StepVideo({ name, label, shape = 'phone', className = '', steps:
 }
 
 /*
- * The test question, to try here: today's Kashmere Gate sign, then the
- * redesign. The reader answers before seeing how the 84 riders did.
- */
-export function TryTheSign() {
-  const [stage, setStage] = useState('today') // today → todayAnswered → redesign → redesignAnswered
-  const [pick, setPick] = useState(null)
-  const redesign = stage.startsWith('redesign')
-  const answered = stage.endsWith('Answered')
-  const choose = (a) => { setPick(a); setStage(redesign ? 'redesignAnswered' : 'todayAnswered') }
-  const verdict = pick === '5' ? 'Right: platform 5.' : pick === 'Not sure' ? 'Platform 5.' : `Platform 5, not ${pick}.`
-  return (
-    <div className="track-wide mt-10">
-      <div className="rounded-xl p-4 sm:p-6" style={{ border: '1px solid var(--rule)' }}>
-        <p className="text-faint" style={{ fontSize: '0.85rem' }}>{redesign ? 'The redesign' : 'Today’s sign'} · Kashmere Gate</p>
-        <p className="text-ink mt-1" style={{ fontSize: '1.15rem' }}>You’re going to <b>Lajpat Nagar</b>. Which platform?</p>
-        <img key={redesign ? 'new' : 'today'} src={`${W}/${redesign ? 'kg-new' : 'kg-today'}.jpg`} alt={redesign ? 'The redesigned Kashmere Gate sign: one row per platform, each with a coloured number and two stations' : 'Today’s Kashmere Gate sign: each platform named only by the last station of its line'} className="sig-fade mt-4 block w-full rounded-lg" />
-        <div className="mt-4 flex flex-wrap gap-2" role="group" aria-label="Your answer">
-          {['3', '4', '5', 'Not sure'].map((a) => {
-            const right = answered && a === '5'
-            const mine = answered && a === pick
-            return (
-              <button key={a} type="button" disabled={answered} onClick={() => choose(a)} className="sig-press min-w-[3.5rem] rounded-full px-4 py-2" style={{ border: '1px solid', borderColor: right || mine ? 'var(--ink)' : 'var(--rule)', background: right ? 'var(--ink)' : 'transparent', color: right ? 'var(--ground)' : 'var(--ink)', fontSize: '0.95rem' }}>
-                {a}
-              </button>
-            )
-          })}
-        </div>
-        <div aria-live="polite" className="mt-4 min-h-[3.2rem]">
-          {answered && (
-            <div className="sig-fade flex flex-wrap items-baseline justify-between gap-3">
-              <p className="text-ink" style={{ fontSize: '0.98rem' }}>
-                {verdict} {redesign ? 'With the redesign, riders were right 80% of the time.' : 'With today’s signs, riders were right only 45% of the time.'}
-              </p>
-              {redesign ? (
-                <button type="button" className="prose-link" onClick={() => { setStage('today'); setPick(null) }}>Start again</button>
-              ) : (
-                <button type="button" className="sig-press rounded-full px-4 py-2" style={{ background: 'var(--ink)', color: 'var(--ground)', fontSize: '0.95rem' }} onClick={() => { setStage('redesign'); setPick(null) }}>Now the redesign →</button>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  )
-}
-
-/*
- * The key, built up: number, colour, name. Then each one in turn lights up,
- * and the other two are the confirmation. A diagram of the sign row, so the
+ * The key: number, colour, name. Each one in turn lights up, and the other
+ * two are the confirmation. A diagram of the sign row, so the
  * line colour is content here.
  */
 export function KeyBuild() {
   const reduce = useReducedMotion()
-  const [n, setN] = useState(reduce ? 3 : 0)
+  // The row is always complete; while on screen, each part takes a turn as the one remembered.
+  // 3–5: number, colour, name. 6: all three.
+  const [n, setN] = useState(6)
   const box = useRef(null)
   useEffect(() => {
     if (reduce) return
     let id = 0
     const io = new IntersectionObserver(([e]) => {
       clearInterval(id)
-      if (!e.isIntersecting) return
-      setN(0)
-      id = setInterval(() => setN((k) => (k + 1) % 7), 1100)
+      if (!e.isIntersecting) return setN(6)
+      id = setInterval(() => setN((k) => (k >= 6 ? 3 : k + 1)), 1400)
     }, { threshold: 0.5 })
     if (box.current) io.observe(box.current)
     return () => { io.disconnect(); clearInterval(id) }
   }, [reduce])
-  // 0–2: the three parts arrive. 3–5: each is the one remembered. 6: all three.
-  const shown = (k) => n > k || n >= 3
-  const lit = (k) => n < 3 || n === 6 || n - 3 === k
+  const shown = () => true
+  const lit = (k) => n === 6 || n - 3 === k
   const parts = ['The number', 'The colour', 'The name']
   return (
     <div ref={box} className="mt-10">

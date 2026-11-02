@@ -62,30 +62,42 @@ export function Mark({ line, size = 40 }) {
 const Label = ({ children, className = '' }) => <p className={`text-faint ${className}`} style={{ fontSize: '0.72rem', letterSpacing: '0.08em', textTransform: 'uppercase' }}>{children}</p>
 const Ref = ({ n }) => <a href={`#ref-${n}`} className="text-faint align-super" style={{ fontSize: '0.7em' }} aria-label={`Reference ${n}`}>[{n}]</a>
 
-/* The system at a glance: the parts before any explanation. */
+/* The work at a glance: a sign in place, the app, the badge and the line marks. */
 export function Collage() {
   const tile = 'overflow-hidden rounded-xl'
   const violet = LINES.find((l) => l.id === 'violet')
   return (
-    <div className="track-wide mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4" style={{ fontFamily: SIGN_FONT }}>
-      <img src={`${W}/render-totem.jpg`} alt="Concept render: a platform totem for platform 5, Violet Line, listing the next five stops" className={`${tile} col-span-2 row-span-2 block h-full w-full object-cover`} style={{ border: '1px solid var(--rule)' }} />
-      <div className={`${tile} grid aspect-square place-items-center`} style={{ background: PANEL }} role="img" aria-label="Platform badge: 5 on violet">
-        <span className="grid h-[44%] w-[44%] place-items-center rounded-xl" style={{ background: violet.hex, border: '4px solid #fbfbf8', color: '#fbfbf8', fontSize: 'clamp(2rem, 5vw, 3.6rem)', fontWeight: 800 }}>5</span>
+    <div className="track-wide mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:grid-rows-2" style={{ fontFamily: SIGN_FONT }}>
+      <img src={`${W}/render-blade.jpg`} alt="Concept render: a violet platform 5 blade sign on a concrete wall in soft sunlight" className={`${tile} col-span-2 block aspect-square h-full w-full object-cover sm:row-span-2 sm:aspect-auto`} style={{ border: '1px solid var(--rule)' }} />
+      <div className={`${tile} row-span-2 grid place-items-center p-3 sm:p-4`} style={{ background: '#e9e4f7' }}>
+        <div className="w-full max-w-[12rem] overflow-hidden rounded-[1.6rem]" style={{ border: '5px solid #121212', background: '#121212' }}>
+          <img src={`${W}/saathi-screen-platform.jpg`} alt="Saathi, the route finder: Platform 5, straight ahead, Violet Line" className="block w-full" />
+        </div>
       </div>
-      <div className={`${tile} flex aspect-square flex-col justify-between p-4`} style={{ background: '#fbfbf8', color: ON_DARK }}>
-        <span style={{ fontSize: '0.72rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#5c5c5c' }}>Noto Sans · Devanagari</span>
-        <span style={{ lineHeight: 1.1 }}>
-          <span className="block" style={{ fontSize: 'clamp(1.3rem, 2.6vw, 2.1rem)', fontWeight: 700 }}>मंडी हाउस</span>
-          <span className="block" style={{ fontSize: 'clamp(1.3rem, 2.6vw, 2.1rem)', fontWeight: 700 }}>Mandi House</span>
-        </span>
+      <div className={`${tile} grid aspect-square place-items-center`} style={{ background: PANEL }} role="img" aria-label="Platform badge: 5 on violet">
+        <span className="grid h-[44%] w-[44%] place-items-center rounded-xl" style={{ background: violet.hex, border: '4px solid #fbfbf8', color: '#fbfbf8', fontSize: 'clamp(2rem, 4.4vw, 3.4rem)', fontWeight: 800 }}>5</span>
       </div>
       <div className={`${tile} grid aspect-square grid-cols-3 place-items-center gap-1 p-4`} style={{ background: '#fbfbf8' }} role="img" aria-label="Line marks: a shape and a letter for each line">
-        {LINES.slice(0, 9).map((l) => <Mark key={l.id} line={l} size={34} />)}
+        {LINES.slice(0, 9).map((l) => <Mark key={l.id} line={l} size={30} />)}
       </div>
-      <div className={`${tile} grid aspect-square place-items-center`} style={{ background: '#fbfbf8' }} role="img" aria-label="The arrow tile: a square outline with an arrow, the same size as the platform badge">
-        <span className="grid h-[44%] w-[44%] place-items-center rounded-xl" style={{ border: '4px solid #1f2a6b' }}>
-          <svg viewBox="0 0 100 100" className="h-[70%] w-[70%]" aria-hidden="true"><g transform="rotate(-135 50 50)"><path d="M12 50 H82 M54 22 L82 50 L54 78" fill="none" stroke="#1f2a6b" strokeWidth="16" /></g></svg>
-        </span>
+    </div>
+  )
+}
+
+/* What the rider knows against what the sign says, with nothing joining them. */
+export function Mismatch() {
+  return (
+    <div className="track-wide mt-14 grid items-stretch gap-3 sm:grid-cols-[1fr_auto_1fr]" style={{ fontFamily: SIGN_FONT }}>
+      <div className="rounded-xl p-6 sm:p-8" style={{ background: '#fbfbf8', color: ON_DARK }}>
+        <Label className="!text-[#5c5c5c]">What the rider knows</Label>
+        <p className="mt-6" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', fontWeight: 700, lineHeight: 1.1 }}>Lajpat Nagar</p>
+        <p className="mt-2" style={{ color: '#5c5c5c' }}>The place they’re going</p>
+      </div>
+      <div className="grid place-items-center py-2 text-faint" aria-hidden="true" style={{ fontSize: '2rem' }}>≠</div>
+      <div className="rounded-xl p-6 sm:p-8" style={{ background: PANEL, color: '#fbfbf8' }}>
+        <Label className="!text-[#c9cff0]">What the sign says</Label>
+        <p className="mt-6" style={{ fontSize: 'clamp(1.4rem, 3vw, 2.1rem)', fontWeight: 700, lineHeight: 1.15 }}>Towards Raja Nahar Singh (Ballabhgarh)</p>
+        <p className="mt-2" style={{ color: '#c9cff0' }}>The last station of the line</p>
       </div>
     </div>
   )
@@ -211,27 +223,6 @@ export function LineTable() {
         WCAG 2.2 contrast, computed from the tokens.<Ref n={2} /> Yellow and the Airport line carry dark text.
       </p>
     </div>
-  )
-}
-
-/* The system in place: concept renders whose sign faces are the real artwork. */
-export function Applications() {
-  return (
-    <figure className="track-wide mt-12">
-      <div className="grid gap-3 sm:grid-cols-3">
-        {[
-          ['render-fork', 'The arrow points to the path', 'Concept render: the Kashmere Gate fork sign, with the left, straight and right paths below arrows 3, 5 and 4'],
-          ['render-totem', 'The number decides', 'Concept render: a platform totem for platform 5, Violet Line, with the next five stops'],
-          ['render-entrance', 'The board opens the route', 'Concept render: the entrance board on a pillar by the stairs, a phone showing the Saathi page it opens'],
-        ].map(([src, cap, alt]) => (
-          <div key={src}>
-            <img src={`${W}/${src}.jpg`} alt={alt} loading="lazy" className="block aspect-[4/3] w-full rounded-xl object-cover" style={{ border: '1px solid var(--rule)' }} />
-            <Label className="mt-2">{cap}</Label>
-          </div>
-        ))}
-      </div>
-      <figcaption className="text-faint mt-3" style={{ fontSize: '0.82rem' }}>Concept renders; the sign faces, poster and screen are the real designs.</figcaption>
-    </figure>
   )
 }
 

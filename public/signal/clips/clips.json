@@ -1,60 +1,60 @@
 {
   "saathi-trip": {
-    "duration": 15.78,
+    "duration": 15.86,
     "steps": [
       {
         "label": "Saathi asks where you’re going",
-        "t": 0.14
+        "t": 0.12
       },
       {
         "label": "You type a place, not a station",
-        "t": 2.74
+        "t": 2.72
       },
       {
         "label": "Platform first, in the sign’s own words",
-        "t": 5.93
+        "t": 6
       },
       {
         "label": "On the train: your stop, and the stops to count",
-        "t": 9.16
+        "t": 9.23
       },
       {
         "label": "On arrival: the right gate and the walk",
-        "t": 12.17
+        "t": 12.25
       }
     ]
   },
   "saathi-change": {
-    "duration": 8.82,
+    "duration": 8.88,
     "steps": [
       {
         "label": "Going to Vinobapuri, one change",
-        "t": 0.12
+        "t": 0.13
       },
       {
         "label": "Platform 5 first",
-        "t": 1.8
+        "t": 1.84
       },
       {
         "label": "Your change: Lajpat Nagar, then Platform 3",
-        "t": 4.42
+        "t": 4.47
       }
     ]
   },
   "saathi-language": {
-    "duration": 8.9,
+    "duration": 8.47,
     "steps": [
       {
         "label": "English",
-        "t": 0.13
+        "t": 0.15
       },
       {
         "label": "हिंदी: every line switches, nothing doubles up",
-        "t": 1.52
+        "t": 1.41
       },
       {
         "label": "Listen reads it aloud, offline",
-        "t": 4.24
+        "t": 4.04
       }
     ]
   },
@@ -63,7 +63,7 @@
     "steps": []
   },
   "detail-morph": {
-    "duration": 4.45,
+    "duration": 4.09,
     "steps": []
   },
   "test-today": {
