@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from 'motion/react'
 import { Back, Facts, Figure, Heading, Impact, Overview, Subhead, Tradeoffs } from '../components/case-study'
 import { Compare, Pair, W } from './wayfinding'
 import { Clip, ColourBlind, Distance, KeyBuild, StepVideo, TryTheSign } from './demos'
+import { Applications, Collage, GridSpec, LineTable, Principles, References, TypeSpecimen } from './system'
 
 /*
  * Signal: finding the right platform on the Delhi Metro (iteration 5).
@@ -16,12 +17,12 @@ import { Clip, ColourBlind, Distance, KeyBuild, StepVideo, TryTheSign } from './
  * Written for a recruiter's first pass: result first, then the problem, the
  * work as pictures, and honest limits. Colour lives only in the images.
  */
-// Grouped like a demo reel: why, then the work running, then the small decisions, then the limits.
+// Problem and impact first, then the work, then how I got there, then the limits.
 const GROUPS = [
-  ['Intro', [['overview', 'Overview'], ['problem', 'The problem'], ['who', 'Who it’s for'], ['idea', 'The idea'], ['signs', 'The signs']]],
-  ['Demos', [['test', 'The sign test'], ['result', 'The result'], ['system', 'Beyond the sign'], ['saathi', 'Saathi']]],
-  ['Details', [['details', 'Details']]],
-  ['Wrap up', [['limits', 'Limits and next']]],
+  ['Intro', [['overview', 'Overview'], ['problem', 'The problem'], ['result', 'The impact']]],
+  ['The work', [['idea', 'The idea'], ['signs', 'The signs'], ['system', 'The ticket and QR board'], ['saathi', 'Saathi']]],
+  ['How I got there', [['who', 'Who it’s for'], ['test', 'The sign test'], ['spec', 'The sign system'], ['details', 'Details']]],
+  ['Wrap up', [['limits', 'Limits and next'], ['outcome', 'Outcome']]],
 ]
 const IDS = GROUPS.flatMap(([, items]) => items.map(([id]) => id))
 
@@ -66,13 +67,21 @@ function SectionMenu({ active }) {
 
 function Section({ id, n, title, lede, children }) {
   return (
-    <section id={id} className="scroll-mt-24 pt-24">
+    <section id={id} className="scroll-mt-24 pt-32 sm:pt-48">
       <Heading n={n}>{title}</Heading>
-      {lede && <p className="text-ink" style={{ fontSize: '1.2rem', lineHeight: 1.5 }}>{lede}</p>}
+      {lede && <p className="text-ink" style={{ fontSize: '1.2rem', lineHeight: 1.5, maxWidth: '36rem' }}>{lede}</p>}
       {children}
     </section>
   )
 }
+
+/* A part of a long section: a small label, then the visual, with room around it. */
+const Part = ({ label, children }) => (
+  <div className="pt-20 sm:pt-28">
+    <Subhead>{label}</Subhead>
+    {children}
+  </div>
+)
 
 const Note = ({ children, className = 'mt-4' }) => <p className={`text-faint ${className}`} style={{ fontSize: '0.88rem', lineHeight: 1.5 }}>{children}</p>
 
@@ -93,14 +102,14 @@ export default function Signal() {
       {/* ---------- Overview ---------- */}
       <section id="overview" className="scroll-mt-24">
         <motion.header {...rise(0.06)} className="mt-10 space-y-5">
-          <h1 className="display">Finding the right platform on the Delhi Metro</h1>
+          <h1 className="display">Helping Delhi Metro riders find their way: new signs and a QR route finder</h1>
           <p className="text-ink" style={{ fontSize: '1.3rem', lineHeight: 1.45 }}>
-            Delhi Metro signs name a train by its last station. I redesigned them around where riders actually go, and tested them with 84 riders.
+            Delhi Metro signs name each train by the last station on its line, so riders have to know the network to pick a platform. I redesigned the signs around the stations riders travel to, and added QR boards that open Saathi, a route finder, for riders who get lost in the station. I tested the signs with 84 riders.
           </p>
         </motion.header>
 
         <motion.div {...rise(0.12)}>
-          <Figure className="mt-12" src={`${W}/sign-hang.jpg`} alt="Concept render of the redesigned Kashmere Gate sign: three rows, platforms 3, 5 and 4, each with an arrow, a coloured number, the line name and two stations" caption="The redesigned Kashmere Gate sign. Concept render; the artwork is the tested design." />
+          <Collage />
         </motion.div>
 
         <Impact
@@ -117,128 +126,80 @@ export default function Signal() {
           ['Role', 'Solo: research, sign design, prototype'],
           ['Context', 'M.Des Interaction Design, UPES'],
           ['Timeline', 'October to November 2026'],
-          ['Built', 'Signs, a ticket, a Lost? board, a route finder'],
+          ['Built', 'Signs, a paper ticket, an entrance board and Saathi, a route finder'],
         ]} />
 
         <Overview items={[
-          ['The problem', 'A sign says “Towards Raja Nahar Singh”. The rider wants Lajpat Nagar. They have to know the network to pick a side.'],
-          ['Why it matters', '2 of my 6 rides went the wrong way, and 3 of 5 occasional riders I asked get confused too. A wrong side means riding back.'],
-          ['What I did', 'One key on every sign: the platform number, the line colour and two stations riders actually go to.'],
-          ['Status', 'Signs tested with 84 riders. Ticket, board and route finder are built and live, not yet tested on site.'],
+          ['The problem', 'At the Kashmere Gate fork, the way to Lajpat Nagar is signed only “Towards Raja Nahar Singh”.'],
+          ['Why it matters', 'The wrong platform means riding the wrong way and back, which happened on 2 of my own 6 rides.'],
+          ['What I did', 'I put one key on every sign and ticket, and added QR boards that open a route finder for riders who are lost.'],
+          ['Status', 'The signs were tested with 84 riders; the ticket, board and Saathi are live but not yet tested in a station.'],
         ]} />
       </section>
 
       {/* ---------- The problem ---------- */}
-      <Section id="problem" n="01" title="The problem" lede="At Kashmere Gate, Lajpat Nagar is platform 5. The sign doesn’t say so. Try it.">
+      <Section id="problem" n="01" title="The problem" lede="At Kashmere Gate, Lajpat Nagar is platform 5, but the sign names only the last station of each line. Try picking the platform.">
         <TryTheSign />
-        <Pair className="mt-10" items={[
-          ['kg-today', 'Kashmere Gate: every platform is named by its last station.', 'Kashmere Gate concourse sign today: platforms named by last stations, a middle panel of small print'],
-          ['pink-today', 'Lajpat Nagar, Pink Line: a ring has no last station, so a small − or + decides.', 'Lajpat Nagar Pink Line sign today: Pink Line Circular with a minus or plus for each direction'],
+        <Pair className="mt-16" items={[
+          ['kg-today', 'Kashmere Gate: each platform is named by its last station.', 'Kashmere Gate concourse sign today: platforms named by last stations, a middle panel of small print'],
+          ['pink-today', 'Lajpat Nagar: the Pink Line is a ring, so a small − or + decides.', 'Lajpat Nagar Pink Line sign today: Pink Line Circular with a minus or plus for each direction'],
         ]} />
-        <div className="mt-10 grid gap-px overflow-hidden rounded-xl sm:grid-cols-3" style={{ background: 'var(--rule)', border: '1px solid var(--rule)' }}>
-          {[['2 of 6', 'of my own rides went the wrong way'], ['3 of 5', 'occasional riders I asked get confused about direction'], ['4', 'people on r/DelhiMetro raised it without being asked']].map(([v, t]) => (
-            <div key={t} className="p-5" style={{ background: 'var(--ground)' }}>
-              <p className="font-serif text-ink" style={{ fontSize: '2.4rem', lineHeight: 1 }}>{v}</p>
-              <p className="text-faint mt-2" style={{ fontSize: '0.88rem' }}>{t}</p>
-            </div>
-          ))}
-        </div>
-        <Note>Field photos from Kashmere Gate, Lajpat Nagar and Rajiv Chowk, 25–26 October. I asked the five riders about direction directly, so the question may have led them.</Note>
       </Section>
 
-      {/* ---------- Who it's for ---------- */}
-      <Section id="who" n="02" title="Who it’s for" lede="Design for the first-time rider. Never leave out the one without a smartphone.">
-        <div className="mt-8 grid gap-x-10 gap-y-6 border-t border-rule pt-6 sm:grid-cols-2">
-          {[['Neha', 'First time on this route. Has a phone. Knows the place, not the station.'], ['Mohan-ji', 'Uses his phone for calls, not maps. Trusts signs and staff.']].map(([n, d]) => (
-            <div key={n}>
-              <p className="font-serif text-ink" style={{ fontSize: '2rem', lineHeight: 1 }}>{n}</p>
-              <p className="mt-3" style={{ fontSize: '0.98rem' }}>{d}</p>
-            </div>
-          ))}
-        </div>
-        <p className="text-ink mt-8 border-l-2 pl-4" style={{ borderColor: 'var(--ink)' }}>The rule: every step has to work with no phone.</p>
-      </Section>
-
-      {/* ---------- The idea ---------- */}
-      <Section id="idea" n="03" title="The idea" lede="Number, colour and name, always together. Remember any one, and the other two confirm it.">
-        <KeyBuild />
-        <Figure className="mt-10" track="track-wide" src={`${W}/sign-art.jpg`} alt="The sign artwork: for each platform an arrow, the platform number in the line’s colour, the line name in Hindi and English, and two stations the train goes to" />
-        <ul className="mt-8 grid gap-x-8 gap-y-5 sm:grid-cols-2">
-          {[
-            ['The platform number', 'In the line’s colour. It’s the one thing a rider can carry from the ticket to the train.'],
-            ['Two real stations', 'Places riders go to, not where the line ends.'],
-            ['Both scripts', 'Hindi above English, the same size.'],
-            ['Never colour alone', 'Every line also has a shape, for colour-blind riders.'],
-          ].map(([t, d]) => (
-            <li key={t} className="border-t border-rule pt-3">
-              <p className="text-ink">{t}</p>
-              <p style={{ fontSize: '0.95rem' }}>{d}</p>
-            </li>
-          ))}
-        </ul>
-      </Section>
-
-      {/* ---------- The signs ---------- */}
-      <Section id="signs" n="04" title="The signs" lede="The same two spots as the photos above, redesigned.">
-        <Pair items={[
-          ['kg-new', 'Kashmere Gate: one row per platform', 'The redesign at Kashmere Gate: each platform as a coloured number with two stations it goes to'],
-          ['pink-new', 'Lajpat Nagar: stations instead of − and +', 'The redesign at Lajpat Nagar: platforms 3 and 4 with the stations each direction goes to'],
-        ]} />
-
-        <Subhead>One key, four kinds of sign</Subhead>
-        <Pair className="mt-4" items={[
-          ['sign-hang', 'Hanging, at the fork', 'Concept render of the hanging fork sign'],
-          ['sign-stair', 'At the top of the stairs', 'Concept render of the Pink Line stair-head sign with a pink band'],
-          ['sign-totem', 'On the platform', 'Concept render of a platform totem: platform 5, Violet Line, and the next stops on a line'],
-          ['sign-pillar', 'Wrapped round a pillar, for new stations', 'Concept render of a pillar wrapped with three platform bands'],
-        ]} />
-        <Note>Concept renders. The sign artwork is the real design; the pillar wrap is a proposal for new stations and isn’t tested.</Note>
-      </Section>
-
-      {/* ---------- Demo: the sign test ---------- */}
-      <Section id="test" n="05" title="The sign test" lede="Riders took it on their own phones, turned sideways, against a 30-second clock. Each saw today’s sign at one station and the redesign at the other, at random.">
-        <div className="track-wide mt-10 grid gap-10 sm:grid-cols-2">
-          {[['test-today', 'Today’s sign', 'The rider searches the sign, then gives up: “Not sure”.'], ['test-redesign', 'The redesign', 'Platform 5 is on the sign, beside Lajpat Nagar.']].map(([name, title, note]) => (
-            <div key={name}>
-              <p className="text-ink mb-3">{title}</p>
-              <StepVideo name={name} shape="land" label={`Sign test recording, ${title.toLowerCase()}`} />
-              <Note className="mt-2">{note}</Note>
-            </div>
-          ))}
-        </div>
-        <Note className="mt-6">Recordings of the real test, replayed by a script. Each rider did a practice trip, then four trips at each station.</Note>
-      </Section>
-
-      {/* ---------- The result ---------- */}
-      <Section id="result" n="06" title="The result" lede="Almost twice as many riders picked the right platform. The gain is biggest where the rider’s stop is printed on the sign.">
-        <div className="mt-10">
+      {/* ---------- The impact ---------- */}
+      <Section id="result" n="02" title="The impact" lede="In a phone test with 84 riders, almost twice as many picked the right platform with the new signs, most of all where their stop was on the sign.">
+        <div className="mt-16">
           <Compare rows={[
             ['Right platform, first try', 45, 80],
             ['Stop printed on the new sign', 48, 91],
             ['Stop not printed', 39, 60],
           ]} />
         </div>
-        <Note className="mt-6">84 of 120 riders finished all eight trips. Sign test p &lt; 0.001. Wrong answers given with confidence, the ones that put someone on the wrong train, fell from 13% to 6%. On the Pink Line, riders who got it right were slower with the new sign (3.4 s against 2.1 s): there’s more to read.</Note>
+        <Note className="mt-8">84 of 120 riders finished all eight trips. Sign test p &lt; 0.001.</Note>
+      </Section>
+
+      {/* ---------- The idea ---------- */}
+      <Section id="idea" n="03" title="The idea" lede="Every sign, ticket and screen shows the platform number, the line colour and two stations together, so remembering any one of them is enough.">
+        <KeyBuild />
+        <Figure className="mt-16" track="track-wide" src={`${W}/sign-art.jpg`} alt="The sign artwork: for each platform an arrow, the platform number in the line’s colour, the line name in Hindi and English, and two stations the train goes to" />
+      </Section>
+
+      {/* ---------- The signs ---------- */}
+      <Section id="signs" n="04" title="The signs" lede="These are the two places from the problem, redesigned.">
+        <Pair items={[
+          ['kg-new', 'Kashmere Gate: one row per platform', 'The redesign at Kashmere Gate: each platform as a coloured number with two stations it goes to'],
+          ['pink-new', 'Lajpat Nagar: stations instead of − and +', 'The redesign at Lajpat Nagar: platforms 3 and 4 with the stations each direction goes to'],
+        ]} />
+
+        <Part label="One key, four kinds of sign">
+        <Pair className="mt-4" items={[
+          ['render-fork-busy', 'Hanging, at the fork', 'Concept render of the hanging fork sign over a busy concourse'],
+          ['sign-stair', 'At the top of the stairs', 'Concept render of the Pink Line stair-head sign with a pink band'],
+          ['sign-totem', 'On the platform', 'Concept render of a platform totem: platform 5, Violet Line, and the next stops on a line'],
+          ['sign-pillar', 'Wrapped round a pillar, for new stations', 'Concept render of a pillar wrapped with three platform bands'],
+        ]} />
+        <Note>Concept renders. The pillar wrap is an untested proposal for new stations.</Note>
+        </Part>
       </Section>
 
       {/* ---------- Beyond the sign ---------- */}
-      <Section id="system" n="07" title="Beyond the sign" lede="The same key on the ticket, and on a board at the entrance that opens the route on the phone.">
+      <Section id="system" n="05" title="The ticket and QR board" lede="The same key is on the paper ticket, and a QR board at the entrance opens Saathi for riders who get lost.">
         <div className="track-wide mt-10 grid items-start gap-4 sm:grid-cols-[1fr_2fr]">
           <figure className="mx-auto w-full max-w-[280px] sm:max-w-none">
             <img src={`${W}/ticket.jpg`} alt="The redesigned paper ticket: platform 5, Violet Line, Mandi House · Lajpat Nagar, printed in black on the existing thermal printer" loading="lazy" className="block w-full rounded-xl" style={{ border: '1px solid var(--rule)' }} />
-            <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem', lineHeight: 1.45 }}>The ticket prints your platform. Same printer, black only.</figcaption>
+            <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem', lineHeight: 1.45 }}>The same thermal printer, in black only.</figcaption>
           </figure>
           <figure>
             <img src={`${W}/saathi-04-entrance.jpg`} alt="The A3 entrance board beside the Saathi landing screen it opens" loading="lazy" className="block w-full rounded-xl" style={{ border: '1px solid var(--rule)' }} />
-            <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem', lineHeight: 1.45 }}>The entrance board, at street level where there’s signal. Scan it, plan the trip, and the route stays on the phone underground.</figcaption>
+            <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem', lineHeight: 1.45 }}>Scan above ground; the route stays on the phone below.</figcaption>
           </figure>
         </div>
       </Section>
 
       {/* ---------- Demo: Saathi ---------- */}
-      <Section id="saathi" n="08" title="Saathi, the route finder" lede="Riders trust asking a person, so the route finder answers like one: the platform, then your stop, then the gate. One question at a time.">
-        <StepVideo className="track-wide mt-10" name="saathi-trip" label="Saathi recording: a trip from Kashmere Gate to Lajpat Nagar Central Market" />
-        <div className="track-wide mt-16 grid gap-12 sm:grid-cols-2">
+      <Section id="saathi" n="06" title="Saathi, the route finder" lede="Saathi answers like a person would, one thing at a time: the platform, then the stop, then the gate.">
+        <StepVideo className="track-wide mt-16" name="saathi-trip" label="Saathi recording: a trip from Kashmere Gate to Lajpat Nagar Central Market" />
+        <div className="track-wide mt-24 grid gap-12 sm:grid-cols-2">
           <div>
             <p className="text-ink mb-4">A trip with a change</p>
             <StepVideo name="saathi-change" label="Saathi recording: a trip with a change at Lajpat Nagar" />
@@ -249,18 +210,51 @@ export default function Signal() {
           </div>
         </div>
         <p className="mt-10" style={{ fontSize: '0.95rem' }}>
-          Live at <a className="prose-link" href="https://saathi-delhi-metro.vercel.app" target="_blank" rel="noreferrer">saathi-delhi-metro.vercel.app</a>. No app, no login. Recordings are the live app, driven by a script.
+          Live at <a className="prose-link" href="https://saathi-delhi-metro.vercel.app" target="_blank" rel="noreferrer">saathi-delhi-metro.vercel.app</a>.
         </p>
       </Section>
 
+      {/* ---------- Who it's for ---------- */}
+      <Section id="who" n="07" title="Who it’s for" lede="I designed for two riders: one who knows the place but not the station, and one with no smartphone.">
+        <div className="mt-14 grid gap-x-10 gap-y-8 border-t border-rule pt-8 sm:grid-cols-2">
+          {[['Neha', 'First time on this route. Has a phone. Knows the place, not the station.'], ['Mohan-ji', 'Uses his phone for calls, not maps. Trusts signs and staff.']].map(([n, d]) => (
+            <div key={n}>
+              <p className="font-serif text-ink" style={{ fontSize: '2rem', lineHeight: 1 }}>{n}</p>
+              <p className="mt-3" style={{ fontSize: '0.98rem' }}>{d}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* ---------- Demo: the sign test ---------- */}
+      <Section id="test" n="08" title="The sign test" lede="On their own phones, each rider saw today’s sign at one station and the redesign at the other.">
+        <div className="track-wide mt-16 grid gap-10 sm:grid-cols-2">
+          {[['test-today', 'Today’s sign'], ['test-redesign', 'The redesign']].map(([name, title]) => (
+            <div key={name}>
+              <p className="text-ink mb-3">{title}</p>
+              <StepVideo name={name} shape="land" label={`Sign test recording, ${title.toLowerCase()}`} />
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* ---------- The sign system ---------- */}
+      <Section id="spec" n="09" title="The sign system" lede="The grid, type and colours are set once and used on every sign, ticket and screen.">
+        <Principles />
+        <Part label="One module, U = 50 mm"><GridSpec /></Part>
+        <Part label="Two scripts at one size"><TypeSpecimen /></Part>
+        <Part label="Colour identifies a line, and only that"><LineTable /></Part>
+        <Part label="In place"><Applications /></Part>
+      </Section>
+
       {/* ---------- Details ---------- */}
-      <Section id="details" n="09" title="Details" lede="The small decisions that make it hold up underground, in a crowd, for every rider.">
-        <div className="track-wide mt-10 grid gap-x-10 gap-y-14 sm:grid-cols-2">
+      <Section id="details" n="10" title="Details" lede="These small decisions keep it working underground, in a crowd, in Hindi and for colour-blind riders.">
+        <div className="track-wide mt-16 grid gap-x-12 gap-y-24 sm:grid-cols-2">
           {[
-            ['The answer types in', 'Saathi’s line appears the way a person would say it. The full sentence is there for screen readers from the start.', <div key="v" className="mx-auto max-w-[15rem]"><Clip name="detail-typed" label="Saathi’s question typing in" /></div>],
-            ['Stages change in place', 'Moving from the platform to the train, the card reshapes rather than the page reloading, so the eye stays put.', <div key="v" className="mx-auto max-w-[15rem]"><Clip name="detail-morph" label="The platform card reshaping into the train card" /></div>],
-            ['Colour is never alone', 'Every line has a shape and a letter as well as a colour. Switch the simulation: the marks stay apart.', <ColourBlind key="v" />],
-            ['It reads from across the hall', 'Drag the distance. Names go first; the number, arrow and colour last, and they’re what decides.', <Distance key="v" />],
+            ['The answer types in', 'The line types in like speech; screen readers get the whole sentence at once.', <div key="v" className="mx-auto max-w-[15rem]"><Clip name="detail-typed" label="Saathi’s question typing in" /></div>],
+            ['Stages change in place', 'The card reshapes between stages, so the eye stays in one place.', <div key="v" className="mx-auto max-w-[15rem]"><Clip name="detail-morph" label="The platform card reshaping into the train card" /></div>],
+            ['Colour is never alone', 'Switch the simulation: every line keeps its shape and letter.', <ColourBlind key="v" />],
+            ['It reads from across the hall', 'Drag the distance: names fade first, the number and arrow last.', <Distance key="v" />],
           ].map(([t, d, v]) => (
             <div key={t}>
               {v}
@@ -269,21 +263,22 @@ export default function Signal() {
             </div>
           ))}
         </div>
-        <div className="track-wide mt-14 grid items-center gap-8 sm:grid-cols-[1fr_1.2fr]">
+        <div className="track-wide mt-24 grid items-center gap-10 sm:grid-cols-[1fr_1.2fr]">
           <img src={`${W}/saathi-entrance.svg`} alt="Saathi waving beside a metro entrance" className="block w-full" />
           <div>
             <p className="text-ink">A person, not a robot</p>
-            <p className="mt-1" style={{ fontSize: '0.95rem' }}>People trust asking someone, so the guide is a person. He waves when you arrive, then a smaller wave every seven seconds: enough to feel present, not enough to distract.</p>
+            <p className="mt-1" style={{ fontSize: '0.95rem' }}>People trust asking someone, so the guide is a person. He waves once, then waits.</p>
           </div>
         </div>
       </Section>
 
       {/* ---------- Limits and next ---------- */}
-      <Section id="limits" n="10" title="Limits and next" lede="What the test doesn’t prove yet, and the trade-offs I chose.">
+      <Section id="limits" n="11" title="Limits and next" lede="What the test doesn’t prove yet, and what I chose to give up.">
         <ul className="mt-8 space-y-3">
           {[
-            ['Mostly regular riders', '66 of the 84 ride weekly, and even they got only 46% right on today’s signs. The 18 occasional riders went from 39% to 68% right: the same direction, too few to prove it.'],
-            ['A photo, not a busy hall', 'Riders chose from a photo on their phone, with no map. Next is the real thing, on site at Kashmere Gate and Lajpat Nagar.'],
+            ['Mostly regular riders', '66 of the 84 ride weekly. The 18 occasional riders improved too (39% to 68%), but they are too few to prove it.'],
+            ['A photo, not a busy hall', 'Riders answered from a photo; the next test is on site at Kashmere Gate.'],
+            ['More to read', 'On the Pink Line, right answers took longer with the new sign (3.4 s against 2.1 s).'],
           ].map(([t, d]) => (
             <li key={t} className="border-t border-rule pt-3">
               <div className="text-ink">{t}</div>
@@ -291,7 +286,7 @@ export default function Signal() {
             </li>
           ))}
         </ul>
-        <div className="mt-12">
+        <div className="mt-20">
           <Tradeoffs items={[
             ['Signs have to fit today’s frames', 'One row per platform, inside the existing panel', 'No room for maps or long station lists'],
             ['Some riders have no smartphone', 'Every step works on signs and the ticket alone', 'The phone can only add, never fix a bad sign'],
@@ -299,6 +294,13 @@ export default function Signal() {
           ]} />
         </div>
       </Section>
+
+      {/* ---------- Outcome ---------- */}
+      <section id="outcome" className="scroll-mt-24 pt-32 sm:pt-48">
+        <p className="headline" style={{ lineHeight: 1.2 }}>One module, two scripts, a mark for every line, and every text colour measured against AA. A rider who knows only where they’re going can still find the platform.</p>
+        <Subhead>References</Subhead>
+        <References />
+      </section>
 
       <footer className="mt-20 space-y-3 border-t border-rule pt-6 text-faint" style={{ fontSize: '0.85rem', lineHeight: 1.55 }}>
         <p>This is the fifth idea in the project. The fourth is written up too: <a className="prose-link" href="/signal/v4">when to stop waiting during a delay</a>.</p>

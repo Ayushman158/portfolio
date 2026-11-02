@@ -88,13 +88,13 @@ const RESEARCH = [
     tags: ['Brand', 'Design system', 'Interaction', 'iOS build'],
   },
   {
-    name: 'Finding the right platform on the Delhi Metro',
+    name: 'Helping Delhi Metro riders find their way: new signs and a QR route finder',
     kind: 'Wayfinding · Research, sign design and testing',
     href: '/signal',
     site: '84 riders · 45% → 80% right platform',
     shot: '/signal/wayfinding/kg-new.jpg',
     alt: 'The redesigned Kashmere Gate sign in place: each platform as a coloured number with two stations it goes to',
-    what: 'For first-time and occasional riders. Signs name a train by its last station; I redesigned them around where riders actually go and tested them with 84 riders.',
+    what: 'For first-time and occasional riders. Delhi Metro signs name a train by the last station on its line. I redesigned them around the stations riders travel to, added QR boards that open a route finder for riders who get lost, and tested the signs with 84 riders.',
     tags: ['Research', 'Interaction', 'Systems', 'Prototype'],
   },
 ]
