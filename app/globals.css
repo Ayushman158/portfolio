@@ -857,6 +857,16 @@ html[data-room] .lamp-glow-anchor { display: none; }
 .sig-press:active:not(:disabled), .sig-play:active { transform: scale(.97); }
 .sig-press:disabled { cursor: default; }
 .sig-range { accent-color: var(--ink); }
+/* A slow, edge-to-edge drift of screens and signs; the track is doubled so it loops without a seam. */
+.sig-gallery { position: relative; z-index: 20; width: 100vw; margin-inline: calc(50% - 50vw); padding-block: 1.5rem; overflow: hidden; background: var(--ground); }
+.sig-gallery__track { animation: sig-drift 90s linear infinite; padding-inline: 1rem; }
+.sig-gallery:hover .sig-gallery__track { animation-play-state: paused; }
+@keyframes sig-drift { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) {
+  .sig-gallery { overflow-x: auto; scroll-snap-type: x mandatory; }
+  .sig-gallery__track { animation: none; }
+  .sig-gallery__track > [aria-hidden] { display: none; }
+}
 .sig-group { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); margin: 1rem 0 .25rem; }
 @media (prefers-reduced-motion: reduce) { .sig-fade { animation: none; } .sig-press:active:not(:disabled), .sig-play:active { transform: none; } }
 

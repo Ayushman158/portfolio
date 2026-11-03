@@ -5,7 +5,7 @@ import { motion, useReducedMotion } from 'motion/react'
 import { Back, Facts, Heading, Impact, Subhead, Tradeoffs } from '../components/case-study'
 import { Compare, W } from './wayfinding'
 import { StepVideo } from './demos'
-import { Collage, ColourVision, GridSpec, KeyDiagram, LineTable, Mismatch, Principles, ReadingDistance, References, TypeSpecimen } from './system'
+import { Collage, ColourVision, Gallery, GridSpec, KeyDiagram, LineTable, Mismatch, Principles, ReadingDistance, References, TypeSpecimen } from './system'
 
 /*
  * Signal: finding the right platform on the Delhi Metro (iteration 5).
@@ -193,6 +193,8 @@ export default function Signal() {
           Live at <a className="prose-link" href="https://saathi-delhi-metro.vercel.app" target="_blank" rel="noreferrer">saathi-delhi-metro.vercel.app</a>.
         </p>
       </Section>
+
+      <Gallery />
 
       {/* ---------- Trade-offs ---------- */}
       <Section id="limits" n="08" title="Trade-offs" lede="What each constraint made me choose, and what it cost.">

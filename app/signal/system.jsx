@@ -103,23 +103,25 @@ export function Mismatch() {
   )
 }
 
-/* The key as a still diagram: one sign row, each of its three parts named. */
+/* The key as a still diagram: the real sign row, with its three parts called out. */
 export function KeyDiagram() {
   const violet = LINES.find((l) => l.id === 'violet').hex
-  const parts = [['The number', 'Carried from the ticket to the train'], ['The colour', 'Names the line at a glance'], ['The name', 'Two stations riders travel to']]
+  const tile = 'clamp(3.4rem, 9vw, 5.5rem)'
   return (
     <figure className="track-wide mt-16" style={{ fontFamily: SIGN_FONT }}>
-      <div className="grid grid-cols-[auto_auto_1fr] items-center gap-3 rounded-xl p-5 sm:gap-5 sm:p-7" style={{ background: PANEL }} role="img" aria-label="A sign row: platform 5 on violet, Violet Line, Mandi House and Lajpat Nagar">
-        <span className="grid h-14 w-14 place-items-center rounded-lg sm:h-20 sm:w-20" style={{ border: '3px solid #fbfbf8', color: '#fbfbf8', fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 800 }}>5</span>
-        <span className="h-14 w-6 rounded sm:h-20 sm:w-8" style={{ background: violet }} />
+      <div className="flex items-center gap-3 rounded-xl p-5 sm:gap-5 sm:p-7" style={{ background: PANEL }} role="img" aria-label="A sign row: an arrow, platform 5 on violet, Violet Line, Mandi House and Lajpat Nagar">
+        <span className="grid shrink-0 place-items-center rounded-lg" style={{ width: tile, height: tile, border: '3px solid #fbfbf8' }}>
+          <svg viewBox="0 0 24 24" className="h-[64%] w-[64%]" aria-hidden="true"><path d="M12 20V4M5 11l7-7 7 7" fill="none" stroke="#fbfbf8" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </span>
+        <span className="grid shrink-0 place-items-center rounded-lg" style={{ width: tile, height: tile, background: violet, border: '3px solid #fbfbf8', color: '#fbfbf8', fontSize: 'clamp(1.8rem, 4.6vw, 3rem)', fontWeight: 800 }}>5</span>
         <span className="min-w-0" style={{ color: '#fbfbf8' }}>
-          <span className="block truncate" style={{ fontSize: '0.8rem', color: '#c9cff0' }}>वायलेट लाइन · Violet Line</span>
-          <span className="block truncate" style={{ fontSize: 'clamp(1.05rem, 3.4vw, 1.9rem)', fontWeight: 700 }}>मंडी हाउस · लाजपत नगर</span>
-          <span className="block truncate" style={{ fontSize: 'clamp(1.05rem, 3.4vw, 1.9rem)', fontWeight: 700 }}>Mandi House · Lajpat Nagar</span>
+          <span className="block truncate" style={{ fontSize: 'clamp(0.7rem, 1.6vw, 0.9rem)', color: '#c9cff0' }}>वायलेट लाइन · Violet Line</span>
+          <span className="block truncate" style={{ fontSize: 'clamp(1rem, 3vw, 1.75rem)', fontWeight: 700 }}>मंडी हाउस · लाजपत नगर</span>
+          <span className="block truncate" style={{ fontSize: 'clamp(1rem, 3vw, 1.75rem)', fontWeight: 700 }}>Mandi House · Lajpat Nagar</span>
         </span>
       </div>
       <ol className="mt-4 grid grid-cols-3 gap-3">
-        {parts.map(([t, d], i) => (
+        {[['The number', 'The platform, carried from the ticket to the train'], ['The colour', 'The badge is the line’s colour'], ['The name', 'Two stations riders travel to']].map(([t, d], i) => (
           <li key={t} className="border-t border-rule pt-3">
             <Label>{String(i + 1).padStart(2, '0')} · {t}</Label>
             <p className="text-ink mt-1" style={{ fontSize: '0.9rem', lineHeight: 1.4 }}>{d}</p>
@@ -298,6 +300,34 @@ export function LineTable() {
         WCAG 2.2 contrast, computed from the tokens.<Ref n={2} /> Yellow and the Airport line carry dark text.
       </p>
     </div>
+  )
+}
+
+/* More of the system, drifting past: only pieces that appear nowhere else on the page. */
+const GALLERY = [
+  ['screen-train', 'phone', 'Saathi on the train: your stop, Lajpat Nagar, and the stops to count'],
+  ['board-inside', 'board', 'The inside board: a printed table of places from Kashmere Gate, each with its platform and gate'],
+  ['screen-change', 'phone', 'Saathi with a change: change at Lajpat Nagar to platform 3, Pink Line'],
+  ['sign-pink', 'wide', 'The Lajpat Nagar redesign: two stations in each direction instead of minus and plus'],
+  ['screen-platform-hi', 'phone', 'Saathi in Hindi: platform 5, straight ahead'],
+  ['board-entrance', 'board', 'The entrance board: where are you going, with the QR code that opens Saathi'],
+  ['screen-exit', 'phone', 'Saathi on arrival: the exit gate and the walk'],
+  ['screen-landing-hi', 'phone', 'Saathi’s first screen in Hindi'],
+]
+export function Gallery() {
+  const h = 'h-[18rem] sm:h-[24rem]'
+  const item = ([src, kind, alt], i, hidden) => (
+    <img key={`${src}-${i}`} src={`/signal/gallery/${src}.jpg`} alt={hidden ? '' : alt} aria-hidden={hidden || undefined} loading="lazy"
+      className={`${h} block w-auto shrink-0 object-contain ${kind === 'phone' ? 'rounded-[1.6rem]' : 'rounded-xl'}`}
+      style={{ border: kind === 'phone' ? '6px solid #121212' : '1px solid var(--rule)', background: '#fbfbf8' }} />
+  )
+  return (
+    <figure className="sig-gallery mt-24 sm:mt-32" aria-label="More screens and signs">
+      <div className="sig-gallery__track flex w-max gap-4">
+        {GALLERY.map((g, i) => item(g, i, false))}
+        {GALLERY.map((g, i) => item(g, i + GALLERY.length, true))}
+      </div>
+    </figure>
   )
 }
 
