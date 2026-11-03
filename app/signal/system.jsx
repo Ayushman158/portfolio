@@ -319,7 +319,6 @@ export function Gallery() {
 export function BeforeAfter() {
   const rows = [
     ['Kashmere Gate fork', 'kg-today', 'kg-new', 'Today: three platforms named only by the last station of each line', 'Redesign: one row per platform, each with its number in the line colour and two stations'],
-    ['Lajpat Nagar, Pink Line', 'pink-today', 'pink-new', 'Today: the ring line has no last station, so a small minus or plus decides', 'Redesign: two stations in each direction, with one bar or two'],
   ]
   return (
     <div className="track-wide mt-16 space-y-12">
@@ -345,44 +344,32 @@ const JOURNEY = [
   ['Street', 'Which way to my train?', 'A map app, if there’s signal', 'A QR board opens Saathi; the route stays offline', 'Built · untested'],
   ['Ticket counter', 'Where do I go after the gates?', 'The fare printed largest', 'The ticket prints platform 5 · Violet Line', 'Built · 1 tester'],
   ['The fork', 'Which of three platforms?', 'One arrow, last stations only', 'One row per platform: Mandi House · Lajpat Nagar', 'Tested with 84 riders'],
-  ['Top of the stairs', 'Is this my side?', 'On the Pink ring, a small − or +', 'Two stations each way, one bar or two', 'Tested with 84 riders'],
+  ['Top of the stairs', 'Is this my side?', 'The last station again, nothing to confirm it', 'The same violet 5 confirms it', 'Same key as the fork'],
   ['On the train', 'When do I get off?', 'Count the stations yourself', 'Saathi shows your stop and the stops to count', 'Built · untested'],
   ['Exit', 'Which gate?', 'Guess', 'Gate 5, nearest the market', 'Built · untested'],
 ]
 export function Journey() {
   return (
     <div className="track-wide mt-16">
-      <div className="hidden grid-cols-[7rem_1fr] gap-4 pb-2 sm:grid">
-        <span />
-        <div className="grid grid-cols-6 gap-3">
-          {JOURNEY.map(([place], i) => (
-            <div key={place} className="flex items-center gap-2">
-              <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full tnum" style={{ background: 'var(--ink)', color: 'var(--ground)', fontSize: '0.72rem' }}>{i + 1}</span>
-              <span className="h-px flex-1" style={{ background: i < JOURNEY.length - 1 ? 'var(--rule)' : 'transparent' }} />
-            </div>
-          ))}
-        </div>
-      </div>
-      <ol className="grid gap-px overflow-hidden rounded-xl sm:grid-cols-6" style={{ background: 'var(--rule)', border: '1px solid var(--rule)' }}>
-        {JOURNEY.map(([place, q, before, after, status], i) => (
-          <li key={place} className="flex flex-col gap-3 p-4" style={{ background: 'var(--ground)' }}>
-            <div>
-              <Label>{String(i + 1).padStart(2, '0')} · {place}</Label>
-              <p className="text-ink mt-1" style={{ fontSize: '0.95rem', lineHeight: 1.35 }}>{q}</p>
-            </div>
-            <div>
-              <p className="text-faint" style={{ fontSize: '0.72rem', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Before</p>
-              <p className="text-faint line-through decoration-[var(--rule)]" style={{ fontSize: '0.85rem', lineHeight: 1.4 }}>{before}</p>
-            </div>
-            <div className="flex-1">
-              <p className="text-faint" style={{ fontSize: '0.72rem', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Now</p>
-              <p className="text-ink" style={{ fontSize: '0.85rem', lineHeight: 1.4 }}>{after}</p>
-            </div>
-            <span className="self-start rounded-full px-2 py-0.5" style={{ fontSize: '0.7rem', border: '1px solid var(--rule)', color: status.startsWith('Tested') ? 'var(--ink)' : 'var(--faint)', background: status.startsWith('Tested') ? 'var(--rule)' : 'transparent' }}>{status}</span>
-          </li>
-        ))}
+      <ol className="grid gap-x-6 gap-y-12 sm:grid-cols-3">
+        {JOURNEY.map(([place, q, before, after, status], i) => {
+          const tested = status.startsWith('Tested')
+          return (
+            <li key={place} className="flex flex-col">
+              <img src={`/signal/journey/step-${i + 1}.jpg`} alt="" loading="lazy" className="block aspect-[535/450] w-full rounded-xl object-cover" style={{ border: '1px solid var(--rule)' }} />
+              <div className="mt-4 flex items-center gap-2">
+                <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full tnum" style={{ background: 'var(--ink)', color: 'var(--ground)', fontSize: '0.72rem' }}>{i + 1}</span>
+                <Label>{place}</Label>
+              </div>
+              <p className="text-ink mt-2" style={{ fontSize: '1.05rem', lineHeight: 1.35 }}>{q}</p>
+              <p className="mt-3" style={{ fontSize: '0.9rem', lineHeight: 1.45 }}><span className="text-faint">Before: {before}.</span></p>
+              <p className="text-ink mt-1" style={{ fontSize: '0.9rem', lineHeight: 1.45 }}>Now: {after}.</p>
+              <span className="mt-3 self-start rounded-full px-2.5 py-0.5" style={{ fontSize: '0.72rem', border: '1px solid var(--rule)', color: tested ? 'var(--ink)' : 'var(--faint)', background: tested ? 'var(--rule)' : 'transparent' }}>{status}</span>
+            </li>
+          )
+        })}
       </ol>
-      <p className="text-faint mt-3" style={{ fontSize: '0.82rem' }}>One trip, Kashmere Gate to Lajpat Nagar Central Market. Only the two signs have been tested with riders so far.</p>
+      <p className="text-faint mt-8" style={{ fontSize: '0.82rem' }}>One trip, Kashmere Gate to Lajpat Nagar Central Market, drawn as a concept storyboard. On this trip, only the fork sign has been tested with riders so far.</p>
     </div>
   )
 }
