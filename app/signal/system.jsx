@@ -103,6 +103,81 @@ export function Mismatch() {
   )
 }
 
+/* The key as a still diagram: one sign row, each of its three parts named. */
+export function KeyDiagram() {
+  const violet = LINES.find((l) => l.id === 'violet').hex
+  const parts = [['The number', 'Carried from the ticket to the train'], ['The colour', 'Names the line at a glance'], ['The name', 'Two stations riders travel to']]
+  return (
+    <figure className="track-wide mt-16" style={{ fontFamily: SIGN_FONT }}>
+      <div className="grid grid-cols-[auto_auto_1fr] items-center gap-3 rounded-xl p-5 sm:gap-5 sm:p-7" style={{ background: PANEL }} role="img" aria-label="A sign row: platform 5 on violet, Violet Line, Mandi House and Lajpat Nagar">
+        <span className="grid h-14 w-14 place-items-center rounded-lg sm:h-20 sm:w-20" style={{ border: '3px solid #fbfbf8', color: '#fbfbf8', fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 800 }}>5</span>
+        <span className="h-14 w-6 rounded sm:h-20 sm:w-8" style={{ background: violet }} />
+        <span className="min-w-0" style={{ color: '#fbfbf8' }}>
+          <span className="block truncate" style={{ fontSize: '0.8rem', color: '#c9cff0' }}>वायलेट लाइन · Violet Line</span>
+          <span className="block truncate" style={{ fontSize: 'clamp(1.05rem, 3.4vw, 1.9rem)', fontWeight: 700 }}>मंडी हाउस · लाजपत नगर</span>
+          <span className="block truncate" style={{ fontSize: 'clamp(1.05rem, 3.4vw, 1.9rem)', fontWeight: 700 }}>Mandi House · Lajpat Nagar</span>
+        </span>
+      </div>
+      <ol className="mt-4 grid grid-cols-3 gap-3">
+        {parts.map(([t, d], i) => (
+          <li key={t} className="border-t border-rule pt-3">
+            <Label>{String(i + 1).padStart(2, '0')} · {t}</Label>
+            <p className="text-ink mt-1" style={{ fontSize: '0.9rem', lineHeight: 1.4 }}>{d}</p>
+          </li>
+        ))}
+      </ol>
+    </figure>
+  )
+}
+
+/* The line marks under each colour-vision type (Machado 2009, full severity), side by side. */
+const CVD = [
+  ['Normal', null],
+  ['Protanopia', '0.152286 1.052583 -0.204868 0 0  0.114503 0.786281 0.099216 0 0  -0.003882 -0.048116 1.051998 0 0  0 0 0 1 0'],
+  ['Deuteranopia', '0.367322 0.860646 -0.227968 0 0  0.280085 0.672501 0.047413 0 0  -0.011820 0.042940 0.968881 0 0  0 0 0 1 0'],
+  ['Tritanopia', '1.255528 -0.076749 -0.178779 0 0  -0.078411 0.930809 0.147602 0 0  0.004733 0.691367 0.303900 0 0  0 0 0 1 0'],
+]
+export function ColourVision() {
+  return (
+    <figure className="track-wide mt-10">
+      <svg width="0" height="0" className="absolute" aria-hidden="true">
+        {CVD.map(([n, m], i) => m && <filter key={n} id={`cvd-${i}`} colorInterpolationFilters="linearRGB"><feColorMatrix type="matrix" values={m} /></filter>)}
+      </svg>
+      <div className="space-y-2">
+        {CVD.map(([n, m], i) => (
+          <div key={n} className="grid grid-cols-[7rem_1fr] items-center gap-2 sm:grid-cols-[9rem_1fr] sm:gap-3">
+            <Label>{n}</Label>
+            <div className="grid grid-cols-9 gap-1 rounded-lg p-2" style={{ background: '#fbfbf8', filter: m ? `url(#cvd-${i})` : 'none' }}>
+              {LINES.map((l) => <span key={l.id} className="mx-auto block w-full max-w-[30px] [&>svg]:h-auto [&>svg]:w-full"><Mark line={l} size={30} /></span>)}
+            </div>
+          </div>
+        ))}
+      </div>
+      <figcaption className="text-faint mt-3" style={{ fontSize: '0.82rem' }}>Colours merge for some riders; the shapes and letters never do.<Ref n={1} /></figcaption>
+    </figure>
+  )
+}
+
+/* How far each part of the sign reads, from its cap height (×150 in poor conditions to ×400 in good). */
+export function ReadingDistance() {
+  const rows = [['Platform number', 105, 16, 42], ['Station names', 60, 9, 24], ['Line name', 25, 4, 10]]
+  const max = 42
+  return (
+    <div className="track-wide mt-10">
+      {rows.map(([n, cap, lo, hi]) => (
+        <div key={n} className="grid grid-cols-[8rem_1fr_5.5rem] items-center gap-4 border-t border-rule py-3 sm:grid-cols-[11rem_1fr_6rem]">
+          <span><span className="text-ink block" style={{ fontSize: '0.95rem' }}>{n}</span><span className="text-faint block font-mono" style={{ fontSize: '0.75rem' }}>{cap} mm cap</span></span>
+          <span className="relative h-2 rounded-full" style={{ background: 'var(--rule)' }}>
+            <span className="absolute inset-y-0 rounded-full" style={{ left: `${(lo / max) * 100}%`, width: `${((hi - lo) / max) * 100}%`, background: 'var(--ink)' }} />
+          </span>
+          <span className="text-ink tnum text-right" style={{ fontSize: '0.9rem' }}>{lo}–{hi} m</span>
+        </div>
+      ))}
+      <p className="text-faint border-t border-rule pt-3" style={{ fontSize: '0.82rem' }}>The number and arrow carry the decision from across the hall; the names confirm it closer in. Rule of thumb, to be measured on site.</p>
+    </div>
+  )
+}
+
 export function Principles() {
   return (
     <div className="mt-10 grid gap-x-8 gap-y-6 border-t border-rule pt-6 sm:grid-cols-3">
