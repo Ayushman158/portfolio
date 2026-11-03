@@ -84,10 +84,11 @@ export function Collage() {
   )
 }
 
-/* What the rider knows against what the sign says, with nothing joining them. */
+/* The two problems: a sign the rider can't read, and no help once they're lost. */
 export function Mismatch() {
   return (
-    <div className="track-wide mt-14 grid items-stretch gap-3 sm:grid-cols-[1fr_auto_1fr]" style={{ fontFamily: SIGN_FONT }}>
+    <div className="track-wide mt-14 space-y-3" style={{ fontFamily: SIGN_FONT }}>
+    <div className="grid items-stretch gap-3 sm:grid-cols-[1fr_auto_1fr]">
       <div className="rounded-xl p-6 sm:p-8" style={{ background: '#fbfbf8', color: ON_DARK }}>
         <Label className="!text-[#5c5c5c]">What the rider knows</Label>
         <p className="mt-6" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', fontWeight: 700, lineHeight: 1.1 }}>Lajpat Nagar</p>
@@ -98,6 +99,20 @@ export function Mismatch() {
         <Label className="!text-[#c9cff0]">What the sign says</Label>
         <p className="mt-6" style={{ fontSize: 'clamp(1.4rem, 3vw, 2.1rem)', fontWeight: 700, lineHeight: 1.15 }}>Towards Raja Nahar Singh (Ballabhgarh)</p>
         <p className="mt-2" style={{ color: '#c9cff0' }}>The last station of the line</p>
+      </div>
+    </div>
+      <div className="grid items-stretch gap-3 sm:grid-cols-[1fr_auto_1fr]">
+        <div className="rounded-xl p-6 sm:p-8" style={{ background: '#fbfbf8', color: ON_DARK }}>
+          <Label className="!text-[#5c5c5c]">When a new rider is lost</Label>
+          <p className="mt-6" style={{ fontSize: 'clamp(1.4rem, 3vw, 2.1rem)', fontWeight: 700, lineHeight: 1.15 }}>“Which way now?”</p>
+          <p className="mt-2" style={{ color: '#5c5c5c' }}>Inside the station, below ground</p>
+        </div>
+        <div className="grid place-items-center py-2 text-faint" aria-hidden="true" style={{ fontSize: '2rem' }}>≠</div>
+        <div className="rounded-xl p-6 sm:p-8" style={{ background: PANEL, color: '#fbfbf8' }}>
+          <Label className="!text-[#c9cff0]">What there is to help</Label>
+          <p className="mt-6" style={{ fontSize: 'clamp(1.4rem, 3vw, 2.1rem)', fontWeight: 700, lineHeight: 1.15 }}>No signal for a map</p>
+          <p className="mt-2" style={{ color: '#c9cff0' }}>And the sign above is the one that confused them</p>
+        </div>
       </div>
     </div>
   )

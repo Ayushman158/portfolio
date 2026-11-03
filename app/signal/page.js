@@ -131,7 +131,7 @@ export default function Signal() {
       </section>
 
       {/* ---------- The problem ---------- */}
-      <Section id="problem" n="01" title="The problem" lede="At a fork, Delhi Metro signs name each platform by the last station on its line. Riders know only where they’re going.">
+      <Section id="problem" n="01" title="The problem" lede="New riders get confused in two ways. At a fork, signs name each platform by the last station on its line, which means nothing to someone who knows only where they’re going. And once they’re lost inside the station, there’s nothing to ask: maps need signal, and underground there often isn’t any.">
         <Mismatch />
       </Section>
 
