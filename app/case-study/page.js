@@ -293,7 +293,7 @@ export default function Hoychoy() {
         <p>
           Back to <Link href="/archive" className="prose-link">the archive</Link>, or read{' '}
           <Link href="/banyan" className="prose-link">Banyan Tree</Link> and{' '}
-          <Link href="/signal" className="prose-link">the DMRC redesign</Link>
+          <Link href="/signal" className="prose-link">finding the right platform on the Delhi Metro</Link>
         </p>
       </section>
     </main>

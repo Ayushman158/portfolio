@@ -193,10 +193,10 @@ export function Numbers({ items, cols = 'grid-cols-2 sm:grid-cols-4' }) {
  * is visible before any process. Each item is [value, what it measures,
  * before?]; a before value is shown struck through above the after.
  */
-export function Impact({ items, note }) {
+export function Impact({ items, note, label = 'Outcome' }) {
   return (
-    <section aria-label="Outcome" className="mt-10">
-      <p className="text-faint mb-3 text-[0.85rem]">Outcome</p>
+    <section aria-label={label} className="mt-10">
+      <p className="text-faint mb-3 text-[0.85rem]">{label}</p>
       <div className={`grid grid-cols-2 gap-px overflow-hidden rounded-xl ${items.length > 3 ? 'sm:grid-cols-4' : 'sm:grid-cols-3'}`} style={{ background: 'var(--rule)', border: '1px solid var(--rule)' }}>
         {items.map(([value, text, before]) => (
           <div key={text} className="p-4 sm:p-5" style={{ background: 'var(--ground)' }}>

@@ -88,13 +88,13 @@ const RESEARCH = [
     tags: ['Brand', 'Design system', 'Interaction', 'iOS build'],
   },
   {
-    name: 'Personalising the Delhi Metro app for daily commuters',
-    kind: 'DMRC app redesign · Research and interaction design',
+    name: 'Helping Delhi Metro riders find their way: new signs and a QR route finder',
+    kind: 'Wayfinding · Research, sign design and testing',
     href: '/signal',
-    site: '7 interviews · 3 directions dropped',
-    shot: '/signal/v4/hero.jpg',
-    alt: 'Three screens from the feature on a dark blue stage: a lock-screen alert, the decision screen reading Backups work until 9:31, and a booked bike taxi',
-    what: 'For people who ride the same Delhi Metro route every day and have a time they can’t miss. When their line is delayed, DMRC’s app shows how long their other ways to work still get them there on time.',
+    site: '84 riders · 45% → 80% right platform',
+    shot: '/signal/wayfinding/kg-new.jpg',
+    alt: 'The redesigned Kashmere Gate sign in place: each platform as a coloured number with two stations it goes to',
+    what: 'For first-time and occasional riders. Delhi Metro signs name a train by the last station on its line. I redesigned them around the stations riders travel to, added QR boards that open a route finder for riders who get lost, and tested the signs with 84 riders.',
     tags: ['Research', 'Interaction', 'Systems', 'Prototype'],
   },
 ]
@@ -102,7 +102,7 @@ const RESEARCH = [
 // Ordered for a recruiter: live work with measured results, then tested research, then
 // the product being built, then the speculative campaign, then the installation.
 const byName = Object.fromEntries([...CAMPAIGN, ...SHIPPED, ...RESEARCH].map((p) => [p.name, p]))
-const SELECTED = ['Personalising the Delhi Metro app for daily commuters', 'Kizuku'].map((n) => byName[n])
+const SELECTED = ['Helping Delhi Metro riders find their way: new signs and a QR route finder', 'Kizuku'].map((n) => byName[n])
 
 // matter-js is ~30 kB gzipped and only matters once this section is reached, so
 // it is split out of the initial bundle entirely rather than shipped with the fold.

@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'Personalising the Delhi Metro app for daily commuters',
-  description: 'A redesign of DMRC’s app for people who ride the same Metro route daily and have a time they can’t miss. When their line is delayed, it shows how long their other ways to work still get them there on time.',
+  title: 'Helping Delhi Metro riders find their way: new signs and a QR route finder',
+  description: 'Delhi Metro signs name a train by the last station on its line. I redesigned them around the stations riders travel to, added QR boards that open a route finder for riders who get lost, and tested the signs with 84 riders: the right platform on the first try went from 45% to 80%.',
 };
 
 export default function SignalLayout({ children }) {

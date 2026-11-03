@@ -850,6 +850,15 @@ html[data-room] .lamp-glow-anchor { display: none; }
    enough for it beside the wide track. */
 .sig-map { display: none; }
 @media (min-width: 86rem) { .sig-map { display: block; } }
+/* Signal demos: a soft fade when an answer or image swaps, press feedback, a plain slider. */
+@keyframes sig-fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.sig-fade { animation: sig-fade 260ms cubic-bezier(.23, 1, .32, 1) both; }
+.sig-press, .sig-play { transition: transform 140ms cubic-bezier(.23, 1, .32, 1); }
+.sig-press:active:not(:disabled), .sig-play:active { transform: scale(.97); }
+.sig-press:disabled { cursor: default; }
+.sig-range { accent-color: var(--ink); }
+.sig-group { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); margin: 1rem 0 .25rem; }
+@media (prefers-reduced-motion: reduce) { .sig-fade { animation: none; } .sig-press:active:not(:disabled), .sig-play:active { transform: none; } }
 
 /* Signal: swap the hero for its dark twin, and take the glare off light
    screenshots, in dark mode. */
