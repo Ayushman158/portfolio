@@ -206,12 +206,11 @@ export default function Signal() {
       <Section id="details" n="08" title="Details" lede="These small decisions keep it working underground, in a crowd, in Hindi and for colour-blind riders.">
         <div className="track-wide mt-16 grid gap-x-12 gap-y-24 sm:grid-cols-2">
           {[
-            ['The answer types in', 'The line types in like speech; screen readers get the whole sentence at once.', <div key="v" className="mx-auto max-w-[15rem]"><Clip name="detail-typed" label="Saathi’s question typing in" /></div>],
             ['Stages change in place', 'The card reshapes between stages, so the eye stays in one place.', <div key="v" className="mx-auto max-w-[15rem]"><Clip name="detail-morph" label="The platform card reshaping into the train card" /></div>],
             ['Colour is never alone', 'Switch the simulation: every line keeps its shape and letter.', <ColourBlind key="v" />],
             ['It reads from across the hall', 'Drag the distance: names fade first, the number and arrow last.', <Distance key="v" />],
-          ].map(([t, d, v]) => (
-            <div key={t}>
+          ].map(([t, d, v], i) => (
+            <div key={t} className={i === 2 ? 'sm:col-span-2' : ''}>
               {v}
               <p className="text-ink mt-5">{t}</p>
               <p className="mt-1" style={{ fontSize: '0.95rem' }}>{d}</p>
