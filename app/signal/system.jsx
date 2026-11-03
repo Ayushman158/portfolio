@@ -293,7 +293,6 @@ const GALLERY = [
   ['screen-train', 'phone', 'Saathi on the train: your stop, Lajpat Nagar, and the stops to count'],
   ['board-inside', 'board', 'The inside board: a printed table of places from Kashmere Gate, each with its platform and gate'],
   ['screen-change', 'phone', 'Saathi with a change: change at Lajpat Nagar to platform 3, Pink Line'],
-  ['sign-pink', 'wide', 'The Lajpat Nagar redesign: two stations in each direction instead of minus and plus'],
   ['screen-platform-hi', 'phone', 'Saathi in Hindi: platform 5, straight ahead'],
   ['board-entrance', 'board', 'The entrance board: where are you going, with the QR code that opens Saathi'],
   ['screen-exit', 'phone', 'Saathi on arrival: the exit gate and the walk'],
@@ -313,6 +312,78 @@ export function Gallery() {
         {GALLERY.map((g, i) => item(g, i + GALLERY.length, true))}
       </div>
     </figure>
+  )
+}
+
+/* Today's sign and the redesign, at the same two spots. */
+export function BeforeAfter() {
+  const rows = [
+    ['Kashmere Gate fork', 'kg-today', 'kg-new', 'Today: three platforms named only by the last station of each line', 'Redesign: one row per platform, each with its number in the line colour and two stations'],
+    ['Lajpat Nagar, Pink Line', 'pink-today', 'pink-new', 'Today: the ring line has no last station, so a small minus or plus decides', 'Redesign: two stations in each direction, with one bar or two'],
+  ]
+  return (
+    <div className="track-wide mt-16 space-y-12">
+      {rows.map(([place, a, b, altA, altB]) => (
+        <figure key={place}>
+          <Label>{place}</Label>
+          <div className="mt-3 grid gap-3 sm:grid-cols-2">
+            {[[a, 'Today', altA], [b, 'Redesign', altB]].map(([src, tag, alt]) => (
+              <div key={src} className="relative">
+                <img src={`${W}/${src}.jpg`} alt={alt} loading="lazy" className="block aspect-[4/3] w-full rounded-xl object-cover" style={{ border: '1px solid var(--rule)' }} />
+                <span className="absolute left-3 top-3 rounded-full px-3 py-1" style={{ background: tag === 'Today' ? 'rgba(18,18,18,.72)' : '#fbfbf8', color: tag === 'Today' ? '#fbfbf8' : '#242424', fontSize: '0.78rem', fontWeight: 600 }}>{tag}</span>
+              </div>
+            ))}
+          </div>
+        </figure>
+      ))}
+    </div>
+  )
+}
+
+/* One trip, step by step: what a new rider had to go on, and what they have now. */
+const JOURNEY = [
+  ['Street', 'Which way to my train?', 'A map app, if there’s signal', 'A QR board opens Saathi; the route stays offline', 'Built · untested'],
+  ['Ticket counter', 'Where do I go after the gates?', 'The fare printed largest', 'The ticket prints platform 5 · Violet Line', 'Built · 1 tester'],
+  ['The fork', 'Which of three platforms?', 'One arrow, last stations only', 'One row per platform: Mandi House · Lajpat Nagar', 'Tested with 84 riders'],
+  ['Top of the stairs', 'Is this my side?', 'On the Pink ring, a small − or +', 'Two stations each way, one bar or two', 'Tested with 84 riders'],
+  ['On the train', 'When do I get off?', 'Count the stations yourself', 'Saathi shows your stop and the stops to count', 'Built · untested'],
+  ['Exit', 'Which gate?', 'Guess', 'Gate 5, nearest the market', 'Built · untested'],
+]
+export function Journey() {
+  return (
+    <div className="track-wide mt-16">
+      <div className="hidden grid-cols-[7rem_1fr] gap-4 pb-2 sm:grid">
+        <span />
+        <div className="grid grid-cols-6 gap-3">
+          {JOURNEY.map(([place], i) => (
+            <div key={place} className="flex items-center gap-2">
+              <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full tnum" style={{ background: 'var(--ink)', color: 'var(--ground)', fontSize: '0.72rem' }}>{i + 1}</span>
+              <span className="h-px flex-1" style={{ background: i < JOURNEY.length - 1 ? 'var(--rule)' : 'transparent' }} />
+            </div>
+          ))}
+        </div>
+      </div>
+      <ol className="grid gap-px overflow-hidden rounded-xl sm:grid-cols-6" style={{ background: 'var(--rule)', border: '1px solid var(--rule)' }}>
+        {JOURNEY.map(([place, q, before, after, status], i) => (
+          <li key={place} className="flex flex-col gap-3 p-4" style={{ background: 'var(--ground)' }}>
+            <div>
+              <Label>{String(i + 1).padStart(2, '0')} · {place}</Label>
+              <p className="text-ink mt-1" style={{ fontSize: '0.95rem', lineHeight: 1.35 }}>{q}</p>
+            </div>
+            <div>
+              <p className="text-faint" style={{ fontSize: '0.72rem', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Before</p>
+              <p className="text-faint line-through decoration-[var(--rule)]" style={{ fontSize: '0.85rem', lineHeight: 1.4 }}>{before}</p>
+            </div>
+            <div className="flex-1">
+              <p className="text-faint" style={{ fontSize: '0.72rem', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Now</p>
+              <p className="text-ink" style={{ fontSize: '0.85rem', lineHeight: 1.4 }}>{after}</p>
+            </div>
+            <span className="self-start rounded-full px-2 py-0.5" style={{ fontSize: '0.7rem', border: '1px solid var(--rule)', color: status.startsWith('Tested') ? 'var(--ink)' : 'var(--faint)', background: status.startsWith('Tested') ? 'var(--rule)' : 'transparent' }}>{status}</span>
+          </li>
+        ))}
+      </ol>
+      <p className="text-faint mt-3" style={{ fontSize: '0.82rem' }}>One trip, Kashmere Gate to Lajpat Nagar Central Market. Only the two signs have been tested with riders so far.</p>
+    </div>
   )
 }
 

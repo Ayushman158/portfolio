@@ -5,7 +5,7 @@ import { motion, useReducedMotion } from 'motion/react'
 import { Back, Facts, Heading, Impact, Subhead, Tradeoffs } from '../components/case-study'
 import { Compare, W } from './wayfinding'
 import { StepVideo } from './demos'
-import { Collage, ColourVision, Gallery, GridSpec, KeyDiagram, LineTable, Mismatch, Principles, ReadingDistance, References, TypeSpecimen } from './system'
+import { BeforeAfter, Collage, ColourVision, Gallery, Journey, GridSpec, KeyDiagram, LineTable, Mismatch, Principles, ReadingDistance, References, TypeSpecimen } from './system'
 
 /*
  * Signal: finding the right platform on the Delhi Metro (iteration 5).
@@ -20,7 +20,7 @@ import { Collage, ColourVision, Gallery, GridSpec, KeyDiagram, LineTable, Mismat
 // Outcome-led: the problem and the impact, then the work. Research and the test write-up live in the deck.
 const GROUPS = [
   ['Intro', [['overview', 'Overview'], ['problem', 'The problem'], ['result', 'The impact']]],
-  ['The work', [['idea', 'The idea'], ['signs', 'The signs'], ['spec', 'The sign system'], ['system', 'The ticket and QR board'], ['saathi', 'Saathi']]],
+  ['The work', [['idea', 'The idea'], ['signs', 'The signs'], ['spec', 'The sign system'], ['system', 'The ticket and QR board'], ['saathi', 'Saathi'], ['journey', 'The journey']]],
   ['Wrap up', [['limits', 'Trade-offs'], ['outcome', 'Outcome']]],
 ]
 const IDS = GROUPS.flatMap(([, items]) => items.map(([id]) => id))
@@ -153,7 +153,8 @@ export default function Signal() {
 
       {/* ---------- The signs ---------- */}
       <Section id="signs" n="04" title="The signs" lede="Each platform gets one row: an arrow, the number in the line’s colour, and two stations on the way.">
-        <figure className="track-wide mt-16">
+        <BeforeAfter />
+        <figure className="track-wide mt-20">
           <img src={`${W}/render-fork.jpg`} alt="Concept render: the redesigned Kashmere Gate sign hanging where the concourse splits three ways, each arrow over its path" className="block aspect-[3/1] w-full rounded-xl object-cover" style={{ objectPosition: '50% 8%', border: '1px solid var(--rule)' }} />
         </figure>
         <figure className="track-wide mt-6">
@@ -194,10 +195,15 @@ export default function Signal() {
         </p>
       </Section>
 
+      {/* ---------- The journey ---------- */}
+      <Section id="journey" n="08" title="The journey, before and after" lede="One trip asks a new rider six questions. Before, most of them had no answer in the station.">
+        <Journey />
+      </Section>
+
       <Gallery />
 
       {/* ---------- Trade-offs ---------- */}
-      <Section id="limits" n="08" title="Trade-offs" lede="What each constraint made me choose, and what it cost.">
+      <Section id="limits" n="09" title="Trade-offs" lede="What each constraint made me choose, and what it cost.">
         <div className="mt-16">
           <Tradeoffs items={[
             ['Signs have to fit today’s frames', 'One row per platform, inside the existing panel', 'No room for maps or long station lists'],
