@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { Back, Facts, Heading, Impact, Subhead, Tradeoffs } from '../components/case-study'
 import { Compare, W } from './wayfinding'
-import { Clip, ColourBlind, Distance, KeyBuild, StepVideo } from './demos'
-import { Collage, GridSpec, LineTable, Mismatch, Principles, References, TypeSpecimen } from './system'
+import { StepVideo } from './demos'
+import { Collage, ColourVision, GridSpec, KeyDiagram, LineTable, Mismatch, Principles, ReadingDistance, References, TypeSpecimen } from './system'
 
 /*
  * Signal: finding the right platform on the Delhi Metro (iteration 5).
@@ -20,7 +20,7 @@ import { Collage, GridSpec, LineTable, Mismatch, Principles, References, TypeSpe
 // Outcome-led: the problem and the impact, then the work. Research and the test write-up live in the deck.
 const GROUPS = [
   ['Intro', [['overview', 'Overview'], ['problem', 'The problem'], ['result', 'The impact']]],
-  ['The work', [['idea', 'The idea'], ['signs', 'The signs'], ['spec', 'The sign system'], ['system', 'The ticket and QR board'], ['saathi', 'Saathi'], ['details', 'Details']]],
+  ['The work', [['idea', 'The idea'], ['signs', 'The signs'], ['spec', 'The sign system'], ['system', 'The ticket and QR board'], ['saathi', 'Saathi']]],
   ['Wrap up', [['limits', 'Trade-offs'], ['outcome', 'Outcome']]],
 ]
 const IDS = GROUPS.flatMap(([, items]) => items.map(([id]) => id))
@@ -148,7 +148,7 @@ export default function Signal() {
 
       {/* ---------- The idea ---------- */}
       <Section id="idea" n="03" title="The idea" lede="Every sign, ticket and screen shows the platform number, the line colour and two stations together, so remembering any one of them is enough.">
-        <KeyBuild />
+        <KeyDiagram />
       </Section>
 
       {/* ---------- The signs ---------- */}
@@ -168,6 +168,8 @@ export default function Signal() {
         <Part label="One module, U = 50 mm"><GridSpec /></Part>
         <Part label="Two scripts at one size"><TypeSpecimen /></Part>
         <Part label="Colour identifies a line, and only that"><LineTable /></Part>
+        <Part label="Every line reads without colour"><ColourVision /></Part>
+        <Part label="Read from across the hall"><ReadingDistance /></Part>
       </Section>
 
       {/* ---------- The ticket and QR board ---------- */}
@@ -187,47 +189,13 @@ export default function Signal() {
       {/* ---------- Demo: Saathi ---------- */}
       <Section id="saathi" n="07" title="Saathi, the route finder" lede="Saathi answers like a person would, one thing at a time: the platform, then the stop, then the gate.">
         <StepVideo className="track-wide mt-16" name="saathi-trip" label="Saathi recording: a trip from Kashmere Gate to Lajpat Nagar Central Market" />
-        <div className="track-wide mt-24 grid gap-12 sm:grid-cols-2">
-          <div>
-            <p className="text-ink mb-4">A trip with a change</p>
-            <StepVideo name="saathi-change" label="Saathi recording: a trip with a change at Lajpat Nagar" />
-          </div>
-          <div>
-            <p className="text-ink mb-4">One language at a time</p>
-            <StepVideo name="saathi-language" label="Saathi recording: switching to Hindi, then Listen" />
-          </div>
-        </div>
         <p className="mt-10" style={{ fontSize: '0.95rem' }}>
           Live at <a className="prose-link" href="https://saathi-delhi-metro.vercel.app" target="_blank" rel="noreferrer">saathi-delhi-metro.vercel.app</a>.
         </p>
       </Section>
 
-      {/* ---------- Details ---------- */}
-      <Section id="details" n="08" title="Details" lede="These small decisions keep it working underground, in a crowd, in Hindi and for colour-blind riders.">
-        <div className="track-wide mt-16 grid gap-x-12 gap-y-24 sm:grid-cols-2">
-          {[
-            ['Stages change in place', 'The card reshapes between stages, so the eye stays in one place.', <div key="v" className="mx-auto max-w-[15rem]"><Clip name="detail-morph" label="The platform card reshaping into the train card" /></div>],
-            ['Colour is never alone', 'Switch the simulation: every line keeps its shape and letter.', <ColourBlind key="v" />],
-            ['It reads from across the hall', 'Drag the distance: names fade first, the number and arrow last.', <Distance key="v" />],
-          ].map(([t, d, v], i) => (
-            <div key={t} className={i === 2 ? 'sm:col-span-2' : ''}>
-              {v}
-              <p className="text-ink mt-5">{t}</p>
-              <p className="mt-1" style={{ fontSize: '0.95rem' }}>{d}</p>
-            </div>
-          ))}
-        </div>
-        <div className="track-wide mt-24 grid items-center gap-10 sm:grid-cols-[1fr_1.2fr]">
-          <img src={`${W}/saathi-entrance.svg`} alt="Saathi waving beside a metro entrance" className="block w-full" />
-          <div>
-            <p className="text-ink">A person, not a robot</p>
-            <p className="mt-1" style={{ fontSize: '0.95rem' }}>People trust asking someone, so the guide is a person. He waves once, then waits.</p>
-          </div>
-        </div>
-      </Section>
-
       {/* ---------- Trade-offs ---------- */}
-      <Section id="limits" n="09" title="Trade-offs" lede="What each constraint made me choose, and what it cost.">
+      <Section id="limits" n="08" title="Trade-offs" lede="What each constraint made me choose, and what it cost.">
         <div className="mt-16">
           <Tradeoffs items={[
             ['Signs have to fit today’s frames', 'One row per platform, inside the existing panel', 'No room for maps or long station lists'],
