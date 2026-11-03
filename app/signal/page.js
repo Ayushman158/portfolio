@@ -5,7 +5,7 @@ import { motion, useReducedMotion } from 'motion/react'
 import { Back, Facts, Heading, Impact, Subhead, Tradeoffs } from '../components/case-study'
 import { Compare, W } from './wayfinding'
 import { StepVideo } from './demos'
-import { Collage, ColourVision, GridSpec, KeyDiagram, LineTable, Mismatch, Principles, ReadingDistance, References, TypeSpecimen } from './system'
+import { Collage, ColourVision, Gallery, GridSpec, KeyDiagram, LineTable, Mismatch, Principles, ReadingDistance, References, TypeSpecimen } from './system'
 
 /*
  * Signal: finding the right platform on the Delhi Metro (iteration 5).
@@ -131,7 +131,7 @@ export default function Signal() {
       </section>
 
       {/* ---------- The problem ---------- */}
-      <Section id="problem" n="01" title="The problem" lede="At a fork, Delhi Metro signs name each platform by the last station on its line. Riders know only where they’re going.">
+      <Section id="problem" n="01" title="The problem" lede="New riders get confused in two ways. At a fork, signs name each platform by the last station on its line, which means nothing to someone who knows only where they’re going. And once they’re lost inside the station, there’s nothing to ask: maps need signal, and underground there often isn’t any.">
         <Mismatch />
       </Section>
 
@@ -193,6 +193,8 @@ export default function Signal() {
           Live at <a className="prose-link" href="https://saathi-delhi-metro.vercel.app" target="_blank" rel="noreferrer">saathi-delhi-metro.vercel.app</a>.
         </p>
       </Section>
+
+      <Gallery />
 
       {/* ---------- Trade-offs ---------- */}
       <Section id="limits" n="08" title="Trade-offs" lede="What each constraint made me choose, and what it cost.">
