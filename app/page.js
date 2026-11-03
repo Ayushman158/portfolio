@@ -93,7 +93,9 @@ const RESEARCH = [
     href: '/signal',
     site: '84 riders · 45% → 80% right platform',
     shot: '/signal/wayfinding/render-blade.jpg',
-    alt: 'A violet platform 5 sign on a concrete wall, with the arrow tile and Platform in English and Hindi',
+    // The row shows the case study's collage, assembled, in place of the shot.
+    visual: 'signal',
+    alt: 'The Signal work at a glance: a violet platform 5 sign on a concrete wall, the Saathi route finder showing Platform 5 straight ahead, the platform badge, and the nine line marks',
     what: 'For first-time and occasional riders. Delhi Metro signs name a train by the last station on its line. I redesigned them around the stations riders travel to, added QR boards that open a route finder for riders who get lost, and tested the signs with 84 riders.',
     tags: ['Research', 'Interaction', 'Systems', 'Prototype'],
   },
@@ -303,6 +305,24 @@ export default function Home() {
           </PinnedNote>
         </motion.section>
       </div>
+
+      {/* The sign-off. The question sits in the mono the site uses for data,
+          the answer in the serif, and a margin note lists a few real entries
+          from that dataset, in the one handwriting face. */}
+      <motion.footer {...rise(0.26)} className="track-wide mt-28 border-t pt-10" style={{ borderColor: 'var(--rule)' }}>
+        <p className="text-faint mb-4" style={{ fontFamily: "'Geist Mono', ui-monospace, monospace", fontSize: '0.8rem', letterSpacing: '0.02em' }}>
+          Why design in the age of AI?
+        </p>
+        <p className="display max-w-[34rem]">
+          Because my life is a dataset no AI has been trained on.
+        </p>
+        <p
+          className="font-reenie-beanie text-faint mt-5 max-w-[30rem] leading-tight"
+          style={{ fontSize: '1.45rem', transform: 'rotate(-1.5deg)', transformOrigin: 'left' }}
+        >
+          a few entries: a year in security, Hazel, the wrong train to the airport, North Lakhimpur
+        </p>
+      </motion.footer>
     </main>
   )
 }
