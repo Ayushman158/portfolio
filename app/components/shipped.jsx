@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { motion, useMotionValue, useReducedMotion, useTransform } from 'motion/react'
 import ScrambleText from './scramble-text'
+import SignalCard from './signal-card'
 
 /**
  * Shipped client work, shown rather than listed.
@@ -162,7 +163,9 @@ function Row({ p, i, cards, turns, reduceMotion, router }) {
         className={`relative block overflow-hidden rounded-xl [isolation:isolate]${flip ? ' lg:order-2' : ''}`}
         style={{ border: '1px solid var(--rule)', background: 'var(--raised)' }}
       >
-        {p.video && !reduceMotion ? (
+        {p.visual === 'signal' ? (
+          <SignalCard alt={p.alt} />
+        ) : p.video && !reduceMotion ? (
           <Loop src={p.video} poster={p.shot} playing={turns.playing === i} repeat={turns.repeat(i)} onEnded={() => turns.next(i)} />
         ) : (
           <Image

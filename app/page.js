@@ -93,7 +93,9 @@ const RESEARCH = [
     href: '/signal',
     site: '84 riders · 45% → 80% right platform',
     shot: '/signal/wayfinding/render-blade.jpg',
-    alt: 'A violet platform 5 sign on a concrete wall, with the arrow tile and Platform in English and Hindi',
+    // The row shows the case study's collage, assembled, in place of the shot.
+    visual: 'signal',
+    alt: 'The Signal work at a glance: a violet platform 5 sign on a concrete wall, the Saathi route finder showing Platform 5 straight ahead, the platform badge, and the nine line marks',
     what: 'For first-time and occasional riders. Delhi Metro signs name a train by the last station on its line. I redesigned them around the stations riders travel to, added QR boards that open a route finder for riders who get lost, and tested the signs with 84 riders.',
     tags: ['Research', 'Interaction', 'Systems', 'Prototype'],
   },
