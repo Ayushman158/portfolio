@@ -246,7 +246,7 @@ export default function Signal() {
   return (
     <main className="measure min-h-screen pb-28 pt-20 sm:pt-28 lg:pt-36">
       <LineMap active={active} />
-      <motion.div {...rise(0)}><Back href="/signal" label="← Finding the right platform" /></motion.div>
+      <motion.div {...rise(0)}><Back href="/signal" label="← Delhi Metro wayfinding" /></motion.div>
       <p className="text-faint mt-6" style={{ fontSize: '0.95rem' }}>An earlier idea from the same Delhi Metro project, paused. The current version is <a className="prose-link" href="/signal">finding the right platform</a>.</p>
 
       {/* ---------- Overview ---------- */}

@@ -102,7 +102,7 @@ const RESEARCH = [
 // Ordered for a recruiter: live work with measured results, then tested research, then
 // the product being built, then the speculative campaign, then the installation.
 const byName = Object.fromEntries([...CAMPAIGN, ...SHIPPED, ...RESEARCH].map((p) => [p.name, p]))
-const SELECTED = ['Finding the right platform on the Delhi Metro', 'Kizuku'].map((n) => byName[n])
+const SELECTED = ['Helping Delhi Metro riders find their way: new signs and a QR route finder', 'Kizuku'].map((n) => byName[n])
 
 // matter-js is ~30 kB gzipped and only matters once this section is reached, so
 // it is split out of the initial bundle entirely rather than shipped with the fold.
