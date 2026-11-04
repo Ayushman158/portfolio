@@ -7,7 +7,7 @@ import { Compare, W } from './wayfinding'
 import { StepVideo } from './demos'
 import { LiveActivity } from './device'
 import { SIGN_FONT } from './font'
-import { BeforeAfter, Collage, ColourVision, Gallery, Journey, GridSpec, KeyDiagram, LineTable, Mismatch, ReadingDistance, References, TypeSpecimen } from './system'
+import { BeforeAfter, Collage, ColourVision, Journey, GridSpec, SignFamily, KeyDiagram, LineTable, Mismatch, ReadingDistance, References, TypeSpecimen } from './system'
 
 /*
  * Signal: finding the right platform on the Delhi Metro (iteration 5).
@@ -211,6 +211,7 @@ export default function Signal() {
         <Part label="Two scripts at one size"><TypeSpecimen /></Part>
         <Part label="Colour identifies a line, and only that"><LineTable /></Part>
         <Part label="Every line reads without colour"><ColourVision /></Part>
+        <Part label="The sign family, to scale"><SignFamily /></Part>
         <Part label="Read from across the hall"><ReadingDistance /></Part>
       </Section>
 
@@ -250,7 +251,7 @@ export default function Signal() {
         <Journey />
       </Section>
 
-      <Gallery />
+      {/* Gallery hidden for now (Ayushman, 4 Nov): it read as an archive. */}
 
       {/* ---------- Trade-offs ---------- */}
       <Section id="limits" n="09" title="Trade-offs" lede="What each constraint made me choose, and what it cost.">
