@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useRef } from 'react'
 import { motion, useInView, useReducedMotion } from 'motion/react'
 import { LINES, Mark } from '../signal/marks'
+import { Phone } from '../signal/device'
 
 const W = '/signal/wayfinding'
 const VIOLET = LINES.find((l) => l.id === 'violet')
@@ -50,11 +51,14 @@ export default function SignalCard({ alt }) {
           {...(reduce ? {} : { initial: { y: 40 }, animate: seen ? { y: 0 } : {}, transition: { duration: 0.8, delay: 0.18, ease: EASE } })}
           className="h-full"
         >
+          {/* The drawn iPhone is sized by width; 100 : 208 is its outline, so it fits the tile's height. */}
           <div
-            className={`h-full overflow-hidden rounded-[1.1rem]${reduce ? '' : ' transition-transform duration-500 ease-out group-hover:-translate-y-1.5'}`}
-            style={{ aspectRatio: '780 / 1688', border: '4px solid #121212', background: '#121212' }}
+            className={`h-full${reduce ? '' : ' transition-transform duration-500 ease-out group-hover:-translate-y-1.5'}`}
+            style={{ aspectRatio: '100 / 208' }}
           >
-            <Image src={`${W}/saathi-screen-platform.jpg`} alt="" width={780} height={1688} sizes="140px" className="block h-full w-full object-cover" />
+            <Phone>
+              <Image src="/signal/gallery/screen-trip.jpg" alt="" width={780} height={1688} sizes="140px" className="block w-full" />
+            </Phone>
           </div>
         </motion.div>
       </motion.div>

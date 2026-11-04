@@ -143,21 +143,245 @@ export function ColourVision() {
 }
 
 /* How far each part of the sign reads, from its cap height (×150 in poor conditions to ×400 in good). */
+/* The arrow, as on the signs and in the app (signal-wayfinding/src/components/signs/arrowPaths.ts). */
+const ARROW = { up: 'M12 20V4M5 11l7-7 7 7', 'up-left': 'M18 18L6 6M6 15V6h9', 'up-right': 'M6 18L18 6M9 6h9v9' }
+const C = { red: '#d32f2f', yellow: '#d4ac14', violet: '#7b3fe0', pink: '#c2185b' }
+
+/* An arrow tile and a platform badge, drawn at (x, y) with side s, in a drawing's own units. */
+const Tile = ({ x, y, s, dir, stroke = '#fff' }) => (
+  <g transform={`translate(${x} ${y})`}>
+    <rect x="0.5" y="0.5" width={s - 1} height={s - 1} rx={s * 0.12} fill="none" stroke={stroke} strokeWidth={s * 0.07} />
+    <path d={ARROW[dir]} transform={`translate(${s * 0.18} ${s * 0.18}) scale(${(s * 0.64) / 24})`} fill="none" stroke={stroke} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+  </g>
+)
+const Badge = ({ x, y, s, c, n, dark }) => (
+  <g>
+    <rect x={x} y={y} width={s} height={s} rx={s * 0.12} fill={c} stroke="#fff" strokeWidth={s * 0.06} />
+    <text x={x + s / 2} y={y + s * 0.73} textAnchor="middle" fontSize={s * 0.66} fontWeight="800" fill={dark ? '#242424' : '#fff'}>{n}</text>
+  </g>
+)
+
+/*
+ * The sign family to scale, in elevation (after sign-family sheets such as Urbanite's
+ * modular sign family). 1 unit = 10 mm. Sign sizes are the artwork's; mounting heights are
+ * proposals, to be measured at Kashmere Gate. The rider is 1650 mm, for scale.
+ */
+export function SignFamily() {
+  const F = 330 // floor line: y of 0 mm
+  const y = (mm) => F - mm / 10
+  const panel = '#1f2a6b'
+  const grid = [0, 600, 1200, 1800, 2400, 3000]
+  const name = { fontSize: 3.6, fill: '#fff', fontWeight: 700 }
+  const label = (x, w, t, d) => (
+    <g>
+      <text x={x} y={F + 20} fontSize="8.5" fill="var(--ink)" fontWeight="600">{t}</text>
+      <text x={x} y={F + 31} fontSize="7.5" fill="currentColor">{d}</text>
+      <line x1={x} y1={F + 8} x2={x + w} y2={F + 8} stroke="currentColor" strokeWidth="0.5" />
+    </g>
+  )
+  return (
+    <figure className="track-wide mt-10 overflow-x-auto">
+      <svg viewBox="-34 -6 940 380" className="block w-full min-w-[46rem] text-faint" role="img" style={{ fontFamily: SIGN_FONT }}
+        aria-label="The sign family to scale beside a 1650 mm rider: an A3 entrance board at eye height, a 600 by 2000 mm platform totem, a 1600 by 300 mm walkway sign and a 2400 by 300 mm fork sign, both hung with their underside at a proposed 2500 mm.">
+        {/* height grid */}
+        {grid.map((mm) => (
+          <g key={mm}>
+            <line x1="0" x2="900" y1={y(mm)} y2={y(mm)} stroke="currentColor" strokeWidth="0.4" strokeDasharray={mm ? '1.5 3' : undefined} opacity={mm ? 0.6 : 0} />
+            <text x="-6" y={y(mm) + 2.5} fontSize="7" textAnchor="end" fill="currentColor" className="tnum">{mm}</text>
+          </g>
+        ))}
+        <text x="-6" y={y(3300) + 2.5} fontSize="7" textAnchor="end" fill="currentColor">mm</text>
+        <line x1="0" x2="900" y1="0" y2="0" stroke="currentColor" strokeWidth="0.8" />
+        <rect x="0" y={F} width="900" height="4" fill="currentColor" opacity="0.5" />
+
+        {/* rider, 1650 mm */}
+        <g fill="currentColor" opacity="0.45">
+          <circle cx="52" cy={y(1540)} r="11" />
+          <rect x="40" y={y(1410)} width="24" height="58" rx="10" />
+          <rect x="41" y={y(870)} width="10" height="86" rx="5" />
+          <rect x="53" y={y(870)} width="10" height="86" rx="5" />
+          <rect x="32" y={y(1395)} width="9" height="56" rx="4.5" />
+          <rect x="63" y={y(1395)} width="9" height="56" rx="4.5" />
+        </g>
+        {label(30, 50, 'Rider', '1650 mm, for scale')}
+
+        {/* entrance board on a pillar, centred at eye height */}
+        <rect x="124" y="0" width="56" height={F} fill="currentColor" opacity="0.12" />
+        <g>
+          <rect x="137" y={y(1710)} width="30" height="42" fill="#fbfbf8" stroke="currentColor" strokeWidth="0.6" />
+          <rect x="140" y={y(1660)} width="16" height="2.4" fill="#242424" />
+          <rect x="140" y={y(1630)} width="21" height="4.4" fill="#242424" />
+          <rect x="140" y={y(1560)} width="11" height="11" fill="#242424" />
+          <rect x="142" y={y(1540)} width="7" height="7" fill="#fbfbf8" />
+          <rect x="154" y={y(1550)} width="9" height="1.6" fill="#242424" opacity=".6" />
+          <rect x="154" y={y(1520)} width="7" height="1.6" fill="#242424" opacity=".6" />
+        </g>
+        {label(124, 56, 'Entrance QR board', 'A3, centre at 1500 mm')}
+
+        {/* platform totem */}
+        <g>
+          <rect x="230" y={y(2000)} width="60" height="200" rx="2" fill="#fbfbf8" stroke="currentColor" strokeWidth="0.6" />
+          <rect x="230" y={y(2000)} width="60" height="34" rx="2" fill={panel} />
+          <Badge x={235} y={y(1960)} s={18} c={C.violet} n="5" />
+          <text x="257" y={y(1900)} {...name} fontSize="3.2">Mandi House</text>
+          <text x="257" y={y(1860)} {...name} fontSize="3.2">Lajpat Nagar</text>
+          <line x1="242" x2="242" y1={y(1560)} y2={y(800)} stroke={C.violet} strokeWidth="2.4" />
+          {[1560, 1370, 1180, 990, 800].map((mm) => (
+            <g key={mm}><circle cx="242" cy={y(mm)} r="2.6" fill="#fbfbf8" stroke={C.violet} strokeWidth="1.2" /><rect x="249" y={y(mm) - 1.4} width="26" height="2.8" rx="1" fill="#242424" opacity=".7" /></g>
+          ))}
+        </g>
+        {label(230, 60, 'Platform totem', '600 × 2000 mm')}
+
+        {/* hanging signs: rods to the ceiling, underside at 2500 mm */}
+        {[[340, 160], [560, 240]].map(([x, w]) => (
+          <g key={x} stroke="currentColor" strokeWidth="1">
+            <line x1={x + 20} x2={x + 20} y1="0" y2={y(2800)} />
+            <line x1={x + w - 20} x2={x + w - 20} y1="0" y2={y(2800)} />
+          </g>
+        ))}
+        {/* Pink walkway sign, 1600 × 300 */}
+        <g>
+          <rect x="340" y={y(2800)} width="160" height="30" rx="1.5" fill={panel} />
+          <line x1="420" x2="420" y1={y(2780)} y2={y(2520)} stroke="#3b4790" strokeWidth="0.8" />
+          {[[340, '3', 'Vinobapuri · Mayur Vihar-I'], [420, '4', 'South Extension · INA']].map(([x, n, t]) => (
+            <g key={n}>
+              <Tile x={x + 4} y={y(2700)} s={11} dir="up" />
+              <Badge x={x + 18} y={y(2700)} s={11} c={C.pink} n={n} />
+              <text x={x + 33} y={y(2640)} {...name} fontSize="3.4">{t}</text>
+            </g>
+          ))}
+        </g>
+        {label(340, 160, 'Walkway sign', '1600 × 300 mm')}
+
+        {/* Kashmere Gate fork sign, 2400 × 300 */}
+        <g>
+          <rect x="560" y={y(2800)} width="240" height="30" rx="1.5" fill={panel} />
+          {[640, 720].map((x) => <line key={x} x1={x} x2={x} y1={y(2780)} y2={y(2520)} stroke="#3b4790" strokeWidth="0.8" />)}
+          <Tile x={564} y={y(2700)} s={11} dir="up-left" />
+          <Badge x={578} y={y(2700)} s={11} c={C.red} n="3" />
+          <text x="593" y={y(2640)} {...name}>Tis Hazari · Inderlok</text>
+          <Tile x={644} y={y(2700)} s={11} dir="up" />
+          {[['1', C.yellow, 'Chandni Chowk · Rajiv Chowk', true], ['2', C.yellow, 'Civil Lines · Vishwavidyalaya', true], ['5', C.violet, 'Mandi House · Lajpat Nagar']].map(([n, c, t, dark], i) => (
+            <g key={n}>
+              <Badge x={658} y={y(2770) + i * 9.4} s={8} c={c} n={n} dark={dark} />
+              <text x="669" y={y(2770) + i * 9.4 + 5.6} {...name} fontSize="3">{t}</text>
+            </g>
+          ))}
+          <Badge x={724} y={y(2700)} s={11} c={C.red} n="4" />
+          <text x="739" y={y(2640)} {...name}>Shastri Park · Welcome</text>
+          <Tile x={785} y={y(2700)} s={11} dir="up-right" />
+        </g>
+        {label(560, 240, 'Fork sign, Kashmere Gate', '2400 × 300 mm')}
+
+        {/* clearance under the hanging signs */}
+        <g stroke="var(--ink)" strokeWidth="0.7">
+          <line x1="830" x2="830" y1={y(2500)} y2={F} />
+          <path d={`M826 ${y(2500) + 6}l4-6 4 6M826 ${F - 6}l4 6 4-6`} fill="none" />
+          <line x1="800" x2="836" y1={y(2500)} y2={y(2500)} strokeDasharray="2 2" />
+        </g>
+        <text x="840" y={y(1300)} fontSize="8" fill="var(--ink)" className="tnum">2500</text>
+        <text x="840" y={y(1300) + 10} fontSize="7" fill="currentColor">clear below</text>
+        <g stroke="var(--ink)" strokeWidth="0.7">
+          <line x1="808" x2="808" y1={y(2800)} y2={y(2500)} />
+          <path d={`M805 ${y(2800) + 4}l3-4 3 4M805 ${y(2500) - 4}l3 4 3-4`} fill="none" />
+        </g>
+        <text x="813" y={y(2620)} fontSize="7" fill="currentColor" className="tnum">300</text>
+      </svg>
+      <p className="text-faint mt-2 sm:hidden" style={{ fontSize: '0.78rem' }}>Swipe sideways for the whole drawing →</p>
+      <figcaption className="text-faint mt-3" style={{ fontSize: '0.82rem', lineHeight: 1.5 }}>
+        Sign sizes are the artwork’s. Mounting heights are proposals, to be measured at Kashmere Gate.
+      </figcaption>
+    </figure>
+  )
+}
+
+/* One violet row of the sign, at illustration size; parts beyond reading distance are blurred. */
+function SignRow({ id, blur = {} }) {
+  const f = (k) => (blur[k] ? `url(#${id}-${k})` : undefined)
+  const o = (k) => (blur[k] ? 0.55 : 1)
+  return (
+    <svg viewBox="0 0 400 76" className="block w-full" role="img" aria-hidden="true" style={{ fontFamily: SIGN_FONT }}>
+      <defs>
+        {['names', 'line'].map((k) => blur[k] && <filter key={k} id={`${id}-${k}`} x="-10%" y="-40%" width="120%" height="180%"><feGaussianBlur stdDeviation={blur[k]} /></filter>)}
+      </defs>
+      <rect width="400" height="76" rx="6" fill="#1f2a6b" />
+      <Tile x={12} y={14} s={48} dir="up" />
+      <Badge x={70} y={14} s={48} c={C.violet} n="5" />
+      <g filter={f('line')} opacity={o('line')}><text x="132" y="22" fontSize="9" fontWeight="600" fill="#d6dcff">वायलेट लाइन · Violet Line</text></g>
+      <g filter={f('names')} opacity={o('names')}>
+        <text x="132" y="44" fontSize="17" fontWeight="700" fill="#fff">मंडी हाउस · लाजपत नगर</text>
+        <text x="132" y="64" fontSize="17" fontWeight="700" fill="#fff">Mandi House · Lajpat Nagar</text>
+      </g>
+    </svg>
+  )
+}
+
+/*
+ * What a rider can read on the way to the fork. Reading distance from cap height, using a
+ * rule of thumb (to be measured on site): the number and arrow decide from across the hall,
+ * the names confirm the direction, the line name is for the last few metres.
+ */
 export function ReadingDistance() {
-  const rows = [['Platform number', 105, 16, 42], ['Station names', 60, 9, 24], ['Line name', 25, 4, 10]]
-  const max = 42
+  const D = 45
+  const x = (m) => 30 + (m / D) * 840
+  const bands = [['Arrow and number', '105 mm cap', 16, 42, 'var(--ink)'], ['Station names', '60 mm cap', 9, 24, 'var(--ink)'], ['Line name', '25 mm cap', 4, 10, 'var(--ink)']]
+  const views = [
+    [40, 'Across the hall', 'The arrow and the 5 are enough to pick the platform.', { names: 2.6, line: 2 }],
+    [20, 'Walking up', 'The station names confirm the direction.', { line: 1.6 }],
+    [8, 'Under the sign', 'The line name, for the last few metres.', {}],
+  ]
+  const rider = (m) => (
+    <g key={m} transform={`translate(${x(m)} 0)`} fill="var(--ink)">
+      <circle cx="2" cy="113" r="4.6" />
+      <path d="M-3 120h9l2 18h-3l-1 16h-3.4l-.6-14-.6 14H-4l-1-16h-3z" />
+    </g>
+  )
   return (
     <div className="track-wide mt-10">
-      {rows.map(([n, cap, lo, hi]) => (
-        <div key={n} className="grid grid-cols-[8rem_1fr_5.5rem] items-center gap-4 border-t border-rule py-3 sm:grid-cols-[11rem_1fr_6rem]">
-          <span><span className="text-ink block" style={{ fontSize: '0.95rem' }}>{n}</span><span className="text-faint block font-mono" style={{ fontSize: '0.75rem' }}>{cap} mm cap</span></span>
-          <span className="relative h-2 rounded-full" style={{ background: 'var(--rule)' }}>
-            <span className="absolute inset-y-0 rounded-full" style={{ left: `${(lo / max) * 100}%`, width: `${((hi - lo) / max) * 100}%`, background: 'var(--ink)' }} />
-          </span>
-          <span className="text-ink tnum text-right" style={{ fontSize: '0.9rem' }}>{lo}–{hi} m</span>
-        </div>
-      ))}
-      <p className="text-faint border-t border-rule pt-3" style={{ fontSize: '0.82rem' }}>The number and arrow carry the decision from across the hall; the names confirm it closer in. Rule of thumb, to be measured on site.</p>
+      <div className="overflow-x-auto">
+        <svg viewBox="-20 0 920 190" className="block w-full min-w-[40rem] text-faint" role="img" style={{ fontFamily: SIGN_FONT }}
+          aria-label="Distance from the sign, 0 to 45 metres. The arrow and number read from 16 to 42 metres, the station names from 9 to 24 metres, the line name from 4 to 10 metres. Riders stand at 40, 20 and 8 metres.">
+          {/* the sign, hung at the left */}
+          <line x1={x(0)} x2={x(0)} y1="0" y2="96" stroke="currentColor" strokeWidth="1" />
+          <rect x={x(0) - 6} y="96" width="12" height="10" rx="1.5" fill="#1f2a6b" />
+          <rect x={x(0) - 3} y="98.5" width="6" height="5" rx="0.8" fill={C.violet} />
+          <text x={x(0) - 10} y="102" fontSize="7.5" textAnchor="end" fill="currentColor">Sign</text>
+          {/* reading bands */}
+          {bands.map(([t, cap, lo, hi], i) => (
+            <g key={t}>
+              <text x={x(0) + 16} y={18 + i * 26} fontSize="9" fill="var(--ink)" fontWeight="600">{t}</text>
+              <text x={x(0) + 16} y={28 + i * 26} fontSize="7.5" fill="currentColor">{cap}</text>
+              <rect x={x(lo)} y={12 + i * 26} width={x(hi) - x(lo)} height="8" rx="4" fill="var(--ink)" opacity={1 - i * 0.22} />
+              <text x={x(hi) + 6} y={19 + i * 26} fontSize="7.5" fill="currentColor" className="tnum">{lo}–{hi} m</text>
+            </g>
+          ))}
+          {/* riders and their sight lines */}
+          {views.map(([m]) => <line key={m} x1={x(m)} x2={x(m)} y1="6" y2="108" stroke="var(--ink)" strokeWidth="0.6" strokeDasharray="2 2.5" />)}
+          {views.map(([m]) => rider(m))}
+          {/* floor and distance scale */}
+          <line x1={x(0) - 10} x2={x(D)} y1="154" y2="154" stroke="currentColor" strokeWidth="1" />
+          {Array.from({ length: D / 5 + 1 }, (_, i) => i * 5).map((m) => (
+            <g key={m}>
+              <line x1={x(m)} x2={x(m)} y1="154" y2="158" stroke="currentColor" strokeWidth="0.8" />
+              <text x={x(m)} y="170" fontSize="7.5" textAnchor="middle" fill="currentColor" className="tnum">{m}</text>
+            </g>
+          ))}
+          <text x={x(D)} y="184" fontSize="7.5" textAnchor="end" fill="currentColor">metres from the sign</text>
+        </svg>
+      </div>
+      <p className="text-faint mt-2 sm:hidden" style={{ fontSize: '0.78rem' }}>Swipe sideways for the whole drawing →</p>
+      <div className="mt-8 grid gap-6 sm:grid-cols-3">
+        {views.map(([m, t, d, blur]) => (
+          <figure key={m}>
+            <SignRow id={`rd${m}`} blur={blur} />
+            <figcaption className="mt-3">
+              <span className="text-faint tnum block font-mono" style={{ fontSize: '0.75rem' }}>{m} m · {t}</span>
+              <span className="text-ink mt-1 block" style={{ fontSize: '0.95rem', lineHeight: 1.45 }}>{d}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+      <p className="text-faint mt-6 border-t border-rule pt-3" style={{ fontSize: '0.82rem', lineHeight: 1.5 }}>Distances from cap height by a rule of thumb, to be measured on site. Blur shows what can’t be read yet.</p>
     </div>
   )
 }
