@@ -945,3 +945,6 @@ html[data-room] .lamp-glow-anchor { display: none; }
 @media (prefers-reduced-motion: reduce) {
   .la-island, .la-island__compact, .la-island__full { transition: none !important; }
 }
+
+/* The scroll-filled statement on /signal: with Reduce Motion it is plain, fully inked text. */
+@media (prefers-reduced-motion: reduce) { .sig-statement > span { opacity: 1 !important; } }
