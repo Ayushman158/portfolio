@@ -6,13 +6,10 @@
  * Inside the specimens colour is content (it is the sign); the page around them
  * keeps to the site's tokens.
  */
-import { Noto_Sans, Noto_Sans_Devanagari } from 'next/font/google'
 import { W } from './wayfinding'
 import { LINES, Mark as BaseMark } from './marks'
-
-const latin = Noto_Sans({ subsets: ['latin'], weight: ['400', '600', '700', '800'], display: 'swap' })
-const deva = Noto_Sans_Devanagari({ subsets: ['devanagari'], weight: ['400', '600', '700'], display: 'swap' })
-const SIGN_FONT = `${latin.style.fontFamily}, ${deva.style.fontFamily}, system-ui, sans-serif`
+import { SIGN_FONT, deva } from './font'
+import { Phone } from './device'
 
 const PANEL = '#1f2a6b'
 const ON_LIGHT = '#ffffff'
@@ -40,9 +37,9 @@ export function Collage() {
     <div className="track-wide mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:grid-rows-2" style={{ fontFamily: SIGN_FONT }}>
       <img src={`${W}/render-blade.jpg`} alt="Concept render: a violet platform 5 blade sign on a concrete wall in soft sunlight" className={`${tile} col-span-2 block aspect-square h-full w-full object-cover sm:row-span-2 sm:aspect-auto`} style={{ border: '1px solid var(--rule)' }} />
       <div className={`${tile} row-span-2 grid place-items-center p-3 sm:p-4`} style={{ background: '#e9e4f7' }}>
-        <div className="w-full max-w-[12rem] overflow-hidden rounded-[1.6rem]" style={{ border: '5px solid #121212', background: '#121212' }}>
-          <img src={`${W}/saathi-screen-platform.jpg`} alt="Saathi, the route finder: Platform 5, straight ahead, Violet Line" className="block w-full" />
-        </div>
+        <Phone className="max-w-[11rem]">
+          <img src="/signal/gallery/screen-trip.jpg" alt="Saathi, the route finder: the whole trip from Kashmere Gate, platform 5, change at Lajpat Nagar to platform 3, then the exit" className="block w-full" />
+        </Phone>
       </div>
       <div className={`${tile} grid aspect-square place-items-center`} style={{ background: PANEL }} role="img" aria-label="Platform badge: 5 on violet">
         <span className="grid h-[44%] w-[44%] place-items-center rounded-xl" style={{ background: violet.hex, border: '4px solid #fbfbf8', color: '#fbfbf8', fontSize: 'clamp(2rem, 4.4vw, 3.4rem)', fontWeight: 800 }}>5</span>
@@ -290,24 +287,30 @@ export function LineTable() {
 
 /* More of the system, drifting past: only pieces that appear nowhere else on the page. */
 const GALLERY = [
-  ['screen-train', 'phone', 'Saathi on the train: your stop, Lajpat Nagar, and the stops to count'],
+  ['screen-stops', 'phone', 'Saathi with the stop list open: the eleven stations to Lajpat Nagar, in English and Hindi'],
   ['board-inside', 'board', 'The inside board: a printed table of places from Kashmere Gate, each with its platform and gate'],
-  ['screen-change', 'phone', 'Saathi with a change: change at Lajpat Nagar to platform 3, Pink Line'],
-  ['screen-platform-hi', 'phone', 'Saathi in Hindi: platform 5, straight ahead'],
+  ['screen-trip-hi', 'phone', 'Saathi in Hindi: the whole trip, platform 5, change at Lajpat Nagar to platform 3'],
   ['board-entrance', 'board', 'The entrance board: where are you going, with the QR code that opens Saathi'],
-  ['screen-exit', 'phone', 'Saathi on arrival: the exit gate and the walk'],
-  ['screen-landing-hi', 'phone', 'Saathi’s first screen in Hindi'],
+  ['screen-exit', 'phone', 'Saathi to a place: Gate 5, nearest Lajpat Nagar Central Market, a 3 minute walk'],
+  ['screen-landing-hi', 'phone', 'Saathi’s first screen in Hindi', '#ffffff'],
 ]
 export function Gallery() {
   const h = 'h-[18rem] sm:h-[24rem]'
-  const item = ([src, kind, alt], i, hidden) => (
-    <img key={`${src}-${i}`} src={`/signal/gallery/${src}.jpg`} alt={hidden ? '' : alt} aria-hidden={hidden || undefined} loading="lazy"
-      className={`${h} block w-auto shrink-0 object-contain ${kind === 'phone' ? 'rounded-[1.6rem]' : 'rounded-xl'}`}
-      style={{ border: kind === 'phone' ? '6px solid #121212' : '1px solid var(--rule)', background: '#fbfbf8' }} />
-  )
+  // A phone is 2.08 times as tall as it is wide, so its width is set to match the boards' height.
+  const item = ([src, kind, alt, bar], i, hidden) =>
+    kind === 'phone' ? (
+      <div key={`${src}-${i}`} aria-hidden={hidden || undefined} className="w-[8.65rem] shrink-0 self-center sm:w-[11.5rem]">
+        <Phone bar={bar ?? '#f4f4f4'}>
+          <img src={`/signal/gallery/${src}.jpg`} alt={hidden ? '' : alt} loading="lazy" className="block w-full" />
+        </Phone>
+      </div>
+    ) : (
+      <img key={`${src}-${i}`} src={`/signal/gallery/${src}.jpg`} alt={hidden ? '' : alt} aria-hidden={hidden || undefined} loading="lazy"
+        className={`${h} block w-auto shrink-0 rounded-xl object-contain`} style={{ border: '1px solid var(--rule)', background: '#fbfbf8' }} />
+    )
   return (
     <figure className="sig-gallery mt-24 sm:mt-32" aria-label="More screens and signs">
-      <div className="sig-gallery__track flex w-max gap-4">
+      <div className="sig-gallery__track flex w-max items-center gap-4">
         {GALLERY.map((g, i) => item(g, i, false))}
         {GALLERY.map((g, i) => item(g, i + GALLERY.length, true))}
       </div>
@@ -345,7 +348,7 @@ const JOURNEY = [
   ['Ticket counter', 'Where do I go after the gates?', 'The fare printed largest', 'The ticket prints platform 5 · Violet Line', 'Built · 1 tester'],
   ['The fork', 'Which of three platforms?', 'One arrow, last stations only', 'One row per platform: Mandi House · Lajpat Nagar', 'Tested with 84 riders'],
   ['Top of the stairs', 'Is this my side?', 'The last station again, nothing to confirm it', 'The same violet 5 confirms it', 'Same key as the fork'],
-  ['On the train', 'When do I get off?', 'Count the stations yourself', 'Saathi shows your stop and the stops to count', 'Built · untested'],
+  ['On the train', 'When do I get off?', 'Count the stations yourself', 'Saathi lists every stop, to match the light strip above the doors', 'Built · untested'],
   ['Exit', 'Which gate?', 'Guess', 'Gate 5, nearest the market', 'Built · untested'],
 ]
 export function Journey() {

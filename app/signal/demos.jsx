@@ -10,6 +10,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useReducedMotion } from 'motion/react'
 import manifest from '../../public/signal/clips/clips.json'
+import { Phone } from './device'
 
 const C = '/signal/clips'
 
@@ -36,8 +37,9 @@ function useClip(ref, reduce) {
 }
 
 function Frame({ shape, children }) {
-  // A plain device outline: the recording is the phone screen, nothing invented around it.
-  const r = shape === 'land' ? 'rounded-[1.4rem]' : 'rounded-[2rem]'
+  // Phone recordings sit in the drawn iPhone; landscape test clips keep a plain outline.
+  if (shape !== 'land') return <Phone bar="#ffffff">{children}</Phone>
+  const r = 'rounded-[1.4rem]'
   return (
     <div className={`relative overflow-hidden ${r}`} style={{ border: '6px solid #121212', background: '#121212', boxShadow: '0 0 0 1px var(--rule)' }}>
       {children}
@@ -82,8 +84,8 @@ export function StepVideo({ name, label, shape = 'phone', className = '', steps:
   const seek = (i) => { const v = ref.current; if (!v) return; v.currentTime = steps[i][1] + 0.01; v.play().catch(() => {}) }
   const land = shape === 'land'
   return (
-    <div className={`grid items-start gap-6 ${land ? '' : 'sm:grid-cols-[minmax(0,15rem)_1fr] sm:gap-10'} ${className}`}>
-      <div className={land ? '' : 'mx-auto w-full max-w-[15rem]'}>
+    <div className={`grid items-start gap-6 ${land ? '' : 'sm:grid-cols-[minmax(0,16.5rem)_1fr] sm:gap-12'} ${className}`}>
+      <div className={land ? '' : 'mx-auto w-full max-w-[16.5rem]'}>
         <Frame shape={shape}>
           <video ref={ref} src={`${C}/${name}.mp4`} poster={`${C}/${name}.jpg`} muted loop playsInline preload="metadata" aria-label={label} className="block w-full" />
           <PlayButton playing={playing} toggle={toggle} label={label} />

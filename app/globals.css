@@ -876,3 +876,72 @@ html[data-room] .lamp-glow-anchor { display: none; }
 [data-theme="dark"]:not([data-light-only]) .sig-light { display: none; }
 [data-theme="dark"]:not([data-light-only]) .sig-dark { display: block; }
 [data-theme="dark"]:not([data-light-only]) .sig-dim { filter: brightness(0.88); }
+
+/* ───────── Device mockups (app/signal/device.jsx) ─────────
+   A 6.1" iPhone drawn in container units: 1cqw = 1% of the phone's width, so a single
+   width scales the band, glass, island and buttons together. Screen 393 × 852 pt. */
+.iph { position: relative; container-type: inline-size; width: 100%; }
+.iph__band { padding: 1.2cqw; border-radius: 16.8cqw;
+  background: linear-gradient(140deg, #9a9aa0 0%, #45454a 14%, #1f1f22 46%, #2e2e33 74%, #8c8c92 100%);
+  box-shadow: inset 0 0 0 .22cqw rgba(255,255,255,.22), 0 3cqw 7cqw -3cqw rgba(16,18,24,.38), 0 1cqw 2.4cqw -1cqw rgba(16,18,24,.22); }
+.iph__glass { padding: 2.6cqw; border-radius: 15.6cqw; background: #050506; box-shadow: inset 0 0 0 .3cqw #1b1b1e; }
+.iph__screen { position: relative; overflow: hidden; aspect-ratio: 393 / 852; border-radius: 12.9cqw; container-type: inline-size; isolation: isolate; }
+.iph__status { position: absolute; inset: 0 0 auto; z-index: 2; height: 13.7cqw; display: grid; grid-template-columns: 1fr 34cqw 1fr; align-items: center; justify-items: center;
+  font: 600 4.3cqw/1 -apple-system, "SF Pro Text", system-ui, sans-serif; letter-spacing: -.01em; }
+.iph__time { padding-left: 2cqw; }
+.iph__icons { display: inline-flex; align-items: center; gap: 1.5cqw; padding-right: 1cqw; }
+.iph__ico { height: 2.9cqw; width: auto; display: block; }
+.iph__ico--bat { height: 3.1cqw; }
+.iph__island { position: absolute; z-index: 3; top: 2.8cqw; left: 50%; width: 31.8cqw; height: 9.4cqw; transform: translateX(-50%); border-radius: 999px; background: #000; }
+.iph__content { position: absolute; inset: 13.7cqw 0 0; overflow: hidden; }
+.iph__content--bare { inset: 0; display: flex; flex-direction: column; }
+.iph__content > img, .iph__content > video { display: block; width: 100%; height: auto; }
+.iph__btn { position: absolute; z-index: -1; width: 1.6cqw; border-radius: .8cqw; background: linear-gradient(90deg, #6d6d72, #2c2c30 60%, #4a4a4f); }
+.iph__btn--action { left: -.7cqw; top: 15.5%; height: 3.4%; }
+.iph__btn--up { left: -.7cqw; top: 22.5%; height: 6.6%; }
+.iph__btn--down { left: -.7cqw; top: 31%; height: 6.6%; }
+.iph__btn--power { right: -.7cqw; top: 25%; height: 10.4%; }
+
+/* Live Activity concept: the island and the lock screen */
+.la-badge { display: inline-grid; place-items: center; flex: none; color: #fff; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums lining-nums; }
+.la-badge--sm { width: 6.6cqw; height: 6.6cqw; border-radius: 1.9cqw; font-size: 4.2cqw; }
+.la-badge--md { width: 9.4cqw; height: 9.4cqw; border-radius: 2.6cqw; font-size: 5.4cqw; }
+.la-badge--lg { width: 13cqw; height: 13cqw; border-radius: 3.4cqw; font-size: 7.6cqw; }
+
+/* Compact, the island widens around the camera to hold the two numbers; open, it drops into a
+   card. Opening uses a light overshoot like the real island; closing is quicker and settles flat. */
+.la-island { position: absolute; z-index: 3; top: 2.8cqw; left: 50%; transform: translateX(-50%); width: 44cqw; height: 9.4cqw; padding: 0; border: 0; border-radius: 4.7cqw; overflow: hidden;
+  background: #000; color: #fff; cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transition: width 380ms cubic-bezier(.32,.72,0,1), height 380ms cubic-bezier(.32,.72,0,1), border-radius 380ms cubic-bezier(.32,.72,0,1); }
+.la-island.is-open { width: 94cqw; height: 37cqw; border-radius: 11.5cqw;
+  transition: width 560ms cubic-bezier(.3,1.22,.5,1), height 560ms cubic-bezier(.3,1.22,.5,1), border-radius 560ms cubic-bezier(.3,1.22,.5,1); }
+.la-island:focus-visible { outline: .6cqw solid #fff; outline-offset: .6cqw; }
+.la-island__compact { position: absolute; inset: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 1.4cqw; transition: opacity 200ms ease 160ms; }
+.la-island.is-open .la-island__compact { opacity: 0; transition: opacity 120ms ease; }
+.la-island__full { position: absolute; top: 0; left: 50%; width: 94cqw; height: 37cqw; transform: translateX(-50%); display: flex; flex-direction: column; padding: 5.4cqw 5.6cqw 4.6cqw; text-align: left;
+  opacity: 0; filter: blur(.6cqw); transition: opacity 140ms ease, filter 140ms ease; }
+.la-island.is-open .la-island__full { opacity: 1; filter: none; transition: opacity 300ms cubic-bezier(.23,1,.32,1) 150ms, filter 300ms cubic-bezier(.23,1,.32,1) 150ms; }
+.la-island__row { display: flex; align-items: center; gap: 3.4cqw; }
+.la-island__text { display: flex; flex-direction: column; gap: .8cqw; min-width: 0; }
+.la-island__text b { font-size: 4.6cqw; line-height: 1.2; font-weight: 700; }
+.la-island__text small { font-size: 3.3cqw; line-height: 1.3; font-weight: 600; color: rgba(255,255,255,.66); }
+.la-island__foot { margin-top: auto; display: flex; justify-content: space-between; gap: 2cqw; padding-top: 2.6cqw; border-top: .25cqw solid rgba(255,255,255,.14); font-size: 3.3cqw; line-height: 1.2; font-weight: 600; color: rgba(255,255,255,.72); }
+
+.la-lock { padding-top: 21cqw; text-align: center; color: rgba(255,255,255,.92); }
+.la-lock__date { margin: 0; font-size: 4.8cqw; font-weight: 600; letter-spacing: .01em; }
+.la-lock__clock { margin: .6cqw 0 0; font-size: 24cqw; line-height: 1; font-weight: 700; letter-spacing: -.02em; }
+.la-card { margin: auto 3.6cqw 11cqw; padding: 4.6cqw 4.6cqw 4cqw; border-radius: 6.4cqw; color: #fff;
+  background: rgba(28,26,36,.58); -webkit-backdrop-filter: blur(22px) saturate(1.5); backdrop-filter: blur(22px) saturate(1.5); box-shadow: inset 0 0 0 .25cqw rgba(255,255,255,.08); }
+.la-card__head { display: flex; align-items: center; gap: 2cqw; font-size: 3.6cqw; line-height: 1; font-weight: 700; }
+.la-card__app { display: grid; place-items: center; width: 6cqw; height: 6cqw; padding: .9cqw; border-radius: 1.6cqw; background: #121212; box-sizing: border-box; }
+.la-card__to { margin-left: auto; color: rgba(255,255,255,.66); font-weight: 600; }
+.la-card__route { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 4.6cqw; }
+.la-card__rail { position: absolute; left: 16.66%; right: 16.66%; top: 4.1cqw; height: 1.2cqw; display: flex; }
+.la-card__rail i { flex: 1; }
+.la-card__stop { position: relative; display: flex; flex-direction: column; align-items: center; gap: 1.8cqw; }
+.la-card__stop .la-badge { box-shadow: 0 0 0 .9cqw rgba(34,31,44,1); }
+.la-card__name { font-size: 3.3cqw; line-height: 1.2; font-weight: 700; text-align: center; }
+.la-card__note { margin: 3.6cqw 0 0; font-size: 3.1cqw; line-height: 1.3; font-weight: 600; text-align: center; color: rgba(255,255,255,.68); }
+@media (prefers-reduced-motion: reduce) {
+  .la-island, .la-island__compact, .la-island__full { transition: none !important; }
+}

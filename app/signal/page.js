@@ -1,10 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { motion, useReducedMotion } from 'motion/react'
+import { useEffect, useRef, useState } from 'react'
+import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { Back, Facts, Heading, Impact, Subhead, Tradeoffs } from '../components/case-study'
 import { Compare, W } from './wayfinding'
 import { StepVideo } from './demos'
+import { LiveActivity } from './device'
+import { SIGN_FONT } from './font'
 import { BeforeAfter, Collage, ColourVision, Gallery, Journey, GridSpec, KeyDiagram, LineTable, Mismatch, Principles, ReadingDistance, References, TypeSpecimen } from './system'
 
 /*
@@ -84,6 +86,43 @@ const Part = ({ label, children }) => (
 
 const Note = ({ children, className = 'mt-4' }) => <p className={`text-faint ${className}`} style={{ fontSize: '0.88rem', lineHeight: 1.5 }}>{children}</p>
 
+/*
+ * The project in one statement, read as you scroll: each word fills from faint to ink as it
+ * reaches the middle of the screen, so the eye is led through it once (after Glydways' Metro
+ * page). The badge inline is the one thing a rider has to remember. Reduce Motion: plain text.
+ */
+const STATEMENT = 'Delhi Metro signs name each train by the last station on its line, so riders have to know the network to pick a platform. I redesigned the signs around the stations riders travel to {chip} and added QR boards that open a route finder for riders who get lost. With the new signs, 80% of riders picked the right platform first try, up from 45%.'
+
+const Chip = () => (
+  <span className="mx-1 inline-flex translate-y-[-0.12em] items-center gap-2 rounded-full py-1 pl-1 pr-3 align-middle" style={{ border: '1px solid var(--rule)', background: 'var(--ground)', fontFamily: SIGN_FONT, fontSize: '0.5em', lineHeight: 1, fontWeight: 700, color: 'var(--ink)' }}>
+    <span className="grid h-[1.9em] w-[1.9em] place-items-center rounded-[0.5em]" style={{ background: '#7b3fe0', color: '#fff' }}>5</span>
+    Lajpat Nagar
+  </span>
+)
+
+function Word({ progress, range, children }) {
+  const opacity = useTransform(progress, range, [0.18, 1])
+  return <motion.span style={{ opacity }}>{children}</motion.span>
+}
+
+function Statement() {
+  const ref = useRef(null)
+  const reduce = useReducedMotion()
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.85', 'end 0.5'] })
+  const words = STATEMENT.split(' ')
+  return (
+    <p ref={ref} className="headline mt-24 sm:mt-32" style={{ fontSize: 'clamp(1.6rem, 1.15rem + 1.5vw, 2.2rem)', lineHeight: 1.28, textWrap: 'pretty' }}>
+      {words.map((w, i) => {
+        const node = w === '{chip}' ? <Chip /> : w
+        const tail = i < words.length - 1 ? ' ' : ''
+        if (reduce) return <span key={i}>{node}{tail}</span>
+        const a = i / words.length
+        return <Word key={i} progress={scrollYProgress} range={[a, a + 1.6 / words.length]}>{node}{tail}</Word>
+      })}
+    </p>
+  )
+}
+
 export default function Signal() {
   const reduceMotion = useReducedMotion()
   const active = useActive(IDS)
@@ -102,14 +141,22 @@ export default function Signal() {
       <section id="overview" className="scroll-mt-24">
         <motion.header {...rise(0.06)} className="mt-10 space-y-5">
           <h1 className="display">Helping Delhi Metro riders find their way: new signs and a QR route finder</h1>
-          <p className="text-ink" style={{ fontSize: '1.3rem', lineHeight: 1.45 }}>
-            Delhi Metro signs name each train by the last station on its line, so riders have to know the network to pick a platform. I redesigned the signs around the stations riders travel to, and added QR boards that open a route finder for riders who get lost. With the new signs, 80% of riders picked the right platform first try, up from 45%.
-          </p>
         </motion.header>
 
         <motion.div {...rise(0.12)}>
           <Collage />
         </motion.div>
+
+
+        <Facts rows={[
+          ['Project', 'Signal, for the Delhi Metro'],
+          ['Role', 'Solo: research, design, prototype'],
+          ['Scope', <span key="scope" className="block leading-relaxed">Signage and wayfinding<br />Type and colour system<br />Paper ticket<br />QR boards<br />Saathi, a route finder</span>],
+          ['Context', 'M.Des Interaction Design, UPES'],
+          ['Year', '2026'],
+        ]} />
+
+        <Statement />
 
         <Impact
           label="Impact"
@@ -120,13 +167,6 @@ export default function Signal() {
             ['84', 'riders on their own phones'],
           ]}
         />
-
-        <Facts rows={[
-          ['Role', 'Solo: research, sign design, prototype'],
-          ['Context', 'M.Des Interaction Design, UPES'],
-          ['Timeline', 'October to November 2026'],
-          ['Built', 'Signs, a paper ticket, an entrance board and Saathi, a route finder'],
-        ]} />
 
       </section>
 
@@ -156,6 +196,11 @@ export default function Signal() {
         <BeforeAfter />
         <figure className="track-wide mt-20">
           <img src={`${W}/render-fork.jpg`} alt="Concept render: the redesigned Kashmere Gate sign hanging where the concourse splits three ways, each arrow over its path" className="block aspect-[3/1] w-full rounded-xl object-cover" style={{ objectPosition: '50% 8%', border: '1px solid var(--rule)' }} />
+          <figcaption className="mt-4 grid gap-x-6 gap-y-2 sm:grid-cols-3">
+            {['The number names the platform', 'The colour names the line', 'Two stations name the direction'].map((c) => (
+              <span key={c} className="text-faint border-t border-rule pt-3" style={{ fontSize: '0.72rem', letterSpacing: '0.08em', textTransform: 'uppercase' }}>{c}</span>
+            ))}
+          </figcaption>
         </figure>
         <figure className="track-wide mt-6">
           <img src={`${W}/render-totem.jpg`} alt="Concept render: a platform totem for platform 5, Violet Line, listing the next five stops" loading="lazy" className="block aspect-[16/10] w-full rounded-xl object-cover" style={{ objectPosition: '50% 50%', border: '1px solid var(--rule)' }} />
@@ -188,8 +233,17 @@ export default function Signal() {
       </Section>
 
       {/* ---------- Demo: Saathi ---------- */}
-      <Section id="saathi" n="07" title="Saathi, the route finder" lede="Saathi answers like a person would, one thing at a time: the platform, then the stop, then the gate.">
+      <Section id="saathi" n="07" title="Saathi, the route finder" lede="A rider reads the route once at the board and puts the phone away, so Saathi shows the whole trip on one screen: the numbers to remember on top, the full route below.">
         <StepVideo className="track-wide mt-16" name="saathi-trip" label="Saathi recording: a trip from Kashmere Gate to Lajpat Nagar Central Market" />
+        <Part label="Concept: Saathi as an app">
+          <div className="track-wide mt-6 grid items-center gap-10 sm:grid-cols-[minmax(0,16.5rem)_1fr] sm:gap-12">
+            <LiveActivity className="mx-auto max-w-[16.5rem]" />
+            <div className="space-y-4" style={{ maxWidth: '26rem' }}>
+              <p className="text-ink" style={{ fontSize: '1.05rem', lineHeight: 1.55 }}>As an app, the trip could stay on the lock screen with no signal. The Dynamic Island opens to the step that matters now, in the sign’s own words; the lock screen keeps the whole route.</p>
+              <p className="text-faint" style={{ fontSize: '0.88rem', lineHeight: 1.5 }}>Not built. A website can’t reach the island or the lock screen. Tap the island to open or close it.</p>
+            </div>
+          </div>
+        </Part>
         <p className="mt-10" style={{ fontSize: '0.95rem' }}>
           Live at <a className="prose-link" href="https://saathi-delhi-metro.vercel.app" target="_blank" rel="noreferrer">saathi-delhi-metro.vercel.app</a>.
         </p>
