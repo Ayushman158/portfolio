@@ -94,8 +94,9 @@ const Note = ({ children, className = 'mt-4' }) => <p className={`text-faint ${c
 const STATEMENT = 'Delhi Metro signs name each train by the last station on its line, so riders have to know the network to pick a platform. I redesigned the signs around the stations riders travel to, like {chip}, and added QR boards that open a route finder for riders who get lost. With the new signs, 80% of riders picked the right platform first try, up from 45%.'
 
 const Chip = () => (
-  <span className="mx-1 inline-flex translate-y-[-0.12em] items-center gap-2 rounded-full py-1 pl-1 pr-3 align-middle" style={{ border: '1px solid var(--rule)', background: 'var(--ground)', fontFamily: SIGN_FONT, fontSize: '0.5em', lineHeight: 1, fontWeight: 700, color: 'var(--ink)' }}>
-    <span className="grid h-[1.9em] w-[1.9em] place-items-center rounded-[0.5em]" style={{ background: '#7b3fe0', color: '#fff' }}>5</span>
+  // Concentric corners: the box's radius is the badge's radius plus the gap around it.
+  <span className="inline-flex translate-y-[-0.12em] items-center gap-[0.55em] align-middle" style={{ padding: '0.3em 0.75em 0.3em 0.3em', borderRadius: '0.75em', border: '1px solid var(--rule)', background: 'var(--ground)', fontFamily: SIGN_FONT, fontSize: '0.5em', lineHeight: 1, fontWeight: 700, color: 'var(--ink)' }}>
+    <span className="grid h-[1.9em] w-[1.9em] place-items-center" style={{ borderRadius: '0.45em', background: '#7b3fe0', color: '#fff' }}>5</span>
     Lajpat Nagar
   </span>
 )
