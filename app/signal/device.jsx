@@ -76,7 +76,8 @@ function Island() {
   const [open, setOpen] = useState(false)
   const [held, setHeld] = useState(false)
   useEffect(() => {
-    if (reduce) return setOpen(true)
+    // Reduce Motion: start open and stay still; a tap still opens or closes it.
+    if (reduce) { if (!held) setOpen(true); return }
     if (held || typeof IntersectionObserver === 'undefined') return
     let timer = 0
     let seen = false
