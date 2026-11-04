@@ -1,26 +1,26 @@
 {
   "saathi-trip": {
-    "duration": 15.86,
+    "duration": 18.82,
     "steps": [
       {
         "label": "Saathi asks where you’re going",
-        "t": 0.12
+        "t": 0.04
       },
       {
         "label": "You type a place, not a station",
-        "t": 2.72
+        "t": 2.64
       },
       {
-        "label": "Platform first, in the sign’s own words",
-        "t": 6
+        "label": "The whole trip at once: platform, the gate, the walk",
+        "t": 5.74
       },
       {
-        "label": "On the train: your stop, and the stops to count",
-        "t": 9.23
+        "label": "The stops, to match the strip above the doors",
+        "t": 9.74
       },
       {
-        "label": "On arrival: the right gate and the walk",
-        "t": 12.25
+        "label": "The gate nearest the place, and the walk there",
+        "t": 13.61
       }
     ]
   },
