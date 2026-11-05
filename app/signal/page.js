@@ -42,9 +42,9 @@ const BOARD_PINS = [
   { x: 10, y: 80, title: 'It works with no phone', body: 'The table is the answer. The QR and a typed address are only for places not on the list.' },
 ]
 const SAATHI_PINS = [
-  { x: 68, y: 25.3, title: 'In the sign’s own words', body: 'The first line is the direction the station signs use, so the phone and the station never disagree.' },
-  { x: 88, y: 56, title: 'The numbers to remember, on top', body: 'The platform and the exit, in the same badges as the signs. A rider reads them once at the board and puts the phone away.' },
-  { x: 51, y: 81.2, title: 'The full route below', body: 'The stops fold into one line, and open to match the strip above the doors.' },
+  { x: 68, y: 18.9, title: 'In the sign’s own words', body: 'The first line is the direction the station signs use, so the phone and the station never disagree.' },
+  { x: 88, y: 51.2, title: 'The numbers to remember, on top', body: 'The platform and the exit, in the same badges as the signs. A rider reads them once at the board and puts the phone away.' },
+  { x: 51, y: 77.5, title: 'The full route below', body: 'The stops fold into one line, and open to match the strip above the doors.' },
 ]
 
 const IDS = GROUPS.flatMap(([, items]) => items.map(([id]) => id))
@@ -272,7 +272,7 @@ export default function Signal() {
         <AnnotatedScreen
           src={`${W}/saathi-route.jpg`}
           width={780}
-          height={1804}
+          height={1720}
           maxW="16.5rem"
           alt="Saathi's route to Lajpat Nagar: Take the train towards Raja Nahar Singh (Ballabhgarh); a summary card with platform 5, Violet Line, at Kashmere Gate and the exit at Lajpat Nagar; below it the full route, with 11 stops folded into one line and the exit"
           pins={SAATHI_PINS}
