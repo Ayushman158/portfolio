@@ -6,7 +6,6 @@ import { Back, Facts, Heading, Impact, Subhead, Tradeoffs } from '../components/
 import AnnotatedScreen from '../components/annotated-screen'
 import { Compare, W } from './wayfinding'
 import { StepVideo } from './demos'
-import { LiveActivity } from './device'
 import { SIGN_FONT } from './font'
 import { BeforeAfter, Collage, ColourVision, Journey, GridSpec, SignFamily, KeyDiagram, LineTable, Mismatch, ReadingDistance, References, TypeSpecimen } from './system'
 
@@ -278,15 +277,6 @@ export default function Signal() {
           pins={SAATHI_PINS}
           caption="Saathi is an unofficial student prototype, not made with or for DMRC."
         />
-        <Part label="Concept: Saathi as an app">
-          <div className="track-wide mt-6 grid items-center gap-10 sm:grid-cols-[minmax(0,16.5rem)_1fr] sm:gap-12">
-            <LiveActivity className="mx-auto max-w-[16.5rem]" />
-            <div className="space-y-4" style={{ maxWidth: '26rem' }}>
-              <p className="text-ink" style={{ fontSize: '1.05rem', lineHeight: 1.55 }}>As an app, the trip could stay on the lock screen with no signal. The Dynamic Island opens to the step that matters now, in the sign’s own words; the lock screen keeps the whole route.</p>
-              <p className="text-faint" style={{ fontSize: '0.88rem', lineHeight: 1.5 }}>Not built. A website can’t reach the island or the lock screen. Tap the island to open or close it.</p>
-            </div>
-          </div>
-        </Part>
         <p className="mt-10" style={{ fontSize: '0.95rem' }}>
           Live at <a className="prose-link" href="https://saathi-delhi-metro.vercel.app" target="_blank" rel="noreferrer">saathi-delhi-metro.vercel.app</a>.
         </p>
