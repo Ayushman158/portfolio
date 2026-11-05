@@ -22,7 +22,7 @@ import { BeforeAfter, Collage, ColourVision, Journey, GridSpec, SignFamily, KeyD
 // Outcome-led: the problem and the impact, then the work. Research and the test write-up live in the deck.
 const GROUPS = [
   ['Intro', [['overview', 'Overview'], ['problem', 'The problem'], ['result', 'The impact']]],
-  ['The work', [['idea', 'The idea'], ['signs', 'The signs'], ['spec', 'The sign system'], ['system', 'The ticket and QR board'], ['saathi', 'Saathi'], ['journey', 'The journey']]],
+  ['The work', [['idea', 'The idea'], ['signs', 'The signs'], ['spec', 'The sign system'], ['system', 'The ticket and QR boards'], ['saathi', 'Saathi'], ['journey', 'The journey']]],
   ['Wrap up', [['limits', 'Trade-offs'], ['outcome', 'What’s next']]],
 ]
 const IDS = GROUPS.flatMap(([, items]) => items.map(([id]) => id))
@@ -216,17 +216,25 @@ export default function Signal() {
       </Section>
 
       {/* ---------- The ticket and QR board ---------- */}
-      <Section id="system" n="06" title="The ticket and QR board" lede="The same key is on the paper ticket, and a QR board at the entrance opens Saathi for riders who get lost.">
-        <div className="track-wide mt-16 grid items-start gap-4 sm:grid-cols-[1fr_2fr]">
+      <Section id="system" n="06" title="The ticket and QR boards" lede="The same key is on the paper ticket. Inside the station, QR boards hang where lost riders already go to ask: the customer care counter, the ticket counter and the station map.">
+        <div className="track-wide mt-16 grid items-start gap-4 sm:grid-cols-3">
           <figure className="mx-auto w-full max-w-[280px] sm:max-w-none">
             <img src={`${W}/ticket.jpg`} alt="The redesigned paper ticket: platform 5, Violet Line, Mandi House · Lajpat Nagar, printed in black on the existing thermal printer" loading="lazy" className="block w-full rounded-xl" style={{ border: '1px solid var(--rule)' }} />
             <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem' }}>The same thermal printer, in black only.</figcaption>
           </figure>
           <figure>
-            <img src={`${W}/render-entrance.jpg`} alt="Concept render: the entrance board on a pillar by the stairs, a phone showing the Saathi page it opens" loading="lazy" className="block w-full rounded-xl" style={{ border: '1px solid var(--rule)' }} />
-            <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem' }}>Scan above ground; the route stays on the phone below.</figcaption>
+            <img src="/signal/gallery/board-entrance.jpg" alt="The counter board: Saathi asks “Where are you going?”, with the QR code that opens it at Kashmere Gate" loading="lazy" className="block w-full rounded-xl" style={{ border: '1px solid var(--rule)' }} />
+            <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem' }}>Counter board: at customer care and the ticket counter.</figcaption>
+          </figure>
+          <figure>
+            <img src="/signal/gallery/board-inside.jpg" alt="The map board: a printed table of major places from Kashmere Gate with line, direction, station and gate, and a QR code" loading="lazy" className="block w-full rounded-xl" style={{ border: '1px solid var(--rule)' }} />
+            <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem' }}>Map board: beside the station map. It works with no phone.</figcaption>
           </figure>
         </div>
+        <figure className="track-wide mt-6">
+          <img src={`${W}/render-counter.jpg`} alt="Concept render: inside a metro concourse, a rider scans the Saathi counter board on a pillar beside the customer care counter while two people queue at the window" loading="lazy" className="block aspect-[16/9] w-full rounded-xl object-cover" style={{ border: '1px solid var(--rule)' }} />
+          <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem' }}>Beside customer care, where lost riders already queue to ask. Concept render; the board is the real artwork.</figcaption>
+        </figure>
       </Section>
 
       {/* ---------- Demo: Saathi ---------- */}
@@ -259,7 +267,7 @@ export default function Signal() {
           <Tradeoffs items={[
             ['Signs have to fit today’s frames', 'One row per platform, inside the existing panel', 'No room for maps or long station lists'],
             ['Some riders have no smartphone', 'Every step works on signs and the ticket alone', 'The phone can only add, never fix a bad sign'],
-            ['No signal underground', 'Plan at the entrance; the route saves on the phone', 'It needs one scan above ground'],
+            ['No signal underground', 'Boards where riders already ask; once opened, the route stays on the phone', 'The first scan needs signal where the board hangs'],
           ]} />
         </div>
       </Section>

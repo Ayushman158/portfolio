@@ -182,7 +182,7 @@ export function SignFamily() {
   return (
     <figure className="track-wide mt-10 overflow-x-auto">
       <svg viewBox="-34 -6 940 380" className="block w-full min-w-[46rem] text-faint" role="img" style={{ fontFamily: SIGN_FONT }}
-        aria-label="The sign family to scale beside a 1650 mm rider: an A3 entrance board at eye height, a 600 by 2000 mm platform totem, a 1600 by 300 mm walkway sign and a 2400 by 300 mm fork sign, both hung with their underside at a proposed 2500 mm.">
+        aria-label="The sign family to scale beside a 1650 mm rider: an A3 QR board at the counter, at eye height, a 600 by 2000 mm platform totem, a 1600 by 300 mm walkway sign and a 2400 by 300 mm fork sign, both hung with their underside at a proposed 2500 mm.">
         {/* height grid */}
         {grid.map((mm) => (
           <g key={mm}>
@@ -205,7 +205,7 @@ export function SignFamily() {
         </g>
         {label(30, 50, 'Rider', '1650 mm, for scale')}
 
-        {/* entrance board on a pillar, centred at eye height */}
+        {/* QR board on a pillar by the counter, centred at eye height */}
         <rect x="124" y="0" width="56" height={F} fill="currentColor" opacity="0.12" />
         <g>
           <rect x="137" y={y(1710)} width="30" height="42" fill="#fbfbf8" stroke="currentColor" strokeWidth="0.6" />
@@ -216,7 +216,7 @@ export function SignFamily() {
           <rect x="154" y={y(1550)} width="9" height="1.6" fill="#242424" opacity=".6" />
           <rect x="154" y={y(1520)} width="7" height="1.6" fill="#242424" opacity=".6" />
         </g>
-        {label(124, 56, 'Entrance QR board', 'A3, centre at 1500 mm')}
+        {label(124, 56, 'Counter QR board', 'A3, centre at 1500 mm')}
 
         {/* platform totem */}
         <g>
@@ -512,9 +512,9 @@ export function LineTable() {
 /* More of the system, drifting past: only pieces that appear nowhere else on the page. */
 const GALLERY = [
   ['screen-stops', 'phone', 'Saathi with the stop list open: the eleven stations to Lajpat Nagar, in English and Hindi'],
-  ['board-inside', 'board', 'The inside board: a printed table of places from Kashmere Gate, each with its platform and gate'],
+  ['board-inside', 'board', 'The map board: a printed table of places from Kashmere Gate, each with its platform and gate'],
   ['screen-trip-hi', 'phone', 'Saathi in Hindi: the whole trip, platform 5, change at Lajpat Nagar to platform 3'],
-  ['board-entrance', 'board', 'The entrance board: where are you going, with the QR code that opens Saathi'],
+  ['board-entrance', 'board', 'The counter board: where are you going, with the QR code that opens Saathi'],
   ['screen-exit', 'phone', 'Saathi to a place: Gate 5, nearest Lajpat Nagar Central Market, a 3 minute walk'],
   ['screen-landing-hi', 'phone', 'Saathi’s first screen in Hindi', '#ffffff'],
 ]
@@ -568,7 +568,7 @@ export function BeforeAfter() {
 
 /* One trip, step by step: what a new rider had to go on, and what they have now. */
 const JOURNEY = [
-  ['Street', 'Which way to my train?', 'A map app, if there’s signal', 'A QR board opens Saathi; the route stays offline', 'Built · untested'],
+  ['Customer care', 'Which way to my train?', 'A map app, if there’s signal', 'A QR board at the counter opens Saathi; the route stays on the phone', 'Built · untested'],
   ['Ticket counter', 'Where do I go after the gates?', 'The fare printed largest', 'The ticket prints platform 5 · Violet Line', 'Built · 1 tester'],
   ['The fork', 'Which of three platforms?', 'One arrow, last stations only', 'One row per platform: Mandi House · Lajpat Nagar', 'Tested with 84 riders'],
   ['Top of the stairs', 'Is this my side?', 'The last station again, nothing to confirm it', 'The same violet 5 confirms it', 'Same key as the fork'],
