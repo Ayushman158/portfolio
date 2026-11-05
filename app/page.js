@@ -84,7 +84,14 @@ const RESEARCH = [
     shot: '/research/kizuku-loop.jpg',
     video: '/research/kizuku-loop.mp4',
     alt: 'A worry becomes one small action, the seed grows when it is done, then three Kizuku screens',
+    // Selected work shows the worry and the action side by side; the archive keeps the loop.
+    visual: 'kizuku',
+    cardAlt: 'Two Kizuku screens: the app asks what future worry is on your mind, then gives one action for today',
     what: 'An iOS app for people who overthink the future. You give it one worry and get one small thing to do today.',
+    facts: [
+      ['Role', 'Sole designer and developer'],
+      ['Outcome', 'The loop runs end to end on a real iPhone. Not yet tested with users.'],
+    ],
     tags: ['Brand', 'Design system', 'Interaction', 'iOS build'],
   },
   {
@@ -92,11 +99,15 @@ const RESEARCH = [
     kind: 'Wayfinding · Research, sign design and testing',
     href: '/signal',
     site: '84 riders · 45% → 80% right platform',
-    shot: '/signal/wayfinding/render-blade.jpg',
-    // The row shows the case study's collage, assembled, in place of the shot.
+    shot: '/signal/wayfinding/kg-new.jpg',
+    // The same Kashmere Gate photo: the redesigned sign, and today's on hover.
     visual: 'signal',
-    alt: 'The Signal work at a glance: a violet platform 5 sign on a concrete wall, the Saathi route finder showing Platform 5 straight ahead, the platform badge, and the nine line marks',
+    alt: 'The redesigned sign hanging at Kashmere Gate: platforms 3, 1, 2, 5 and 4, each with its number in the line colour and two stations on the way',
     what: 'For first-time and occasional riders. Delhi Metro signs name a train by the last station on its line. I redesigned them around the stations riders travel to, added QR boards that open a route finder for riders who get lost, and tested the signs with 84 riders.',
+    facts: [
+      ['Role', 'Solo: research, design, prototype'],
+      ['Outcome', 'Riders who picked the right platform first try: 45% → 80%, in a photo test'],
+    ],
     tags: ['Research', 'Interaction', 'Systems', 'Prototype'],
   },
 ]
