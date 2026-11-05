@@ -99,10 +99,10 @@ const RESEARCH = [
     kind: 'Wayfinding · Research, sign design and testing',
     href: '/signal',
     site: '84 riders · 45% → 80% right platform',
-    shot: '/signal/wayfinding/kg-new.jpg',
-    // The same Kashmere Gate photo: the redesigned sign, and today's on hover.
+    shot: '/signal/wayfinding/render-fork.jpg',
+    // The concept render at the fork; the view moves in toward the sign on hover.
     visual: 'signal',
-    alt: 'The redesigned sign hanging at Kashmere Gate: platforms 3, 1, 2, 5 and 4, each with its number in the line colour and two stations on the way',
+    alt: 'Concept render: the redesigned sign hanging where a metro concourse splits three ways, platform 3 Tis Hazari · Inderlok to the left, platform 5 Mandi House · Lajpat Nagar straight ahead, platform 4 Shastri Park · Welcome to the right',
     what: 'For first-time and occasional riders. Delhi Metro signs name a train by the last station on its line. I redesigned them around the stations riders travel to, added QR boards that open a route finder for riders who get lost, and tested the signs with 84 riders.',
     facts: [
       ['Role', 'Solo: research, design, prototype'],
