@@ -42,9 +42,9 @@ const BOARD_PINS = [
   { x: 10, y: 80, title: 'It works with no phone', body: 'The table is the answer. The QR and a typed address are only for places not on the list.' },
 ]
 const SAATHI_PINS = [
-  { x: 62, y: 30, title: 'The number to remember, first', body: 'A rider reads the route once and puts the phone away, so the step that matters now is the largest thing on the screen.' },
-  { x: 91, y: 53, title: 'In the sign’s own words', body: 'Saathi repeats what the station signs say, so the phone and the station never disagree.' },
-  { x: 90, y: 95, title: 'Platform, train, exit', body: 'The whole trip in three steps, with the current one marked.' },
+  { x: 68, y: 25.3, title: 'In the sign’s own words', body: 'The first line is the direction the station signs use, so the phone and the station never disagree.' },
+  { x: 88, y: 56, title: 'The numbers to remember, on top', body: 'The platform and the exit, in the same badges as the signs. A rider reads them once at the board and puts the phone away.' },
+  { x: 51, y: 81.2, title: 'The full route below', body: 'The stops fold into one line, and open to match the strip above the doors.' },
 ]
 
 const IDS = GROUPS.flatMap(([, items]) => items.map(([id]) => id))
@@ -270,12 +270,13 @@ export default function Signal() {
       <Section id="saathi" n="07" title="Saathi, the route finder" lede="A rider reads the route once at the board and puts the phone away, so Saathi shows the whole trip on one screen: the numbers to remember on top, the full route below.">
         <StepVideo className="track-wide mt-16" name="saathi-trip" label="Saathi recording: a trip from Kashmere Gate to Lajpat Nagar Central Market" />
         <AnnotatedScreen
-          src={`${W}/saathi-screen-platform.jpg`}
+          src={`${W}/saathi-route.jpg`}
           width={780}
-          height={1688}
+          height={1804}
           maxW="16.5rem"
-          alt="Saathi's platform step for Lajpat Nagar Central Market: a large violet card with an up arrow and the number 5, Platform 5, Violet Line; below it, the signs say Towards Raja Nahar Singh (Ballabhgarh); an I'm on the train button and a three-step bar: Platform, Train, Exit"
+          alt="Saathi's route to Lajpat Nagar: Take the train towards Raja Nahar Singh (Ballabhgarh); a summary card with platform 5, Violet Line, at Kashmere Gate and the exit at Lajpat Nagar; below it the full route, with 11 stops folded into one line and the exit"
           pins={SAATHI_PINS}
+          caption="Saathi is an unofficial student prototype, not made with or for DMRC."
         />
         <Part label="Concept: Saathi as an app">
           <div className="track-wide mt-6 grid items-center gap-10 sm:grid-cols-[minmax(0,16.5rem)_1fr] sm:gap-12">
