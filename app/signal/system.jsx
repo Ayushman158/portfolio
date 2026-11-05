@@ -10,6 +10,7 @@ import { W } from './wayfinding'
 import { LINES, Mark as BaseMark } from './marks'
 import { SIGN_FONT, deva } from './font'
 import { Phone } from './device'
+import { Compare } from './compare'
 
 const PANEL = '#1f2a6b'
 const ON_LIGHT = '#ffffff'
@@ -552,14 +553,10 @@ export function BeforeAfter() {
       {rows.map(([place, a, b, altA, altB]) => (
         <figure key={place}>
           <Label>{place}</Label>
-          <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            {[[a, 'Today', altA], [b, 'Redesign', altB]].map(([src, tag, alt]) => (
-              <div key={src} className="relative">
-                <img src={`${W}/${src}.jpg`} alt={alt} loading="lazy" className="block aspect-[4/3] w-full rounded-xl object-cover" style={{ border: '1px solid var(--rule)' }} />
-                <span className="absolute left-3 top-3 rounded-full px-3 py-1" style={{ background: tag === 'Today' ? 'rgba(18,18,18,.72)' : '#fbfbf8', color: tag === 'Today' ? '#fbfbf8' : '#242424', fontSize: '0.78rem', fontWeight: 600 }}>{tag}</span>
-              </div>
-            ))}
+          <div className="mt-3">
+            <Compare before={{ src: `${W}/${a}.jpg`, alt: altA }} after={{ src: `${W}/${b}.jpg`, alt: altB }} />
           </div>
+          <p className="text-faint mt-2" style={{ fontSize: '0.82rem' }}>Drag across the photo to compare.</p>
         </figure>
       ))}
     </div>
