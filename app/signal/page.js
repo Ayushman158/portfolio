@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { Back, Facts, Heading, Impact, Subhead, Tradeoffs } from '../components/case-study'
 import AnnotatedScreen from '../components/annotated-screen'
@@ -19,12 +19,6 @@ import { BeforeAfter, Collage, ColourVision, Journey, GridSpec, SignFamily, KeyD
  * Written for a recruiter's first pass: result first, then the problem, the
  * work as pictures, and honest limits. Colour lives only in the images.
  */
-// Outcome-led: the problem and the impact, then the work. Research and the test write-up live in the deck.
-const GROUPS = [
-  ['Intro', [['overview', 'Overview'], ['problem', 'The problem'], ['result', 'The impact']]],
-  ['The work', [['idea', 'The idea'], ['signs', 'The signs'], ['spec', 'The sign system'], ['system', 'The ticket and QR boards'], ['saathi', 'Saathi'], ['journey', 'The journey']]],
-  ['Wrap up', [['limits', 'Trade-offs'], ['outcome', 'What’s next']]],
-]
 /*
  * Why each pinned decision, for the annotated screens. Drawn only from what the
  * page already says; check before publishing.
@@ -45,47 +39,6 @@ const SAATHI_PINS = [
   { x: 88, y: 51.2, title: 'The numbers to remember, on top', body: 'The platform and the exit, in the same badges as the signs. A rider reads them once at the board and puts the phone away.' },
   { x: 51, y: 77.5, title: 'The full route below', body: 'The stops fold into one line, and open to match the strip above the doors.' },
 ]
-
-const IDS = GROUPS.flatMap(([, items]) => items.map(([id]) => id))
-
-function useActive(ids) {
-  const [active, setActive] = useState(ids[0])
-  useEffect(() => {
-    if (typeof IntersectionObserver === 'undefined') return
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
-      { rootMargin: '-35% 0px -60% 0px' },
-    )
-    ids.forEach((id) => { const el = document.getElementById(id); if (el) io.observe(el) })
-    return () => io.disconnect()
-  }, [ids])
-  return active
-}
-
-/* Plain text menu, fixed in the left margin on wide screens only. */
-function SectionMenu({ active }) {
-  return (
-    <nav aria-label="Sections" className="sig-map fixed left-6 top-40 z-10 w-44">
-      {GROUPS.map(([group, items]) => (
-        <div key={group}>
-          <p className="sig-group">{group}</p>
-          <ul className="space-y-0.5">
-            {items.map(([id, name]) => {
-              const on = id === active
-              return (
-                <li key={id}>
-                  <a href={`#${id}`} aria-current={on ? 'location' : undefined} className="block py-1 transition-colors duration-200" style={{ fontSize: '0.92rem', color: on ? 'var(--ink)' : 'var(--faint)' }}>
-                    {name}
-                  </a>
-                </li>
-              )
-            })}
-          </ul>
-        </div>
-      ))}
-    </nav>
-  )
-}
 
 function Section({ id, n, title, lede, children }) {
   return (
@@ -147,7 +100,6 @@ function Statement() {
 
 export default function Signal() {
   const reduceMotion = useReducedMotion()
-  const active = useActive(IDS)
   const rise = (delay) => ({
     initial: reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 },
     animate: { opacity: 1, y: 0 },
@@ -156,7 +108,6 @@ export default function Signal() {
 
   return (
     <main className="measure min-h-screen pb-28 pt-20 sm:pt-28 lg:pt-36">
-      <SectionMenu active={active} />
       <motion.div {...rise(0)}><Back /></motion.div>
 
       {/* ---------- Overview ---------- */}

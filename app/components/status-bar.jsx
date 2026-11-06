@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 
 /**
- * A scale of bare ticks on the right edge of a case study, showing where you
+ * A scale of bare ticks on the left edge of a case study, showing where you
  * are in the page. The tick nearest your position is the accent colour and
  * longest, and the ticks around it fall away in a wave.
  *
@@ -14,7 +14,8 @@ import { usePathname } from 'next/navigation'
  *
  * Ticks at a section start rest a little longer and jump to that section.
  */
-const CASE_STUDIES = ['/case-study', '/kizuku', '/signal', '/signal/v4', '/banyan', '/koi-wishing-pond']
+// /signal/v4 is left out: it has its own line map in the left margin.
+const CASE_STUDIES = ['/case-study', '/kizuku', '/signal', '/banyan', '/koi-wishing-pond']
 const TICKS = 33
 const PEAK = 2.6 // the active tick reaches 1 + PEAK times its resting length
 const FALLOFF = 0.9
@@ -82,7 +83,7 @@ export default function StatusBar() {
 
   let current = -1
   marks.forEach((m, i) => { if (active >= m.tick) current = i })
-  const label = peek ?? (current < 0 ? null : marks[current].name)
+  const shown = peek ?? (current < 0 ? null : marks[current])
   const sections = new Set(marks.map((m) => m.tick))
 
   return (
@@ -108,13 +109,22 @@ export default function StatusBar() {
           aria-label={m.name}
           aria-current={i === current ? 'location' : undefined}
           onClick={(e) => go(e, m.id)}
-          onPointerEnter={() => setPeek(m.name)}
+          onPointerEnter={() => setPeek(m)}
           onPointerLeave={() => setPeek(null)}
-          onFocus={() => setPeek(m.name)}
+          onFocus={() => setPeek(m)}
           onBlur={() => setPeek(null)}
         />
       ))}
-      {label && <span key={label} aria-hidden="true" className="status__label">{label}</span>}
+      {shown && (
+        <p
+          aria-hidden="true"
+          className="status__label"
+          data-peek={peek ? '' : undefined}
+          style={{ '--t': (peek ? peek.tick : active) / (TICKS - 1) }}
+        >
+          <span key={shown.id}>{shown.name}</span>
+        </p>
+      )}
     </nav>
   )
 }

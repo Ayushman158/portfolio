@@ -621,13 +621,14 @@ figure.case-fig,
     .case-fig[data-side='right'] { padding-left: calc(var(--track-w, 100%) * 0.38); }
 }
 
-/* ---- The status bar: bare ticks on the right edge of a case study, with no
-   container. Each tick is 5 by 1px and grows towards the left from the edge. */
+/* ---- The status bar: bare ticks on the left edge of a case study, with no
+   container. Each tick is 5 by 1px and grows to the right from the edge. The
+   section name rides beside the active tick, in reading size and full ink. */
 .status {
     position: fixed;
     z-index: 40;
     top: 50%;
-    right: 14px;
+    left: 14px;
     width: 18px;
     height: min(18rem, 50vh);
     transform: translateY(-50%);
@@ -635,47 +636,58 @@ figure.case-fig,
 html[data-room] .status { display: none; }
 .status__tick {
     position: absolute;
-    right: 0;
+    left: 0;
     top: calc(var(--t) * 100%);
     width: 5px;
     height: 1px;
     transform: scaleX(var(--s));
-    transform-origin: 100% 0.5px;
+    transform-origin: 0 0.5px;
     background: color-mix(in srgb, var(--ink) calc(30% + var(--w) * 70%), transparent);
     transition: transform 0.16s cubic-bezier(0.2, 0.7, 0.3, 1), background 0.25s;
 }
 .status__tick[data-on] { background: var(--accent); }
 .status__mark {
     position: absolute;
-    right: -8px;
+    left: -8px;
     top: calc(var(--t) * 100%);
     width: 30px;
     height: 12px;
     margin-top: -6px;
     border-radius: 2px;
 }
+/* The ground behind the name is the page's own colour, so it reads as bare
+   text and stays legible if a wide image passes under it. */
 .status__label {
     display: none;
     position: absolute;
-    right: 28px;
-    top: 50%;
-    max-height: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    writing-mode: vertical-rl;
-    font-family: 'Geist Mono', ui-monospace, monospace;
-    font-size: 0.68rem;
-    color: var(--faint);
-    transform: translateY(-50%) rotate(180deg);
+    left: 28px;
+    top: calc(var(--t) * 100%);
+    width: max-content;
+    max-width: 10rem;
+    padding: 1px 4px;
+    transform: translateY(-50%);
+    background: var(--ground);
+    color: var(--ink);
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.3;
+    transition: top 0.16s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.status__label span {
+    display: block;
     animation: status-label 0.25s cubic-bezier(0.2, 0.7, 0.3, 1);
 }
 @keyframes status-label { from { opacity: 0; } }
-@media (min-width: 1400px) {
+/* Always on where the margin has room; on hover or focus from 1024px. */
+@media (min-width: 1024px) {
+    .status__label[data-peek] { display: block; }
+}
+@media (min-width: 1366px) {
     .status__label { display: block; }
 }
 @media (prefers-reduced-motion: reduce) {
-    .status__tick { transition: none; }
-    .status__label { animation: none; }
+    .status__tick, .status__label { transition: none; }
+    .status__label span { animation: none; }
 }
 @media print {
     .status { display: none; }
@@ -966,7 +978,6 @@ html[data-room] .lamp-glow-anchor { display: none; }
   .sig-gallery__track { animation: none; }
   .sig-gallery__track > [aria-hidden] { display: none; }
 }
-.sig-group { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); margin: 1rem 0 .25rem; }
 @media (prefers-reduced-motion: reduce) { .sig-fade { animation: none; } .sig-press:active:not(:disabled), .sig-play:active { transform: none; } }
 
 /* Signal: swap the hero for its dark twin, and take the glare off light
