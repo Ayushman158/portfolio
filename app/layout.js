@@ -3,7 +3,7 @@ import './phosphor.css'
 import { ThemeProvider, themeInitScript, Lamp } from './components/theme'
 import Dock from './components/dock'
 import AwayTitle from './components/away-title'
-import RouteLine from './components/route-line'
+import StatusBar from './components/status-bar'
 import { Inter, Instrument_Sans, Instrument_Serif, Reenie_Beanie } from 'next/font/google'
 
 // The site's two faces: Instrument Sans for everything read, Instrument Serif
@@ -82,7 +82,7 @@ export default function RootLayout({ children }) {
           <Dock />
           <Lamp />
           <AwayTitle />
-          <RouteLine />
+          <StatusBar />
           {children}
         </ThemeProvider>
       </body>

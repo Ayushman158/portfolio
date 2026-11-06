@@ -65,7 +65,7 @@ function useActive(ids) {
 /* Plain text menu, fixed in the left margin on wide screens only. */
 function SectionMenu({ active }) {
   return (
-    <nav aria-label="Sections" className="sig-map fixed left-[52px] top-40 z-10 w-44">
+    <nav aria-label="Sections" className="sig-map fixed left-6 top-40 z-10 w-44">
       {GROUPS.map(([group, items]) => (
         <div key={group}>
           <p className="sig-group">{group}</p>

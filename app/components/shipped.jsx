@@ -34,7 +34,7 @@ export default function Shipped({ label = 'Shipped', items, className = 'mt-16',
     <section ref={section} className={className}>
       {/* The label rides the track, not the measure: a heading that does not
           share a left edge with the thing it names reads as an accident. */}
-      <h2 className="track-wide text-faint text-[0.95rem] mb-4">
+      <h2 data-route={label} className="track-wide text-faint text-[0.95rem] mb-4">
         <ScrambleText>{label}</ScrambleText>
       </h2>
 

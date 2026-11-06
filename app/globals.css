@@ -621,57 +621,96 @@ figure.case-fig,
     .case-fig[data-side='right'] { padding-left: calc(var(--track-w, 100%) * 0.38); }
 }
 
-/* ---- The route line: where you are in a case study, at 1024px and up. A
-   hairline down the left edge with one tick per section, placed where that
-   section really sits in the page. */
-.route { display: none; }
+/* ---- The status bar: a ruler, a needle and a readout. Below 1024px it sits
+   on the bottom edge, because the nav fills the top of a phone. Dark in both
+   themes, lifted a step in dark mode so it still has an edge. */
+.status {
+    --status-bg: var(--sunset-ink);
+    --status-ink: #F6EEE9;
+    position: fixed;
+    z-index: 55;
+    left: 50%;
+    bottom: 0;
+    width: min(22rem, calc(100vw - 2rem));
+    padding: 0.55rem 0.9rem calc(0.5rem + env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    border-radius: 10px 10px 0 0;
+    background: var(--status-bg);
+    color: var(--status-ink);
+    font-family: 'Geist Mono', ui-monospace, monospace;
+}
+[data-theme="dark"] .status {
+    --status-bg: var(--raised);
+    box-shadow: 0 0 0 1px var(--rule);
+}
+html[data-room] .status { display: none; }
 @media (min-width: 1024px) {
-    .route {
-        display: block;
-        position: fixed;
-        z-index: 40;
+    .status {
         top: 0;
-        bottom: 0;
-        left: 24px;
-        width: 1px;
-        background: color-mix(in srgb, var(--ink) 15%, transparent);
+        bottom: auto;
+        padding-block: 0.6rem 0.5rem;
+        border-radius: 0 0 10px 10px;
     }
 }
-.route__tick {
+.status__ruler {
+    container-type: inline-size;
+    position: relative;
+    height: 16px;
+    /* The fine scale: a hairline every 6px, along the bottom. */
+    background: repeating-linear-gradient(to right, rgb(246 238 233 / 0.28) 0 1px, transparent 1px 6px) left bottom / 100% 6px no-repeat;
+}
+.status__mark {
+    position: absolute;
+    top: -4px;
+    bottom: -4px;
+    width: 15px;
+    margin-left: -7px;
+    border-radius: 2px;
+}
+.status__mark::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    bottom: 4px;
+    width: 1px;
+    height: 11px;
+    background: rgb(246 238 233 / 0.55);
+    transition: background-color var(--duration-quick) ease;
+}
+.status__mark[data-passed]::before,
+.status__mark:hover::before { background: var(--status-ink); }
+.status__mark:focus-visible { outline: 2px solid var(--peach); outline-offset: 0; }
+.status__needle {
     position: absolute;
     left: 0;
-    display: flex;
-    align-items: center;
-    height: 20px;
-    width: 28px;
-    transform: translateY(-50%);
-}
-.route__tick::before {
-    content: '';
-    display: block;
-    width: 8px;
-    height: 1px;
-    background: color-mix(in srgb, var(--ink) 35%, transparent);
-    transition: width var(--duration-quick) var(--ease-out), background-color var(--duration-quick) ease;
-}
-.route__tick[data-state='passed']::before { background: var(--ink); }
-.route__tick[data-state='current']::before { width: 12px; height: 2px; background: var(--accent); }
-.route__label {
-    position: absolute;
-    left: 20px;
-    padding: 2px 6px;
-    white-space: nowrap;
-    font-family: 'Geist Mono', ui-monospace, monospace;
-    font-size: 0.7rem;
-    color: var(--ink);
-    background: var(--ground);
-    opacity: 0;
+    bottom: 0;
+    width: 2px;
+    height: 16px;
+    margin-left: -1px;
+    background: var(--peach);
     pointer-events: none;
+    transform: translateX(calc(var(--p, 0) * 100cqw));
 }
-.route__tick:hover .route__label,
-.route__tick:focus-visible .route__label { opacity: 1; }
+.status__readout {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 0.4rem;
+    font-size: 0.68rem;
+    line-height: 1.4;
+}
+.status__index { opacity: 0.6; }
+.status__name {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 @media (prefers-reduced-motion: reduce) {
-    .route__tick::before { transition: none; }
+    .status__mark::before { transition: none; }
+}
+@media print {
+    .status { display: none; }
 }
 
 /* ---- The lamp (theme switch). It hangs from the top of the page at the
@@ -941,7 +980,7 @@ html[data-room] .lamp-glow-anchor { display: none; }
 /* Signal's line-map menu: in the left margin only where the margin is wide
    enough for it beside the wide track. */
 .sig-map { display: none; }
-@media (min-width: 88rem) { .sig-map { display: block; } }
+@media (min-width: 86rem) { .sig-map { display: block; } }
 /* Signal demos: a soft fade when an answer or image swaps, press feedback, a plain slider. */
 @keyframes sig-fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 .sig-fade { animation: sig-fade 260ms cubic-bezier(.23, 1, .32, 1) both; }

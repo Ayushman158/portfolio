@@ -296,7 +296,7 @@ export default function Home() {
       <div className="track-wide mt-16 grid gap-y-16">
         <motion.section {...rise(0.18)}>
           <div className="mb-3 flex items-baseline justify-between">
-            <h2 className="text-faint text-[0.95rem]"><ScrambleText>skills</ScrambleText></h2>
+            <h2 data-route="skills" className="text-faint text-[0.95rem]"><ScrambleText>skills</ScrambleText></h2>
             {!reduceMotion && <span aria-hidden="true" className="text-faint text-[0.95rem]">drag them around</span>}
           </div>
 
@@ -309,7 +309,7 @@ export default function Home() {
         </motion.section>
 
         <motion.section {...rise(0.22)}>
-          <h2 className="text-faint text-[0.95rem] mb-3"><ScrambleText>connect</ScrambleText></h2>
+          <h2 data-route="connect" className="text-faint text-[0.95rem] mb-3"><ScrambleText>connect</ScrambleText></h2>
           <PinnedNote>
             <p>
               I’m looking for UX/UI or design-engineering work, somewhere I can take an idea from research

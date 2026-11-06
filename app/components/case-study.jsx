@@ -20,7 +20,7 @@ export function Rule() {
  */
 export function Heading({ children, n }) {
   return (
-    <h2 className="mb-5" data-route>
+    <h2 className="mb-5" data-route="">
       {n && <span className="section-n">{n}</span>}
       <span className="headline block">{children}</span>
     </h2>
