@@ -283,6 +283,8 @@ export default function Home() {
       </div>
       </div>
 
+      <div aria-hidden="true" className="sunset-strip" />
+
       <motion.div {...rise(0.12)}>
         {/* Only the work with a full case study, strongest first, one per row.
             Everything else is in the Archive (linked under the list and in the nav). */}
