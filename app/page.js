@@ -320,17 +320,6 @@ export default function Home() {
           </PinnedNote>
         </motion.section>
       </div>
-
-      {/* The sign-off. The question sits in the mono the site uses for data,
-          the answer in the serif. */}
-      <motion.footer {...rise(0.26)} className="track-wide mt-28 border-t pt-10" style={{ borderColor: 'var(--rule)' }}>
-        <p className="text-faint mb-4" style={{ fontFamily: "'Geist Mono', ui-monospace, monospace", fontSize: '0.8rem', letterSpacing: '0.02em' }}>
-          Why design in the age of AI?
-        </p>
-        <p className="display max-w-[34rem]">
-          Because my life is a dataset no AI has been trained on.
-        </p>
-      </motion.footer>
     </main>
   )
 }
