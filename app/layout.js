@@ -4,7 +4,6 @@ import { ThemeProvider, themeInitScript, Lamp } from './components/theme'
 import Dock from './components/dock'
 import AwayTitle from './components/away-title'
 import RouteLine from './components/route-line'
-import SiteFooter from './components/site-footer'
 import { Inter, Instrument_Sans, Instrument_Serif, Reenie_Beanie } from 'next/font/google'
 
 // The site's two faces: Instrument Sans for everything read, Instrument Serif
@@ -85,7 +84,6 @@ export default function RootLayout({ children }) {
           <AwayTitle />
           <RouteLine />
           {children}
-          <SiteFooter />
         </ThemeProvider>
       </body>
     </html>

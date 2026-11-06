@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
-import FieldNotes from '../components/field-notes'
 
 /*
  * About, in Ayushman's own words from a voice note, then the background that
@@ -145,8 +144,6 @@ export default function About() {
         <h2 className="text-faint text-[0.95rem] mb-3">Skills</h2>
         <p>{SKILLS.join(' · ')}</p>
       </motion.section>
-
-      <FieldNotes />
     </main>
   )
 }
