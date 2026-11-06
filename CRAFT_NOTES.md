@@ -18,7 +18,7 @@ The hero gradient strip, the footer lines (`palette from a sunset, Assam` and th
 - **Lowercase voice** covers interface labels: nav, buttons, back links and home and archive section labels. Prose and headings are unchanged.
 - **Not on the voice list but built early:** a plain 404 and the away title, so their strings have a home. The away title is inert under Reduce Motion, as section 9 asks.
 
-- **Status bar replaces the route line.** Ayushman asked for a tuner-style status bar in the nav, inspired by vansita.design. Two position indicators would repeat each other, so 10.4's left-edge line is gone. It uses a passive scroll listener, because a needle has to follow the scroll continuously.
+- **Status bar replaces the route line.** Ayushman asked for the scroll scale from vansita.design: same motion, on the side, no box, case studies only. The tick count, wave and easing match hers. It uses a passive scroll listener that only picks the active tick.
 
 ## Waiting on Ayushman
 - The sunset palette image. The hex values are unchecked until then.

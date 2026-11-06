@@ -621,93 +621,61 @@ figure.case-fig,
     .case-fig[data-side='right'] { padding-left: calc(var(--track-w, 100%) * 0.38); }
 }
 
-/* ---- The status bar: a ruler, a needle and a readout. Below 1024px it sits
-   on the bottom edge, because the nav fills the top of a phone. Dark in both
-   themes, lifted a step in dark mode so it still has an edge. */
+/* ---- The status bar: bare ticks on the right edge of a case study, with no
+   container. Each tick is 5 by 1px and grows towards the left from the edge. */
 .status {
-    --status-bg: var(--sunset-ink);
-    --status-ink: #F6EEE9;
     position: fixed;
-    z-index: 55;
-    left: 50%;
-    bottom: 0;
-    width: min(22rem, calc(100vw - 2rem));
-    padding: 0.55rem 0.9rem calc(0.5rem + env(safe-area-inset-bottom));
-    transform: translateX(-50%);
-    border-radius: 10px 10px 0 0;
-    background: var(--status-bg);
-    color: var(--status-ink);
-    font-family: 'Geist Mono', ui-monospace, monospace;
-}
-[data-theme="dark"] .status {
-    --status-bg: var(--raised);
-    box-shadow: 0 0 0 1px var(--rule);
+    z-index: 40;
+    top: 50%;
+    right: 14px;
+    width: 18px;
+    height: min(18rem, 50vh);
+    transform: translateY(-50%);
 }
 html[data-room] .status { display: none; }
-@media (min-width: 1024px) {
-    .status {
-        top: 0;
-        bottom: auto;
-        padding-block: 0.6rem 0.5rem;
-        border-radius: 0 0 10px 10px;
-    }
+.status__tick {
+    position: absolute;
+    right: 0;
+    top: calc(var(--t) * 100%);
+    width: 5px;
+    height: 1px;
+    transform: scaleX(var(--s));
+    transform-origin: 100% 0.5px;
+    background: color-mix(in srgb, var(--ink) calc(30% + var(--w) * 70%), transparent);
+    transition: transform 0.16s cubic-bezier(0.2, 0.7, 0.3, 1), background 0.25s;
 }
-.status__ruler {
-    container-type: inline-size;
-    position: relative;
-    height: 16px;
-    /* The fine scale: a hairline every 6px, along the bottom. */
-    background: repeating-linear-gradient(to right, rgb(246 238 233 / 0.28) 0 1px, transparent 1px 6px) left bottom / 100% 6px no-repeat;
-}
+.status__tick[data-on] { background: var(--accent); }
 .status__mark {
     position: absolute;
-    top: -4px;
-    bottom: -4px;
-    width: 15px;
-    margin-left: -7px;
+    right: -8px;
+    top: calc(var(--t) * 100%);
+    width: 30px;
+    height: 12px;
+    margin-top: -6px;
     border-radius: 2px;
 }
-.status__mark::before {
-    content: '';
+.status__label {
+    display: none;
     position: absolute;
-    left: 7px;
-    bottom: 4px;
-    width: 1px;
-    height: 11px;
-    background: rgb(246 238 233 / 0.55);
-    transition: background-color var(--duration-quick) ease;
-}
-.status__mark[data-passed]::before,
-.status__mark:hover::before { background: var(--status-ink); }
-.status__mark:focus-visible { outline: 2px solid var(--peach); outline-offset: 0; }
-.status__needle {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 2px;
-    height: 16px;
-    margin-left: -1px;
-    background: var(--peach);
-    pointer-events: none;
-    transform: translateX(calc(var(--p, 0) * 100cqw));
-}
-.status__readout {
-    display: flex;
-    gap: 0.6rem;
-    margin-top: 0.4rem;
-    font-size: 0.68rem;
-    line-height: 1.4;
-}
-.status__index { opacity: 0.6; }
-.status__name {
-    flex: 1;
-    min-width: 0;
+    right: 28px;
+    top: 50%;
+    max-height: 100%;
     overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
+    writing-mode: vertical-rl;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 0.68rem;
+    color: var(--faint);
+    transform: translateY(-50%) rotate(180deg);
+    animation: status-label 0.25s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+@keyframes status-label { from { opacity: 0; } }
+@media (min-width: 1400px) {
+    .status__label { display: block; }
 }
 @media (prefers-reduced-motion: reduce) {
-    .status__mark::before { transition: none; }
+    .status__tick { transition: none; }
+    .status__label { animation: none; }
 }
 @media print {
     .status { display: none; }

@@ -4,68 +4,61 @@ import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 
 /**
- * A small instrument for the page: a ruler, a needle that follows the scroll,
- * and a readout naming the section you are in. It hangs from the top of the
- * window on wide screens and sits on the bottom edge below 1024px, because a
- * phone's nav leaves no room for it up top.
+ * A scale of bare ticks on the right edge of a case study, showing where you
+ * are in the page. The tick nearest your position is the accent colour and
+ * longest, and the ticks around it fall away in a wave.
  *
- * Each long tick is a real section: an h2 marked data-route, placed where the
- * needle will be when that heading reaches the top quarter of the window. So
- * the gaps between ticks show how long each section is. Pages with fewer than
- * two sections show nothing.
+ * Nothing animates frame by frame. Scrolling only picks the active tick; each
+ * tick then eases to its new length and colour through its CSS transition,
+ * and that is what makes the wave look fluid.
  *
- * The needle is moved through a CSS variable, so scrolling never re-renders
- * this component unless the section changes.
+ * Ticks at a section start rest a little longer and jump to that section.
  */
+const CASE_STUDIES = ['/case-study', '/kizuku', '/signal', '/signal/v4', '/banyan', '/koi-wishing-pond']
+const TICKS = 33
+const PEAK = 2.6 // the active tick reaches 1 + PEAK times its resting length
+const FALLOFF = 0.9
+const SECTION_REST = 1.8
+
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+const scale = Array.from({ length: TICKS }, (_, i) => i)
 
 export default function StatusBar() {
   const pathname = usePathname()
   const root = useRef(null)
-  const [marks, setMarks] = useState([])
-  const [current, setCurrent] = useState(-1)
+  const [marks, setMarks] = useState([]) // one per section: id, name, tick
+  const [active, setActive] = useState(0)
   const [peek, setPeek] = useState(null)
-  const [percent, setPercent] = useState(0)
 
   useEffect(() => {
-    setCurrent(-1)
-    setPercent(0)
+    setActive(0)
+    setMarks([])
+    if (!CASE_STUDIES.includes(pathname)) return
     const heads = [...document.querySelectorAll('h2[data-route]')]
-    if (heads.length < 2) {
-      setMarks([])
-      return
-    }
+    if (heads.length < 2) return
 
-    const names = heads.map((h) => h.dataset.route || (h.querySelector('.headline') || h).textContent.trim())
+    const names = heads.map((h) => (h.querySelector('.headline') || h).textContent.trim())
     heads.forEach((h, i) => {
       if (!h.id) h.id = slug(names[i])
       h.style.scrollMarginTop = '25vh'
     })
 
-    let spots = []
     let frame = 0
-
     const read = () => {
       frame = 0
       const range = document.documentElement.scrollHeight - window.innerHeight
       const p = range > 0 ? Math.min(1, Math.max(0, window.scrollY / range)) : 0
-      root.current?.style.setProperty('--p', p)
-      setPercent(Math.round(p * 100))
-      let at = -1
-      spots.forEach((s, i) => { if (p >= s - 0.001) at = i })
-      setCurrent(at)
+      setActive(Math.round(p * (TICKS - 1)))
     }
-
     const measure = () => {
       const range = document.documentElement.scrollHeight - window.innerHeight
-      spots = heads.map((h) => {
+      setMarks(heads.map((h, i) => {
         const top = h.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.25
-        return range > 0 ? Math.min(1, Math.max(0, top / range)) : 0
-      })
-      setMarks(heads.map((h, i) => ({ id: h.id, name: names[i], at: spots[i] })))
+        const p = range > 0 ? Math.min(1, Math.max(0, top / range)) : 0
+        return { id: h.id, name: names[i], tick: Math.round(p * (TICKS - 1)) }
+      }))
       read()
     }
-
     const onScroll = () => { if (!frame) frame = requestAnimationFrame(read) }
 
     measure()
@@ -87,35 +80,41 @@ export default function StatusBar() {
     document.getElementById(id)?.scrollIntoView({ behavior: still ? 'auto' : 'smooth' })
   }
 
-  const shown = peek ?? current
-  const label = shown < 0 ? 'start' : marks[shown].name
+  let current = -1
+  marks.forEach((m, i) => { if (active >= m.tick) current = i })
+  const label = peek ?? (current < 0 ? null : marks[current].name)
+  const sections = new Set(marks.map((m) => m.tick))
 
   return (
     <nav ref={root} className="status" aria-label="position on this page">
-      <div className="status__ruler">
-        {marks.map((m, i) => (
-          <a
-            key={m.id}
-            href={`#${m.id}`}
-            className="status__mark"
-            style={{ left: `${m.at * 100}%` }}
-            aria-label={m.name}
-            aria-current={i === current ? 'location' : undefined}
-            data-passed={i <= current || undefined}
-            onClick={(e) => go(e, m.id)}
-            onPointerEnter={() => setPeek(i)}
-            onPointerLeave={() => setPeek(null)}
-            onFocus={() => setPeek(i)}
-            onBlur={() => setPeek(null)}
+      {scale.map((i) => {
+        const wave = Math.exp(-FALLOFF * Math.abs(i - active))
+        const length = Math.max(1 + PEAK * wave, sections.has(i) ? SECTION_REST : 1)
+        return (
+          <i
+            key={i}
+            className="status__tick"
+            data-on={i === active || undefined}
+            style={{ '--t': i / (TICKS - 1), '--s': length, '--w': wave }}
           />
-        ))}
-        <span aria-hidden="true" className="status__needle" />
-      </div>
-      <p aria-hidden="true" className="status__readout">
-        <span className="status__index">{String(shown + 1).padStart(2, '0')}</span>
-        <span className="status__name">{label}</span>
-        <span className="tnum">{percent}%</span>
-      </p>
+        )
+      })}
+      {marks.map((m, i) => (
+        <a
+          key={m.id}
+          href={`#${m.id}`}
+          className="status__mark"
+          style={{ '--t': m.tick / (TICKS - 1) }}
+          aria-label={m.name}
+          aria-current={i === current ? 'location' : undefined}
+          onClick={(e) => go(e, m.id)}
+          onPointerEnter={() => setPeek(m.name)}
+          onPointerLeave={() => setPeek(null)}
+          onFocus={() => setPeek(m.name)}
+          onBlur={() => setPeek(null)}
+        />
+      ))}
+      {label && <span key={label} aria-hidden="true" className="status__label">{label}</span>}
     </nav>
   )
 }
