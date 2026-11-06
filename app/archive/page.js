@@ -6,11 +6,10 @@ import WorkIndex from '../components/work-index'
 /*
  * Work kept off the homepage: client work, an installation, a campaign,
  * motion and small experiments. Kept, and findable, but off the homepage so
- * the two selected case studies read first.
+ * the three selected case studies read first.
  */
 
 const CLIENT = [
-  { name: 'Hoychoy Cafe · hoychoycafe.com', year: '2025', href: '/case-study', img: '/shipped/hoychoy-card.jpg', w: 2400, h: 1350 },
   { name: 'Banyan Tree · himanshugarg.in', year: '2026', href: '/banyan', img: '/shipped/banyan.jpg', w: 1600, h: 900 },
 ]
 

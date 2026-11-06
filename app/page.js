@@ -40,6 +40,10 @@ const SHIPPED = [
         <GradientText>6–8 minutes to 2–3</GradientText>.
       </>
     ),
+    facts: [
+      ['Role', 'Research, design, build (AI-assisted) and pilot'],
+      ['Outcome', 'Payment mismatches went from about 8–10 a week to 1–2, by the owner’s figures from a two-week pilot'],
+    ],
     tags: ['Research', 'Service design', 'Interface', 'Build'],
   },
 ]
@@ -115,7 +119,7 @@ const RESEARCH = [
 // Ordered for a recruiter: live work with measured results, then tested research, then
 // the product being built, then the speculative campaign, then the installation.
 const byName = Object.fromEntries([...CAMPAIGN, ...SHIPPED, ...RESEARCH].map((p) => [p.name, p]))
-const SELECTED = ['Helping Delhi Metro riders find their way: new signs and a QR route finder', 'Kizuku'].map((n) => byName[n])
+const SELECTED = ['Helping Delhi Metro riders find their way: new signs and a QR route finder', 'Kizuku', 'Hoychoy Cafe'].map((n) => byName[n])
 
 // matter-js is ~30 kB gzipped and only matters once this section is reached, so
 // it is split out of the initial bundle entirely rather than shipped with the fold.
