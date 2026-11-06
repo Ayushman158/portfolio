@@ -638,6 +638,27 @@ figure.case-fig,
     color: var(--faint);
 }
 
+/* People are in black and white. Places and project UI stay in colour. */
+.photo-people { filter: grayscale(1) contrast(1.05); }
+
+/* Field notes: photos staggered on twelve columns, each at its own shape. */
+.field-notes { display: grid; gap: 96px 1.5rem; }
+.field-note__meta {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--faint);
+}
+.field-note figcaption { margin-top: 0.5rem; }
+.field-note p { margin-bottom: 0.5rem; }
+.field-note__frame[data-wipe='waiting'] { clip-path: inset(0 0 100% 0); }
+.field-note__frame[data-wipe='done'] { clip-path: inset(0); transition: clip-path 400ms var(--ease-out); }
+@media (min-width: 768px) {
+    .field-notes { grid-template-columns: repeat(12, 1fr); }
+    .field-note { grid-column: var(--slot); }
+    .field-note[data-low] { margin-top: 8rem; }
+}
+
 /* ---- The route line: where you are in a case study, at 1024px and up. A
    hairline down the left edge with one tick per section, placed where that
    section really sits in the page. */
