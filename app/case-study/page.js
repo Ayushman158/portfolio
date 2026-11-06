@@ -160,7 +160,7 @@ export default function Hoychoy() {
 
   return (
     <main className="measure min-h-screen pb-28 pt-20 sm:pt-28 lg:pt-36">
-      <motion.div {...rise(0)}><Back href="/archive" label="← Archive" /></motion.div>
+      <motion.div {...rise(0)}><Back /></motion.div>
 
       <motion.header {...rise(0.06)} className="mt-10 space-y-5">
         <p className="text-faint" style={{ fontSize: '0.95rem' }}>Hoychoy Cafe · 2025 · Service design and build</p>
@@ -204,7 +204,7 @@ export default function Hoychoy() {
           system it had.
         </p>
         <AssamMap />
-        <div className="track-wide mt-4 flex gap-4">
+        <div className="track-wide case-fig mt-4 flex gap-4" data-side="left">
           {CAFE_PHOTOS.map(([src, alt, cap, w, h]) => (
             <figure key={src} className="min-w-0" style={{ flex: `${w / h} 1 0` , maxWidth: `calc(26rem * ${w / h})` }}>
               <img src={src} alt={alt} width={w} height={h} loading="lazy" className="block h-auto w-full rounded-xl" style={{ border: '1px solid var(--rule)' }} />
@@ -253,7 +253,7 @@ export default function Hoychoy() {
         <Blueprint states={BLUEPRINT} />
 
         <Subhead>What shipped</Subhead>
-        <figure className="track-wide mb-10">
+        <figure className="track-wide case-fig mb-10" data-side="right">
           <img
             src="/assets/hoychoy-flow.webp"
             alt="The full ordering flow: menu, cart, checkout and confirmation"
@@ -263,10 +263,11 @@ export default function Hoychoy() {
             className="block h-auto w-full rounded-xl"
             style={{ border: '1px solid var(--rule)' }}
           />
+          <figcaption>The full ordering flow: menu, cart, checkout and confirmation.</figcaption>
         </figure>
         <Decisions items={SHIPPED} />
         <div className="mt-12">
-          <Shots items={SHOTS} />
+          <Shots items={SHOTS} cols="grid-cols-2 sm:grid-cols-3" side="left" />
         </div>
 
         <Subhead>How an order reaches the kitchen</Subhead>
@@ -291,7 +292,7 @@ export default function Hoychoy() {
 
       <section className="mt-16">
         <p>
-          Back to <Link href="/archive" className="prose-link">the archive</Link>, or read{' '}
+          Back to <Link href="/#work" className="prose-link">the work index</Link>, or read{' '}
           <Link href="/banyan" className="prose-link">Banyan Tree</Link> and{' '}
           <Link href="/signal" className="prose-link">finding the right platform on the Delhi Metro</Link>
         </p>

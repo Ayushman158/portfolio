@@ -276,7 +276,8 @@ export function Lamp() {
             <span
               role="switch"
               aria-checked={isDark}
-              aria-label="Dark theme. Pull the lamp cord, or press Enter, to switch."
+              aria-label="light / dark"
+              title="light / dark"
               tabIndex={0}
               onPointerDown={onPointerDown}
               onKeyDown={onKeyDown}

@@ -11,11 +11,11 @@
         font-size: 106.25%;
     }
 
-    /* ---- Light: warm paper. Secondary tones are tinted from the ground, not grey. ---- */
+    /* ---- Light: a white page, inked from the sunset palette. ---- */
     :root {
-        --ground: #FBFAF7;
+        --ground: #FFFFFF;
         --raised: #F3F1EB;
-        --ink: #171614;
+        --ink: #3B2024;
         /* Secondary text is body text here, so it is held well above AA:
            muted 11:1, faint 6.7:1 on paper (6.2:1 on raised). */
         --muted: #3D3934;
@@ -25,7 +25,17 @@
            light to read small on paper, so text takes a deeper cut (5.5:1, 5.2:1). */
         --signal-text: #C22E00;
         --telegram-text: #16719E;
-        --accent: #1D4ED8;
+        /* The sunset palette, read by eye from Ayushman's photo. --accent is the
+           only UI accent, for marks and borders: about 4:1 on white, so never
+           body text. The rest stay the same in both themes. --sunset-ink is
+           the palette's dark end, for places where --ink would flip in dark. */
+        --accent: #B4664F;
+        --accent-rgb: 180 102 79;
+        --sunset-ink: #3B2024;
+        --brick: #70393A;
+        --mauve: #A27E86;
+        --dusk: #C0907F;
+        --peach: #EFA872;
         /* Signal (DMRC case study): its blue, its delay red, DMRC's estimate
            orange, and a pale sky tint for stages. Text cuts pass AA on paper. */
         --sig: #0A6CB0;
@@ -64,7 +74,7 @@
         /* ~400 bytes of fractal noise, drawn once by the browser and tiled.
            Dark specks with alpha on the paper; the dark theme swaps in light
            ones. Strength is the last number. */
-        --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.6 0 0 0 -0.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.09'/%3E%3C/svg%3E");
+        --grain: none;
         /* ~660px: 68ch at 17px, inside the 65-75ch band */
 
         /* Motion. Built-in easings are too weak to read as intentional. */
@@ -91,7 +101,6 @@
         --rule: #3A3733;
         --signal-text: #FF3E00;
         --telegram-text: #229ED9;
-        --accent: #8FB0FF;
         --sig: #7CCBF5;
         --sig-sky: #1E4F78;
         --sig-line: #3B97D6;
@@ -322,7 +331,7 @@
     }
 
     .prose-link:hover {
-        color: var(--accent);
+        color: var(--ink);
     }
 
     .prose-link:hover::after,
@@ -561,8 +570,9 @@
     .dock { transition: none; }
 }
 
-/* Contact. The one filled button on the site, because it is the one action
-   the whole page leads to. */
+/* Contact. Warm keys: a pale face on a 2px edge that presses down into the
+   page. The face stays light in both themes, so its text is fixed too. The
+   primary key alone carries the accent shadow, which keeps the pair ranked. */
 .btn-primary,
 .btn-quiet {
     display: inline-flex;
@@ -572,15 +582,116 @@
     padding-inline: 1.25rem;
     border-radius: 999px;
     font-size: 0.95rem;
-    transition: background-color var(--duration-quick) ease, color var(--duration-quick) ease,
-        border-color var(--duration-quick) ease, transform var(--duration-quick) var(--ease-out);
+    background: #FBFAF8;
+    color: #3B2024;
+    border: 1px solid #E9E4DC;
+    border-bottom-width: 2px;
+    transition: background-color var(--duration-quick) ease, box-shadow 90ms ease, transform 90ms var(--ease-out);
 }
-.btn-primary { background: var(--ink); color: var(--ground); }
-.btn-primary:hover { background: color-mix(in srgb, var(--ink) 86%, var(--ground)); }
-.btn-quiet { border: 1px solid var(--rule); color: var(--ink); }
-.btn-quiet:hover { border-color: var(--faint); }
+.btn-primary { box-shadow: 0 2px 0 rgb(var(--accent-rgb) / 0.18); }
+.btn-primary:hover,
+.btn-quiet:hover { background: #F5F1EA; }
 .btn-primary:active,
-.btn-quiet:active { transform: scale(0.97); }
+.btn-quiet:active { box-shadow: none; transform: translateY(2px); }
+@media (prefers-reduced-motion: reduce) {
+    .btn-primary, .btn-quiet { transition: none; }
+    .btn-primary:active, .btn-quiet:active { transform: none; }
+}
+
+/* Case-study figures: small in a big space. Each figure or row takes 62% of
+   the column and sits to one side, chosen per figure with data-side. Below
+   768px it goes full width. The FIG number is a CSS counter, so inserting a
+   figure renumbers the rest. */
+main { counter-reset: fig; }
+figure.case-fig,
+.case-fig figure { counter-increment: fig; }
+.case-fig figcaption {
+    margin-top: 0.6rem;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 0.72rem !important;
+    line-height: 1.5;
+    color: var(--faint);
+}
+.case-fig figcaption::before {
+    content: 'FIG. ' counter(fig, decimal-leading-zero) ' \2014\00a0';
+}
+@media (min-width: 768px) {
+    /* Padding percentages read the parent's width, not the track's. */
+    .case-fig[data-side='left'] { padding-right: calc(var(--track-w, 100%) * 0.38); }
+    .case-fig[data-side='right'] { padding-left: calc(var(--track-w, 100%) * 0.38); }
+}
+
+/* ---- The status bar: bare ticks on the left edge of a case study, with no
+   container. Each tick is 5 by 1px and grows to the right from the edge. The
+   section name rides beside the active tick, in reading size and full ink. */
+.status {
+    position: fixed;
+    z-index: 40;
+    top: 50%;
+    left: 14px;
+    width: 18px;
+    height: min(18rem, 50vh);
+    transform: translateY(-50%);
+}
+html[data-room] .status { display: none; }
+.status__tick {
+    position: absolute;
+    left: 0;
+    top: calc(var(--t) * 100%);
+    width: 5px;
+    height: 1px;
+    transform: scaleX(var(--s));
+    transform-origin: 0 0.5px;
+    background: color-mix(in srgb, var(--ink) calc(30% + var(--w) * 70%), transparent);
+    transition: transform 0.16s cubic-bezier(0.2, 0.7, 0.3, 1), background 0.25s;
+}
+.status__tick[data-on] { background: var(--accent); }
+.status__mark {
+    position: absolute;
+    left: -8px;
+    top: calc(var(--t) * 100%);
+    width: 30px;
+    height: 12px;
+    margin-top: -6px;
+    border-radius: 2px;
+}
+/* The ground behind the name is the page's own colour, so it reads as bare
+   text and stays legible if a wide image passes under it. */
+.status__label {
+    display: none;
+    position: absolute;
+    left: 28px;
+    top: calc(var(--t) * 100%);
+    width: max-content;
+    max-width: 10rem;
+    padding: 1px 4px;
+    transform: translateY(-50%);
+    background: var(--ground);
+    color: var(--ink);
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.3;
+    transition: top 0.16s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.status__label span {
+    display: block;
+    animation: status-label 0.25s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+@keyframes status-label { from { opacity: 0; } }
+/* Always on where the margin has room; on hover or focus from 1024px. */
+@media (min-width: 1024px) {
+    .status__label[data-peek] { display: block; }
+}
+@media (min-width: 1366px) {
+    .status__label { display: block; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .status__tick, .status__label { transition: none; }
+    .status__label span { animation: none; }
+}
+@media print {
+    .status { display: none; }
+}
 
 /* ---- The lamp (theme switch). It hangs from the top of the page at the
    right edge of the wide track, over the spacer the nav keeps for it. The
@@ -867,7 +978,6 @@ html[data-room] .lamp-glow-anchor { display: none; }
   .sig-gallery__track { animation: none; }
   .sig-gallery__track > [aria-hidden] { display: none; }
 }
-.sig-group { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); margin: 1rem 0 .25rem; }
 @media (prefers-reduced-motion: reduce) { .sig-fade { animation: none; } .sig-press:active:not(:disabled), .sig-play:active { transform: none; } }
 
 /* Signal: swap the hero for its dark twin, and take the glare off light

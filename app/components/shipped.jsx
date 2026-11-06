@@ -7,7 +7,7 @@ import Image from 'next/image'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { motion, useMotionValue, useReducedMotion, useTransform } from 'motion/react'
 import ScrambleText from './scramble-text'
-import SignalCard from './signal-card'
+import { SignalThumb, KizukuThumb } from './case-thumbs'
 
 /**
  * Shipped client work, shown rather than listed.
@@ -164,7 +164,9 @@ function Row({ p, i, cards, turns, reduceMotion, router }) {
         style={{ border: '1px solid var(--rule)', background: 'var(--raised)' }}
       >
         {p.visual === 'signal' ? (
-          <SignalCard alt={p.alt} />
+          <SignalThumb alt={p.alt} />
+        ) : p.visual === 'kizuku' ? (
+          <KizukuThumb alt={p.cardAlt || p.alt} />
         ) : p.video && !reduceMotion ? (
           <Loop src={p.video} poster={p.shot} playing={turns.playing === i} repeat={turns.repeat(i)} onEnded={() => turns.next(i)} />
         ) : (
@@ -187,11 +189,21 @@ function Row({ p, i, cards, turns, reduceMotion, router }) {
         </h3>
         <p className="text-faint mt-1.5" style={{ fontSize: '0.95rem' }}>{p.kind}</p>
         <p className="mt-3">{p.what}</p>
+        {p.facts && (
+          <dl className="mt-4 grid gap-x-6 gap-y-3 sm:grid-cols-2">
+            {p.facts.map(([k, v]) => (
+              <div key={k}>
+                <dt className="section-n" style={{ marginBottom: '0.2rem' }}>{k}</dt>
+                <dd className="m-0" style={{ fontSize: '0.95rem', lineHeight: 1.45 }}>{v}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
         <ul className="mt-4 flex flex-wrap gap-1.5 p-0">
           {p.tags.map((t) => <li key={t} className="chip">{t}</li>)}
         </ul>
         <p className="mt-4" style={{ fontSize: '0.95rem' }}>
-          <Go p={p} className="prose-link">Read the case study</Go>
+          <Go p={p} className="prose-link">read the story →</Go>
           {p.url && (
             <>
               <span className="text-faint"> · </span>
@@ -201,7 +213,7 @@ function Row({ p, i, cards, turns, reduceMotion, router }) {
           {p.play && (
             <>
               <span className="text-faint"> · </span>
-              <a href={p.play} className="prose-link">Play it</a>
+              <a href={p.play} className="prose-link">play it</a>
             </>
           )}
         </p>

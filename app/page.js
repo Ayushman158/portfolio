@@ -40,6 +40,10 @@ const SHIPPED = [
         <GradientText>6–8 minutes to 2–3</GradientText>.
       </>
     ),
+    facts: [
+      ['Role', 'Research, design, build (AI-assisted) and pilot'],
+      ['Outcome', 'Payment mismatches went from about 8–10 a week to 1–2, by the owner’s figures from a two-week pilot'],
+    ],
     tags: ['Research', 'Service design', 'Interface', 'Build'],
   },
 ]
@@ -84,7 +88,14 @@ const RESEARCH = [
     shot: '/research/kizuku-loop.jpg',
     video: '/research/kizuku-loop.mp4',
     alt: 'A worry becomes one small action, the seed grows when it is done, then three Kizuku screens',
+    // Selected work shows the worry and the action side by side; the archive keeps the loop.
+    visual: 'kizuku',
+    cardAlt: 'Two Kizuku screens: the app asks what future worry is on your mind, then gives one action for today',
     what: 'An iOS app for people who overthink the future. You give it one worry and get one small thing to do today.',
+    facts: [
+      ['Role', 'Sole designer and developer'],
+      ['Outcome', 'The loop runs end to end on a real iPhone. Not yet tested with users.'],
+    ],
     tags: ['Brand', 'Design system', 'Interaction', 'iOS build'],
   },
   {
@@ -92,11 +103,15 @@ const RESEARCH = [
     kind: 'Wayfinding · Research, sign design and testing',
     href: '/signal',
     site: '84 riders · 45% → 80% right platform',
-    shot: '/signal/wayfinding/render-blade.jpg',
-    // The row shows the case study's collage, assembled, in place of the shot.
+    shot: '/signal/wayfinding/render-fork.jpg',
+    // The concept render at the fork; the view moves in toward the sign on hover.
     visual: 'signal',
-    alt: 'The Signal work at a glance: a violet platform 5 sign on a concrete wall, the Saathi route finder showing Platform 5 straight ahead, the platform badge, and the nine line marks',
+    alt: 'Concept render: the redesigned sign hanging where a metro concourse splits three ways, platform 3 Tis Hazari · Inderlok to the left, platform 5 Mandi House · Lajpat Nagar straight ahead, platform 4 Shastri Park · Welcome to the right',
     what: 'For first-time and occasional riders. Delhi Metro signs name a train by the last station on its line. I redesigned them around the stations riders travel to, added QR boards that open a route finder for riders who get lost, and tested the signs with 84 riders.',
+    facts: [
+      ['Role', 'Solo: research, design, prototype'],
+      ['Outcome', 'Riders who picked the right platform first try: 45% → 80%, in a photo test'],
+    ],
     tags: ['Research', 'Interaction', 'Systems', 'Prototype'],
   },
 ]
@@ -104,7 +119,7 @@ const RESEARCH = [
 // Ordered for a recruiter: live work with measured results, then tested research, then
 // the product being built, then the speculative campaign, then the installation.
 const byName = Object.fromEntries([...CAMPAIGN, ...SHIPPED, ...RESEARCH].map((p) => [p.name, p]))
-const SELECTED = ['Helping Delhi Metro riders find their way: new signs and a QR route finder', 'Kizuku'].map((n) => byName[n])
+const SELECTED = ['Helping Delhi Metro riders find their way: new signs and a QR route finder', 'Kizuku', 'Hoychoy Cafe'].map((n) => byName[n])
 
 // matter-js is ~30 kB gzipped and only matters once this section is reached, so
 // it is split out of the initial bundle entirely rather than shipped with the fold.
@@ -178,9 +193,9 @@ function EmailActions({ onCopied }) {
 
   return (
     <div className="flex flex-wrap items-center gap-3">
-      <a href={`mailto:${EMAIL}`} className="btn-primary">Email me</a>
+      <a href={`mailto:${EMAIL}`} className="btn-primary">say hello</a>
       <button type="button" onClick={copy} className="btn-quiet">
-        <span aria-live="polite" className="inline-block min-w-[6.5rem] text-center">{copied ? 'Copied ✓' : 'Copy address'}</span>
+        <span aria-live="polite" className="inline-block min-w-[6.5rem] text-center">{copied ? 'copied ✓' : 'copy address'}</span>
       </button>
     </div>
   )
@@ -271,7 +286,7 @@ export default function Home() {
       <motion.div {...rise(0.12)}>
         {/* Only the work with a full case study, strongest first, one per row.
             Everything else is in the Archive (linked under the list and in the nav). */}
-        <Shipped label="Selected work" items={SELECTED} rows />
+        <Shipped label="selected work" items={SELECTED} rows />
         <p className="track-wide text-faint mt-6" style={{ fontSize: '0.95rem' }}>
           Client work, the Koi Wishing Pond, the Choose Assam campaign, motion and smaller experiments are in the <Link href="/archive" className="prose-link">archive</Link>.
         </p>
@@ -281,8 +296,8 @@ export default function Home() {
       <div className="track-wide mt-16 grid gap-y-16">
         <motion.section {...rise(0.18)}>
           <div className="mb-3 flex items-baseline justify-between">
-            <h2 className="text-faint text-[0.95rem]"><ScrambleText>Skills</ScrambleText></h2>
-            {!reduceMotion && <span aria-hidden="true" className="text-faint text-[0.95rem]">Drag them around</span>}
+            <h2 className="text-faint text-[0.95rem]"><ScrambleText>skills</ScrambleText></h2>
+            {!reduceMotion && <span aria-hidden="true" className="text-faint text-[0.95rem]">drag them around</span>}
           </div>
 
           {/* Named in server-rendered text, for crawlers, keyword scans and
@@ -294,7 +309,7 @@ export default function Home() {
         </motion.section>
 
         <motion.section {...rise(0.22)}>
-          <h2 className="text-faint text-[0.95rem] mb-3"><ScrambleText>Connect</ScrambleText></h2>
+          <h2 className="text-faint text-[0.95rem] mb-3"><ScrambleText>connect</ScrambleText></h2>
           <PinnedNote>
             <p>
               I’m looking for UX/UI or design-engineering work, somewhere I can take an idea from research
@@ -305,17 +320,6 @@ export default function Home() {
           </PinnedNote>
         </motion.section>
       </div>
-
-      {/* The sign-off. The question sits in the mono the site uses for data,
-          the answer in the serif. */}
-      <motion.footer {...rise(0.26)} className="track-wide mt-28 border-t pt-10" style={{ borderColor: 'var(--rule)' }}>
-        <p className="text-faint mb-4" style={{ fontFamily: "'Geist Mono', ui-monospace, monospace", fontSize: '0.8rem', letterSpacing: '0.02em' }}>
-          Why design in the age of AI?
-        </p>
-        <p className="display max-w-[34rem]">
-          Because my life is a dataset no AI has been trained on.
-        </p>
-      </motion.footer>
     </main>
   )
 }

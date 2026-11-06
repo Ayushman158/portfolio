@@ -6,9 +6,9 @@ import { usePathname } from 'next/navigation'
 import { LocalClock } from './theme'
 
 const LINKS = [
-  { href: '/', label: 'Index' },
-  { href: '/archive', label: 'Archive' },
-  { href: '/about', label: 'About' },
+  { href: '/', label: 'index' },
+  { href: '/archive', label: 'archive' },
+  { href: '/about', label: 'about' },
 ]
 
 /**

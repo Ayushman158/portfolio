@@ -110,7 +110,7 @@ export default function Banyan() {
   return (
     <main className="measure min-h-screen pb-28 pt-20 sm:pt-28 lg:pt-36">
       <motion.div {...rise(0)}>
-        <Back href="/archive" label="← Archive" />
+        <Back href="/archive" label="← archive" />
       </motion.div>
 
       {/* ─── what it is, in the first screen ─────────────────────────────── */}

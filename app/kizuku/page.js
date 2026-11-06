@@ -186,7 +186,7 @@ export default function Kizuku() {
           <em>reach out</em>. Forest grows a tree when you sit still; Kizuku grows one when you face
           something hard. Same mechanic, a different meaning. Five screens from the app on an iPhone.
         </p>
-        <Shots items={SCREENS} />
+        <Shots items={SCREENS} cols="grid-cols-2 sm:grid-cols-3" side="left" />
 
         <Subhead>Try the real app</Subhead>
         <LiveApp />
@@ -216,8 +216,9 @@ export default function Kizuku() {
           Next to Finch the app looked washed out, so I made it louder without adding a colour: harder
           edges, filled icons, and the type colour as the ground.
         </p>
-        <figure className="track-wide mb-10">
+        <figure className="track-wide case-fig mb-10" data-side="right">
           <img src="/kizuku/logo-formation.webp" alt="How the logo was made: the letter K, mirrored, plus bamboo, makes the final mark; below, the app icon on five colours" width={908} height={693} loading="lazy" className="block h-auto w-full rounded-xl" style={{ border: '1px solid var(--rule)', background: '#fff' }} />
+          <figcaption>How the logo was made: the letter K, mirrored, plus bamboo, makes the final mark.</figcaption>
         </figure>
         <Palette colours={COLOURS} />
       </motion.section>

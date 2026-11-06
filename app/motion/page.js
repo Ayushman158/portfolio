@@ -40,7 +40,7 @@ export default function MotionStudies() {
 
   return (
     <main className="measure min-h-screen pb-28 pt-20 sm:pt-28 lg:pt-36">
-      <motion.div {...rise(0)}><Back href="/archive" label="← Archive" /></motion.div>
+      <motion.div {...rise(0)}><Back href="/archive" label="← archive" /></motion.div>
 
       <motion.div {...rise(0.04)} className="space-y-5 mt-8">
         <p className="text-faint" style={{ fontSize: '0.95rem' }}>Motion studies · 2026</p>
