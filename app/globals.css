@@ -941,7 +941,7 @@ html[data-room] .lamp-glow-anchor { display: none; }
 /* Signal's line-map menu: in the left margin only where the margin is wide
    enough for it beside the wide track. */
 .sig-map { display: none; }
-@media (min-width: 86rem) { .sig-map { display: block; } }
+@media (min-width: 88rem) { .sig-map { display: block; } }
 /* Signal demos: a soft fade when an answer or image swaps, press feedback, a plain slider. */
 @keyframes sig-fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 .sig-fade { animation: sig-fade 260ms cubic-bezier(.23, 1, .32, 1) both; }
