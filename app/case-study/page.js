@@ -204,7 +204,7 @@ export default function Hoychoy() {
           system it had.
         </p>
         <AssamMap />
-        <div className="track-wide mt-4 flex gap-4">
+        <div className="track-wide case-fig mt-4 flex gap-4" data-side="left">
           {CAFE_PHOTOS.map(([src, alt, cap, w, h]) => (
             <figure key={src} className="min-w-0" style={{ flex: `${w / h} 1 0` , maxWidth: `calc(26rem * ${w / h})` }}>
               <img src={src} alt={alt} width={w} height={h} loading="lazy" className="block h-auto w-full rounded-xl" style={{ border: '1px solid var(--rule)' }} />
@@ -253,7 +253,7 @@ export default function Hoychoy() {
         <Blueprint states={BLUEPRINT} />
 
         <Subhead>What shipped</Subhead>
-        <figure className="track-wide mb-10">
+        <figure className="track-wide case-fig mb-10" data-side="right">
           <img
             src="/assets/hoychoy-flow.webp"
             alt="The full ordering flow: menu, cart, checkout and confirmation"
@@ -263,10 +263,11 @@ export default function Hoychoy() {
             className="block h-auto w-full rounded-xl"
             style={{ border: '1px solid var(--rule)' }}
           />
+          <figcaption>The full ordering flow: menu, cart, checkout and confirmation.</figcaption>
         </figure>
         <Decisions items={SHIPPED} />
         <div className="mt-12">
-          <Shots items={SHOTS} />
+          <Shots items={SHOTS} cols="grid-cols-2 sm:grid-cols-3" side="left" />
         </div>
 
         <Subhead>How an order reaches the kitchen</Subhead>

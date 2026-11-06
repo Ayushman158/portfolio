@@ -54,7 +54,7 @@ export function Overview({ items }) {
   )
 }
 
-export function Back({ href = '/#work', label = '← Work' }) {
+export function Back({ href = '/#work', label = '← work' }) {
   const router = useRouter()
   // Arrived from a card? The top image shrinks back into it.
   return <Link href={href} onClick={href === '/#work' ? (e) => backToCard(e, router) : undefined} className="prose-link text-[0.95rem]">{label}</Link>
@@ -147,9 +147,11 @@ export function Figure({ src, alt, caption, track = 'track-full', className = ''
  * these are a sequence, so a single filmstrip of five reads as the flow rather
  * than as a 3-then-2 grid.
  */
-export function Shots({ items, cols = 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-5' }) {
+export function Shots({ items, cols = 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-5', side }) {
+  // With a side, the row is a numbered case-study figure at 62% of the column.
+  const frame = side ? 'track-wide case-fig' : 'track-full'
   return (
-    <div className={`track-full grid ${cols} gap-x-4 gap-y-8`}>
+    <div className={`${frame} grid ${cols} gap-x-4 gap-y-8`} data-side={side}>
       {items.map(([src, caption, crop]) => (
         <figure key={src} className="m-0">
           {/* One capture is a 1170x4641 scroll — left at its natural height it

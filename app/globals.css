@@ -26,6 +26,7 @@
         --signal-text: #C22E00;
         --telegram-text: #16719E;
         --accent: #1D4ED8;
+        --accent-rgb: 180 102 79;
         /* Signal (DMRC case study): its blue, its delay red, DMRC's estimate
            orange, and a pale sky tint for stages. Text cuts pass AA on paper. */
         --sig: #0A6CB0;
@@ -561,8 +562,9 @@
     .dock { transition: none; }
 }
 
-/* Contact. The one filled button on the site, because it is the one action
-   the whole page leads to. */
+/* Contact. Warm keys: a pale face on a 2px edge that presses down into the
+   page. The face stays light in both themes, so its text is fixed too. The
+   primary key alone carries the accent shadow, which keeps the pair ranked. */
 .btn-primary,
 .btn-quiet {
     display: inline-flex;
@@ -572,15 +574,97 @@
     padding-inline: 1.25rem;
     border-radius: 999px;
     font-size: 0.95rem;
-    transition: background-color var(--duration-quick) ease, color var(--duration-quick) ease,
-        border-color var(--duration-quick) ease, transform var(--duration-quick) var(--ease-out);
+    background: #FBFAF8;
+    color: #3B2024;
+    border: 1px solid #E9E4DC;
+    border-bottom-width: 2px;
+    transition: background-color var(--duration-quick) ease, box-shadow 90ms ease, transform 90ms var(--ease-out);
 }
-.btn-primary { background: var(--ink); color: var(--ground); }
-.btn-primary:hover { background: color-mix(in srgb, var(--ink) 86%, var(--ground)); }
-.btn-quiet { border: 1px solid var(--rule); color: var(--ink); }
-.btn-quiet:hover { border-color: var(--faint); }
+.btn-primary { box-shadow: 0 2px 0 rgb(var(--accent-rgb) / 0.18); }
+.btn-primary:hover,
+.btn-quiet:hover { background: #F5F1EA; }
 .btn-primary:active,
-.btn-quiet:active { transform: scale(0.97); }
+.btn-quiet:active { box-shadow: none; transform: translateY(2px); }
+@media (prefers-reduced-motion: reduce) {
+    .btn-primary, .btn-quiet { transition: none; }
+    .btn-primary:active, .btn-quiet:active { transform: none; }
+}
+
+/* Case-study figures: small in a big space. Each figure or row takes 62% of
+   the column and sits to one side, chosen per figure with data-side. Below
+   768px it goes full width. The FIG number is a CSS counter, so inserting a
+   figure renumbers the rest. */
+main { counter-reset: fig; }
+figure.case-fig,
+.case-fig figure { counter-increment: fig; }
+.case-fig figcaption {
+    margin-top: 0.6rem;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 0.72rem !important;
+    line-height: 1.5;
+    color: var(--faint);
+}
+.case-fig figcaption::before {
+    content: 'FIG. ' counter(fig, decimal-leading-zero) ' \2014\00a0';
+}
+@media (min-width: 768px) {
+    /* Padding percentages read the parent's width, not the track's. */
+    .case-fig[data-side='left'] { padding-right: calc(var(--track-w, 100%) * 0.38); }
+    .case-fig[data-side='right'] { padding-left: calc(var(--track-w, 100%) * 0.38); }
+}
+
+/* ---- The route line: where you are in a case study, at 1024px and up. A
+   hairline down the left edge with one tick per section, placed where that
+   section really sits in the page. */
+.route { display: none; }
+@media (min-width: 1024px) {
+    .route {
+        display: block;
+        position: fixed;
+        z-index: 40;
+        top: 0;
+        bottom: 0;
+        left: 24px;
+        width: 1px;
+        background: color-mix(in srgb, var(--ink) 15%, transparent);
+    }
+}
+.route__tick {
+    position: absolute;
+    left: 0;
+    display: flex;
+    align-items: center;
+    height: 20px;
+    width: 28px;
+    transform: translateY(-50%);
+}
+.route__tick::before {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 1px;
+    background: color-mix(in srgb, var(--ink) 35%, transparent);
+    transition: width var(--duration-quick) var(--ease-out), background-color var(--duration-quick) ease;
+}
+.route__tick[data-state='passed']::before { background: var(--ink); }
+.route__tick[data-state='current']::before { width: 12px; height: 2px; background: var(--accent); }
+.route__label {
+    position: absolute;
+    left: 20px;
+    padding: 2px 6px;
+    white-space: nowrap;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 0.7rem;
+    color: var(--ink);
+    background: var(--ground);
+    opacity: 0;
+    pointer-events: none;
+}
+.route__tick:hover .route__label,
+.route__tick:focus-visible .route__label { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+    .route__tick::before { transition: none; }
+}
 
 /* ---- The lamp (theme switch). It hangs from the top of the page at the
    right edge of the wide track, over the spacer the nav keeps for it. The

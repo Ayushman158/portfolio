@@ -201,7 +201,7 @@ export default function KoiWishingPond() {
     <Room column={column} hero={hero} reduceMotion={reduceMotion} />
     <PondHero reduceMotion={reduceMotion} box={hero} />
     <main ref={column} id="story" className="relative z-[1] measure min-h-screen pb-28 pt-16 sm:pt-20" style={{ scrollMarginTop: '0px' }}>
-      <motion.div {...rise(0)}><Back href="/archive" label="← Archive" /></motion.div>
+      <motion.div {...rise(0)}><Back href="/archive" label="← archive" /></motion.div>
 
       <motion.div {...rise(0.08)}><Overview items={OVERVIEW} /></motion.div>
 

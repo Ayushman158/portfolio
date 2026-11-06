@@ -216,11 +216,11 @@ export default function Signal() {
       {/* ---------- The signs ---------- */}
       <Section id="signs" n="04" title="The signs" lede="Each platform gets one row: an arrow, the number in the line’s colour, and two stations on the way.">
         <BeforeAfter />
-        <figure className="track-wide mt-20">
+        <figure className="track-wide case-fig mt-20" data-side="left">
           <img src={`${W}/render-fork.jpg`} alt="Concept render: the redesigned Kashmere Gate sign hanging where the concourse splits three ways, each arrow over its path" className="block aspect-[3/1] w-full rounded-xl object-cover" style={{ objectPosition: '50% 8%', border: '1px solid var(--rule)' }} />
           <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem' }}>At the fork, hung where the concourse splits three ways.</figcaption>
         </figure>
-        <figure className="track-wide mt-6">
+        <figure className="track-wide case-fig mt-6" data-side="right">
           <img src={`${W}/render-totem.jpg`} alt="Concept render: a platform totem for platform 5, Violet Line, listing the next five stops" loading="lazy" className="block aspect-[16/10] w-full rounded-xl object-cover" style={{ objectPosition: '50% 50%', border: '1px solid var(--rule)' }} />
           <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem' }}>On the platform, a totem with the next five stops. Both are concept renders; the sign faces are the real artwork.</figcaption>
         </figure>
@@ -255,11 +255,11 @@ export default function Signal() {
           pins={BOARD_PINS}
           caption="Map board: beside the station map."
         />
-        <figure className="mx-auto mt-16 w-full max-w-[280px]">
+        <figure className="case-fig mx-auto mt-16 w-full max-w-[280px]">
           <img src="/signal/gallery/board-entrance.jpg" alt="The counter board: Saathi asks “Where are you going?”, with the QR code that opens it at Kashmere Gate" loading="lazy" className="block w-full rounded-xl" style={{ border: '1px solid var(--rule)' }} />
           <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem' }}>Counter board: at customer care and the ticket counter.</figcaption>
         </figure>
-        <figure className="track-wide mt-6">
+        <figure className="track-wide case-fig mt-6" data-side="right">
           <img src={`${W}/render-counter.jpg`} alt="Concept render: inside a metro concourse, a rider scans the Saathi counter board on a pillar beside the customer care counter while two people queue at the window" loading="lazy" className="block aspect-[16/9] w-full rounded-xl object-cover" style={{ border: '1px solid var(--rule)' }} />
           <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem' }}>Beside customer care, where lost riders already queue to ask. Concept render; the board is the real artwork.</figcaption>
         </figure>

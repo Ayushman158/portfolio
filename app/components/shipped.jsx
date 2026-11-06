@@ -203,7 +203,7 @@ function Row({ p, i, cards, turns, reduceMotion, router }) {
           {p.tags.map((t) => <li key={t} className="chip">{t}</li>)}
         </ul>
         <p className="mt-4" style={{ fontSize: '0.95rem' }}>
-          <Go p={p} className="prose-link">Read the case study</Go>
+          <Go p={p} className="prose-link">read the story →</Go>
           {p.url && (
             <>
               <span className="text-faint"> · </span>
@@ -213,7 +213,7 @@ function Row({ p, i, cards, turns, reduceMotion, router }) {
           {p.play && (
             <>
               <span className="text-faint"> · </span>
-              <a href={p.play} className="prose-link">Play it</a>
+              <a href={p.play} className="prose-link">play it</a>
             </>
           )}
         </p>

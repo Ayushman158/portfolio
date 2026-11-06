@@ -2,6 +2,7 @@ import './globals.css'
 import './phosphor.css'
 import { ThemeProvider, themeInitScript, Lamp } from './components/theme'
 import Dock from './components/dock'
+import AwayTitle from './components/away-title'
 import { Inter, Instrument_Sans, Instrument_Serif, Reenie_Beanie } from 'next/font/google'
 
 // The site's two faces: Instrument Sans for everything read, Instrument Serif
@@ -79,6 +80,7 @@ export default function RootLayout({ children }) {
           {/* First in the document, so the nav is the first thing a keyboard reaches. */}
           <Dock />
           <Lamp />
+          <AwayTitle />
           {children}
         </ThemeProvider>
       </body>

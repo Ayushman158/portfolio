@@ -43,10 +43,10 @@ export default function Archive() {
         <p className="max-w-[38rem]">Client work, an installation, a campaign, motion and smaller experiments. Hover a row to see it.</p>
       </motion.header>
       <motion.div {...rise(0.08)}>
-        <WorkIndex label="Client work" items={CLIENT} />
-        <WorkIndex label="Installation and campaign" items={PROJECTS} />
-        <WorkIndex label="Experiments" items={EXPERIMENTS} />
-        <WorkIndex label="Motion" items={MOTION} />
+        <WorkIndex label="client work" items={CLIENT} />
+        <WorkIndex label="installation and campaign" items={PROJECTS} />
+        <WorkIndex label="experiments" items={EXPERIMENTS} />
+        <WorkIndex label="motion" items={MOTION} />
       </motion.div>
     </main>
   )

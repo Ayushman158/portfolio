@@ -193,9 +193,9 @@ function EmailActions({ onCopied }) {
 
   return (
     <div className="flex flex-wrap items-center gap-3">
-      <a href={`mailto:${EMAIL}`} className="btn-primary">Email me</a>
+      <a href={`mailto:${EMAIL}`} className="btn-primary">say hello</a>
       <button type="button" onClick={copy} className="btn-quiet">
-        <span aria-live="polite" className="inline-block min-w-[6.5rem] text-center">{copied ? 'Copied ✓' : 'Copy address'}</span>
+        <span aria-live="polite" className="inline-block min-w-[6.5rem] text-center">{copied ? 'copied ✓' : 'copy address'}</span>
       </button>
     </div>
   )
@@ -286,7 +286,7 @@ export default function Home() {
       <motion.div {...rise(0.12)}>
         {/* Only the work with a full case study, strongest first, one per row.
             Everything else is in the Archive (linked under the list and in the nav). */}
-        <Shipped label="Selected work" items={SELECTED} rows />
+        <Shipped label="selected work" items={SELECTED} rows />
         <p className="track-wide text-faint mt-6" style={{ fontSize: '0.95rem' }}>
           Client work, the Koi Wishing Pond, the Choose Assam campaign, motion and smaller experiments are in the <Link href="/archive" className="prose-link">archive</Link>.
         </p>
@@ -296,8 +296,8 @@ export default function Home() {
       <div className="track-wide mt-16 grid gap-y-16">
         <motion.section {...rise(0.18)}>
           <div className="mb-3 flex items-baseline justify-between">
-            <h2 className="text-faint text-[0.95rem]"><ScrambleText>Skills</ScrambleText></h2>
-            {!reduceMotion && <span aria-hidden="true" className="text-faint text-[0.95rem]">Drag them around</span>}
+            <h2 className="text-faint text-[0.95rem]"><ScrambleText>skills</ScrambleText></h2>
+            {!reduceMotion && <span aria-hidden="true" className="text-faint text-[0.95rem]">drag them around</span>}
           </div>
 
           {/* Named in server-rendered text, for crawlers, keyword scans and
@@ -309,7 +309,7 @@ export default function Home() {
         </motion.section>
 
         <motion.section {...rise(0.22)}>
-          <h2 className="text-faint text-[0.95rem] mb-3"><ScrambleText>Connect</ScrambleText></h2>
+          <h2 className="text-faint text-[0.95rem] mb-3"><ScrambleText>connect</ScrambleText></h2>
           <PinnedNote>
             <p>
               I’m looking for UX/UI or design-engineering work, somewhere I can take an idea from research
