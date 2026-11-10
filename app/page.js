@@ -99,27 +99,27 @@ const RESEARCH = [
     tags: ['Brand', 'Design system', 'Interaction', 'iOS build'],
   },
   {
-    name: 'Helping Delhi Metro riders find their way: new signs and a QR route finder',
-    kind: 'Wayfinding · Research, sign design and testing',
+    name: 'Finding the right platform on the Delhi Metro',
+    kind: 'System design · Wayfinding',
     href: '/signal',
-    site: '84 riders · 45% → 80% right platform',
-    shot: '/signal/wayfinding/render-fork.jpg',
-    // The concept render at the fork; the view moves in toward the sign on hover.
+    site: 'First sign, phone test: 45% → 80%',
+    shot: '/signal/night/hero.jpg',
+    // A still sign in a moving crowd; the view moves in toward the sign on hover.
     visual: 'signal',
-    alt: 'Concept render: the redesigned sign hanging where a metro concourse splits three ways, platform 3 Tis Hazari · Inderlok to the left, platform 5 Mandi House · Lajpat Nagar straight ahead, platform 4 Shastri Park · Welcome to the right',
-    what: 'For first-time and occasional riders. Delhi Metro signs name a train by the last station on its line. I redesigned them around the stations riders travel to, added QR boards that open a route finder for riders who get lost, and tested the signs with 84 riders.',
+    alt: 'Concept image: the redesigned black sign hanging still above a blurred crowd, platform 3 Tis Hazari · Inderlok to the left, platform 5 Mandi House · Lajpat Nagar straight ahead, platform 4 Shastri Park · Welcome to the right',
+    what: 'For first-time and occasional riders. Delhi Metro signs name a train by the last station on its line. I redesigned them around the stations riders travel to, and tested the first version with 84 riders. Then I drew one system of signs, screens and tickets from the street to the exit.',
     facts: [
       ['Role', 'Solo: research, design, prototype'],
-      ['Outcome', 'Riders who picked the right platform first try: 45% → 80%, in a photo test'],
+      ['Outcome', 'On the first sign, riders who picked the right platform first try: 45% → 80%, in a photo test'],
     ],
-    tags: ['Research', 'Interaction', 'Systems', 'Prototype'],
+    tags: ['System design', 'Wayfinding', 'Research', 'Prototype'],
   },
 ]
 
 // Ordered for a recruiter: live work with measured results, then tested research, then
 // the product being built, then the speculative campaign, then the installation.
 const byName = Object.fromEntries([...CAMPAIGN, ...SHIPPED, ...RESEARCH].map((p) => [p.name, p]))
-const SELECTED = ['Helping Delhi Metro riders find their way: new signs and a QR route finder', 'Kizuku', 'Hoychoy Cafe'].map((n) => byName[n])
+const SELECTED = ['Finding the right platform on the Delhi Metro', 'Kizuku', 'Hoychoy Cafe'].map((n) => byName[n])
 
 // matter-js is ~30 kB gzipped and only matters once this section is reached, so
 // it is split out of the initial bundle entirely rather than shipped with the fold.

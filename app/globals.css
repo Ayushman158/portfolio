@@ -927,6 +927,53 @@ html.theme-switching::view-transition-new(root) {
     line-height: 1.35;
 }
 
+.sig-evidence { display: inline-flex; align-items: center; min-height: 1.55rem; padding: .18rem .65rem; border: 1px solid var(--rule); border-radius: 999px; color: var(--faint); font-size: .7rem; line-height: 1.2; white-space: nowrap; }
+.sig-evidence--tested { border-color: color-mix(in srgb, var(--ink) 45%, transparent); color: var(--ink); background: color-mix(in srgb, var(--ink) 9%, transparent); }
+
+/* Signal homepage thumbnail: the rider's question resolves into the platform key. */
+.signal-thumb { container-type: inline-size; background: #171717; color: #fff; }
+.signal-thumb__scene { transform: scale(1.035); }
+.signal-thumb__veil { background: linear-gradient(90deg, rgba(10,10,10,.78) 0%, rgba(10,10,10,.3) 55%, rgba(10,10,10,.08) 100%), linear-gradient(0deg, rgba(10,10,10,.56), transparent 50%); }
+.signal-thumb__question { left: 6.5cqw; top: 14cqw; width: 39cqw; animation: signal-question 8.4s var(--ease-in-out) infinite both; }
+.signal-thumb__question span { display: block; color: rgba(255,255,255,.62); font-size: 2.1cqw; letter-spacing: .12em; text-transform: uppercase; }
+.signal-thumb__question strong { display: block; margin-top: 1.8cqw; font-family: var(--font-serif), ui-serif, Georgia, serif; font-size: 7.2cqw; font-weight: 400; line-height: .94; letter-spacing: -.035em; text-wrap: balance; }
+.signal-thumb__answer { left: 6.5cqw; top: 7cqw; width: 67cqw; animation: signal-answer 8.4s var(--ease-in-out) infinite both; }
+.signal-thumb__eyebrow { display: flex; justify-content: space-between; margin-bottom: 1.5cqw; color: rgba(255,255,255,.68); font-size: 1.65cqw; letter-spacing: .08em; text-transform: uppercase; }
+.signal-thumb__sign { display: grid; grid-template-columns: 9cqw 9cqw 1fr; align-items: center; gap: 1.7cqw; padding: 2cqw; border: 1px solid rgba(255,255,255,.16); border-radius: 1.5cqw; background: rgba(18,18,18,.94); box-shadow: 0 2cqw 5cqw rgba(0,0,0,.26); }
+.signal-thumb__sign svg { width: 7cqw; height: 7cqw; padding: 1.35cqw; border: .35cqw solid #fff; border-radius: 1.2cqw; }
+.signal-thumb__sign path { fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.signal-thumb__badge { display: grid; width: 7cqw; height: 7cqw; place-items: center; border: .35cqw solid #fff; border-radius: 1.2cqw; background: #7b3fe0; font-size: 4.2cqw; font-weight: 800; line-height: 1; }
+.signal-thumb__destinations { min-width: 0; }
+.signal-thumb__destinations small { display: block; color: rgba(255,255,255,.58); font-size: 1.75cqw; line-height: 1.1; }
+.signal-thumb__destinations b { display: block; margin-top: .7cqw; overflow: hidden; font-size: 2.7cqw; line-height: 1.1; text-overflow: ellipsis; white-space: nowrap; }
+.signal-thumb__route { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 2.6cqw; }
+.signal-thumb__rail, .signal-thumb__progress { position: absolute; left: 16.66%; right: 16.66%; top: 1.15cqw; height: .35cqw; background: rgba(255,255,255,.26); transform-origin: left; }
+.signal-thumb__progress { right: 16.66%; background: #9d6bf0; animation: signal-route 8.4s var(--ease-in-out) infinite both; }
+.signal-thumb__route > span { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: .75cqw; color: rgba(255,255,255,.72); font-size: 1.55cqw; line-height: 1.15; text-align: center; }
+.signal-thumb__route > span > i { width: 2.5cqw; height: 2.5cqw; border: .45cqw solid #fff; border-radius: 50%; background: #171717; }
+.signal-thumb__route > span:nth-of-type(3) > i { background: #7b3fe0; }
+.signal-thumb__caption { left: 3cqw; bottom: 2.6cqw; color: rgba(255,255,255,.72); font-size: 1.65cqw; letter-spacing: .06em; text-transform: uppercase; padding: .55cqw 1.4cqw; border-radius: 999px; background: rgba(20,19,17,.78); color: #f3efe6; font-size: 2cqw; letter-spacing: 0; text-transform: none; }
+@keyframes signal-question {
+  0%, 18% { opacity: 1; transform: translateX(0); }
+  28%, 88% { opacity: 0; transform: translateX(-1.8cqw); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+@keyframes signal-answer {
+  0%, 18% { opacity: 0; transform: translateX(-2.4cqw); }
+  30%, 86% { opacity: 1; transform: translateX(0); }
+  96%, 100% { opacity: 0; transform: translateX(1.4cqw); }
+}
+@keyframes signal-route {
+  0%, 32% { transform: scaleX(0); opacity: 0; }
+  42% { opacity: 1; }
+  72%, 100% { transform: scaleX(1); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .signal-thumb__question { display: none; animation: none; }
+  .signal-thumb__answer { opacity: 1; transform: none; animation: none; }
+  .signal-thumb__progress { opacity: 1; transform: scaleX(1); animation: none; }
+}
+
 /* ---- Koi Wishing Pond: the room around the words ----------------------
    The lab was dark and lit by candle lanterns. While the page is open the
    site is dark and the lamp cord is put away (data-room on <html>); two warm
@@ -1068,3 +1115,68 @@ html[data-room] .lamp-glow-anchor { display: none; }
 .cmp:has(.cmp__range:focus-visible) { outline: 2px solid var(--ink); outline-offset: 3px; }
 .cmp:has(.cmp__range:focus-visible) .cmp__grip { box-shadow: 0 0 0 2px var(--ink), 0 6px 16px -4px rgba(16,24,40,.28); }
 @media (prefers-reduced-motion: reduce) { .cmp__tag, .cmp__grip { transition: none; } }
+
+
+/* Signal hero: an editorial window instead of a full-bleed campaign image. */
+.sig-hero-masthead { display: flex; align-items: center; justify-content: space-between; padding-bottom: .7rem; border-bottom: 1px solid var(--rule); color: var(--faint); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; }
+.sig-hero-masthead a { color: var(--ink); text-transform: none; letter-spacing: 0; }
+.sig-hero-grid { display: grid; gap: 1.75rem; padding-block: clamp(1rem, 2.6vh, 1.75rem); }
+.sig-hero-copy { display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem; min-width: 0; }
+.sig-hero-title { margin: 0; color: var(--ink); font-family: var(--font-serif), ui-serif, Georgia, serif; font-size: clamp(5rem, 10.6vw, 9.2rem); font-weight: 400; line-height: .9; letter-spacing: -.055em; }
+.sig-hero-deck { max-width: 27rem; margin: 1.5rem 0 0; color: var(--ink); font-size: clamp(1.1rem, 1.6vw, 1.35rem); line-height: 1.38; text-wrap: balance; }
+.sig-hero-insight { max-width: 30rem; margin: 0; color: var(--ink); font-family: var(--font-serif), ui-serif, Georgia, serif; font-size: clamp(1.25rem, 1.75vw, 1.55rem); line-height: 1.26; text-wrap: pretty; }
+.sig-hero-window { min-width: 0; margin: 0; }
+.sig-hero-window img { display: block; width: 100%; height: 100%; aspect-ratio: 3 / 2; object-fit: cover; object-position: 50% 30%; }
+.sig-hero-facts { display: grid; gap: .9rem; margin: 0; }
+.sig-hero-facts div { padding-top: .6rem; border-top: 1px solid var(--rule); }
+.sig-hero-facts dt { color: var(--faint); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
+.sig-hero-facts dd { margin: .2rem 0 0; color: var(--ink); font-size: .9rem; line-height: 1.4; }
+.sig-hero-facts strong { color: var(--signal-text); font-weight: 600; }
+@media (min-width: 48rem) {
+    .sig-hero-grid { grid-template-columns: minmax(17rem, .64fr) minmax(0, 1fr); gap: clamp(2rem, 3.4vw, 3rem); }
+    .sig-hero-window img { aspect-ratio: auto; height: clamp(20rem, calc(100svh - 18.5rem), calc(min(74rem, 100vw - 3rem) * .46)); }
+    .sig-hero-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .sig-grid { clip-path: none !important; opacity: 1 !important; }
+    .sig-fill { transform: none !important; }
+    .sig-lit { opacity: 1 !important; transform: none !important; }
+    .sig-dir { opacity: 1 !important; }
+}
+
+/* hide-status-phone: at phone width the page ticks run into the text column. */
+@media (max-width: 639px) { .status { display: none; } }
+
+/* Signal: one left edge for the whole page, and the night half of the story. */
+.sig-flow .track-wide { width: 100%; margin-inline: 0; }
+.sig-page { overflow-x: clip; }
+.sig-pivot { display: grid; gap: 2rem; margin-bottom: clamp(5rem, 10vw, 9rem); padding-block: clamp(2rem, 5vw, 4.5rem); border-block: 1px solid var(--rule); }
+.sig-pivot__key { display: flex; align-items: center; gap: clamp(1rem, 2.4vw, 2rem); min-width: 0; }
+.sig-pivot__badge { display: grid; flex: none; width: clamp(4.5rem, 9vw, 8rem); aspect-ratio: 1; place-items: center; border: 3px solid var(--ink); border-radius: 50%; color: #fff; background: #7b3fe0; font-size: clamp(2.8rem, 6vw, 5.6rem); font-weight: 800; line-height: 1; }
+.sig-pivot__line { display: block; margin-bottom: 0.35rem; color: var(--faint); font-size: clamp(0.85rem, 1.35vw, 1.15rem); font-weight: 700; }
+.sig-pivot__places { display: block; color: var(--ink); font-size: clamp(1.3rem, 2.4vw, 2.4rem); font-weight: 800; line-height: 1.08; text-wrap: balance; }
+.sig-pivot__claim { max-width: 11ch; color: var(--ink); font-size: clamp(3rem, 7.2vw, 7rem); line-height: 0.94; letter-spacing: -0.035em; text-wrap: balance; }
+@media (min-width: 48rem) {
+    .sig-pivot { grid-template-columns: minmax(0, 1.05fr) minmax(15rem, .95fr); align-items: end; }
+}
+/* The page changes colour as the system section arrives: tokens are registered so they animate. */
+@property --ground { syntax: '<color>'; inherits: true; initial-value: #ffffff; }
+@property --ink { syntax: '<color>'; inherits: true; initial-value: #3b2024; }
+@property --muted { syntax: '<color>'; inherits: true; initial-value: #5c4a4d; }
+@property --faint { syntax: '<color>'; inherits: true; initial-value: #6e6063; }
+@property --rule { syntax: '<color>'; inherits: true; initial-value: #d6d1c6; }
+html[data-sig-flow] body {
+    transition: --ground .8s cubic-bezier(.4, 0, .2, 1), --ink .8s cubic-bezier(.4, 0, .2, 1), --muted .8s cubic-bezier(.4, 0, .2, 1), --faint .8s cubic-bezier(.4, 0, .2, 1), --rule .8s cubic-bezier(.4, 0, .2, 1);
+}
+html[data-sig-night] body { --ground: #0c0b0c; --raised: #1a181a; --ink: #f2efe9; --muted: #c9c4ba; --faint: #a8a296; --rule: #3a3733; }
+.sig-page { background: var(--ground); color: var(--ink); }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+/* Figures and headings rise once as they arrive. */
+html[data-sig-reveal] .sig-flow :is(.case-fig, .sig-section > header) { opacity: 0; transform: translateY(28px); transition: opacity .8s cubic-bezier(.22, 1, .36, 1), transform .8s cubic-bezier(.22, 1, .36, 1); }
+html[data-sig-reveal] .sig-flow :is(.case-fig, .sig-section > header).is-in { opacity: 1; transform: none; }
+/* Black panels keep their edge against the night ground. */
+html[data-sig-night] .sig-night .case-fig img, html[data-sig-night] .sig-night .sig-panel { box-shadow: 0 0 0 1px rgba(255, 255, 255, .13); }
+html[data-sig-flow] .status__label { background: transparent; }
+/* The wider column reaches the margin these labels used, so only the ticks stay on this page. */
+html[data-sig-flow] .status__label { display: none !important; }
