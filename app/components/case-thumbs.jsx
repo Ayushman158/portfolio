@@ -11,39 +11,46 @@ import Image from 'next/image'
 
 const fade = 'transition-opacity duration-300 ease-out motion-reduce:transition-none'
 
-function Label({ children, className = '' }) {
-  return (
-    <span
-      className={`absolute bottom-2.5 left-2.5 rounded-full px-2.5 py-1 ${fade} ${className}`}
-      style={{ background: 'rgba(20,19,17,.72)', color: '#f3efe6', fontSize: '0.78rem', lineHeight: 1.3, backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)' }}
-    >
-      {children}
-    </span>
-  )
-}
-
-/* The concept render at the fork: the sign over the three ways. On hover the view moves in a little
-   and Saathi, the route finder the QR boards open, rises from the bottom edge with the same trip. */
+/* Signal's core idea in one loop: uncertainty at a fork resolves into one stable
+   platform answer, then the route carries that key forward. */
 export function SignalThumb({ alt }) {
-  const move = 'transition-transform duration-700 ease-out motion-reduce:transition-none'
   return (
-    <div role="img" aria-label={alt} className="relative aspect-video w-full overflow-hidden">
+    <div role="img" aria-label={alt} className="signal-thumb relative aspect-video w-full overflow-hidden">
       <Image
-        src="/signal/wayfinding/render-fork.jpg"
+        src="/signal/mockups/stair-landing.png"
         alt=""
         fill
         priority
         sizes="(min-width: 60rem) 560px, 100vw"
-        className={`object-cover ${move} group-hover:scale-[1.03] group-focus-within:scale-[1.03]`}
-        style={{ transformOrigin: '50% 22%' }}
+        className="signal-thumb__scene object-cover"
+        style={{ objectPosition: '50% 46%' }}
       />
-      <div
-        className={`absolute bottom-0 right-[7%] w-[22%] translate-y-full overflow-hidden rounded-t-[0.9rem] ${move} group-hover:translate-y-[6%] group-focus-within:translate-y-[6%]`}
-        style={{ aspectRatio: '9 / 15', boxShadow: '0 0 0 1px rgba(23,22,20,.12), 0 -12px 36px -12px rgba(0,0,0,.45)' }}
-      >
-        <Image src="/signal/wayfinding/saathi-route.jpg" alt="" fill sizes="160px" className="object-cover object-top" />
+      <span aria-hidden="true" className="signal-thumb__veil absolute inset-0" />
+
+      <div aria-hidden="true" className="signal-thumb__question absolute">
+        <span>At the fork</span>
+        <strong>Which way is my train?</strong>
       </div>
-      <Label>Concept render</Label>
+
+      <div aria-hidden="true" className="signal-thumb__answer absolute">
+        <div className="signal-thumb__eyebrow"><span>Signal</span><span>One key, everywhere</span></div>
+        <div className="signal-thumb__sign">
+          <svg viewBox="0 0 24 24"><path d="M12 20V4M5 11l7-7 7 7" /></svg>
+          <span className="signal-thumb__badge">5</span>
+          <span className="signal-thumb__destinations">
+            <small>Violet Line</small>
+            <b>Mandi House · Lajpat Nagar</b>
+          </span>
+        </div>
+        <div className="signal-thumb__route">
+          <i className="signal-thumb__rail" />
+          <i className="signal-thumb__progress" />
+          <span><i />Kashmere Gate</span>
+          <span><i />Mandi House</span>
+          <span><i />Lajpat Nagar</span>
+        </div>
+      </div>
+      <span className="signal-thumb__caption absolute">System design · Wayfinding</span>
     </div>
   )
 }

@@ -89,18 +89,18 @@ export function Mismatch() {
 /* The key as a still diagram: the real sign row, with its three parts called out. */
 export function KeyDiagram() {
   const violet = LINES.find((l) => l.id === 'violet').hex
-  const tile = 'clamp(3.4rem, 9vw, 5.5rem)'
+  const tile = 'clamp(2.6rem, 13vw, 5.5rem)'
   return (
     <figure className="track-wide mt-16" style={{ fontFamily: SIGN_FONT }}>
-      <div className="flex items-center gap-3 rounded-xl p-5 sm:gap-5 sm:p-7" style={{ background: PANEL }} role="img" aria-label="A sign row: an arrow, platform 5 on violet, Violet Line, Mandi House and Lajpat Nagar">
+      <div className="flex items-center gap-2 rounded-xl p-3 sm:gap-5 sm:p-7" style={{ background: PANEL }} role="img" aria-label="A sign row: an arrow, platform 5 on violet, Violet Line, Mandi House and Lajpat Nagar">
         <span className="grid shrink-0 place-items-center rounded-lg" style={{ width: tile, height: tile, border: '3px solid #fbfbf8' }}>
           <svg viewBox="0 0 24 24" className="h-[64%] w-[64%]" aria-hidden="true"><path d="M12 20V4M5 11l7-7 7 7" fill="none" stroke="#fbfbf8" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </span>
         <span className="grid shrink-0 place-items-center rounded-lg" style={{ width: tile, height: tile, background: violet, border: '3px solid #fbfbf8', color: '#fbfbf8', fontSize: 'clamp(1.8rem, 4.6vw, 3rem)', fontWeight: 800 }}>5</span>
         <span className="min-w-0" style={{ color: '#fbfbf8' }}>
-          <span className="block truncate" style={{ fontSize: 'clamp(0.7rem, 1.6vw, 0.9rem)', color: '#c9cff0' }}>वायलेट लाइन · Violet Line</span>
-          <span className="block truncate" style={{ fontSize: 'clamp(1rem, 3vw, 1.75rem)', fontWeight: 700 }}>मंडी हाउस · लाजपत नगर</span>
-          <span className="block truncate" style={{ fontSize: 'clamp(1rem, 3vw, 1.75rem)', fontWeight: 700 }}>Mandi House · Lajpat Nagar</span>
+          <span className="block whitespace-nowrap" style={{ fontSize: 'clamp(0.6rem, 1.6vw, 0.9rem)', color: '#c9cff0' }}>वायलेट लाइन · Violet Line</span>
+          <span className="block whitespace-nowrap" style={{ fontSize: 'clamp(0.78rem, 3vw, 1.75rem)', fontWeight: 700 }}>मंडी हाउस · लाजपत नगर</span>
+          <span className="block whitespace-nowrap" style={{ fontSize: 'clamp(0.78rem, 3vw, 1.75rem)', fontWeight: 700 }}>Mandi House · Lajpat Nagar</span>
         </span>
       </div>
       <ol className="mt-4 grid grid-cols-3 gap-3">
