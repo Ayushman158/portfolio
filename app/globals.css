@@ -930,48 +930,26 @@ html.theme-switching::view-transition-new(root) {
 .sig-evidence { display: inline-flex; align-items: center; min-height: 1.55rem; padding: .18rem .65rem; border: 1px solid var(--rule); border-radius: 999px; color: var(--faint); font-size: .7rem; line-height: 1.2; white-space: nowrap; }
 .sig-evidence--tested { border-color: color-mix(in srgb, var(--ink) 45%, transparent); color: var(--ink); background: color-mix(in srgb, var(--ink) 9%, transparent); }
 
-/* Signal homepage thumbnail: the rider's question resolves into the platform key. */
-.signal-thumb { container-type: inline-size; background: #171717; color: #fff; }
-.signal-thumb__scene { transform: scale(1.035); }
-.signal-thumb__veil { background: linear-gradient(90deg, rgba(10,10,10,.78) 0%, rgba(10,10,10,.3) 55%, rgba(10,10,10,.08) 100%), linear-gradient(0deg, rgba(10,10,10,.56), transparent 50%); }
-.signal-thumb__question { left: 6.5cqw; top: 14cqw; width: 39cqw; animation: signal-question 8.4s var(--ease-in-out) infinite both; }
-.signal-thumb__question span { display: block; color: rgba(255,255,255,.62); font-size: 2.1cqw; letter-spacing: .12em; text-transform: uppercase; }
-.signal-thumb__question strong { display: block; margin-top: 1.8cqw; font-family: var(--font-serif), ui-serif, Georgia, serif; font-size: 7.2cqw; font-weight: 400; line-height: .94; letter-spacing: -.035em; text-wrap: balance; }
-.signal-thumb__answer { left: 6.5cqw; top: 7cqw; width: 67cqw; animation: signal-answer 8.4s var(--ease-in-out) infinite both; }
-.signal-thumb__eyebrow { display: flex; justify-content: space-between; margin-bottom: 1.5cqw; color: rgba(255,255,255,.68); font-size: 1.65cqw; letter-spacing: .08em; text-transform: uppercase; }
-.signal-thumb__sign { display: grid; grid-template-columns: 9cqw 9cqw 1fr; align-items: center; gap: 1.7cqw; padding: 2cqw; border: 1px solid rgba(255,255,255,.16); border-radius: 1.5cqw; background: rgba(18,18,18,.94); box-shadow: 0 2cqw 5cqw rgba(0,0,0,.26); }
-.signal-thumb__sign svg { width: 7cqw; height: 7cqw; padding: 1.35cqw; border: .35cqw solid #fff; border-radius: 1.2cqw; }
-.signal-thumb__sign path { fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
-.signal-thumb__badge { display: grid; width: 7cqw; height: 7cqw; place-items: center; border: .35cqw solid #fff; border-radius: 1.2cqw; background: #7b3fe0; font-size: 4.2cqw; font-weight: 800; line-height: 1; }
-.signal-thumb__destinations { min-width: 0; }
-.signal-thumb__destinations small { display: block; color: rgba(255,255,255,.58); font-size: 1.75cqw; line-height: 1.1; }
-.signal-thumb__destinations b { display: block; margin-top: .7cqw; overflow: hidden; font-size: 2.7cqw; line-height: 1.1; text-overflow: ellipsis; white-space: nowrap; }
-.signal-thumb__route { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 2.6cqw; }
-.signal-thumb__rail, .signal-thumb__progress { position: absolute; left: 16.66%; right: 16.66%; top: 1.15cqw; height: .35cqw; background: rgba(255,255,255,.26); transform-origin: left; }
-.signal-thumb__progress { right: 16.66%; background: #9d6bf0; animation: signal-route 8.4s var(--ease-in-out) infinite both; }
-.signal-thumb__route > span { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: .75cqw; color: rgba(255,255,255,.72); font-size: 1.55cqw; line-height: 1.15; text-align: center; }
-.signal-thumb__route > span > i { width: 2.5cqw; height: 2.5cqw; border: .45cqw solid #fff; border-radius: 50%; background: #171717; }
-.signal-thumb__route > span:nth-of-type(3) > i { background: #7b3fe0; }
-.signal-thumb__caption { left: 3cqw; bottom: 2.6cqw; color: rgba(255,255,255,.72); font-size: 1.65cqw; letter-spacing: .06em; text-transform: uppercase; padding: .55cqw 1.4cqw; border-radius: 999px; background: rgba(20,19,17,.78); color: #f3efe6; font-size: 2cqw; letter-spacing: 0; text-transform: none; }
-@keyframes signal-question {
-  0%, 18% { opacity: 1; transform: translateX(0); }
-  28%, 88% { opacity: 0; transform: translateX(-1.8cqw); }
-  100% { opacity: 1; transform: translateX(0); }
-}
-@keyframes signal-answer {
-  0%, 18% { opacity: 0; transform: translateX(-2.4cqw); }
-  30%, 86% { opacity: 1; transform: translateX(0); }
-  96%, 100% { opacity: 0; transform: translateX(1.4cqw); }
-}
-@keyframes signal-route {
-  0%, 32% { transform: scaleX(0); opacity: 0; }
-  42% { opacity: 1; }
-  72%, 100% { transform: scaleX(1); opacity: 1; }
+/* Signal homepage thumbnail: Delhi as a paper-cut route, with one purposeful train pass. */
+.signal-paper-thumb { container-type: inline-size; isolation: isolate; background: #efe3d5; color: #2d263d; }
+.signal-paper-thumb__scene { object-position: center; }
+.signal-paper-thumb__title { z-index: 2; left: 5cqw; top: 5cqw; display: flex; flex-direction: column; align-items: flex-start; color: #2d263d; }
+.signal-paper-thumb__title > span { font-size: 1.65cqw; line-height: 1; letter-spacing: .1em; text-transform: uppercase; }
+.signal-paper-thumb__title > strong { margin-top: .8cqw; font-family: var(--font-serif), ui-serif, Georgia, serif; font-size: 7cqw; font-weight: 400; line-height: .9; letter-spacing: -.035em; }
+.signal-paper-thumb__title > small { margin-top: 1.25cqw; font-size: 2cqw; line-height: 1.2; }
+.signal-paper-thumb__key { z-index: 2; left: 5cqw; top: 25cqw; display: flex; align-items: center; gap: 1.5cqw; padding: 1.25cqw 1.7cqw 1.25cqw 1.25cqw; border-radius: 1.2cqw; background: rgba(247,238,226,.92); box-shadow: 0 1.2cqw 3cqw rgba(45,38,61,.12); }
+.signal-paper-thumb__key > b { display: grid; width: 5.2cqw; height: 5.2cqw; place-items: center; border-radius: 50%; background: #7b3fe0; color: #fff; font-size: 3.2cqw; line-height: 1; }
+.signal-paper-thumb__key > span { color: #655b70; font-size: 1.45cqw; line-height: 1.18; }
+.signal-paper-thumb__key strong { color: #2d263d; font-size: 1.75cqw; font-weight: 650; }
+.signal-paper-thumb__train { z-index: 3; bottom: 5.7cqw; left: 0; width: 48cqw; filter: drop-shadow(0 .25cqw .35cqw rgba(28,20,39,.16)); animation: signal-paper-train 9s linear infinite both; will-change: transform; }
+@keyframes signal-paper-train {
+  0%, 12% { opacity: 0; transform: translateX(-115%) translateY(1.2cqw) rotate(-1.7deg); }
+  17% { opacity: 1; }
+  78% { opacity: 1; }
+  84%, 100% { opacity: 0; transform: translateX(310%) translateY(-2.8cqw) rotate(-1.7deg); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .signal-thumb__question { display: none; animation: none; }
-  .signal-thumb__answer { opacity: 1; transform: none; animation: none; }
-  .signal-thumb__progress { opacity: 1; transform: scaleX(1); animation: none; }
+  .signal-paper-thumb__train { opacity: 1; transform: translateX(98%) translateY(-.5cqw) rotate(-1.7deg); animation: none; }
 }
 
 /* ---- Koi Wishing Pond: the room around the words ----------------------
