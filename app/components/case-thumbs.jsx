@@ -11,46 +11,36 @@ import Image from 'next/image'
 
 const fade = 'transition-opacity duration-300 ease-out motion-reduce:transition-none'
 
-/* Signal's core idea in one loop: uncertainty at a fork resolves into one stable
-   platform answer, then the route carries that key forward. */
+/* Signal as a small Delhi paper world: the route stays fixed while one train
+   carries the rider through it. */
 export function SignalThumb({ alt }) {
   return (
-    <div role="img" aria-label={alt} className="signal-thumb relative aspect-video w-full overflow-hidden">
+    <div role="img" aria-label={alt} className="signal-paper-thumb relative aspect-video w-full overflow-hidden">
       <Image
-        src="/signal/mockups/stair-landing.png"
+        src="/signal/thumbnail/paper-city.png"
         alt=""
         fill
         priority
         sizes="(min-width: 60rem) 560px, 100vw"
-        className="signal-thumb__scene object-cover"
-        style={{ objectPosition: '50% 46%' }}
+        className="signal-paper-thumb__scene object-cover"
       />
-      <span aria-hidden="true" className="signal-thumb__veil absolute inset-0" />
-
-      <div aria-hidden="true" className="signal-thumb__question absolute">
-        <span>At the fork</span>
-        <strong>Which way is my train?</strong>
+      <div aria-hidden="true" className="signal-paper-thumb__title absolute">
+        <span>Delhi Metro · wayfinding</span>
+        <strong>Signal</strong>
+        <small>One key, carried everywhere.</small>
       </div>
-
-      <div aria-hidden="true" className="signal-thumb__answer absolute">
-        <div className="signal-thumb__eyebrow"><span>Signal</span><span>One key, everywhere</span></div>
-        <div className="signal-thumb__sign">
-          <svg viewBox="0 0 24 24"><path d="M12 20V4M5 11l7-7 7 7" /></svg>
-          <span className="signal-thumb__badge">5</span>
-          <span className="signal-thumb__destinations">
-            <small>Violet Line</small>
-            <b>Mandi House · Lajpat Nagar</b>
-          </span>
-        </div>
-        <div className="signal-thumb__route">
-          <i className="signal-thumb__rail" />
-          <i className="signal-thumb__progress" />
-          <span><i />Kashmere Gate</span>
-          <span><i />Mandi House</span>
-          <span><i />Lajpat Nagar</span>
-        </div>
+      <div aria-hidden="true" className="signal-paper-thumb__key absolute">
+        <b>5</b>
+        <span>Violet Line<br /><strong>Mandi House · Lajpat Nagar</strong></span>
       </div>
-      <span className="signal-thumb__caption absolute">System design · Wayfinding</span>
+      <Image
+        src="/signal/thumbnail/paper-train.png"
+        alt=""
+        width={2172}
+        height={724}
+        sizes="420px"
+        className="signal-paper-thumb__train absolute h-auto"
+      />
     </div>
   )
 }
