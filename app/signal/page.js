@@ -1,6 +1,6 @@
 'use client'
 
-import { Back, Facts, Subhead, Tradeoffs } from '../components/case-study'
+import { Back, Subhead, Tradeoffs } from '../components/case-study'
 import AnnotatedScreen from '../components/annotated-screen'
 import { W } from './wayfinding'
 import { StepVideo } from './demos'
@@ -154,11 +154,24 @@ export default function Signal() {
       {/* One column and one left edge for the whole page: tracks are neutralised inside .sig-flow. */}
       <div className="measure pt-12 sm:pt-20"><div className="track-full sig-flow">
 
-        <div className="mt-16 max-w-[38rem] border-t border-rule pt-8 sm:mt-24"><Facts rows={[
-          ['Scope', <span key="scope" className="block leading-relaxed">Signs and station screens<br />Type, colour and pictograms<br />Paper ticket and gate<br />Standards manual<br />Saathi, a route finder</span>],
-          ['Context', 'M.Des Interaction Design, UPES'],
-          ['Year', '2026'],
-        ]} /></div>
+        <dl className="sig-project-meta" aria-label="Project scope and context">
+          <div className="sig-project-meta__scope">
+            <dt>Scope</dt>
+            <dd>
+              {['Signs and station screens', 'Type, colour and pictograms', 'Paper ticket and gate', 'Standards manual', 'Saathi, a route finder'].map((item, i) => (
+                <span key={item}>{i > 0 && <i aria-hidden="true">·</i>}{item}</span>
+              ))}
+            </dd>
+          </div>
+          <div>
+            <dt>Context</dt>
+            <dd>M.Des Interaction Design, UPES</dd>
+          </div>
+          <div>
+            <dt>Year</dt>
+            <dd>2026</dd>
+          </div>
+        </dl>
 
         {/* ---------- The problem ---------- */}
         <Section id="problem" title="The problem" next="I focused on the riders with the least to fall back on." lede="Signs name each platform by the last station on its line, which doesn’t help someone who knows only where they’re going. Once lost underground, there’s often no signal for a map.">
@@ -167,12 +180,20 @@ export default function Signal() {
 
         {/* ---------- Who it's for ---------- */}
         <Section id="who" title="Who it’s for" next="I tested one change first: what the signs say." lede="First-time and occasional riders, who know where they’re going but not how the network is laid out. I designed around two people.">
-          <div className="mt-16 grid gap-x-16 border-b border-rule sm:grid-cols-2">
-            {[['Neha', 'First time on this route. She has a phone. She knows the place, not the station.'], ['Mohan-ji', 'He uses his phone for calls, not maps. He trusts signs and staff.']].map(([n, d]) => (
-              <div key={n} className="border-t border-rule py-7">
-                <p className="headline text-ink" style={{ fontSize: 'clamp(2.2rem, 3.6vw, 3.25rem)', lineHeight: 1.05 }}>{n}</p>
-                <p className="text-ink mt-3" style={{ fontSize: '1.08rem', lineHeight: 1.5, maxWidth: '26rem' }}>{d}</p>
-              </div>
+          <div className="sig-personas">
+            {[
+              ['Neha', '/signal/personas/neha.png', 'Minimal illustrated portrait of Neha, a fictional first-time Delhi Metro rider', 'First time on this route. She has a phone. She knows the place, not the station.'],
+              ['Mohan-ji', '/signal/personas/mohan-ji.png', 'Minimal illustrated portrait of Mohan-ji, a fictional older Delhi Metro rider', 'He uses his phone for calls, not maps. He trusts signs and staff.'],
+            ].map(([n, src, alt, d]) => (
+              <article key={n} className="sig-persona">
+                <figure className="sig-persona__portrait">
+                  <img src={src} width={1122} height={1402} loading="lazy" alt={alt} />
+                </figure>
+                <div>
+                  <h3 className="headline text-ink" style={{ fontSize: 'clamp(2.2rem, 3.6vw, 3.25rem)', lineHeight: 1.05 }}>{n}</h3>
+                  <p className="text-ink mt-3" style={{ fontSize: '1.08rem', lineHeight: 1.5, maxWidth: '26rem' }}>{d}</p>
+                </div>
+              </article>
             ))}
           </div>
           <p className="headline text-ink mt-10" style={{ fontSize: 'clamp(1.5rem, 2.4vw, 2.1rem)', lineHeight: 1.2 }}>Every step has to work with no phone.</p>
