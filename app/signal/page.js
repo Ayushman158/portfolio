@@ -228,7 +228,7 @@ export default function Signal() {
             <Stop label="Platform" question="Is this the right train?" status="Concept · untested" src="/signal/mockups/platform-totem-v2.png" w={1536} h={1024} alt="Concept image: a tall black platform 5 totem on a working elevated metro platform, listing the Violet Line stations ahead as a train arrives" cap="The platform first, then every station ahead." />
             <Stop wide label="Platform wall" question="How many stops remain?" status="Drawn · untested" src={`${N}/wall-strip.jpg`} w={2400} h={1000} alt="The platform wall strip: all stations ahead on the Violet Line in three rows, numbered, with line bars at interchanges" cap="All the stations ahead, with interchanges marked." />
             <Stop wide label="Interchange" question="Where do I change?" status="Drawn · untested" src={`${N}/change-split.jpg`} w={1600} h={300} alt="Interchange sign: to the left, change to the Pink Line, marked with a pink bar; to the right on a green panel, the exit" cap="Changing and leaving share one panel." />
-            <Stop wide label="Exit" question="Which gate?" status="Needs a site check" src={`${N}/exit-fork.jpg`} w={1600} h={300} alt="A green exit sign listing Gate 1, Gate 2 and Gate 3, each with its arrow and a space for a landmark" cap="The only green panel. Landmarks are placeholders for now." />
+            <Stop wide label="Exit" question="Which gate?" status="Needs a site check" src={`${N}/exit-fork.jpg`} w={1600} h={300} alt="A green exit sign listing Gate 1, Gate 2 and Gate 3, each with its arrow" cap="The only green panel." />
           </Trip>
         </Section>
 
