@@ -1,17 +1,8 @@
 .divider {
-  display: flex;
-  align-items: center;
-  gap: .55rem;
-  height: 20px;
+  height: clamp(12px, 2vw, 20px);
   margin-block: clamp(1.5rem, 4vw, 3rem);
-  color: var(--accent);
+  background: url('/about/exploration-checkerboard.png') center / auto 100% repeat-x;
 }
-.divider::before, .divider::after {
-  content: "";
-  flex: 1;
-  border-top: 1px solid var(--rule);
-}
-.divider svg { flex: none; }
 .section { min-width: 0; }
 .header {
   display: flex;

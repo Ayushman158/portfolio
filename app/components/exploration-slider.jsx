@@ -12,15 +12,7 @@ const clips = [
 ]
 
 export function ExplorationDivider() {
-  return (
-    <div className={styles.divider} aria-hidden="true">
-      <svg width="68" height="20" viewBox="0 0 68 20">
-        <path d="m1 10 5-3 5 3-5 3Zm13 0 6-4 6 4-6 4Zm28 0 6-4 6 4-6 4Zm15 0 5-3 5 3-5 3Z" fill="currentColor" opacity=".55" />
-        <path d="m27 10 7-6 7 6-7 6Z" fill="none" stroke="currentColor" />
-        <circle cx="34" cy="10" r="1.4" fill="currentColor" />
-      </svg>
-    </div>
-  )
+  return <div className={styles.divider} aria-hidden="true" />
 }
 
 export default function ExplorationSlider({ showTitle = true }) {
