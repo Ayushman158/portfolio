@@ -1514,11 +1514,11 @@ html[data-sig-flow] .status__label { display: none !important; }
 }
 .peek-dog[data-visible] {
     transform: translateY(6%);
-    transition: transform 520ms cubic-bezier(.34, 1.5, .5, 1);
+    transition: transform 320ms var(--ease-out);
     pointer-events: auto;
 }
 .peek-dog__art { display: block; width: 100%; height: auto; transform-origin: 50% 92%; }
-.peek-dog[data-visible] .peek-dog__art { animation: peek-nod 520ms 420ms var(--ease-out) both; }
+.peek-dog[data-visible] .peek-dog__art { animation: peek-nod 520ms 260ms var(--ease-out) both; }
 .peek-dog[data-visible] .peek-dog__art[data-nod] { animation-delay: 0ms; }
 @keyframes peek-nod {
     0%, 100% { transform: rotate(0); }
@@ -1534,7 +1534,7 @@ html[data-sig-flow] .status__label { display: none !important; }
     opacity: 0;
     pointer-events: none;
 }
-.peek-dog[data-visible] .peek-dog__heart { animation: peek-heart 900ms 560ms var(--ease-out) both; }
+.peek-dog[data-visible] .peek-dog__heart { animation: peek-heart 900ms 400ms var(--ease-out) both; }
 @keyframes peek-heart {
     0% { opacity: 0; transform: translateY(6px) scale(.6); }
     30% { opacity: 1; transform: translateY(0) scale(1); }

@@ -10,11 +10,9 @@ import PeekDog from './peek-dog'
  * word, nods, and sinks back.
  *
  *   as      'h1' on the Exploration page, 'h2' on the homepage
- *   arrive  visit once shortly after the page opens (the Exploration page,
- *           where the title is on the first screen), instead of on scroll
  *   aside   anything to the right of the title, like a "see everything" link
  */
-export default function CheckerStrip({ as: Tag = 'h2', id, arrive = false, aside = null }) {
+export default function CheckerStrip({ as: Tag = 'h2', id, aside = null }) {
   const root = useRef(null)
   const title = useRef(null)
 
@@ -32,7 +30,7 @@ export default function CheckerStrip({ as: Tag = 'h2', id, arrive = false, aside
   return (
     <div ref={root} className="xh">
       <div className="xh__shelf">
-        <span className="xh__peek"><PeekDog strip arrive={arrive} /></span>
+        <span className="xh__peek"><PeekDog /></span>
         <div className="checker-strip__band" aria-hidden="true" />
       </div>
       <div className="xh__row">
