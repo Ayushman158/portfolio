@@ -48,6 +48,36 @@ export default function ListeningCorner() {
 
   useEffect(() => () => Object.values(doorTimers.current).forEach(clearTimeout), [])
 
+  // The two prints hang crooked, and straighten as the room scrolls up into
+  // view: --tilt-left runs from 1 (as hung) to 0 (straight). Reduced Motion
+  // leaves them as hung.
+  useEffect(() => {
+    const el = scene.current
+    if (!el || reduced()) return undefined
+    let raf = 0
+    const update = () => {
+      raf = 0
+      const r = el.getBoundingClientRect()
+      const vh = window.innerHeight
+      const p = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.45)))
+      el.style.setProperty('--tilt-left', (1 - p).toFixed(3))
+    }
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update) }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
+
+  // The plant's note says thank you for a moment after each watering.
+  const [thanked, setThanked] = useState(false)
+  const thanksTimer = useRef(null)
+  useEffect(() => () => clearTimeout(thanksTimer.current), [])
+
   function playEffect(object) {
     setEffects((current) => ({ ...current, [object]: current[object] + 1 }))
   }
@@ -192,8 +222,18 @@ export default function ListeningCorner() {
           type="button"
           aria-label="Water the plants"
           style={{ '--i': 0 }}
-          onClick={() => playEffect('plant')}
+          onClick={() => {
+            playEffect('plant')
+            setThanked(true)
+            clearTimeout(thanksTimer.current)
+            thanksTimer.current = setTimeout(() => setThanked(false), 2400)
+          }}
         />
+        {/* A small paper tag by the plant. */}
+        <span className="lc__plant-note" data-thanked={thanked || undefined} aria-hidden="true">
+          {thanked ? 'thank you!' : 'water me'}
+          <svg viewBox="0 0 10 13" className="lc__plant-drop"><path d="M5 1C3.2 4 1.5 6 1.5 8.3A3.5 3.5 0 0 0 8.5 8.3C8.5 6 6.8 4 5 1Z" /></svg>
+        </span>
         {effects.plant > 0 && (
           <svg key={`plant-${effects.plant}`} className="lc__effect lc__watering" viewBox="0 0 100 100" aria-hidden="true">
             <g className="lc__can">
@@ -241,6 +281,7 @@ export default function ListeningCorner() {
       </div>
       <div className="lc__meta">
         <small>© {new Date().getFullYear()} Ayushman Bharadwaj</small>
+        <span className="lc__thanks">thanks for rolling by</span>
         <a href="#">Back to top <span aria-hidden="true">↑</span></a>
       </div>
     </footer>
