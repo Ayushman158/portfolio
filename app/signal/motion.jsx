@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { motion, useInView, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'motion/react'
-import Lenis from 'lenis'
 import { MUKTA } from './font'
 
 /*
@@ -173,36 +172,6 @@ export function NightZone({ children }) {
     return () => { io.disconnect(); root.removeAttribute('data-sig-night'); root.removeAttribute('data-sig-flow') }
   }, [])
   return <div ref={ref} className="sig-night">{children}</div>
-}
-
-/*
- * Page-level scroll feel: inertia on the wheel, and each figure and heading rising once
- * as it arrives. Touch keeps the phone's own scrolling. Reduced Motion gets neither.
- */
-export function PageMotion() {
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined
-    const lenis = new Lenis({ lerp: 0.085, smoothWheel: true })
-    let id = requestAnimationFrame(function raf(t) {
-      lenis.raf(t)
-      id = requestAnimationFrame(raf)
-    })
-    const root = document.documentElement
-    root.setAttribute('data-sig-reveal', '')
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target) }
-      })
-    }, { rootMargin: '0px 0px -12% 0px' })
-    document.querySelectorAll('.sig-flow .case-fig, .sig-flow .sig-section > header').forEach((el) => io.observe(el))
-    return () => {
-      cancelAnimationFrame(id)
-      lenis.destroy()
-      io.disconnect()
-      root.removeAttribute('data-sig-reveal')
-    }
-  }, [])
-  return null
 }
 
 /*

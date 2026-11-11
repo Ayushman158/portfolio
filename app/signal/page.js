@@ -7,7 +7,7 @@ import { StepVideo } from './demos'
 import { Compare } from './compare'
 import { MUKTA } from './font'
 import { BeforeAfter, ColourVision, KeyDiagram, Mismatch, ReadingDistance, REFERENCES } from './system'
-import { ArrowTurn, ForkConstruction, LiveScreen, NightZone, OutOf100, PageMotion, Pan, Stop, SwipeHint, Trip } from './motion'
+import { ArrowTurn, ForkConstruction, LiveScreen, NightZone, OutOf100, Pan, Stop, SwipeHint, Trip } from './motion'
 
 /*
  * Signal: finding the right platform on the Delhi Metro.
@@ -149,7 +149,6 @@ function SystemPivot() {
 export default function Signal() {
   return (
     <main className="sig-page">
-      <PageMotion />
       <Hero />
       {/* One column and one left edge for the whole page: tracks are neutralised inside .sig-flow. */}
       <div className="measure pt-12 sm:pt-20"><div className="track-full sig-flow">

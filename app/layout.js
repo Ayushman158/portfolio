@@ -4,6 +4,7 @@ import { ThemeProvider, themeInitScript, Lamp } from './components/theme'
 import Dock from './components/dock'
 import AwayTitle from './components/away-title'
 import StatusBar from './components/status-bar'
+import PageReveal from './components/page-reveal'
 import { Inter, Instrument_Sans, Instrument_Serif, Reenie_Beanie } from 'next/font/google'
 
 // The site's two faces: Instrument Sans for everything read, Instrument Serif
@@ -83,6 +84,7 @@ export default function RootLayout({ children }) {
           <Lamp />
           <AwayTitle />
           <StatusBar />
+          <PageReveal />
           {children}
         </ThemeProvider>
       </body>

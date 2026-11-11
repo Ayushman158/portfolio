@@ -5,10 +5,12 @@ import Link from 'next/link'
 import { useReducedMotion } from 'motion/react'
 import styles from './exploration-slider.module.css'
 
+// `tool` is shown beside the title. A clip without `href` has no page of its
+// own, so its card is not a link.
 const clips = [
-  { title: 'Koi Wishing Pond', video: '/research/koi-loop.mp4', poster: '/research/koi-loop.jpg', href: '/koi-wishing-pond' },
+  { title: 'Koi Wishing Pond', tool: 'TouchDesigner', video: '/research/koi-loop.mp4', poster: '/research/koi-loop.jpg', href: '/koi-wishing-pond' },
+  { title: 'Gradient exploration', tool: 'TouchDesigner', video: '/exploration/gradient.mp4', poster: '/exploration/gradient.jpg', href: 'https://www.instagram.com/p/Dd9XIzEylhx/' },
   { title: 'Album Alive', video: '/album-alive/scan.mp4', poster: '/album-alive/scan-poster.jpg', href: '/album-alive' },
-  { title: 'Kizuku gestures', video: '/research/kizuku-loop.mp4', poster: '/research/kizuku-loop.jpg', href: '/kizuku' },
 ]
 
 export function ExplorationDivider() {
@@ -72,14 +74,26 @@ export default function ExplorationSlider({ showTitle = true }) {
         </div>
       </div>
       <ul ref={track} className={styles.track}>
-        {clips.map(({ title, video, poster, href }) => (
-          <li key={href}>
-            <Link href={href} className={styles.card}>
+        {clips.map(({ title, tool, video, poster, href }) => {
+          const inner = (
+            <>
               <video src={video} poster={poster} muted loop playsInline preload="none" aria-hidden="true" />
-              <span>{title} <span aria-hidden="true">↗</span></span>
-            </Link>
-          </li>
-        ))}
+              <span>
+                {title}
+                {href && <span aria-hidden="true"> ↗</span>}
+                {tool && <span className={styles.tool}>{tool}</span>}
+              </span>
+            </>
+          )
+          return (
+            <li key={title}>
+              {!href ? <div className={styles.card}>{inner}</div>
+                : href.startsWith('http')
+                  ? <a href={href} target="_blank" rel="noopener noreferrer" className={styles.card}>{inner}</a>
+                  : <Link href={href} className={styles.card}>{inner}</Link>}
+            </li>
+          )
+        })}
       </ul>
     </section>
   )

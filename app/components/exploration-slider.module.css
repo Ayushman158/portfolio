@@ -46,7 +46,8 @@
 .track > li { min-width: 0; scroll-snap-align: start; }
 .card { display: grid; gap: .45rem; color: var(--ink); font-size: .9rem; }
 .card:focus-visible { outline-offset: -2px; }
-.card:hover > span { text-decoration: underline; text-underline-offset: .2em; }
+a.card:hover > span { text-decoration: underline; text-underline-offset: .2em; }
+.tool { display: block; color: var(--faint); font-size: .8rem; }
 .card video {
   display: block;
   width: 100%;

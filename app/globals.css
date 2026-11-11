@@ -11,16 +11,17 @@
         font-size: 106.25%;
     }
 
-    /* ---- Light: a white page, inked from the sunset palette. ---- */
+    /* ---- Light: a cream wall, inked from the sunset palette. Every page
+       shares it, so moving between pages never changes the paper. ---- */
     :root {
-        --ground: #FFFFFF;
-        --raised: #F3F1EB;
+        --ground: #F6F0E4;
+        --raised: #EFE7D8;
         --ink: #3B2024;
         /* Secondary text is body text here, so it is held well above AA:
-           muted 11:1, faint 6.7:1 on paper (6.2:1 on raised). */
+           muted 10:1, faint 6.1:1 on the cream (5.7:1 on raised). */
         --muted: #3D3934;
         --faint: #5E5950;
-        --rule: #D6D1C6;
+        --rule: #DCD2C0;
         /* Brand colours as text: the Signal orange and Telegram blue are too
            light to read small on paper, so text takes a deeper cut (5.5:1, 5.2:1). */
         --signal-text: #C22E00;
@@ -713,6 +714,32 @@ html[data-room] .status { display: none; }
 [data-theme="dark"] .lamp-pill {
     box-shadow: 0 0 10px 1px oklch(0.85 0.1 85 / 0.35);
 }
+
+/* ---- The site as a room: the cream wall (--ground, above), the work framed
+   on it, and the lamp's orange as the one bright colour. */
+:root { --lamp: #E8731A; }
+.work-frame {
+    padding: 12px;
+    background: #FBF8F1;
+    border: 5px solid #2A1F1A;
+    box-shadow: 0 3px 8px rgba(40, 25, 15, 0.2);
+}
+[data-theme="dark"] .work-frame {
+    background: #2B2721;
+    border-color: #5A4636;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+}
+@media (max-width: 40rem) { .work-frame { padding: 8px; border-width: 4px; } }
+.story-link {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--lamp);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    transition: text-decoration-color var(--duration-quick) ease;
+}
+.story-link:hover,
+.story-link:focus-visible { text-decoration-color: var(--ink); }
 .lamp-bead:focus-visible {
     outline-offset: -8px;
     border-radius: 999px;
@@ -941,15 +968,20 @@ html.theme-switching::view-transition-new(root) {
 .signal-paper-thumb__key > b { display: grid; width: 5.2cqw; height: 5.2cqw; place-items: center; border-radius: 50%; background: #7b3fe0; color: #fff; font-size: 3.2cqw; line-height: 1; }
 .signal-paper-thumb__key > span { color: #655b70; font-size: 1.45cqw; line-height: 1.18; }
 .signal-paper-thumb__key strong { color: #2d263d; font-size: 1.75cqw; font-weight: 650; }
-.signal-paper-thumb__train { z-index: 3; bottom: 5.7cqw; left: 0; width: 48cqw; filter: drop-shadow(0 .25cqw .35cqw rgba(28,20,39,.16)); animation: signal-paper-train 9s linear infinite both; will-change: transform; }
+/* The train rides the bridge deck. The deck's top edge, measured off
+   paper-city.png, rises 4.93° and sits 4.74cqw above the bottom at the left
+   edge; the wheels end 3.3cqw above the bottom of the 48×16cqw train image.
+   So the tilt is 4.93° and translateY keeps the wheels on the deck at every
+   point of the run: ty = 3.3 − (4.74 + 0.0863 × (tx + 24)), all in cqw. */
+.signal-paper-thumb__train { z-index: 3; bottom: 0; left: 0; width: 48cqw; filter: drop-shadow(0 .25cqw .35cqw rgba(28,20,39,.16)); animation: signal-paper-train 9s linear infinite both; will-change: transform; }
 @keyframes signal-paper-train {
-  0%, 12% { opacity: 0; transform: translateX(-115%) translateY(1.2cqw) rotate(-1.7deg); }
+  0%, 12% { opacity: 0; transform: translateX(-115%) translateY(1.25cqw) rotate(-4.93deg); }
   17% { opacity: 1; }
   78% { opacity: 1; }
-  84%, 100% { opacity: 0; transform: translateX(310%) translateY(-2.8cqw) rotate(-1.7deg); }
+  84%, 100% { opacity: 0; transform: translateX(310%) translateY(-16.35cqw) rotate(-4.93deg); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .signal-paper-thumb__train { opacity: 1; transform: translateX(98%) translateY(-.5cqw) rotate(-1.7deg); animation: none; }
+  .signal-paper-thumb__train { opacity: 1; transform: translateX(98%) translateY(-7.57cqw) rotate(-4.93deg); animation: none; }
 }
 
 /* ---- Koi Wishing Pond: the room around the words ----------------------
@@ -1163,21 +1195,16 @@ html[data-room] .lamp-glow-anchor { display: none; }
     .sig-pivot { grid-template-columns: minmax(0, 1.05fr) minmax(15rem, .95fr); align-items: end; }
 }
 /* The page changes colour as the system section arrives: tokens are registered so they animate. */
-@property --ground { syntax: '<color>'; inherits: true; initial-value: #ffffff; }
+@property --ground { syntax: '<color>'; inherits: true; initial-value: #F6F0E4; }
 @property --ink { syntax: '<color>'; inherits: true; initial-value: #3b2024; }
 @property --muted { syntax: '<color>'; inherits: true; initial-value: #5c4a4d; }
 @property --faint { syntax: '<color>'; inherits: true; initial-value: #6e6063; }
-@property --rule { syntax: '<color>'; inherits: true; initial-value: #d6d1c6; }
+@property --rule { syntax: '<color>'; inherits: true; initial-value: #dcd2c0; }
 html[data-sig-flow] body {
     transition: --ground .8s cubic-bezier(.4, 0, .2, 1), --ink .8s cubic-bezier(.4, 0, .2, 1), --muted .8s cubic-bezier(.4, 0, .2, 1), --faint .8s cubic-bezier(.4, 0, .2, 1), --rule .8s cubic-bezier(.4, 0, .2, 1);
 }
 html[data-sig-night] body { --ground: #0c0b0c; --raised: #1a181a; --ink: #f2efe9; --muted: #c9c4ba; --faint: #a8a296; --rule: #3a3733; }
 .sig-page { background: var(--ground); color: var(--ink); }
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto !important; }
-/* Figures and headings rise once as they arrive. */
-html[data-sig-reveal] .sig-flow :is(.case-fig, .sig-section > header) { opacity: 0; transform: translateY(28px); transition: opacity .8s cubic-bezier(.22, 1, .36, 1), transform .8s cubic-bezier(.22, 1, .36, 1); }
-html[data-sig-reveal] .sig-flow :is(.case-fig, .sig-section > header).is-in { opacity: 1; transform: none; }
 /* Black panels keep their edge against the night ground. */
 html[data-sig-night] .sig-night .case-fig img, html[data-sig-night] .sig-night .sig-panel { box-shadow: 0 0 0 1px rgba(255, 255, 255, .13); }
 html[data-sig-flow] .status__label { background: transparent; }
@@ -1229,7 +1256,31 @@ html[data-sig-flow] .status__label { display: none !important; }
 }
 .lc__meta small { font-size: inherit; }
 .lc__scene { position: relative; isolation: isolate; }
-.lc__art { display: block; width: 100%; height: auto; }
+.lc__art { display: block; width: 100%; height: auto; transition: filter 400ms var(--ease-out); }
+
+/* The lamp's light: a warm pool behind the art, centred on the shade. Off,
+   it goes out and the rest of the room drops a step. */
+.lc__glow {
+    position: absolute;
+    left: 74.5%;
+    top: 36%;
+    width: 78%;
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgb(240 150 70 / .30), rgb(240 150 70 / .12) 45%, transparent);
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    transition: opacity 400ms var(--ease-out);
+}
+[data-theme="dark"] .lc__glow {
+    background: radial-gradient(closest-side, rgb(255 170 90 / .22), rgb(255 170 90 / .07) 45%, transparent);
+    mix-blend-mode: screen;
+}
+.lc__scene[data-lamp-on="false"] .lc__glow { opacity: 0; }
+.lc__scene[data-lamp-on="false"] .lc__art { filter: brightness(.92) saturate(.88); }
+
 .lc__prints {
     position: absolute;
     top: 0;
@@ -1249,7 +1300,14 @@ html[data-sig-flow] .status__label { display: none !important; }
     border: 2px solid #866346;
     box-shadow: 1px 2px 0 #49312325;
 }
-.lc__print--koi { transform: rotate(-4deg); }
+.lc__print--koi {
+    transform: rotate(-4deg);
+    transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out);
+}
+.lc__print--koi:hover, .lc__print--koi:focus-visible {
+    transform: rotate(-1.5deg) translateY(-3px);
+    box-shadow: 2px 6px 10px #49312330;
+}
 .lc__print--koi img { object-fit: cover; }
 .lc__print--bauhaus {
     display: grid;
@@ -1293,28 +1351,52 @@ html[data-sig-flow] .status__label { display: none !important; }
 .lc__plant { --x: .05; --y: .24; --w: .185; --h: .29; }
 .lc__guitar { --x: .84; --y: .38; --w: .135; --h: .53; }
 .lc__moka { --x: .52; --y: .355; --w: .11; --h: .17; }
-@media (hover: hover) and (pointer: fine) {
-    /* Sample the same portion of the room artwork inside each hit area. */
-    .lc__control::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background-image: var(--room-artwork);
-        background-repeat: no-repeat;
-        background-size: calc(100% / var(--w)) calc(100% / var(--h));
-        background-position: calc(100% * var(--x) / (1 - var(--w))) calc(100% * var(--y) / (1 - var(--h)));
-        mask-image: radial-gradient(ellipse closest-side, #000 74%, transparent 100%);
-        opacity: 0;
-        pointer-events: none;
-        transition: transform 160ms var(--ease-out), opacity 160ms var(--ease-out);
-    }
-    .lc__control:hover::after {
-        opacity: 1;
-        transform: translateY(-2px) scale(1.025);
-    }
-    .lc__scene[data-lamp-on="false"] .lc__lamp::after { opacity: 0; }
+/* Each object is a copy of its own patch of the artwork, laid exactly over
+   it. Nothing moves: on hover the copy brightens the object in place, so the
+   drawing never splits into two. */
+.lc__control::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: var(--room-artwork);
+    background-repeat: no-repeat;
+    background-size: calc(100% / var(--w)) calc(100% / var(--h));
+    background-position: calc(100% * var(--x) / (1 - var(--w))) calc(100% * var(--y) / (1 - var(--h)));
+    mask-image: radial-gradient(ellipse closest-side, #000 62%, transparent 100%);
+    filter: brightness(1.1) saturate(1.08);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms var(--ease-out);
 }
-.lc__scene[data-lamp-on="false"] .lc__lamp { backdrop-filter: saturate(.65) brightness(.8); }
+@media (hover: hover) and (pointer: fine) {
+    .lc__control:hover::after { opacity: 1; }
+}
+.lc__control:focus-visible::after { opacity: 1; }
+.lc__scene[data-lamp-on="false"] .lc__lamp::after { opacity: 0; }
+
+/* First view: each object brightens once, left to right. */
+@keyframes lc-hello { 0%, 100% { opacity: 0; } 40% { opacity: 1; } }
+.lc__scene[data-intro] .lc__control::after {
+    animation: lc-hello 700ms var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 180ms + 150ms);
+}
+
+/* Lamp off: a dimmed copy of the lamp's own pixels is laid over it. The art
+   has a transparent ground, so only the lamp darkens, not the box around it. */
+.lc__lamp::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: var(--room-artwork);
+    background-repeat: no-repeat;
+    background-size: calc(100% / var(--w)) calc(100% / var(--h));
+    background-position: calc(100% * var(--x) / (1 - var(--w))) calc(100% * var(--y) / (1 - var(--h)));
+    filter: saturate(.55) brightness(.72);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 240ms var(--ease-out);
+}
+.lc__scene[data-lamp-on="false"] .lc__lamp::before { opacity: 1; }
 .lc__record {
     position: absolute;
     left: 31.9%;
@@ -1404,7 +1486,16 @@ html[data-sig-flow] .status__label { display: none !important; }
     .lc__notes span, .lc__steam, .lc__can, .lc__drops path { animation-name: lc-fade; }
     .lc__can { transform: rotate(22deg); }
     .lc__drops path { animation-iteration-count: 1; }
-    .lc__control:hover::after { transform: none; }
+    .lc__scene[data-intro] .lc__control::after { animation: none; opacity: 0; }
+    .lc__print--koi { transition: none; }
+}
+
+/* ---- One scroll motion for every page (components/page-reveal.jsx):
+   figures and headings below the fold rise once as they arrive. */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s cubic-bezier(.22, 1, .36, 1), transform .8s cubic-bezier(.22, 1, .36, 1); }
+.reveal.is-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
 }
 
 /* ---- Hazel (components/peek-dog.jsx), small and rare: she peeks over the

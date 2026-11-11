@@ -155,13 +155,15 @@ function Row({ p, i, cards, turns, reduceMotion, router }) {
       onFocus={() => turns.take(i)}
       onBlur={() => turns.release(i)}
     >
+      {/* Hung like a print: a dark frame and a cream mat around the picture. */}
+      <div className={`work-frame${flip ? ' lg:order-2' : ''}`}>
       <Go
         p={p}
         aria-label={`${p.name} — read the case study`}
         data-case-card={p.static ? undefined : p.href}
         onClick={p.static ? undefined : (e) => openCase(e, router, p.href)}
-        className={`relative block overflow-hidden rounded-xl [isolation:isolate]${flip ? ' lg:order-2' : ''}`}
-        style={{ border: '1px solid var(--rule)', background: 'var(--raised)' }}
+        className="relative block overflow-hidden [isolation:isolate]"
+        style={{ background: 'var(--raised)' }}
       >
         {p.visual === 'signal' ? (
           <SignalThumb alt={p.alt} />
@@ -181,6 +183,7 @@ function Row({ p, i, cards, turns, reduceMotion, router }) {
         )}
         {p.live && <LiveBadge />}
       </Go>
+      </div>
 
       <div className={flip ? 'lg:order-1' : undefined}>
         <p className="section-n">{String(i + 1).padStart(2, '0')}</p>
@@ -203,7 +206,7 @@ function Row({ p, i, cards, turns, reduceMotion, router }) {
           {p.tags.map((t) => <li key={t} className="chip">{t}</li>)}
         </ul>
         <p className="mt-4" style={{ fontSize: '0.95rem' }}>
-          <Go p={p} className="prose-link">read the story →</Go>
+          <Go p={p} className="story-link">read the story →</Go>
           {p.url && (
             <>
               <span className="text-faint"> · </span>
