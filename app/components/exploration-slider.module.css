@@ -1,0 +1,67 @@
+.divider {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  height: 20px;
+  margin-block: clamp(1.5rem, 4vw, 3rem);
+  color: var(--accent);
+}
+.divider::before, .divider::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid var(--rule);
+}
+.divider svg { flex: none; }
+.section { min-width: 0; }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: .8rem;
+}
+.header h2 {
+  font: 400 clamp(1.65rem, 3vw, 2.3rem)/1 var(--font-serif), Georgia, serif;
+  color: var(--ink);
+}
+.controls { display: flex; gap: .25rem; margin-left: auto; align-items: center; }
+.controls button {
+  min-height: 36px;
+  min-width: 36px;
+  padding: .2rem .4rem;
+  border: 1px solid var(--rule);
+  border-radius: 99px;
+  color: var(--ink);
+  font-size: .7rem;
+  white-space: nowrap;
+}
+.controls button:first-child { border-color: transparent; }
+.controls button:disabled { opacity: .38; }
+.controls button:hover:enabled { background: var(--raised); }
+.track {
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 42%);
+  gap: .85rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  padding: .2rem .2rem .55rem;
+  margin: 0;
+  list-style: none;
+}
+.track > li { min-width: 0; scroll-snap-align: start; }
+.card { display: grid; gap: .5rem; color: var(--ink); font-size: .85rem; }
+.card:hover > span { text-decoration: underline; text-underline-offset: .2em; }
+.card video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 4px;
+  background: var(--raised);
+}
+@media (max-width: 640px) {
+  .track { grid-auto-columns: 81%; gap: .65rem; }
+}

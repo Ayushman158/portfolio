@@ -12,6 +12,7 @@ import Magnet from './components/magnet'
 import { FigmaMark, FramerMark, ClaudeMark, IllustratorGlyph, PromptGlyph } from './components/tool-marks'
 import VerticalCutReveal from './components/vertical-cut-reveal'
 import ListeningCorner from './components/listening-corner'
+import ExplorationSlider, { ExplorationDivider } from './components/exploration-slider'
 
 // Live, client-run, and reachable by anyone — so these are shown, not listed.
 const SHIPPED = [
@@ -286,13 +287,13 @@ export default function Home() {
       </div>
 
       <motion.div {...rise(0.12)}>
-        {/* Only the work with a full case study, strongest first, one per row.
-            Everything else is in the Archive (linked under the list and in the nav). */}
+        {/* Only work with a full case study, strongest first, one per row. */}
         <Shipped label="selected work" items={SELECTED} rows />
-        <p className="track-wide text-faint mt-6" style={{ fontSize: '0.95rem' }}>
-          Client work, the Koi Wishing Pond, the Choose Assam campaign, motion and smaller experiments are in the <Link href="/archive" className="prose-link">Exploration</Link>.
-        </p>
       </motion.div>
+      <div className="track-wide">
+        <ExplorationDivider />
+        <ExplorationSlider />
+      </div>
 
       {/* Skills across the full track, as things to pick up; then Connect. */}
       <div className="track-wide mt-16 grid gap-y-16">

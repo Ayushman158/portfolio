@@ -2,10 +2,11 @@
 
 import { motion, useReducedMotion } from 'motion/react'
 import WorkIndex from '../components/work-index'
+import ExplorationSlider from '../components/exploration-slider'
 
 /*
  * Work kept off the homepage: client work, an installation, a campaign,
- * motion and small experiments. Kept, and findable, but off the homepage so
+ * and small experiments. The index sits below the video previews so
  * the three selected case studies read first.
  */
 
@@ -24,11 +25,6 @@ const EXPERIMENTS = [
   { name: 'ALBUM//ALIVE', year: '2026', href: '/album-alive', img: '/album-alive/fan.jpg', w: 1200, h: 900 },
 ]
 
-const MOTION = [
-  { name: 'Showreel', year: '2026', href: '/reel', video: '/reel/showreel-preview.mp4' },
-  { name: 'Motion studies', year: '2026', href: '/motion', img: '/assets/motion-studies.png', w: 1360, h: 1020 },
-]
-
 export default function Exploration() {
   const reduceMotion = useReducedMotion()
   const rise = (delay) => ({
@@ -40,13 +36,12 @@ export default function Exploration() {
     <main className="measure min-h-screen pb-28 pt-20 sm:pt-28 lg:pt-36">
       <motion.header {...rise(0)} className="track-wide space-y-4">
         <h1 className="display">Exploration</h1>
-        <p className="max-w-[38rem]">Client work, an installation, a campaign, motion and smaller experiments. Hover a row to see it.</p>
       </motion.header>
+      <div className="track-wide mt-8"><ExplorationSlider showTitle={false} /></div>
       <motion.div {...rise(0.08)}>
         <WorkIndex label="client work" items={CLIENT} />
         <WorkIndex label="installation and campaign" items={PROJECTS} />
         <WorkIndex label="experiments" items={EXPERIMENTS} />
-        <WorkIndex label="motion" items={MOTION} />
       </motion.div>
     </main>
   )
