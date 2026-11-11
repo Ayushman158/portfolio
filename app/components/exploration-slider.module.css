@@ -1,24 +1,25 @@
 .divider {
-  height: clamp(12px, 2vw, 20px);
-  margin-block: clamp(1.5rem, 4vw, 3rem);
+  height: clamp(12px, 1.6vw, 18px);
+  margin-block: clamp(1.4rem, 3vw, 2.2rem) clamp(.9rem, 2vw, 1.4rem);
   background: url('/about/exploration-checkerboard.png') center / auto 100% repeat-x;
 }
-.section { min-width: 0; }
+.section { min-width: 0; scroll-margin-top: 5rem; }
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: .5rem;
-  margin-bottom: .8rem;
+  gap: .35rem .6rem;
+  flex-wrap: wrap;
+  margin-bottom: .7rem;
 }
 .header h2 {
   font: 400 clamp(1.65rem, 3vw, 2.3rem)/1 var(--font-serif), Georgia, serif;
   color: var(--ink);
 }
-.controls { display: flex; gap: .25rem; margin-left: auto; align-items: center; }
+.controls { display: flex; gap: .3rem; margin-left: auto; align-items: center; }
 .controls button {
-  min-height: 36px;
-  min-width: 36px;
+  min-height: 44px;
+  min-width: 44px;
   padding: .2rem .4rem;
   border: 1px solid var(--rule);
   border-radius: 99px;
@@ -26,7 +27,7 @@
   font-size: .7rem;
   white-space: nowrap;
 }
-.controls button:first-child { border-color: transparent; }
+.controls button:first-child { border-color: transparent; color: var(--faint); }
 .controls button:disabled { opacity: .38; }
 .controls button:hover:enabled { background: var(--raised); }
 .track {
@@ -34,16 +35,17 @@
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: minmax(0, 42%);
-  gap: .85rem;
+  gap: clamp(.7rem, 1.5vw, 1.1rem);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scrollbar-width: thin;
-  padding: .2rem .2rem .55rem;
+  padding: 0 0 .6rem;
   margin: 0;
   list-style: none;
 }
 .track > li { min-width: 0; scroll-snap-align: start; }
-.card { display: grid; gap: .5rem; color: var(--ink); font-size: .85rem; }
+.card { display: grid; gap: .45rem; color: var(--ink); font-size: .9rem; }
+.card:focus-visible { outline-offset: -2px; }
 .card:hover > span { text-decoration: underline; text-underline-offset: .2em; }
 .card video {
   display: block;
@@ -54,5 +56,5 @@
   background: var(--raised);
 }
 @media (max-width: 640px) {
-  .track { grid-auto-columns: 81%; gap: .65rem; }
+  .track { grid-auto-columns: 85%; }
 }
