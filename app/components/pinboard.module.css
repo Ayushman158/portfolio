@@ -1,0 +1,134 @@
+/* A dotted board on the cream wall. */
+.board {
+  position: relative;
+  padding: clamp(1rem, 3vw, 2rem) clamp(1rem, 3vw, 2.25rem) clamp(2.5rem, 6vw, 4.5rem);
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  background-color: var(--raised);
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--ink) 22%, transparent) 1px, transparent 1.5px);
+  background-size: 22px 22px;
+  background-position: 11px 11px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: clamp(1rem, 3vw, 2rem);
+}
+.hint {
+  margin: 0;
+  font: 400 1.45rem/1 var(--font-reenie-beanie), cursive;
+  color: var(--muted);
+  transform: rotate(-2deg);
+}
+.tidy {
+  margin-left: auto;
+  min-height: 44px;
+  padding: 0 1rem;
+  border: 1px solid var(--rule);
+  border-radius: 99px;
+  background: var(--ground);
+  color: var(--ink);
+  font-size: .8rem;
+}
+.tidy:disabled { opacity: .45; }
+.tidy:hover:enabled { background: var(--raised); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3vw, 2.5rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Each slot holds one print at its own tilt and height. Dragging moves it by
+   --x / --y on top of that. */
+.slot {
+  position: relative;
+  transform: translate(var(--x), calc(var(--y) + var(--lift))) rotate(var(--tilt));
+  transition: transform 420ms cubic-bezier(.22, 1, .36, 1);
+}
+.slot[data-dragging] { transition: none; }
+
+.piece {
+  position: relative;
+  display: grid;
+  gap: .25rem;
+  padding: 10px 10px 14px;
+  background: #FBF8F1;
+  color: #2A2620;
+  box-shadow: 0 1px 2px rgba(40, 25, 15, .12), 0 10px 22px -8px rgba(40, 25, 15, .25);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: box-shadow 220ms ease, transform 220ms cubic-bezier(.22, 1, .36, 1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .piece { cursor: grab; }
+  .piece:active { cursor: grabbing; }
+  .piece:hover {
+    transform: translateY(-4px) rotate(calc(var(--tilt) * -0.4));
+    box-shadow: 0 2px 4px rgba(40, 25, 15, .12), 0 18px 30px -10px rgba(40, 25, 15, .32);
+  }
+}
+.piece:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+/* Tape: a translucent strip across the top edge, three kinds. */
+.piece::before {
+  content: "";
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  width: 34%;
+  height: 22px;
+  translate: -50% 0;
+  rotate: -3deg;
+  background: rgba(246, 226, 180, .72);
+  box-shadow: 0 1px 1px rgba(40, 25, 15, .08);
+  z-index: 1;
+}
+.piece[data-tape="b"]::before { rotate: 4deg; width: 28%; background: rgba(214, 196, 226, .7); }
+.piece[data-tape="c"]::before { rotate: -6deg; width: 30%; left: 30%; background: rgba(196, 220, 200, .72); }
+
+.photo {
+  display: block;
+  overflow: hidden;
+  background: #E9E2D2;
+}
+.photo video, .photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  pointer-events: none;
+}
+.label {
+  margin-top: .45rem;
+  font: 400 clamp(1.35rem, 2vw, 1.6rem)/1 var(--font-reenie-beanie), cursive;
+}
+.note {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: .68rem;
+  letter-spacing: .04em;
+  color: #5E5950;
+}
+
+:global([data-theme="dark"]) .piece { background: #2B2721; color: #E6DFD2; box-shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 12px 24px -8px rgba(0, 0, 0, .55); }
+:global([data-theme="dark"]) .note { color: #A8A296; }
+:global([data-theme="dark"]) .photo { background: #1C1A18; }
+
+@media (max-width: 760px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .slot { --lift: 0px !important; }
+}
+@media (max-width: 420px) {
+  .grid { grid-template-columns: minmax(0, 1fr); padding-inline: 6%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slot, .piece { transition: none; }
+  .piece:hover { transform: none; }
+}

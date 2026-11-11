@@ -1406,3 +1406,76 @@ html[data-sig-flow] .status__label { display: none !important; }
     .lc__drops path { animation-iteration-count: 1; }
     .lc__control:hover::after { transform: none; }
 }
+
+/* ---- Hazel (components/peek-dog.jsx), small and rare: she peeks over the
+   Exploration shelf beside the title, nods once with a small heart, and goes.
+   Her box (.xh__peek) clips her at the shelf's top edge. */
+.peek-dog {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    padding: 0;
+    background: none;
+    transform: translateY(102%);
+    transition: transform 320ms cubic-bezier(.5, 0, .75, .4);
+    pointer-events: none;
+    cursor: pointer;
+}
+.peek-dog[data-visible] {
+    transform: translateY(6%);
+    transition: transform 520ms cubic-bezier(.34, 1.5, .5, 1);
+    pointer-events: auto;
+}
+.peek-dog__art { display: block; width: 100%; height: auto; transform-origin: 50% 92%; }
+.peek-dog[data-visible] .peek-dog__art { animation: peek-nod 520ms 420ms var(--ease-out) both; }
+.peek-dog[data-visible] .peek-dog__art[data-nod] { animation-delay: 0ms; }
+@keyframes peek-nod {
+    0%, 100% { transform: rotate(0); }
+    36% { transform: rotate(-6deg); }
+    66% { transform: rotate(2deg); }
+}
+/* The heart rises from above her head and fades, in the sunset brick. */
+.peek-dog__heart {
+    position: absolute;
+    top: 2%;
+    right: 6%;
+    width: 22%;
+    opacity: 0;
+    pointer-events: none;
+}
+.peek-dog[data-visible] .peek-dog__heart { animation: peek-heart 900ms 560ms var(--ease-out) both; }
+@keyframes peek-heart {
+    0% { opacity: 0; transform: translateY(6px) scale(.6); }
+    30% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-10px) scale(.9); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .peek-dog { display: none; }
+}
+
+/* ---- The checkered strip and the Exploration title under it
+   (components/checker-strip.jsx). Hazel's box stands on the strip's top edge,
+   its right side lined up with the end of the title (--title-w, measured). */
+.xh__shelf { position: relative; }
+.xh__peek {
+    position: absolute;
+    bottom: calc(100% - 4px);   /* tucked 4px behind the strip */
+    left: max(0px, calc(var(--title-w, 12rem) - clamp(42px, 4vw, 54px)));
+    width: clamp(42px, 4vw, 54px);
+    aspect-ratio: 1;
+    overflow: hidden;
+}
+.checker-strip__band {
+    position: relative;
+    z-index: 1;
+    height: clamp(12px, 1.6vw, 18px);
+    background: url('/about/exploration-checkerboard.png') center / auto 100% repeat-x;
+}
+.xh__row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: clamp(1rem, 2.2vw, 1.5rem) 0 clamp(1.2rem, 2.5vw, 1.8rem);
+}
+.xh__row .display { margin: 0; }
