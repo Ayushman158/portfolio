@@ -1,10 +1,15 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const roomArtwork = '/about/listening-corner-plants.png'
+// A 1200px WebP. The hover highlights in globals.css read the same file, so it
+// downloads once.
+const roomArtwork = '/about/listening-corner-plants.webp'
+
+const reduced = () =>
+  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 function MusicNotes({ source }) {
   return (
@@ -18,10 +23,39 @@ export default function ListeningCorner() {
   const [needleDown, setNeedleDown] = useState(false)
   const [lampOn, setLampOn] = useState(true)
   const [effects, setEffects] = useState({ plant: 0, guitar: 0, moka: 0, record: 0 })
+  const [status, setStatus] = useState('')
+  const [intro, setIntro] = useState(false)
+  const scene = useRef(null)
 
   function playEffect(object) {
     setEffects((current) => ({ ...current, [object]: current[object] + 1 }))
   }
+
+  // The first time the room scrolls into view, each object lights up once in
+  // turn, so a visitor sees that they are things to press, not just a picture.
+  useEffect(() => {
+    const el = scene.current
+    if (!el || reduced()) return
+    let seen = false
+    try { seen = sessionStorage.getItem('lc-intro') === '1' } catch {}
+    if (seen) return
+    const io = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return
+      io.disconnect()
+      try { sessionStorage.setItem('lc-intro', '1') } catch {}
+      setIntro(true)
+      setTimeout(() => setIntro(false), 2000)
+    }, { threshold: 0.6 })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
+  // While the record plays, notes keep rising from it.
+  useEffect(() => {
+    if (!needleDown || reduced()) return
+    const id = setInterval(() => setEffects((c) => ({ ...c, record: c.record + 1 })), 1400)
+    return () => clearInterval(id)
+  }, [needleDown])
 
   return (
     <footer className="lc" id="footer">
@@ -36,17 +70,24 @@ export default function ListeningCorner() {
           <Link href="/">Index</Link>
           <Link href="/archive">Exploration</Link>
           <Link href="/about">About</Link>
-          <Link href="/resume">Résumé</Link>
         </nav>
       </div>
 
-      <div className="lc__scene" data-lamp-on={lampOn} data-needle-down={needleDown} style={{ '--room-artwork': `url(${roomArtwork})` }}>
+      <div
+        ref={scene}
+        className="lc__scene"
+        data-lamp-on={lampOn}
+        data-needle-down={needleDown}
+        data-intro={intro || undefined}
+        style={{ '--room-artwork': `url(${roomArtwork})` }}
+      >
+        <span className="lc__glow" aria-hidden="true" />
         <Image
           className="lc__art"
           src={roomArtwork}
           alt="A walnut record console with two potted plants, a moka pot, an orange lamp and a yellow guitar on a woven rug."
-          width={1536}
-          height={1024}
+          width={1200}
+          height={800}
           sizes="(max-width: 760px) 92vw, 600px"
           unoptimized
         />
@@ -63,10 +104,12 @@ export default function ListeningCorner() {
         <button
           className="lc__control lc__turntable"
           type="button"
-          aria-label="Drop the needle"
+          aria-label={needleDown ? 'Lift the needle' : 'Drop the needle'}
           aria-pressed={needleDown}
+          style={{ '--i': 1 }}
           onClick={() => {
             if (!needleDown) playEffect('record')
+            setStatus(needleDown ? 'Record stopped' : 'Record playing')
             setNeedleDown(!needleDown)
           }}
         />
@@ -76,12 +119,22 @@ export default function ListeningCorner() {
         <button
           className="lc__control lc__lamp"
           type="button"
-          aria-label="Lamp"
+          aria-label="Desk lamp"
           aria-pressed={lampOn}
-          onClick={() => setLampOn((value) => !value)}
+          style={{ '--i': 3 }}
+          onClick={() => {
+            setStatus(lampOn ? 'Lamp off' : 'Lamp on')
+            setLampOn((value) => !value)
+          }}
         />
 
-        <button className="lc__control lc__plant" type="button" aria-label="Water the plants" onClick={() => playEffect('plant')} />
+        <button
+          className="lc__control lc__plant"
+          type="button"
+          aria-label="Water the plants"
+          style={{ '--i': 0 }}
+          onClick={() => playEffect('plant')}
+        />
         {effects.plant > 0 && (
           <svg key={`plant-${effects.plant}`} className="lc__effect lc__watering" viewBox="0 0 100 100" aria-hidden="true">
             <g className="lc__can">
@@ -103,15 +156,29 @@ export default function ListeningCorner() {
           </svg>
         )}
 
-        <button className="lc__control lc__guitar" type="button" aria-label="Strum the guitar" onClick={() => playEffect('guitar')} />
+        <button
+          className="lc__control lc__guitar"
+          type="button"
+          aria-label="Strum the guitar"
+          style={{ '--i': 4 }}
+          onClick={() => playEffect('guitar')}
+        />
         {effects.guitar > 0 && <MusicNotes key={`guitar-${effects.guitar}`} source="guitar" />}
 
-        <button className="lc__control lc__moka" type="button" aria-label="Brew coffee" onClick={() => playEffect('moka')} />
+        <button
+          className="lc__control lc__moka"
+          type="button"
+          aria-label="Make coffee"
+          style={{ '--i': 2 }}
+          onClick={() => playEffect('moka')}
+        />
         {effects.moka > 0 && (
           <svg key={`moka-${effects.moka}`} className="lc__effect lc__steam" viewBox="0 0 28 32" aria-hidden="true">
             <path d="M9 29c-9-9 9-10 0-19m10 15c-9-9 9-10 0-19" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
         )}
+
+        <p className="sr-only" aria-live="polite">{status}</p>
       </div>
       <div className="lc__meta">
         <small>© {new Date().getFullYear()} Ayushman Bharadwaj</small>

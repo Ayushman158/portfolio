@@ -9,7 +9,8 @@ import Shipped from './components/shipped'
 import Magnet from './components/magnet'
 import VerticalCutReveal from './components/vertical-cut-reveal'
 import ListeningCorner from './components/listening-corner'
-import ExplorationSlider, { ExplorationDivider } from './components/exploration-slider'
+import Pinboard from './components/pinboard'
+import CheckerStrip from './components/checker-strip'
 
 // Live, client-run, and reachable by anyone — so these are shown, not listed.
 const SHIPPED = [
@@ -166,7 +167,8 @@ export default function Home() {
 
   return (
     <>
-    <main className="measure min-h-screen pb-8 pt-20 sm:pb-12 sm:pt-28 lg:pt-36">
+    {/* data-wall: the home page is a cream wall the work hangs on (globals.css). */}
+    <main data-wall className="measure min-h-screen pb-8 pt-20 sm:pb-12 sm:pt-28 lg:pt-36">
       {/* One left edge for the whole page. The intro, the work and the closing
           sections all start where the case-study cards start, and the text
           only narrows on the right, to a reading width. Before, the edge
@@ -212,8 +214,14 @@ export default function Home() {
         <Shipped label="selected work" items={SELECTED} rows />
       </motion.div>
       <div className="track-wide">
-        <ExplorationDivider />
-        <ExplorationSlider />
+        {/* The title sits on the checkered strip; Hazel lives behind it, beside the word. */}
+        <section aria-labelledby="home-exploration" className="mt-24 sm:mt-28">
+          <CheckerStrip
+            id="home-exploration"
+            aside={<Link href="/archive" className="prose-link text-[0.95rem]">see everything →</Link>}
+          />
+          <Pinboard only={['Koi Wishing Pond', 'Gradient exploration', 'ALBUM//ALIVE']} />
+        </section>
       </div>
 
     </main>

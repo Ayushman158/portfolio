@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Serif specimen</title>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=gambarino@400&f[]=zodiak@300,400,301,401&f[]=erode@300,400,301,401&f[]=boska@300,400,301,401&f[]=gambetta@300,400,301,401&f[]=switzer@400,500&f[]=author@400,500&f[]=supreme@400,500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap">
+<style>
+  :root { --ground:#FBFAF7; --ink:#171614; --faint:#5E5950; --rule:#D6D1C6; }
+  @media (prefers-color-scheme: dark) { :root { --ground:#121110; --ink:#F2EFE9; --faint:#A8A296; --rule:#3A3733; } }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--ground); color:var(--ink); font-family:'Instrument Sans',system-ui,sans-serif; }
+  main { max-width:62rem; margin:0 auto; padding:4rem 1rem 6rem; }
+  header p { color:var(--faint); max-width:36rem; line-height:1.5; }
+  .row { border-top:1px solid var(--rule); padding:3.5rem 0; display:grid; gap:1.25rem; }
+  .tag { font:500 0.75rem/1 ui-monospace,monospace; letter-spacing:.08em; color:var(--faint); text-transform:uppercase; display:flex; gap:1rem; flex-wrap:wrap; }
+  .h1 { font-size:clamp(2.4rem,1.6rem + 3.4vw,4.4rem); line-height:1.02; margin:0; letter-spacing:-0.01em; }
+  .h2 { font-size:clamp(1.6rem,1.2rem + 1.4vw,2.3rem); line-height:1.15; margin:0; }
+  .h2 em { font-style:italic; }
+  .num { font-size:clamp(3rem,2rem + 4vw,5.5rem); line-height:1; }
+  .body { font-size:1.12rem; line-height:1.55; max-width:36rem; margin:0; }
+  .split { display:grid; gap:1.5rem; align-items:end; grid-template-columns:auto 1fr; }
+  @media (max-width:640px) { .split { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="tag">Serif specimen · your own lines</p>
+    <p>Five free serifs from Fontshare, none of them a Google Fonts default, against what the site uses now. Each is paired with a body sans so you see them together. All are free for commercial use under the ITF Free Font License.</p>
+  </header>
+
+  <section class="row" data-serif="'Instrument Serif'" data-sans="'Instrument Sans'">
+    <div class="tag"><span>Now</span><span>Instrument Serif + Instrument Sans</span></div>
+  </section>
+  <section class="row" data-serif="Gambarino" data-sans="Switzer">
+    <div class="tag"><span>A</span><span>Gambarino + Switzer</span><span>sharp, high contrast, no italic</span></div>
+  </section>
+  <section class="row" data-serif="Zodiak" data-sans="Switzer">
+    <div class="tag"><span>B</span><span>Zodiak + Switzer</span><span>editorial, strong italic</span></div>
+  </section>
+  <section class="row" data-serif="Boska" data-sans="Author">
+    <div class="tag"><span>C</span><span>Boska + Author</span><span>condensed, calligraphic italic</span></div>
+  </section>
+  <section class="row" data-serif="Erode" data-sans="Supreme">
+    <div class="tag"><span>D</span><span>Erode + Supreme</span><span>warm, wedge serifs</span></div>
+  </section>
+  <section class="row" data-serif="Gambetta" data-sans="Author">
+    <div class="tag"><span>E</span><span>Gambetta + Author</span><span>bookish, quiet</span></div>
+  </section>
+</main>
+<script>
+  const tpl = (serif, sans) => `
+    <p class="h1" style="font-family:${serif}">I’m Ayushman, a designer who likes figuring things out.</p>
+    <div class="split">
+      <span class="num" style="font-family:${serif}">80%</span>
+      <p class="h2" style="font-family:${serif}">Riders picked the right platform <em>almost twice as often</em>.</p>
+    </div>
+    <p class="body" style="font-family:${sans}">Delhi Metro signs name each train by the last station on its line, so riders have to know the network to pick a platform. I redesigned the signs around the stations riders travel to.</p>`
+  document.querySelectorAll('.row').forEach((r) => r.insertAdjacentHTML('beforeend', tpl(r.dataset.serif + ', serif', r.dataset.sans + ', sans-serif')))
+</script>
+</body>
+</html>
