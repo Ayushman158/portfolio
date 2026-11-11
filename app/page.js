@@ -2,14 +2,11 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import dynamic from 'next/dynamic'
 import { motion, useReducedMotion } from 'motion/react'
 import GradientText from './components/gradient-text'
 import LetterSwap from './components/letter-swap'
-import ScrambleText from './components/scramble-text'
 import Shipped from './components/shipped'
 import Magnet from './components/magnet'
-import { FigmaMark, FramerMark, ClaudeMark, IllustratorGlyph, PromptGlyph } from './components/tool-marks'
 import VerticalCutReveal from './components/vertical-cut-reveal'
 import ListeningCorner from './components/listening-corner'
 import ExplorationSlider, { ExplorationDivider } from './components/exploration-slider'
@@ -123,20 +120,6 @@ const RESEARCH = [
 const byName = Object.fromEntries([...CAMPAIGN, ...SHIPPED, ...RESEARCH].map((p) => [p.name, p]))
 const SELECTED = ['Finding the right platform on the Delhi Metro', 'Kizuku', 'Hoychoy Cafe'].map((n) => byName[n])
 
-// matter-js is ~30 kB gzipped and only matters once this section is reached, so
-// it is split out of the initial bundle entirely rather than shipped with the fold.
-const SkillsGravity = dynamic(() => import('./components/skills-gravity'), { ssr: false })
-
-// Each tool is a button in its own colour; the methods are paper tags.
-const TOOLS = [
-  { label: 'Figma', mark: <FigmaMark />, ball: '#F7F5F0' },
-  { label: 'Framer', mark: <FramerMark fill="#fff" />, ball: '#2553F0' },
-  { label: 'Illustrator', mark: <IllustratorGlyph />, ball: '#2B0A02' },
-  { label: 'Claude', mark: <ClaudeMark />, ball: '#F3ECE0' },
-  { label: 'Codex', mark: <PromptGlyph />, ball: '#111111' },
-]
-
-const METHODS = ['UX Research', 'Usability Design', 'Design Thinking', 'Design Systems']
 
 // Brand and communication work: a different discipline from the product case
 // studies, so it gets its own short index rather than a card among them.
@@ -167,68 +150,6 @@ function Greeting() {
   )
 }
 
-const EMAIL = 'ayushman15899@gmail.com'
-
-/**
- * The page's one call to action. A mailto link alone fails anyone without a
- * mail app set up, which on a borrowed or work laptop is most people, so the
- * address can also be copied, and says so when it has been.
- */
-function EmailActions({ onCopied }) {
-  const [copied, setCopied] = useState(false)
-
-  useEffect(() => {
-    if (!copied) return
-    const t = setTimeout(() => setCopied(false), 1800)
-    return () => clearTimeout(t)
-  }, [copied])
-
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(EMAIL)
-      setCopied(true)
-      onCopied?.()
-    } catch {
-      window.location.href = `mailto:${EMAIL}`
-    }
-  }
-
-  return (
-    <div className="flex flex-wrap items-center gap-3">
-      <a href={`mailto:${EMAIL}`} className="btn-primary">say hello</a>
-      <button type="button" onClick={copy} className="btn-quiet">
-        <span aria-live="polite" className="inline-block min-w-[6.5rem] text-center">{copied ? 'copied ✓' : 'copy address'}</span>
-      </button>
-    </div>
-  )
-}
-
-/**
- * Connect, pinned to the page as a paper note. Copying the address makes the
- * pin hop, as if the note had been tapped.
- */
-function PinnedNote({ children }) {
-  const [hop, setHop] = useState(false)
-  const onCopied = () => {
-    setHop(true)
-    setTimeout(() => setHop(false), 170)
-  }
-  return (
-    <div className="relative mt-8 max-w-[29rem]" style={{ transform: 'rotate(-1.2deg)' }}>
-      <span
-        aria-hidden="true"
-        className="pushpin absolute left-1/2 top-[-13px] z-10 -ml-3.5 block h-7 w-7 rounded-full"
-        style={{ transform: `translateY(${hop ? -7 : 0}px)` }}
-      >
-        <span className="absolute left-1.5 top-[5px] block h-1.5 w-2.5 rounded-full" style={{ background: 'rgba(255,255,255,.45)' }} />
-      </span>
-      <div className="pin-note flex flex-col gap-5 px-7 pb-6 pt-8">
-        {children}
-        <EmailActions onCopied={onCopied} />
-      </div>
-    </div>
-  )
-}
 
 export default function Home() {
   const reduceMotion = useReducedMotion()
@@ -245,7 +166,7 @@ export default function Home() {
 
   return (
     <>
-    <main className="measure min-h-screen pb-28 pt-20 sm:pt-28 lg:pt-36">
+    <main className="measure min-h-screen pb-8 pt-20 sm:pb-12 sm:pt-28 lg:pt-36">
       {/* One left edge for the whole page. The intro, the work and the closing
           sections all start where the case-study cards start, and the text
           only narrows on the right, to a reading width. Before, the edge
@@ -295,34 +216,6 @@ export default function Home() {
         <ExplorationSlider />
       </div>
 
-      {/* Skills across the full track, as things to pick up; then Connect. */}
-      <div className="track-wide mt-16 grid gap-y-16">
-        <motion.section {...rise(0.18)}>
-          <div className="mb-3 flex items-baseline justify-between">
-            <h2 className="text-faint text-[0.95rem]"><ScrambleText>skills</ScrambleText></h2>
-            {!reduceMotion && <span aria-hidden="true" className="text-faint text-[0.95rem]">drag them around</span>}
-          </div>
-
-          {/* Named in server-rendered text, for crawlers, keyword scans and
-              screen readers. The well below shows the same words and marks as
-              things to throw, and is hidden from assistive tech. */}
-          <p className="sr-only">{METHODS.join(', ')}. Tools: {TOOLS.map((t) => t.label).join(', ')}.</p>
-
-          <SkillsGravity tools={TOOLS} tags={METHODS} still={!!reduceMotion} />
-        </motion.section>
-
-        <motion.section {...rise(0.22)}>
-          <h2 className="text-faint text-[0.95rem] mb-3"><ScrambleText>connect</ScrambleText></h2>
-          <PinnedNote>
-            <p>
-              I’m looking for UX/UI or design-engineering work, somewhere I can take an idea from research
-              through to shipping. The fastest way to reach me is email. I’m also on{' '}
-              <a href="https://www.linkedin.com/in/ayushman-bharadwaj-660759289/" target="_blank" rel="noopener noreferrer" className="prose-link">LinkedIn</a>{' '}
-              and <a href="https://x.com/AyushmanBharad" target="_blank" rel="noopener noreferrer" className="prose-link">X</a>.
-            </p>
-          </PinnedNote>
-        </motion.section>
-      </div>
     </main>
     <ListeningCorner />
     </>

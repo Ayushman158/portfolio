@@ -1,7 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+import dynamic from 'next/dynamic'
 import { motion, useReducedMotion } from 'motion/react'
+import { FigmaMark, FramerMark, ClaudeMark, IllustratorGlyph, PromptGlyph } from '../components/tool-marks'
 
 /*
  * About, in Ayushman's own words from a voice note, then the background that
@@ -51,7 +53,20 @@ const BOOKS = [
 ]
 const bookColor = (hue) => `oklch(0.62 0.07 ${hue})`
 
-const SKILLS = ['Figma', 'Antigravity', 'Illustrator', 'After Effects', 'UX Research', 'Usability Design', 'Design Thinking']
+// matter-js is ~30 kB gzipped and only matters once this section is reached, so
+// it is split out of the initial bundle entirely rather than shipped with the fold.
+const SkillsGravity = dynamic(() => import('../components/skills-gravity'), { ssr: false })
+
+// Each tool is a button in its own colour; the methods are paper tags.
+const TOOLS = [
+  { label: 'Figma', mark: <FigmaMark />, ball: '#F7F5F0' },
+  { label: 'Framer', mark: <FramerMark fill="#fff" />, ball: '#2553F0' },
+  { label: 'Illustrator', mark: <IllustratorGlyph />, ball: '#2B0A02' },
+  { label: 'Claude', mark: <ClaudeMark />, ball: '#F3ECE0' },
+  { label: 'Codex', mark: <PromptGlyph />, ball: '#111111' },
+]
+
+const METHODS = ['UX Research', 'Usability Design', 'Design Thinking', 'Design Systems']
 
 export default function About() {
   const reduceMotion = useReducedMotion()
@@ -90,8 +105,8 @@ export default function About() {
           <p>
             My background is in technology, and it made me comfortable thinking past the interface: how
             things work, what’s technically possible, and how a design decision turns into something that
-            can actually be built. I want to be a UX/UI designer or a design engineer who can take an idea
-            from research and design all the way to development and shipping. Eventually I want a
+            can actually be built. I’m looking for UX/UI or design-engineering work where I can take an
+            idea from research through to shipping. Eventually I want a
             one-person studio, working closely with people, making things I believe in, and shipping
             products of my own.
           </p>
@@ -140,9 +155,14 @@ export default function About() {
         Before that: {EDUCATION.slice(2).map((e) => `${e.school}, ${e.detail} (${e.dates})`).join(' · ')}
       </motion.p>
 
-      <motion.section {...rise(0.2)} className="mt-16">
-        <h2 className="text-faint text-[0.95rem] mb-3">Skills</h2>
-        <p>{SKILLS.join(' · ')}</p>
+      <motion.section {...rise(0.2)} className="track-wide mt-16">
+        <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+          <h2 className="text-faint text-[0.95rem]">Skills</h2>
+          {!reduceMotion && <span aria-hidden="true" className="text-faint text-[0.95rem]">drag them around</span>}
+        </div>
+        <p className="sr-only">{METHODS.join(', ')}. Tools: {TOOLS.map(({ label }) => label).join(', ')}.</p>
+        <SkillsGravity tools={TOOLS} tags={METHODS} still={!!reduceMotion} />
+        <p className="mt-3 text-faint text-[0.9rem]">I also use After Effects and Antigravity.</p>
       </motion.section>
     </main>
   )
