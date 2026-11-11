@@ -185,9 +185,15 @@ export default function ListeningCorner() {
           <Link className="lc__print lc__print--koi" href="/koi-wishing-pond" aria-label="Koi Wishing Pond case study">
             <Image src="/koi-wishing-pond/assets/poster.jpg" alt="" fill sizes="(max-width: 760px) 14vw, 86px" />
           </Link>
-          <div className="lc__print lc__print--bauhaus" aria-hidden="true">
-            <span /><span /><span />
-          </div>
+          <a
+            className="lc__print lc__print--aipan"
+            href="https://www.instagram.com/p/DO4EbKIEjfZ/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Aipan art, a Procreate piece, on Instagram"
+          >
+            <Image src="/about/aipan-poster.jpg" alt="" fill sizes="(max-width: 760px) 13vw, 80px" />
+          </a>
         </div>
 
         <button

@@ -47,6 +47,8 @@ export default function Pinboard({ only }) {
   const [order, setOrder] = useState(() => (only ? PIECES.filter((p) => only.includes(p.title)) : PIECES).map((p) => p.title))
   const [canDrag, setCanDrag] = useState(false)
   const [play, setPlay] = useState(false)
+  const [playOverride, setPlayOverride] = useState(null)
+  const playing = playOverride ?? play
   const drag = useRef(null)
   const moved = useRef(false)
 
@@ -90,20 +92,23 @@ export default function Pinboard({ only }) {
 
   return (
     <section className={styles.board} aria-label="Explorations">
-      {(canDrag || untidy) && (
-        <div className={styles.top}>
-          {canDrag && <p className={styles.hint} aria-hidden="true">drag things around</p>}
-          <button type="button" className={styles.tidy} onClick={() => setOffsets({})} disabled={!untidy}>tidy up</button>
+      <div className={styles.top}>
+        {canDrag && <p className={styles.hint}>drag things around</p>}
+        <div className={styles.actions}>
+          {untidy && <button type="button" className={styles.tidy} onClick={() => setOffsets({})}>tidy up</button>}
+          <button type="button" className={`${styles.tidy} ${styles.playback}`} onClick={() => setPlayOverride(!playing)}>{playing ? 'Pause videos' : 'Play videos'}</button>
         </div>
-      )}
+      </div>
       <ul className={styles.grid}>
         {pieces.map((p) => {
           const o = offsets[p.title] || { x: 0, y: 0 }
           const inner = (
             <>
-              <span className={styles.photo}><Media piece={p} play={play} /></span>
-              <span className={styles.label}>{p.title}{p.kind === 'out' && <span aria-hidden="true"> ↗</span>}</span>
-              <span className={styles.note}>{p.note}</span>
+              <span className={styles.photo}><Media piece={p} play={playing} /></span>
+              <span className={styles.caption}>
+                <span className={styles.label}>{p.title}{p.kind === 'out' && <span aria-hidden="true"> ↗</span>}</span>
+                <span className={styles.note}>{p.note}</span>
+              </span>
             </>
           )
           const common = {

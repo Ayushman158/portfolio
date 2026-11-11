@@ -1297,6 +1297,9 @@ html[data-sig-flow] .status__label { display: none !important; }
 }
 .lc__plant-drop { width: .55em; height: auto; fill: #548DA5; }
 .lc__plant-note[data-thanked] { transform: rotate(-3deg) scale(1.06); }
+@media (max-width: 760px) {
+    .lc__plant-note { font-size: .68rem; padding: .1em .35em .05em; top: 14%; }
+}
 .lc__scene { position: relative; isolation: isolate; }
 .lc__art { display: block; width: 100%; height: auto; transition: filter 400ms var(--ease-out); }
 
@@ -1358,31 +1361,19 @@ html[data-sig-flow] .status__label { display: none !important; }
 }
 .lc__print--koi:active { opacity: .8; }
 .lc__print--koi img { object-fit: cover; }
-.lc__print--bauhaus {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: repeat(2, minmax(0, 1fr));
-    padding: 12%;
+/* Aipan art (Instagram): 3:4 so its patterned border is not cropped. Hung
+   lower and crooked the other way; it straightens with the Koi print. */
+.lc__print--aipan {
+    aspect-ratio: 3 / 4;
     transform: translateY(14%) rotate(calc(4deg * var(--tilt-left, 1)));
-    transition: transform 220ms var(--ease-out);
+    transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out);
 }
-.lc__print--bauhaus span:first-child {
-    grid-column: 1 / -1;
-    align-self: end;
-    aspect-ratio: 2 / 1;
-    border-radius: 100% 100% 0 0 / 200% 200% 0 0;
-    background: #a44d37;
+.lc__print--aipan img { object-fit: cover; }
+.lc__print--aipan:focus-visible { transform: translateY(calc(14% - 3px)); box-shadow: 2px 6px 10px #49312330; }
+@media (hover: hover) and (pointer: fine) {
+    .lc__print--aipan:hover { transform: translateY(calc(14% - 3px)); box-shadow: 2px 6px 10px #49312330; }
 }
-.lc__print--bauhaus span:nth-child(2) {
-    aspect-ratio: 1;
-    border-radius: 0 0 0 100%;
-    background: #55614a;
-}
-.lc__print--bauhaus span:last-child {
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: #c3913f;
-}
+.lc__print--aipan:active { opacity: .8; }
 .lc__control {
     position: absolute;
     left: calc(var(--x) * 100%);
