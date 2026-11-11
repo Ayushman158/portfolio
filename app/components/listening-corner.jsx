@@ -25,7 +25,28 @@ export default function ListeningCorner() {
   const [effects, setEffects] = useState({ plant: 0, guitar: 0, moka: 0, record: 0 })
   const [status, setStatus] = useState('')
   const [intro, setIntro] = useState(false)
+  const [doors, setDoors] = useState({ left: false, right: false })
+  const [sweep, setSweep] = useState(0)
+  const [dust, setDust] = useState(null) // { n, x, y } in % of the scene
   const scene = useRef(null)
+  const doorTimers = useRef({})
+
+  // A door slides a little along its track, shows the dark inside, and slides shut.
+  function nudgeDoor(side) {
+    clearTimeout(doorTimers.current[side])
+    setDoors((d) => ({ ...d, [side]: true }))
+    doorTimers.current[side] = setTimeout(() => setDoors((d) => ({ ...d, [side]: false })), 1500)
+  }
+
+  // A small puff of dust rises from wherever the rug was tapped.
+  function shakeRug(e) {
+    const r = scene.current.getBoundingClientRect()
+    const x = e.clientX ? ((e.clientX - r.left) / r.width) * 100 : 45
+    const y = e.clientY ? ((e.clientY - r.top) / r.height) * 100 : 92
+    setDust((d) => ({ n: (d?.n || 0) + 1, x, y }))
+  }
+
+  useEffect(() => () => Object.values(doorTimers.current).forEach(clearTimeout), [])
 
   function playEffect(object) {
     setEffects((current) => ({ ...current, [object]: current[object] + 1 }))
@@ -91,6 +112,44 @@ export default function ListeningCorner() {
           sizes="(max-width: 760px) 92vw, 600px"
           unoptimized
         />
+
+        {/* The console itself: two sliding doors, the records between them, and
+            the rug. Placed first, so the objects on top of the console win. */}
+        {['left', 'right'].map((side, k) => (
+          <button
+            key={side}
+            className={`lc__control lc__door lc__door--${side}`}
+            type="button"
+            aria-label={`Slide the ${side} door`}
+            data-open={doors[side] || undefined}
+            style={{ '--i': k ? 7 : 5 }}
+            onClick={() => nudgeDoor(side)}
+          >
+            <span className="lc__door-face" aria-hidden="true" />
+          </button>
+        ))}
+        <button
+          className="lc__control lc__records"
+          type="button"
+          aria-label="Flick through the records"
+          style={{ '--i': 6 }}
+          onClick={() => setSweep((n) => n + 1)}
+        >
+          {sweep > 0 && <span key={sweep} className="lc__sweep" aria-hidden="true" />}
+        </button>
+        <button
+          className="lc__control lc__mat"
+          type="button"
+          aria-label="Shake out the rug"
+          style={{ '--i': 8 }}
+          onClick={shakeRug}
+        />
+        {dust && (
+          <svg key={`dust-${dust.n}`} className="lc__effect lc__dust" viewBox="0 0 40 40" style={{ left: `${dust.x}%`, top: `${dust.y}%` }} aria-hidden="true">
+            <circle cx="12" cy="30" r="1.6" /><circle cx="20" cy="33" r="1.2" /><circle cx="27" cy="29" r="1.8" />
+            <circle cx="16" cy="25" r="1" /><circle cx="24" cy="24" r="1.1" />
+          </svg>
+        )}
 
         <div className="lc__prints">
           <Link className="lc__print lc__print--koi" href="/koi-wishing-pond" aria-label="Koi Wishing Pond case study">

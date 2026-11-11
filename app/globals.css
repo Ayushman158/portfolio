@@ -9,6 +9,16 @@
        browser size still scales it. Media queries stay on 16px ems. */
     html {
         font-size: 106.25%;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    button, a, [role="button"], [role="switch"] {
+        touch-action: manipulation;
+    }
+
+    button, [role="button"], [role="switch"] {
+        -webkit-user-select: none;
+        user-select: none;
     }
 
     /* ---- Light: a cream wall, inked from the sunset palette. Every page
@@ -567,6 +577,8 @@
     border-bottom-color: var(--rule);
 }
 .dock[data-hidden] { transform: translateY(-100%); }
+.dock a:active { opacity: .65; }
+.lamp-bead:active .lamp-pill { opacity: .65; }
 @media (prefers-reduced-motion: reduce) {
     .dock { transition: none; }
 }
@@ -1241,7 +1253,10 @@ html[data-sig-flow] .status__label { display: none !important; }
     color: var(--muted);
 }
 .lc__nav a, .lc__meta a { padding-block: .25rem; }
-.lc__links a:hover, .lc__meta a:hover { text-decoration: underline; text-underline-offset: .2em; }
+@media (hover: hover) and (pointer: fine) {
+    .lc__links a:hover, .lc__meta a:hover { text-decoration: underline; text-underline-offset: .2em; }
+}
+.lc__links a:active, .lc__meta a:active { opacity: .65; }
 .lc__meta {
     grid-column: 1 / -1;
     display: flex;
@@ -1304,10 +1319,17 @@ html[data-sig-flow] .status__label { display: none !important; }
     transform: rotate(-4deg);
     transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out);
 }
-.lc__print--koi:hover, .lc__print--koi:focus-visible {
+.lc__print--koi:focus-visible {
     transform: rotate(-1.5deg) translateY(-3px);
     box-shadow: 2px 6px 10px #49312330;
 }
+@media (hover: hover) and (pointer: fine) {
+    .lc__print--koi:hover {
+        transform: rotate(-1.5deg) translateY(-3px);
+        box-shadow: 2px 6px 10px #49312330;
+    }
+}
+.lc__print--koi:active { opacity: .8; }
 .lc__print--koi img { object-fit: cover; }
 .lc__print--bauhaus {
     display: grid;
@@ -1351,6 +1373,57 @@ html[data-sig-flow] .status__label { display: none !important; }
 .lc__plant { --x: .05; --y: .24; --w: .185; --h: .29; }
 .lc__guitar { --x: .84; --y: .38; --w: .135; --h: .53; }
 .lc__moka { --x: .52; --y: .355; --w: .11; --h: .17; }
+/* The console's own parts, measured off listening-corner-plants.webp (1200×800). */
+.lc__door--left { --x: .0875; --y: .5525; --w: .242; --h: .229; }
+.lc__door--right { --x: .598; --y: .5525; --w: .231; --h: .229; }
+.lc__records { --x: .3375; --y: .556; --w: .25; --h: .225; }
+.lc__mat { --x: .043; --y: .8725; --w: .833; --h: .096; }
+
+/* A door is its own patch of the art (.lc__door-face) over the dark inside.
+   Closed, the face is hidden, so nothing can seam; open, it slides 9% along
+   its track (left door left, right door right) and comes back. */
+.lc__door { overflow: hidden; border-radius: 2px; transition: background-color 0s 460ms; }
+.lc__door[data-open] { background: linear-gradient(90deg, #1E0F09, #3A1D11 55%, #1E0F09); transition-delay: 0s; }
+.lc__door-face {
+    position: absolute;
+    inset: 0;
+    background-image: var(--room-artwork);
+    background-repeat: no-repeat;
+    background-size: calc(100% / var(--w)) calc(100% / var(--h));
+    background-position: calc(100% * var(--x) / (1 - var(--w))) calc(100% * var(--y) / (1 - var(--h)));
+    opacity: 0;
+    transition: transform 460ms cubic-bezier(.22, 1, .36, 1), opacity 0s 460ms;
+}
+.lc__door[data-open] .lc__door-face { opacity: 1; transition-delay: 0s; box-shadow: 2px 0 6px rgba(20, 8, 4, .45); }
+/* The hover highlight sits where the closed door is; hide it while it slides. */
+.lc__door[data-open]::after { opacity: 0 !important; }
+.lc__door--left[data-open] .lc__door-face { transform: translateX(-9%); }
+.lc__door--right[data-open] .lc__door-face { transform: translateX(9%); box-shadow: -2px 0 6px rgba(20, 8, 4, .45); }
+
+/* Records: a soft light runs across the spines, like a thumb flicking through. */
+.lc__records { overflow: hidden; }
+.lc__sweep {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 30%;
+    background: linear-gradient(100deg, transparent, rgba(255, 244, 222, .55) 50%, transparent);
+    mix-blend-mode: screen;
+    animation: lc-sweep 720ms cubic-bezier(.4, 0, .2, 1) both;
+}
+@keyframes lc-sweep { from { transform: translateX(-110%); } to { transform: translateX(360%); } }
+
+/* Rug: a small puff of fibre-coloured dust from the tapped spot. */
+.lc__dust { width: 6%; translate: -50% -80%; fill: #B8946A; }
+.lc__dust circle { animation: lc-dust 900ms var(--ease-out) both; }
+.lc__dust circle:nth-child(2) { animation-delay: 60ms; }
+.lc__dust circle:nth-child(3) { animation-delay: 30ms; }
+.lc__dust circle:nth-child(4) { animation-delay: 110ms; }
+.lc__dust circle:nth-child(5) { animation-delay: 90ms; }
+@keyframes lc-dust {
+    0% { opacity: 0; transform: translateY(4px); }
+    25% { opacity: .9; }
+    100% { opacity: 0; transform: translateY(-14px); }
+}
 /* Each object is a copy of its own patch of the artwork, laid exactly over
    it. Nothing moves: on hover the copy brightens the object in place, so the
    drawing never splits into two. */
@@ -1371,7 +1444,7 @@ html[data-sig-flow] .status__label { display: none !important; }
 @media (hover: hover) and (pointer: fine) {
     .lc__control:hover::after { opacity: 1; }
 }
-.lc__control:focus-visible::after { opacity: 1; }
+.lc__control:focus-visible::after, .lc__control:active::after { opacity: 1; }
 .lc__scene[data-lamp-on="false"] .lc__lamp::after { opacity: 0; }
 
 /* First view: each object brightens once, left to right. */
@@ -1480,6 +1553,7 @@ html[data-sig-flow] .status__label { display: none !important; }
 @media (max-width: 760px) {
     .lc { grid-template-columns: 1fr; }
     .lc__scene { width: min(100%, 30rem); justify-self: center; }
+    .lc__glow { width: 50%; }
 }
 @media (prefers-reduced-motion: reduce) {
     .lc__record span { animation: none; }
@@ -1488,6 +1562,8 @@ html[data-sig-flow] .status__label { display: none !important; }
     .lc__drops path { animation-iteration-count: 1; }
     .lc__scene[data-intro] .lc__control::after { animation: none; opacity: 0; }
     .lc__print--koi { transition: none; }
+    .lc__door, .lc__door-face { transition: none; }
+    .lc__sweep, .lc__dust { display: none; }
 }
 
 /* ---- One scroll motion for every page (components/page-reveal.jsx):
@@ -1514,11 +1590,11 @@ html[data-sig-flow] .status__label { display: none !important; }
 }
 .peek-dog[data-visible] {
     transform: translateY(6%);
-    transition: transform 520ms cubic-bezier(.34, 1.5, .5, 1);
+    transition: transform 320ms var(--ease-out);
     pointer-events: auto;
 }
 .peek-dog__art { display: block; width: 100%; height: auto; transform-origin: 50% 92%; }
-.peek-dog[data-visible] .peek-dog__art { animation: peek-nod 520ms 420ms var(--ease-out) both; }
+.peek-dog[data-visible] .peek-dog__art { animation: peek-nod 520ms 260ms var(--ease-out) both; }
 .peek-dog[data-visible] .peek-dog__art[data-nod] { animation-delay: 0ms; }
 @keyframes peek-nod {
     0%, 100% { transform: rotate(0); }
@@ -1534,7 +1610,7 @@ html[data-sig-flow] .status__label { display: none !important; }
     opacity: 0;
     pointer-events: none;
 }
-.peek-dog[data-visible] .peek-dog__heart { animation: peek-heart 900ms 560ms var(--ease-out) both; }
+.peek-dog[data-visible] .peek-dog__heart { animation: peek-heart 900ms 400ms var(--ease-out) both; }
 @keyframes peek-heart {
     0% { opacity: 0; transform: translateY(6px) scale(.6); }
     30% { opacity: 1; transform: translateY(0) scale(1); }
@@ -1548,6 +1624,19 @@ html[data-sig-flow] .status__label { display: none !important; }
    (components/checker-strip.jsx). Hazel's box stands on the strip's top edge,
    its right side lined up with the end of the title (--title-w, measured). */
 .xh__shelf { position: relative; }
+/* The tap target over Hazel's spot: wider than her, for a finger. */
+.xh__find {
+    position: absolute;
+    z-index: 2;
+    bottom: -8px;
+    left: max(0px, calc(var(--title-w, 12rem) - clamp(42px, 4vw, 54px) - 16px));
+    width: calc(clamp(42px, 4vw, 54px) + 32px);
+    height: calc(clamp(42px, 4vw, 54px) + 22px);
+    border-radius: 12px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+.xh__find:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 .xh__peek {
     position: absolute;
     bottom: calc(100% - 4px);   /* tucked 4px behind the strip */

@@ -17,7 +17,7 @@ const Cap = ({ children }) => <figcaption className="text-faint mt-2" style={{ f
 /* Wide signs turn to hairs on a phone, so there they keep a readable size and pan sideways. */
 export function Pan({ label, children }) {
   return (
-    <div tabIndex={0} role="group" aria-label={`${label}. Scrolls sideways on small screens.`} className="overflow-x-auto rounded-lg sm:overflow-visible">
+    <div tabIndex={0} role="group" aria-label={`${label}. Scrolls sideways on small screens.`} className="overflow-x-auto overscroll-x-contain rounded-lg sm:overflow-visible">
       <div className="min-w-[46rem] sm:min-w-0">{children}</div>
     </div>
   )

@@ -8,11 +8,11 @@ import Image from 'next/image'
  * a nod and a small heart, then back down. Clicking her while she is up
  * replays the nod and the heart. Hidden under Reduced Motion.
  *
- *   strip   she sits in a clipped box on a shelf (see CheckerStrip)
- *   arrive  visit ~1.2s after the page opens, if her shelf is on screen,
- *           instead of waiting for a scroll
+ * The shelf triggers the visit as it comes into view, even during scrolling.
+ * `summon` (a count from CheckerStrip's tap target) brings her up again on
+ * every tap: up, nod and heart, then down.
  */
-export default function PeekDog({ strip = false, arrive = false }) {
+export default function PeekDog({ summon = 0 }) {
   const [visible, setVisible] = useState(false)
   const [replay, setReplay] = useState(0)
   const button = useRef(null)
@@ -21,52 +21,46 @@ export default function PeekDog({ strip = false, arrive = false }) {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
-    let idle
+    const shelf = button.current?.parentElement
+    if (!shelf) return
+
     let retreat
-    let travelled = 0
-    let lastY = window.scrollY
-
-    const onShelf = () => {
-      if (!strip) return true
-      const edge = button.current?.parentElement?.getBoundingClientRect()
-      return !!edge && edge.top >= 0 && edge.bottom <= window.innerHeight - 32
-    }
-
-    function visit() {
-      window.removeEventListener('scroll', onScroll)
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.intersectionRatio < 0.55) return
+      observer.disconnect()
       setVisible(true)
       retreat = setTimeout(() => {
         visitEnded.current = true
         if (!button.current?.matches(':focus-visible')) setVisible(false)
       }, 1900)
-    }
+    }, { threshold: 0.55 })
+    observer.observe(shelf)
 
-    let arrival
-    if (arrive) arrival = setTimeout(() => { if (onShelf()) visit() }, 1200)
-
-    function onScroll() {
-      travelled += Math.abs(window.scrollY - lastY)
-      lastY = window.scrollY
-      clearTimeout(idle)
-      if (travelled < 24) return
-
-      idle = setTimeout(() => { if (onShelf()) visit() }, 250)
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true })
     return () => {
-      window.removeEventListener('scroll', onScroll)
-      clearTimeout(idle)
+      observer.disconnect()
       clearTimeout(retreat)
-      clearTimeout(arrival)
     }
-  }, [strip, arrive])
+  }, [])
+
+  // Each tap on her spot: up, a fresh nod and heart, then down after 1.6s.
+  const summonTimer = useRef(null)
+  useEffect(() => {
+    if (!summon) return undefined
+    setVisible(true)
+    setReplay((count) => count + 1)
+    clearTimeout(summonTimer.current)
+    summonTimer.current = setTimeout(() => {
+      visitEnded.current = true
+      setVisible(false)
+    }, 1600)
+    return () => clearTimeout(summonTimer.current)
+  }, [summon])
 
   return (
     <button
       ref={button}
       type="button"
-      className={`peek-dog${strip ? ' peek-dog--strip' : ''}`}
+      className="peek-dog"
       data-visible={visible || undefined}
       aria-hidden={!visible}
       aria-label="Say hello to Hazel"

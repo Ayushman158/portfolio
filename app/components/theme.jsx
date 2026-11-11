@@ -51,6 +51,11 @@ export function ThemeProvider({ children }) {
     delete document.documentElement.dataset.lightOnly
   }, [])
 
+  useEffect(() => {
+    const color = getComputedStyle(document.documentElement).getPropertyValue('--ground').trim()
+    if (color) document.querySelector('meta[name="theme-color"]')?.setAttribute('content', color)
+  }, [theme])
+
   const apply = useCallback((next) => {
     document.documentElement.dataset.theme = next
     try { localStorage.setItem('theme', next) } catch (e) {}
@@ -215,6 +220,7 @@ export function Lamp() {
   }, [flip, kick])
 
   const onPointerDown = (e) => {
+    if (e.pointerType !== 'mouse' || e.button !== 0) return
     e.preventDefault()
     const s = sim.current
     s.drag = { sx: e.clientX, sy: e.clientY, moved: false, armed: false }
@@ -231,12 +237,14 @@ export function Lamp() {
       s.sway = reduce ? 0 : Math.max(-14, Math.min(14, -dx * 0.12))
       render((n) => n + 1)
     }
-    const up = () => {
+    const up = (event) => {
       const d = s.drag
       s.drag = null
       s.unbind()
-      if (!d.moved) pullOnce()
-      else if (d.armed) { s.vs += (Math.random() - 0.5) * 8; flip() }
+      if (event.type !== 'pointercancel') {
+        if (!d.moved) pullOnce()
+        else if (d.armed) { s.vs += (Math.random() - 0.5) * 8; flip() }
+      }
       kick()
     }
     window.addEventListener('pointermove', move)
@@ -280,9 +288,10 @@ export function Lamp() {
               title="light / dark"
               tabIndex={0}
               onPointerDown={onPointerDown}
+              onPointerUp={(e) => { if (e.isPrimary && e.pointerType !== 'mouse') pullOnce() }}
               onKeyDown={onKeyDown}
               className="lamp-bead pointer-events-auto absolute flex h-11 w-11 -translate-x-1/2 cursor-grab items-center justify-center rounded-full active:cursor-grabbing"
-              style={{ top: cord, left: 0, touchAction: 'none' }}
+              style={{ top: cord, left: 0 }}
             >
               <span className="lamp-pill block h-4 w-[7px] rounded" />
             </span>

@@ -28,7 +28,7 @@ function Media({ piece, play }) {
     const v = ref.current
     if (!v) return undefined
     const io = new IntersectionObserver(([e]) => {
-      if (play && e.isIntersecting) v.play().catch(() => {})
+      if (play && e.intersectionRatio >= 0.5) v.play().catch(() => {})
       else v.pause()
     }, { threshold: 0.5 })
     io.observe(v)
@@ -61,7 +61,7 @@ export default function Pinboard({ only }) {
   }, [])
 
   const onPointerDown = (title) => (e) => {
-    if (!canDrag || e.button !== 0) return
+    if (!canDrag || e.pointerType !== 'mouse' || e.button !== 0) return
     const start = offsets[title] || { x: 0, y: 0 }
     drag.current = { title, sx: e.clientX - start.x, sy: e.clientY - start.y, ox: e.clientX, oy: e.clientY }
     moved.current = false
@@ -90,10 +90,12 @@ export default function Pinboard({ only }) {
 
   return (
     <section className={styles.board} aria-label="Explorations">
-      <div className={styles.top}>
-        {canDrag && <p className={styles.hint} aria-hidden="true">drag things around</p>}
-        <button type="button" className={styles.tidy} onClick={() => setOffsets({})} disabled={!untidy}>tidy up</button>
-      </div>
+      {(canDrag || untidy) && (
+        <div className={styles.top}>
+          {canDrag && <p className={styles.hint} aria-hidden="true">drag things around</p>}
+          <button type="button" className={styles.tidy} onClick={() => setOffsets({})} disabled={!untidy}>tidy up</button>
+        </div>
+      )}
       <ul className={styles.grid}>
         {pieces.map((p) => {
           const o = offsets[p.title] || { x: 0, y: 0 }

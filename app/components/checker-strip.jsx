@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import PeekDog from './peek-dog'
 
 /*
@@ -10,13 +10,12 @@ import PeekDog from './peek-dog'
  * word, nods, and sinks back.
  *
  *   as      'h1' on the Exploration page, 'h2' on the homepage
- *   arrive  visit once shortly after the page opens (the Exploration page,
- *           where the title is on the first screen), instead of on scroll
  *   aside   anything to the right of the title, like a "see everything" link
  */
-export default function CheckerStrip({ as: Tag = 'h2', id, arrive = false, aside = null }) {
+export default function CheckerStrip({ as: Tag = 'h2', id, aside = null }) {
   const root = useRef(null)
   const title = useRef(null)
+  const [summon, setSummon] = useState(0)
 
   // Line Hazel up with the end of the title, whatever size the title renders at.
   useEffect(() => {
@@ -32,8 +31,10 @@ export default function CheckerStrip({ as: Tag = 'h2', id, arrive = false, aside
   return (
     <div ref={root} className="xh">
       <div className="xh__shelf">
-        <span className="xh__peek"><PeekDog strip arrive={arrive} /></span>
+        <span className="xh__peek"><PeekDog summon={summon} /></span>
         <div className="checker-strip__band" aria-hidden="true" />
+        {/* Her hiding spot, tappable: the strip under her and the space she rises into. */}
+        <button type="button" className="xh__find" aria-label="Find Hazel" onClick={() => setSummon((n) => n + 1)} />
       </div>
       <div className="xh__row">
         <Tag ref={title} id={id} className="display">Exploration</Tag>

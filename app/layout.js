@@ -68,6 +68,8 @@ export const metadata = {
   },
 }
 
+export const viewport = { themeColor: '#F6F0E4' }
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${sans.variable} ${serif.variable} ${inter.variable} ${reenieBeanie.variable}`} suppressHydrationWarning>

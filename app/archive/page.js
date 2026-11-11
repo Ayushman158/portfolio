@@ -18,7 +18,7 @@ export default function Exploration() {
   return (
     <main className="measure min-h-screen pb-28 pt-20 sm:pt-28 lg:pt-36">
       <motion.header {...rise(0)} className="track-wide">
-        <CheckerStrip as="h1" arrive />
+        <CheckerStrip as="h1" />
       </motion.header>
       <motion.div {...rise(0.08)} className="track-wide mt-6">
         <Pinboard />
