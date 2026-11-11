@@ -29,7 +29,7 @@ const MOTION = [
   { name: 'Motion studies', year: '2026', href: '/motion', img: '/assets/motion-studies.png', w: 1360, h: 1020 },
 ]
 
-export default function Archive() {
+export default function Exploration() {
   const reduceMotion = useReducedMotion()
   const rise = (delay) => ({
     initial: reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 },
@@ -39,7 +39,7 @@ export default function Archive() {
   return (
     <main className="measure min-h-screen pb-28 pt-20 sm:pt-28 lg:pt-36">
       <motion.header {...rise(0)} className="track-wide space-y-4">
-        <h1 className="display">Archive</h1>
+        <h1 className="display">Exploration</h1>
         <p className="max-w-[38rem]">Client work, an installation, a campaign, motion and smaller experiments. Hover a row to see it.</p>
       </motion.header>
       <motion.div {...rise(0.08)}>

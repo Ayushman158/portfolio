@@ -11,6 +11,7 @@ import Shipped from './components/shipped'
 import Magnet from './components/magnet'
 import { FigmaMark, FramerMark, ClaudeMark, IllustratorGlyph, PromptGlyph } from './components/tool-marks'
 import VerticalCutReveal from './components/vertical-cut-reveal'
+import ListeningCorner from './components/listening-corner'
 
 // Live, client-run, and reachable by anyone — so these are shown, not listed.
 const SHIPPED = [
@@ -242,6 +243,7 @@ export default function Home() {
   })
 
   return (
+    <>
     <main className="measure min-h-screen pb-28 pt-20 sm:pt-28 lg:pt-36">
       {/* One left edge for the whole page. The intro, the work and the closing
           sections all start where the case-study cards start, and the text
@@ -288,7 +290,7 @@ export default function Home() {
             Everything else is in the Archive (linked under the list and in the nav). */}
         <Shipped label="selected work" items={SELECTED} rows />
         <p className="track-wide text-faint mt-6" style={{ fontSize: '0.95rem' }}>
-          Client work, the Koi Wishing Pond, the Choose Assam campaign, motion and smaller experiments are in the <Link href="/archive" className="prose-link">archive</Link>.
+          Client work, the Koi Wishing Pond, the Choose Assam campaign, motion and smaller experiments are in the <Link href="/archive" className="prose-link">Exploration</Link>.
         </p>
       </motion.div>
 
@@ -321,5 +323,7 @@ export default function Home() {
         </motion.section>
       </div>
     </main>
+    <ListeningCorner />
+    </>
   )
 }

@@ -7,7 +7,7 @@ import { LocalClock } from './theme'
 
 const LINKS = [
   { href: '/', label: 'index' },
-  { href: '/archive', label: 'archive' },
+  { href: '/archive', label: 'exploration' },
   { href: '/about', label: 'about' },
 ]
 

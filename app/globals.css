@@ -1183,3 +1183,226 @@ html[data-sig-night] .sig-night .case-fig img, html[data-sig-night] .sig-night .
 html[data-sig-flow] .status__label { background: transparent; }
 /* The wider column reaches the margin these labels used, so only the ticks stay on this page. */
 html[data-sig-flow] .status__label { display: none !important; }
+
+/* ---- The listening corner ---- */
+.lc {
+    width: min(58rem, calc(100% - 3rem));
+    margin: clamp(3rem, 8vw, 7rem) auto 0;
+    padding: clamp(2rem, 5vw, 3rem) 0 1.5rem;
+    border-top: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr);
+    align-items: center;
+    gap: 1.5rem clamp(2rem, 7vw, 5rem);
+    color: var(--ink);
+}
+.lc__links {
+    display: grid;
+    justify-items: start;
+    gap: .9rem;
+}
+.lc__email {
+    font: 400 clamp(1.85rem, 3vw, 2.55rem)/1 var(--font-serif), Georgia, serif;
+    color: var(--ink);
+}
+.lc__email span { font: .55em var(--font-sans), sans-serif; }
+.lc__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25rem 1rem;
+    font-size: .85rem;
+    color: var(--muted);
+}
+.lc__nav a, .lc__meta a { padding-block: .25rem; }
+.lc__links a:hover, .lc__meta a:hover { text-decoration: underline; text-underline-offset: .2em; }
+.lc__meta {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: .4rem 1rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 1rem;
+    color: var(--faint);
+    font-size: .75rem;
+}
+.lc__meta small { font-size: inherit; }
+.lc__scene { position: relative; isolation: isolate; }
+.lc__art { display: block; width: 100%; height: auto; }
+.lc__prints {
+    position: absolute;
+    top: 0;
+    left: 31%;
+    width: 33%;
+    display: grid;
+    grid-template-columns: 1.08fr .92fr;
+    align-items: start;
+    gap: 13%;
+}
+.lc__print {
+    position: relative;
+    display: block;
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+    background: #efe0c5;
+    border: 2px solid #866346;
+    box-shadow: 1px 2px 0 #49312325;
+}
+.lc__print--koi { transform: rotate(-4deg); }
+.lc__print--koi img { object-fit: cover; }
+.lc__print--bauhaus {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    padding: 12%;
+    transform: translateY(14%) rotate(4deg);
+}
+.lc__print--bauhaus span:first-child {
+    grid-column: 1 / -1;
+    align-self: end;
+    aspect-ratio: 2 / 1;
+    border-radius: 100% 100% 0 0 / 200% 200% 0 0;
+    background: #a44d37;
+}
+.lc__print--bauhaus span:nth-child(2) {
+    aspect-ratio: 1;
+    border-radius: 0 0 0 100%;
+    background: #55614a;
+}
+.lc__print--bauhaus span:last-child {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #c3913f;
+}
+.lc__control {
+    position: absolute;
+    left: calc(var(--x) * 100%);
+    top: calc(var(--y) * 100%);
+    width: calc(var(--w) * 100%);
+    height: calc(var(--h) * 100%);
+    cursor: pointer;
+    border-radius: 5px;
+}
+.lc__control:focus-visible, .lc__print:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 4px;
+}
+.lc__turntable { --x: .24; --y: .39; --w: .25; --h: .13; }
+.lc__lamp { --x: .65; --y: .25; --w: .19; --h: .27; }
+.lc__plant { --x: .05; --y: .24; --w: .185; --h: .29; }
+.lc__guitar { --x: .84; --y: .38; --w: .135; --h: .53; }
+.lc__moka { --x: .52; --y: .355; --w: .11; --h: .17; }
+@media (hover: hover) and (pointer: fine) {
+    /* Sample the same portion of the room artwork inside each hit area. */
+    .lc__control::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: var(--room-artwork);
+        background-repeat: no-repeat;
+        background-size: calc(100% / var(--w)) calc(100% / var(--h));
+        background-position: calc(100% * var(--x) / (1 - var(--w))) calc(100% * var(--y) / (1 - var(--h)));
+        mask-image: radial-gradient(ellipse closest-side, #000 74%, transparent 100%);
+        opacity: 0;
+        pointer-events: none;
+        transition: transform 160ms var(--ease-out), opacity 160ms var(--ease-out);
+    }
+    .lc__control:hover::after {
+        opacity: 1;
+        transform: translateY(-2px) scale(1.025);
+    }
+    .lc__scene[data-lamp-on="false"] .lc__lamp::after { opacity: 0; }
+}
+.lc__scene[data-lamp-on="false"] .lc__lamp { backdrop-filter: saturate(.65) brightness(.8); }
+.lc__record {
+    position: absolute;
+    left: 31.9%;
+    top: 41.5%;
+    width: 7.3%;
+    aspect-ratio: 1;
+    transform: scaleY(.26);
+    transform-origin: top;
+    pointer-events: none;
+}
+.lc__record span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: conic-gradient(from 45deg, transparent 0 42%, #fff8e2 44% 48%, transparent 50%);
+    animation: lc-spin 1.8s linear infinite paused;
+    opacity: 0;
+}
+.lc__scene[data-needle-down="true"] .lc__record span { animation-play-state: running; opacity: .6; }
+@keyframes lc-spin { to { transform: rotate(360deg); } }
+
+.lc__effect { position: absolute; pointer-events: none; }
+.lc__notes { width: 15%; height: 14%; }
+.lc__notes--record { left: 32%; top: 29%; }
+.lc__notes--guitar { right: 1%; top: 28%; }
+.lc__notes span {
+    position: absolute;
+    bottom: 0;
+    color: var(--ink);
+    font: 700 clamp(.8rem, 2.4vw, 1.4rem)/1 ui-serif, Georgia, serif;
+    animation: lc-note 800ms var(--ease-out) both;
+}
+.lc__notes span:first-child { left: 0; rotate: -14deg; }
+.lc__notes span:nth-child(2) { left: 32%; bottom: 25%; rotate: 11deg; animation-delay: 70ms; }
+.lc__notes span:last-child { left: 65%; bottom: 10%; rotate: 17deg; animation-delay: 140ms; }
+.lc__steam {
+    left: 55%;
+    top: 26%;
+    width: 3.5%;
+    color: var(--muted);
+    animation: lc-rise 950ms var(--ease-out) both;
+}
+.lc__watering { left: 0; top: 7%; width: 22%; overflow: visible; }
+.lc__can {
+    transform-origin: 35px 35px;
+    animation: lc-pour 1350ms var(--ease-out) both;
+}
+.lc__drops { color: #548da5; }
+.lc__drops path { animation: lc-drip 265ms 350ms linear 2 both; }
+.lc__drops path:first-child { --drift: -4px; }
+.lc__drops path:nth-child(2) { --drift: 1px; animation-delay: 405ms; }
+.lc__drops path:last-child { --drift: 6px; animation-delay: 465ms; }
+@keyframes lc-rise {
+    0% { opacity: 0; transform: translateY(20%); }
+    18%, 62% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-45%); }
+}
+@keyframes lc-note {
+    0% { opacity: 0; transform: translate(-20%, 55%); }
+    18%, 62% { opacity: 1; }
+    100% { opacity: 0; transform: translate(25%, -125%); }
+}
+@keyframes lc-pour {
+    0% { opacity: 0; transform: translate(-9px, -5px); }
+    14% { opacity: 1; transform: translate(0, 0); }
+    26%, 74% { opacity: 1; transform: rotate(22deg); }
+    87% { opacity: 1; transform: rotate(0); }
+    100% { opacity: 0; transform: translate(-7px, -5px); }
+}
+@keyframes lc-drip {
+    0% { opacity: 0; transform: translate(0, -1px); }
+    20%, 76% { opacity: 1; }
+    100% { opacity: 0; transform: translate(var(--drift), 29px); }
+}
+@keyframes lc-fade {
+    0%, 100% { opacity: 0; }
+    22%, 70% { opacity: 1; }
+}
+
+@media (max-width: 760px) {
+    .lc { grid-template-columns: 1fr; }
+    .lc__scene { width: min(100%, 30rem); justify-self: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .lc__record span { animation: none; }
+    .lc__notes span, .lc__steam, .lc__can, .lc__drops path { animation-name: lc-fade; }
+    .lc__can { transform: rotate(22deg); }
+    .lc__drops path { animation-iteration-count: 1; }
+    .lc__control:hover::after { transform: none; }
+}
