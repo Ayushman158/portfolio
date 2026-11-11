@@ -34,7 +34,7 @@
   font-size: .8rem;
 }
 .tidy:disabled { opacity: .45; }
-.tidy:hover:enabled { background: var(--raised); }
+.tidy:active:enabled { background: var(--raised); }
 
 .grid {
   display: grid;
@@ -68,6 +68,7 @@
   transition: box-shadow 220ms ease, transform 220ms cubic-bezier(.22, 1, .36, 1);
 }
 @media (hover: hover) and (pointer: fine) {
+  .tidy:hover:enabled { background: var(--raised); }
   .piece { cursor: grab; }
   .piece:active { cursor: grabbing; }
   .piece:hover {
@@ -75,6 +76,7 @@
     box-shadow: 0 2px 4px rgba(40, 25, 15, .12), 0 18px 30px -10px rgba(40, 25, 15, .32);
   }
 }
+.piece:active { box-shadow: 0 1px 3px rgba(40, 25, 15, .2); }
 .piece:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
 
 /* Tape: a translucent strip across the top edge, three kinds. */

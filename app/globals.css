@@ -9,6 +9,16 @@
        browser size still scales it. Media queries stay on 16px ems. */
     html {
         font-size: 106.25%;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    button, a, [role="button"], [role="switch"] {
+        touch-action: manipulation;
+    }
+
+    button, [role="button"], [role="switch"] {
+        -webkit-user-select: none;
+        user-select: none;
     }
 
     /* ---- Light: a cream wall, inked from the sunset palette. Every page
@@ -567,6 +577,8 @@
     border-bottom-color: var(--rule);
 }
 .dock[data-hidden] { transform: translateY(-100%); }
+.dock a:active { opacity: .65; }
+.lamp-bead:active .lamp-pill { opacity: .65; }
 @media (prefers-reduced-motion: reduce) {
     .dock { transition: none; }
 }
@@ -1241,7 +1253,10 @@ html[data-sig-flow] .status__label { display: none !important; }
     color: var(--muted);
 }
 .lc__nav a, .lc__meta a { padding-block: .25rem; }
-.lc__links a:hover, .lc__meta a:hover { text-decoration: underline; text-underline-offset: .2em; }
+@media (hover: hover) and (pointer: fine) {
+    .lc__links a:hover, .lc__meta a:hover { text-decoration: underline; text-underline-offset: .2em; }
+}
+.lc__links a:active, .lc__meta a:active { opacity: .65; }
 .lc__meta {
     grid-column: 1 / -1;
     display: flex;
@@ -1304,10 +1319,17 @@ html[data-sig-flow] .status__label { display: none !important; }
     transform: rotate(-4deg);
     transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out);
 }
-.lc__print--koi:hover, .lc__print--koi:focus-visible {
+.lc__print--koi:focus-visible {
     transform: rotate(-1.5deg) translateY(-3px);
     box-shadow: 2px 6px 10px #49312330;
 }
+@media (hover: hover) and (pointer: fine) {
+    .lc__print--koi:hover {
+        transform: rotate(-1.5deg) translateY(-3px);
+        box-shadow: 2px 6px 10px #49312330;
+    }
+}
+.lc__print--koi:active { opacity: .8; }
 .lc__print--koi img { object-fit: cover; }
 .lc__print--bauhaus {
     display: grid;
@@ -1371,7 +1393,7 @@ html[data-sig-flow] .status__label { display: none !important; }
 @media (hover: hover) and (pointer: fine) {
     .lc__control:hover::after { opacity: 1; }
 }
-.lc__control:focus-visible::after { opacity: 1; }
+.lc__control:focus-visible::after, .lc__control:active::after { opacity: 1; }
 .lc__scene[data-lamp-on="false"] .lc__lamp::after { opacity: 0; }
 
 /* First view: each object brightens once, left to right. */
@@ -1480,6 +1502,7 @@ html[data-sig-flow] .status__label { display: none !important; }
 @media (max-width: 760px) {
     .lc { grid-template-columns: 1fr; }
     .lc__scene { width: min(100%, 30rem); justify-self: center; }
+    .lc__glow { width: 50%; }
 }
 @media (prefers-reduced-motion: reduce) {
     .lc__record span { animation: none; }
