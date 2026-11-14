@@ -8,7 +8,7 @@ const nextConfig = {
   // Choose Assam is a standalone static case study, and the playable koi pond a
   // static page, both in public/ and served at clean URLs.
   // /resume opens the public résumé PDF (no phone number) straight from the
-  // server. Rebuild the PDF from ~/Downloads/resume-v2/resume.html if it changes.
+  // server. Rebuild the PDF from ~/Downloads/resume-v2/variants/resume-public.html if it changes.
   async redirects() {
     return [
       { source: '/resume', destination: '/Ayushman_Bharadwaj_Resume.pdf', permanent: false },

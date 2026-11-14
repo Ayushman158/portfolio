@@ -147,10 +147,10 @@ his Pinterest board in.pinterest.com/ayushman15899/interior-design/.
   system stays at `/signal/detail` (noindex) for interviews. Both render from
   `app/signal/content.jsx`, where `detail &&` marks full-version-only parts.
 - Done: `/resume` opens `public/Ayushman_Bharadwaj_Resume.pdf`, a copy without
-  the phone number (built from `~/Downloads/resume-v2/resume.html`).
+  the phone number (built from `~/Downloads/resume-v2/variants/resume-public.html`;
+  referral, hiring-manager and cold-application versions sit beside it).
 - Started: short clips instead of stills. Signal's "One visual system" opens
   with `public/signal/clips/sign-in-place.mp4`, drawn frame by frame in Python
   (the bundled ffmpeg has no overlay or fade filters) and encoded with ffmpeg.
-- Open: clips for Kizuku and Hoychoy; résumé versions by channel (referral,
-  hiring-manager message, cold application); a slide deck built from
+- Open: clips for Kizuku and Hoychoy; a slide deck built from
   `/signal/detail`.
