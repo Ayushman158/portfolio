@@ -121,6 +121,7 @@ export default function ListeningCorner() {
           <Link href="/">Index</Link>
           <Link href="/archive">Exploration</Link>
           <Link href="/about">About</Link>
+          <a href="/Ayushman_Bharadwaj_Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a>
         </nav>
       </div>
 

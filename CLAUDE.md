@@ -141,10 +141,16 @@ minimal yet crafty"); manyaa.me/works/scam-prevention and jeevanshunarang.com
 (from a Blinkit lead's review: one specific problem and outcome per project);
 his Pinterest board in.pinterest.com/ayushman15899/interior-design/.
 
-## Known gaps (from the November 2026 checklist review)
+## Checklist status (November 2026)
 
-- Signal's case study runs about 31 screens; cut it to the story and move
-  research and system detail into a separate interview deck.
-- Case studies are mostly static screenshots; replace key ones with short clips.
-- Only one résumé; make versions for referral, hiring-manager message and cold
-  application. `/resume` still redirects to About.
+- Done: Signal cut to its story (about 13 screens) at `/signal`; the full
+  system stays at `/signal/detail` (noindex) for interviews. Both render from
+  `app/signal/content.jsx`, where `detail &&` marks full-version-only parts.
+- Done: `/resume` opens `public/Ayushman_Bharadwaj_Resume.pdf`, a copy without
+  the phone number (built from `~/Downloads/resume-v2/resume.html`).
+- Started: short clips instead of stills. Signal's "One visual system" opens
+  with `public/signal/clips/sign-in-place.mp4`, drawn frame by frame in Python
+  (the bundled ffmpeg has no overlay or fade filters) and encoded with ffmpeg.
+- Open: clips for Kizuku and Hoychoy; résumé versions by channel (referral,
+  hiring-manager message, cold application); a slide deck built from
+  `/signal/detail`.

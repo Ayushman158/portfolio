@@ -1,7 +1,8 @@
 import { redirect } from 'next/navigation'
 
-// The résumé became the About page. It returns later as a download; until
-// then, anyone holding an old /resume link lands on the same content.
+// /resume opens the résumé PDF. This public copy leaves out the phone number;
+// the full version (with phone) lives in ~/Downloads/resume-v2 and is sent
+// on request. Rebuild it from resume.html there if the résumé changes.
 export default function Resume() {
-  redirect('/about')
+  redirect('/Ayushman_Bharadwaj_Resume.pdf')
 }

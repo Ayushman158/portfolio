@@ -15,7 +15,7 @@ import { usePathname } from 'next/navigation'
  * Ticks at a section start rest a little longer and jump to that section.
  */
 // /signal/v4 is left out: it has its own line map in the left margin.
-const CASE_STUDIES = ['/case-study', '/kizuku', '/signal', '/banyan', '/koi-wishing-pond']
+const CASE_STUDIES = ['/case-study', '/kizuku', '/signal', '/signal/detail', '/banyan', '/koi-wishing-pond']
 const TICKS = 33
 const PEAK = 2.6 // the active tick reaches 1 + PEAK times its resting length
 const FALLOFF = 0.9

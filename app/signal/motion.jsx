@@ -195,34 +195,79 @@ export function SignHead({ n, title, hi, colour, rot = 0, darkNumber = false, ri
   )
 }
 
-/* The result as 100 dots each: one dot is one try in a hundred. Two states only, so ink carries it. */
-function Dots({ n, label }) {
-  const size = 11
-  const gap = 5
-  const w = 10 * size + 9 * gap
+/*
+ * The test result, counted out. One dot is one rider in a hundred. When the
+ * figure scrolls into view, today's grid fills to 45, then the new sign's grid
+ * fills to 80: its first 45 dots in ink like today's, and the 35 extra riders
+ * in the accent, so the gain is its own colour. Counters tick with the dots.
+ * Reduced Motion shows the finished grids at once.
+ */
+const DOT = 11
+const DOT_GAP = 5
+const GRID_W = 10 * DOT + 9 * DOT_GAP
+
+function DotGrid({ shown, base, label, total }) {
   return (
-    <figure className="min-w-0 flex-1" style={{ maxWidth: '17rem' }}>
-      <svg role="img" aria-label={`${n} of 100 tries reached the right platform first, ${label}`} viewBox={`0 0 ${w} ${w}`} className="block h-auto w-full">
-        <title>{`${n} of 100 tries, ${label}`}</title>
-        {Array.from({ length: 100 }, (_, i) => {
-          const row = Math.floor(i / 10)
-          const col = i % 10
-          return <rect key={i} x={col * (size + gap)} y={(9 - row) * (size + gap)} width={size} height={size} rx={size / 2} fill={i < n ? 'var(--ink)' : 'var(--rule)'} />
-        })}
-      </svg>
-      <figcaption className="mt-3 flex items-baseline gap-2">
-        <span className="headline" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 3.6rem)', lineHeight: 1 }}>{n}</span>
-        <span className="text-faint" style={{ fontSize: '0.92rem', lineHeight: 1.3 }}>{label}</span>
-      </figcaption>
-    </figure>
+    <svg role="img" aria-label={`${total} of 100 riders reached the right platform first, ${label}`} viewBox={`0 0 ${GRID_W} ${GRID_W}`} className="block h-auto w-full">
+      {Array.from({ length: 100 }, (_, i) => {
+        const row = Math.floor(i / 10)
+        const col = i % 10
+        const on = i < shown
+        const fill = !on ? 'var(--rule)' : i < base ? 'var(--ink)' : 'var(--accent)'
+        return <rect key={i} x={col * (DOT + DOT_GAP)} y={(9 - row) * (DOT + DOT_GAP)} width={DOT} height={DOT} rx={DOT / 2} fill={fill} />
+      })}
+    </svg>
   )
 }
 
 export function OutOf100({ before, after }) {
+  const ref = useRef(null)
+  const reduce = useReducedMotion()
+  const inView = useInView(ref, { once: true, amount: 0.5 })
+  const [a, setA] = useState(0) // today's grid, dots shown
+  const [b, setB] = useState(0) // new sign's grid, dots shown
+
+  useEffect(() => {
+    if (reduce) { setA(before); setB(after); return undefined }
+    if (!inView) return undefined
+    setA(0); setB(0)
+    let raf
+    const start = performance.now()
+    const ease = (t) => 1 - Math.pow(1 - t, 3)
+    // 0–1.1s today's grid, 1.3–2.7s the new sign's grid.
+    const tick = (now) => {
+      const t = (now - start) / 1000
+      setA(Math.round(before * ease(Math.min(1, t / 1.1))))
+      setB(Math.round(after * ease(Math.min(1, Math.max(0, (t - 1.3) / 1.4)))))
+      if (t < 2.8) raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [inView, reduce, before, after])
+
+  const done = b === after
+  const big = { fontSize: 'clamp(2.6rem, 5vw, 3.8rem)', lineHeight: 1 }
   return (
-    <div className="mt-6 flex gap-8 sm:gap-12">
-      <Dots n={before} label="today’s signs" />
-      <Dots n={after} label="the first new sign" />
+    <div ref={ref} className="mt-6">
+      <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-end gap-4 sm:gap-8" style={{ maxWidth: '38rem' }}>
+        <figure className="min-w-0">
+          <p className="mb-3 text-faint" style={{ fontSize: '0.92rem' }}>Today’s sign</p>
+          <DotGrid shown={a} base={before} total={before} label="today’s sign" />
+          <p className="mt-3"><span className="headline tnum" style={big}>{a}</span><span className="text-faint"> of 100</span></p>
+        </figure>
+        <p aria-hidden="true" className="mb-10 text-center text-faint transition-opacity duration-500" style={{ opacity: done ? 1 : 0, fontSize: '0.95rem', lineHeight: 1.2 }}>
+          →<br /><span style={{ color: 'var(--signal-text)' }}>+{after - before}</span><br />riders
+        </p>
+        <figure className="min-w-0">
+          <p className="mb-3 text-faint" style={{ fontSize: '0.92rem' }}>New sign</p>
+          <DotGrid shown={b} base={before} total={after} label="the first new sign" />
+          <p className="mt-3"><span className="headline tnum" style={big}>{b}</span><span className="text-faint"> of 100</span></p>
+        </figure>
+      </div>
+      <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-faint" style={{ fontSize: '0.85rem' }}>
+        <span className="inline-flex items-center gap-2"><span aria-hidden="true" className="inline-block h-2.5 w-2.5 rounded-full" style={{ background: 'var(--ink)' }} />right platform, first try</span>
+        <span className="inline-flex items-center gap-2"><span aria-hidden="true" className="inline-block h-2.5 w-2.5 rounded-full" style={{ background: 'var(--accent)' }} />the extra riders the new sign helped</span>
+      </div>
     </div>
   )
 }
