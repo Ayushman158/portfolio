@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
 import { Back, Cards, Decisions, Facts, Heading, Impact, Numbers, Overview, Rule, Shots, SkipTo, Subhead, Tradeoffs } from '../components/case-study'
-import { AssamMap, Backbone, Blueprint, Chat, Funnel, Outcomes, StepChain } from './diagrams'
+import { AssamMap, Backbone, Blueprint, Chat, Funnel, OrderRelay, Outcomes, StepChain } from './diagrams'
 
 /*
  * Hoychoy, with the research, the service blueprint, the information
@@ -80,6 +80,12 @@ const CHAIN = [
       ['Owner glances at the dashboard', 'owner'],
     ],
   },
+]
+
+// The same steps as CHAIN, with the time per order for the relay at the top.
+const RELAY = [
+  { title: 'before · WhatsApp', time: '6–8 min', minutes: 7, steps: CHAIN[0].steps },
+  { title: 'after · web ordering', time: '2–3 min', minutes: 2.5, steps: CHAIN[1].steps },
 ]
 
 const SIGNALS = ['Bro payment sent check once', 'Address same as last time', 'Add extra gravy pls']
@@ -167,6 +173,14 @@ export default function Hoychoy() {
         <h1 className="display">Hoychoy Cafe: moving a café’s orders out of WhatsApp</h1>
       </motion.header>
       <motion.div {...rise(0.08)}><Overview items={OVERVIEW} /></motion.div>
+
+      {/* Before and after, near the top: one order, then and now. */}
+      <motion.div {...rise(0.09)}>
+        <p className="mt-12 text-ink" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.45rem)', lineHeight: 1.35, maxWidth: '36rem', textWrap: 'balance' }}>
+          Before, each order stopped at the owner five times and took 6–8 minutes. Now it stops once and takes 2–3.
+        </p>
+        <OrderRelay rows={RELAY} />
+      </motion.div>
       <motion.div {...rise(0.1)}>
         <Impact
           items={OUTCOMES.map(([label, before, after]) => [after, label, before])}

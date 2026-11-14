@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
+import { useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion, useInView, useReducedMotion } from 'motion/react'
 
 /**
  * The drawn parts of the Hoychoy case study, restored from the version before
@@ -329,6 +329,111 @@ export function AssamMap() {
       </div>
       <figcaption className="text-faint mt-2" style={{ fontSize: '0.85rem', lineHeight: 1.45 }}>
         About 213 km from Guwahati and 1,665 km from Delhi, in a straight line.
+      </figcaption>
+    </figure>
+  )
+}
+
+/*
+ * Before and after, as one order travelling through its steps. When the
+ * figure scrolls into view the "before" order walks step by step, pausing
+ * longest wherever it waits on the owner, while a bar fills toward its time;
+ * then the "after" order runs through. Each row's time appears when it lands.
+ *
+ *   rows   [{ title, time, minutes, steps: [[label, who]] }]
+ *          who: 'customer' | 'owner' | 'auto'; minutes sets the bar length
+ *          on a shared 8-minute scale.
+ * Reduced Motion shows both rows finished.
+ */
+const RELAY_STEP = { owner: 600, customer: 400, auto: 280 } // ms spent at each step
+const RELAY_SCALE = 8 // minutes across the full bar
+
+export function OrderRelay({ rows }) {
+  const ref = useRef(null)
+  const reduce = useReducedMotion()
+  const inView = useInView(ref, { once: true, amount: 0.45 })
+  const finished = rows.map((r) => r.steps.length)
+  const [at, setAt] = useState(() => rows.map(() => -1)) // current step per row
+
+  useEffect(() => {
+    if (reduce) { setAt(finished); return undefined }
+    if (!inView) return undefined
+    const timers = []
+    let t = 300
+    rows.forEach((row, r) => {
+      row.steps.forEach(([, who], i) => {
+        timers.push(setTimeout(() => setAt((a) => a.map((v, k) => (k === r ? i : v))), t))
+        t += RELAY_STEP[who]
+      })
+      timers.push(setTimeout(() => setAt((a) => a.map((v, k) => (k === r ? row.steps.length : v))), t))
+      t += 600
+    })
+    return () => timers.forEach(clearTimeout)
+  }, [inView, reduce]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const tones = {
+    owner: { background: 'color-mix(in srgb, var(--warm-a) 55%, transparent)', border: '1px solid var(--warm-b)' },
+    auto: { background: 'color-mix(in srgb, var(--accent) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 45%, transparent)' },
+    customer: { border: '1px solid var(--rule)' },
+  }
+
+  return (
+    <figure ref={ref} className="track-wide mt-12">
+      {rows.map((row, r) => {
+        const now = at[r]
+        const landed = now >= row.steps.length
+        const progress = Math.max(0, Math.min(row.steps.length, now + 1)) / row.steps.length
+        return (
+          <div key={row.title} className="mt-8 first:mt-0">
+            <div className="mb-2 flex items-baseline justify-between gap-4">
+              <p className="text-faint" style={eyebrow}>{row.title}</p>
+              <p className="headline tnum transition-opacity duration-500" style={{ fontSize: 'clamp(1.6rem, 3vw, 2.2rem)', lineHeight: 1, opacity: landed ? 1 : 0.15 }}>
+                {row.time}<span className="text-faint" style={{ fontSize: '0.9rem', fontFamily: 'var(--font-sans)' }}> per order</span>
+              </p>
+            </div>
+            <ol className="flex flex-wrap items-stretch gap-1.5 p-0">
+              {row.steps.map(([label, who], i) => {
+                const active = i === now
+                const done = i < now || landed
+                return (
+                  <li key={label} className="flex list-none items-center gap-1.5">
+                    {i > 0 && <span aria-hidden="true" className="text-faint transition-opacity duration-300" style={{ opacity: done || active ? 1 : 0.3 }}>→</span>}
+                    <span
+                      className="rounded-lg px-3 py-2"
+                      style={{
+                        ...small,
+                        color: 'var(--ink)',
+                        ...tones[who],
+                        opacity: done || active ? 1 : 0.32,
+                        transform: active ? 'translateY(-2px) scale(1.04)' : 'none',
+                        boxShadow: active ? '0 0 0 2px var(--ink)' : 'none',
+                        transition: 'opacity 250ms ease, transform 250ms cubic-bezier(.22,1,.36,1), box-shadow 200ms ease',
+                      }}
+                    >
+                      {label}
+                    </span>
+                  </li>
+                )
+              })}
+            </ol>
+            {/* Time, as a bar on one shared scale: the after bar is shorter because the order is quicker. */}
+            <div className="mt-3 h-1.5 rounded-full" style={{ background: 'var(--rule)' }} aria-hidden="true">
+              <div
+                className="h-full rounded-full"
+                style={{
+                  width: `${progress * (row.minutes / RELAY_SCALE) * 100}%`,
+                  background: r === 0 ? 'var(--warm-b)' : 'var(--accent)',
+                  transition: reduce ? 'none' : 'width 450ms cubic-bezier(.22,1,.36,1)',
+                }}
+              />
+            </div>
+          </div>
+        )
+      })}
+      <figcaption className="text-faint mt-5 flex flex-wrap items-center gap-x-4 gap-y-1" style={small}>
+        <span className="flex items-center gap-1.5"><Swatch tone="pain" /> waits on the owner</span>
+        <span className="flex items-center gap-1.5"><Swatch tone="win" /> happens without anyone</span>
+        <span>Times are the owner’s figures from a two-week pilot.</span>
       </figcaption>
     </figure>
   )

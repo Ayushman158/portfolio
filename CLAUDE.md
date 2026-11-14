@@ -149,6 +149,9 @@ his Pinterest board in.pinterest.com/ayushman15899/interior-design/.
 - Done: `/resume` opens `public/Ayushman_Bharadwaj_Resume.pdf`, a copy without
   the phone number (built from `~/Downloads/resume-v2/variants/resume-public.html`;
   referral, hiring-manager and cold-application versions sit beside it).
+- Done: Hoychoy has a before/after under its overview: one plain sentence
+  and an animated order relay (`OrderRelay` in `app/case-study/diagrams.jsx`)
+  built from the page's own CHAIN steps and the owner's pilot times.
 - Started: short clips instead of stills. Signal's "One visual system" opens
   with `public/signal/clips/sign-in-place.mp4`, drawn frame by frame in Python
   (the bundled ffmpeg has no overlay or fade filters) and encoded with ffmpeg.
