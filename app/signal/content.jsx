@@ -195,6 +195,16 @@ const STRIP = [
   { label: 'Platform', question: 'Is this the right train?', src: '/signal/mockups/platform-totem-v2.png', w: 1536, h: 1024, alt: 'Concept image: a black platform 5 totem on an elevated metro platform, listing the Violet Line stations ahead' },
 ]
 
+// The short version's "What the system covers": one picture and one sentence
+// for each part the full version shows at length. `pos` picks which part of a
+// tall or wide image stays in the 4:5 frame.
+const COVERS = [
+  { label: 'The ticket', line: 'Same paper roll. Platform, line and where to change, in both scripts.', src: `${N}/ticket-new.jpg`, w: 928, h: 1446, pos: 'top', alt: 'The redesigned paper ticket: QR beside the destination, platform 5 on the Violet Line, a line reading Change at Lajpat Nagar, then platform 3 on the Pink Line' },
+  { label: 'The gate', line: 'A QR scan confirms the first platform. A card tap shows only a tick, so nobody sees a balance.', src: `${N}/fare-gate-qr.jpg`, w: 1262, h: 756, alt: 'Concept image of a fare gate screen showing a tick and platform 5, Violet Line, Mandi House and Lajpat Nagar' },
+  { label: 'The manual', line: '34 pages, in trip order, so someone else could build it. It flags what I still need to check on site.', src: `${N}/manual-05.jpg`, w: 1400, h: 990, pos: 'left', alt: 'Standards manual page on the arrow, with eight directions and three rules' },
+  { label: 'Saathi', line: 'A QR board opens the whole trip on one screen. Read it once, put the phone away.', src: `${W}/saathi-route.jpg`, w: 780, h: 1720, pos: 'top', alt: 'Saathi route screen: platform 5, Violet Line, at Kashmere Gate, and the exit at Lajpat Nagar' },
+]
+
 export default function SignalContent({ detail = false }) {
   return (
     <main className="sig-page">
@@ -311,7 +321,7 @@ export default function SignalContent({ detail = false }) {
         </Section>
 
         {/* ---------- Street to exit ---------- */}
-        <Section id="signs" title="One trip, from the street to the exit" next={detail ? 'Screens build on the same signs.' : 'These are the limits I know about.'} lede="Each sign answers one question. The signs are real artwork. The places are AI-generated concept images, and nothing here is installed.">
+        <Section id="signs" title="One trip, from the street to the exit" next={detail ? 'Screens build on the same signs.' : 'The same key carries past the signs.'} lede="Each sign answers one question. The signs are real artwork. The places are AI-generated concept images, and nothing here is installed.">
           {detail ? (
             <Trip>
               <Stop label="Street" question="Where is my station?" status="Concept · untested" src={`${N}/mock-street.jpg`} w={2000} h={1333} alt="Concept image: a tall black totem on a Delhi pavement at dusk showing the metro symbol, Kashmere Gate, its three lines and Gate 3, with auto-rickshaws passing behind" cap="Station name, lines and gate." />
@@ -338,12 +348,32 @@ export default function SignalContent({ detail = false }) {
               </div>
               <p className="mt-8 max-w-[36rem]">
                 The same key carries on to the stairs, the platform wall, the interchange and the exit.
-                Station screens, the paper ticket and gate, a 34-page standards manual and Saathi, a route
-                finder, are in <a className="prose-link" href="/signal/detail">the full system</a>.
               </p>
             </>
           )}
         </Section>
+
+        {/* ---------- Short version only: the rest of the system, one tile each ---------- */}
+        {!detail && (
+          <Section id="covers" title="What the system covers" next="These are the limits I know about." lede="The signs are one part. The same platform, line and two stops appear on the ticket, at the gate, in a written manual and in a route finder.">
+            <ul className="track-wide mt-12 grid list-none gap-6 p-0 grid-cols-2 lg:grid-cols-4">
+              {COVERS.map((c) => (
+                <li key={c.label}>
+                  <figure className="case-fig m-0">
+                    <img src={c.src} width={c.w} height={c.h} loading="lazy" alt={c.alt} className="block aspect-[4/5] h-auto w-full rounded-lg object-cover" style={{ objectPosition: c.pos || 'center' }} />
+                    <figcaption className="mt-3" style={{ fontSize: '0.92rem', lineHeight: 1.45 }}>
+                      <span className="block text-ink">{c.label}</span>
+                      <span className="block text-faint mt-1">{c.line}</span>
+                    </figcaption>
+                  </figure>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-10" style={{ fontSize: '0.95rem' }}>
+              Station screens, the 24 pictograms and the whole manual are in <a className="prose-link" href="/signal/detail">the full system</a>.
+            </p>
+          </Section>
+        )}
 
         {detail && (<>
         {/* ---------- Screens ---------- */}
