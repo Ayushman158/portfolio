@@ -6,7 +6,6 @@ import { openCase } from './case-transition'
 import Image from 'next/image'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { motion, useMotionValue, useReducedMotion, useTransform } from 'motion/react'
-import ScrambleText from './scramble-text'
 import { SignalThumb, KizukuThumb } from './case-thumbs'
 
 /**
@@ -35,7 +34,7 @@ export default function Shipped({ label = 'Shipped', items, className = 'mt-16',
       {/* The label rides the track, not the measure: a heading that does not
           share a left edge with the thing it names reads as an accident. */}
       <h2 className="track-wide text-faint text-[0.95rem] mb-4">
-        <ScrambleText>{label}</ScrambleText>
+        {label}
       </h2>
 
       {rows ? (
@@ -112,10 +111,7 @@ export default function Shipped({ label = 'Shipped', items, className = 'mt-16',
                   className="prose-link shrink-0"
                   style={{ fontSize: '0.9rem' }}
                 >
-                  {/* The address is the "go and look" affordance, and a string of
-                      characters resolving into a domain is the one place on the
-                      page where the effect means something. */}
-                  <ScrambleText delay={140 + i * 90}>{p.site}</ScrambleText>
+                  {p.site}
                 </a>
               ) : (
                 // Research work has nothing live to link to, so the slot says
@@ -126,11 +122,6 @@ export default function Shipped({ label = 'Shipped', items, className = 'mt-16',
 
             <p className="text-faint mt-1" style={{ fontSize: '0.95rem' }}>{p.what}</p>
 
-            <ul className="mt-3 flex flex-wrap gap-1.5 p-0">
-              {p.tags.map((t) => (
-                <li key={t} className="chip">{t}</li>
-              ))}
-            </ul>
             </div>
           </article>
         ))}
@@ -186,7 +177,6 @@ function Row({ p, i, cards, turns, reduceMotion, router }) {
       </div>
 
       <div className={flip ? 'lg:order-1' : undefined}>
-        <p className="section-n">{String(i + 1).padStart(2, '0')}</p>
         <h3 className="headline">
           <Go p={p} className="transition-opacity duration-150 hover:opacity-80">{p.name}</Go>
         </h3>
@@ -202,9 +192,6 @@ function Row({ p, i, cards, turns, reduceMotion, router }) {
             ))}
           </dl>
         )}
-        <ul className="mt-4 flex flex-wrap gap-1.5 p-0">
-          {p.tags.map((t) => <li key={t} className="chip">{t}</li>)}
-        </ul>
         <p className="mt-4" style={{ fontSize: '0.95rem' }}>
           <Go p={p} className="story-link">read the story →</Go>
           {p.url && (

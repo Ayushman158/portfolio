@@ -35,7 +35,7 @@
         /* Brand colours as text: the Signal orange and Telegram blue are too
            light to read small on paper, so text takes a deeper cut (5.5:1, 5.2:1). */
         --signal-text: #C22E00;
-        --telegram-text: #16719E;
+        --telegram-text: #13668F;
         /* The sunset palette, read by eye from Ayushman's photo. --accent is the
            only UI accent, for marks and borders: about 4:1 on white, so never
            body text. The rest stay the same in both themes. --sunset-ink is
@@ -225,6 +225,9 @@
 
     /* The serif's two jobs. Instrument Serif has one weight and runs narrow, so
        it is set larger than the sans it replaced and never faux-bolded. */
+    /* Paragraphs avoid leaving one short word alone on their last line. */
+    p, li, dd, figcaption { text-wrap: pretty; }
+
     .display {
         font-family: var(--font-serif), ui-serif, Georgia, serif;
         font-weight: 400;
@@ -659,6 +662,24 @@ html[data-room] .status { display: none; }
     transition: transform 0.16s cubic-bezier(0.2, 0.7, 0.3, 1), background 0.25s;
 }
 .status__tick[data-on] { background: var(--accent); }
+/* The music easter egg: --a (0 to 1) is set each frame from the record's
+   loudness. `scale` is separate from `transform`, so it stretches the tick on
+   top of its position length without fighting that transition. */
+.status__tick { scale: calc(1 + var(--a, 0) * 1.8) 1; }
+.status__record {
+    position: absolute;
+    top: calc(100% + 18px);
+    left: -4px;
+    width: max-content;
+    padding: 2px 4px;
+    color: var(--faint);
+    font: 400 1.15rem/1 var(--font-reenie-beanie), cursive;
+    transform: rotate(-4deg);
+    transition: color 0.15s ease;
+    animation: status-label 0.4s ease-out;
+}
+.status__record:hover { color: var(--ink); }
+.status__record:focus-visible { outline: 2px solid var(--lamp); outline-offset: 2px; }
 .status__mark {
     position: absolute;
     left: -8px;

@@ -17,11 +17,11 @@ const ROLES = [
     title: 'Manager, Product & Websites',
     dates: 'June 2024 → July 2025',
     points: [
-      'Led UX and system design for early-stage products, focusing on clarity in flows, interactions, and scalable architecture',
-      'Designed complex scheduling systems handling availability logic, conflicts, manual overrides, and edge cases',
-      'Conducted user research and developed personas to guide experience and feature strategy',
-      'Defined end-to-end journeys across onboarding, scheduling, and client engagement ecosystems',
-      'Translated UX decisions into structured PRDs and aligned design, engineering, and business for build-ready execution',
+      'Led UX and system design for early-stage products: flows, interactions and how the parts fit together.',
+      'Designed scheduling systems that handle availability, conflicts, manual overrides and edge cases.',
+      'Ran user research and built personas to decide what to build.',
+      'Mapped onboarding, scheduling and client follow-up from start to finish.',
+      'Wrote PRDs from the design decisions and kept design, engineering and business agreed on what would be built.',
     ],
   },
   {
@@ -29,9 +29,9 @@ const ROLES = [
     title: 'Cybersecurity Analyst',
     dates: 'July 2022 → Aug 2023',
     points: [
-      'Performed SAST/DAST and VAPT on web and mobile applications, identifying critical usability-impacting security risks.',
-      'Conducted API and web application testing, strengthening understanding of system behavior, edge cases, and failure states.',
-      'Reviewed firewall and OS configurations, reinforcing a mindset of defensive design and risk-aware systems thinking.',
+      'Ran SAST/DAST and VAPT on web and mobile apps and found critical security risks that also affected how people used them.',
+      'Tested APIs and web apps, which taught me how systems behave at their edges and when they fail.',
+      'Reviewed firewall and OS configurations, where I learned to design for what can go wrong.',
     ],
   },
 ]
@@ -51,7 +51,9 @@ const BOOKS = [
   { id: 'upes', spine: 'M.Des · UPES', w: 30, h: 150, hue: 250, kind: 'edu', ref: EDUCATION[0] },
   { id: 'smit', spine: 'B.Tech · SMIT', w: 26, h: 128, hue: 25, kind: 'edu', ref: EDUCATION[1] },
 ]
-const bookColor = (hue) => `oklch(0.62 0.07 ${hue})`
+// Lightness 0.5 keeps the cream spine titles readable (about 5:1); at 0.62
+// they fell to 3.3:1.
+const bookColor = (hue) => `oklch(0.5 0.07 ${hue})`
 
 // matter-js is ~30 kB gzipped and only matters once this section is reached, so
 // it is split out of the initial bundle entirely rather than shipped with the fold.
@@ -91,7 +93,7 @@ export default function About() {
           <p>
             I’m drawn to the space between people and technology: understanding how people think and
             feel, working within real-world constraints, and turning that into things that are useful,
-            intuitive and visually considered.
+            easy to use and good to look at.
           </p>
           <p>
             People tell me I’m calm, and I am. When something interests me I focus on it, a little

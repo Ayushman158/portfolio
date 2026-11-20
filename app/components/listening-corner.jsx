@@ -1,5 +1,6 @@
 'use client'
 
+import * as record from './record-player'
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -21,6 +22,12 @@ function MusicNotes({ source }) {
 
 export default function ListeningCorner() {
   const [needleDown, setNeedleDown] = useState(false)
+  // The needle follows the real record, which keeps playing across pages: come
+  // back to the home page mid-song and the needle is still down.
+  useEffect(() => {
+    setNeedleDown(record.isPlaying())
+    return record.subscribe(setNeedleDown)
+  }, [])
   const [lampOn, setLampOn] = useState(true)
   const [effects, setEffects] = useState({ plant: 0, guitar: 0, moka: 0, record: 0 })
   const [status, setStatus] = useState('')
@@ -206,7 +213,8 @@ export default function ListeningCorner() {
           onClick={() => {
             if (!needleDown) playEffect('record')
             setStatus(needleDown ? 'Record stopped' : 'Record playing')
-            setNeedleDown(!needleDown)
+            if (needleDown) record.stop()
+            else record.start()
           }}
         />
         <span className="lc__record" aria-hidden="true"><span /></span>

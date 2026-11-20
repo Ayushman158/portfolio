@@ -4,8 +4,6 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion, useMotionValue, useSpring, useReducedMotion } from 'motion/react'
-import Letter3DSwap from './letter-3d-swap'
-import ScrambleText from './scramble-text'
 
 /* The preview's size lives here rather than in a class, because the placement
    maths needs the same numbers to keep it inside the window. */
@@ -64,21 +62,14 @@ export default function WorkIndex({ label, items }) {
           into the reading measure here made the left edge jump inward in the
           middle of the work. The text sections below return to the measure. */}
       <h2 className="track-wide text-faint text-[0.95rem] mb-2">
-        <ScrambleText>{label}</ScrambleText>
+        {label}
       </h2>
 
       <ul ref={listRef} className="track-wide border-t border-rule">
-        {items.map((item, i) => {
+        {items.map((item) => {
           const Row = (
             <>
-              <span className="flex items-baseline gap-3 min-w-0">
-                <span className="tnum text-faint text-[0.8rem] tabular-nums shrink-0">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <Letter3DSwap rotateDirection="right" staggerDuration={0.03}>
-                  {item.name}
-                </Letter3DSwap>
-              </span>
+              <span className="min-w-0">{item.name}</span>
               <span className="tnum text-faint text-[0.9rem] shrink-0">{item.year}</span>
             </>
           )

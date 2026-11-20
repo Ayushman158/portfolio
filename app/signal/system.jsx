@@ -28,7 +28,7 @@ export { LINES }
 export const Mark = (props) => <BaseMark font={SIGN_FONT} {...props} />
 
 const Label = ({ children, className = '' }) => <p className={`text-faint ${className}`} style={{ fontSize: '0.72rem', letterSpacing: '0.08em', textTransform: 'uppercase' }}>{children}</p>
-const Ref = ({ n }) => <a href={`#ref-${n}`} className="text-faint align-super" style={{ fontSize: '0.7em' }} aria-label={`Reference ${n}`}>[{n}]</a>
+const Ref = ({ n }) => <a href={`#ref-${n}`} className="text-faint align-super" style={{ fontSize: 'max(0.7em, 11px)' }} aria-label={`Reference ${n}`}>[{n}]</a>
 
 /* The work at a glance: a sign in place, the app, the badge and the line marks. */
 export function Collage() {

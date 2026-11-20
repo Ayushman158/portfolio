@@ -200,8 +200,8 @@ export default function Home() {
 
         <p>
           I’m drawn to the space between people and technology: how people think and feel, what can
-          actually be built, and turning both into things that are useful, intuitive and visually
-          considered. Finishing my masters in interaction design.
+          actually be built, and turning both into things that are useful, easy to use and good to
+          look at. Finishing my masters in interaction design.
         </p>
 
         <p>

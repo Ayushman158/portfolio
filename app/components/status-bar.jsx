@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
+import * as record from './record-player'
 
 /**
  * A scale of bare ticks on the left edge of a case study, showing where you
@@ -13,6 +14,12 @@ import { usePathname } from 'next/navigation'
  * and that is what makes the wave look fluid.
  *
  * Ticks at a section start rest a little longer and jump to that section.
+ *
+ * Easter egg: while the record on the home page's turntable is playing (it
+ * keeps playing across pages), each tick also stretches with one band of the
+ * music, bass at the top and treble at the bottom, so the scale moves gently
+ * with the song. A small "lift the needle" note under the bar stops it.
+ * Reduced Motion: the ticks stay still; the note still shows.
  */
 // /signal/v4 is left out: it has its own line map in the left margin.
 const CASE_STUDIES = ['/case-study', '/kizuku', '/signal', '/signal/detail', '/banyan', '/koi-wishing-pond']
@@ -30,6 +37,42 @@ export default function StatusBar() {
   const [marks, setMarks] = useState([]) // one per section: id, name, tick
   const [active, setActive] = useState(0)
   const [peek, setPeek] = useState(null)
+  const ticks = useRef([])
+  const amps = useRef(new Float32Array(TICKS)) // kept between runs, so ticks settle from where they are
+  const [music, setMusic] = useState(false)
+
+  useEffect(() => {
+    setMusic(record.isPlaying())
+    return record.subscribe(setMusic)
+  }, [])
+
+  // While music plays, read how loud each band is every frame and write it to
+  // the tick as --a (0 to 1). Written straight to the element, not through
+  // React state, so 60 updates a second cost almost nothing. Each tick jumps
+  // up with a beat and falls back slowly, like a level meter. After the music
+  // stops, the loop runs until every tick has settled, then ends.
+  useEffect(() => {
+    if (!marks.length) return undefined
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined
+    const data = new Uint8Array(record.bands())
+    const amp = amps.current
+    let raf = 0
+    const frame = () => {
+      const on = record.isPlaying()
+      if (on) record.levels(data)
+      let moving = on
+      for (let i = 0; i < TICKS; i++) {
+        // Spread the ticks over the bands that carry most of the music.
+        const v = on ? data[2 + Math.floor((i / TICKS) * 30)] / 255 : 0
+        amp[i] = Math.max(v * v, amp[i] * 0.9)
+        if (amp[i] > 0.002) moving = true
+        ticks.current[i]?.style.setProperty('--a', amp[i].toFixed(3))
+      }
+      if (moving) raf = requestAnimationFrame(frame)
+    }
+    raf = requestAnimationFrame(frame)
+    return () => cancelAnimationFrame(raf)
+  }, [music, marks.length])
 
   useEffect(() => {
     setActive(0)
@@ -94,6 +137,7 @@ export default function StatusBar() {
         return (
           <i
             key={i}
+            ref={(el) => { ticks.current[i] = el }}
             className="status__tick"
             data-on={i === active || undefined}
             style={{ '--t': i / (TICKS - 1), '--s': length, '--w': wave }}
@@ -115,6 +159,11 @@ export default function StatusBar() {
           onBlur={() => setPeek(null)}
         />
       ))}
+      {music && (
+        <button type="button" className="status__record" onClick={record.stop}>
+          lift the needle
+        </button>
+      )}
       {shown && (
         <p
           aria-hidden="true"

@@ -15,13 +15,14 @@ export function Rule() {
 
 /**
  * A section heading. Plain words that say what the section is ("The problem",
- * "What I found"), with an optional index so a reviewer scanning the page can
- * see where they are and how much is left.
+ * "What I found"). No 01 / 02 numbers above it: the status bar on the left
+ * already shows where you are, and the numbers read as a template.
+ * (`n` is still accepted so existing pages don't need editing; it is ignored.)
  */
+// eslint-disable-next-line no-unused-vars
 export function Heading({ children, n }) {
   return (
     <h2 className="mb-5" data-route="">
-      {n && <span className="section-n">{n}</span>}
       <span className="headline block">{children}</span>
     </h2>
   )
