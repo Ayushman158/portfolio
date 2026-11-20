@@ -6,12 +6,12 @@ import { motion, useReducedMotion } from 'motion/react'
 import GradientText from './components/gradient-text'
 import LetterSwap from './components/letter-swap'
 import Shipped from './components/shipped'
-import Magnet from './components/magnet'
-import VerticalCutReveal from './components/vertical-cut-reveal'
 import ListeningCorner from './components/listening-corner'
 import Pinboard from './components/pinboard'
 import CheckerStrip from './components/checker-strip'
-import PencilUnderline from './components/pencil-underline'
+import PhotoSlot from './components/photo-slot'
+import EditedIntro from './components/edited-intro'
+import PixelGlow from './components/pixel-glow'
 
 // Live, client-run, and reachable by anyone — so these are shown, not listed.
 const SHIPPED = [
@@ -132,30 +132,6 @@ const SELECTED = ['Finding the right platform on the Delhi Metro', 'Kizuku', 'Ho
 
 // Madi Things and KL Hi-Tech are not live yet, so they are held back
 // rather than listed as work a visitor cannot reach.
-function Greeting() {
-  const [hour, setHour] = useState(null)
-  useEffect(() => setHour(new Date().getHours()), [])
-
-  const part = hour == null ? 'hello' : hour < 12 ? 'good morning' : hour < 17 ? 'good afternoon' : 'good evening'
-
-  // Assamese and Hindi: he is from North Lakhimpur, Assam. The reveal waits
-  // for the clock so it does not play against a placeholder greeting.
-  return (
-    <p className="text-faint">
-      <VerticalCutReveal
-        start={hour != null}
-        delay={0.05}
-        segments={[
-          { text: `${part},`, lang: 'en' },
-          { text: 'নমস্কাৰ,', lang: 'as' },
-          { text: 'नमस्ते', lang: 'hi' },
-        ]}
-      />
-    </p>
-  )
-}
-
-
 export default function Home() {
   const reduceMotion = useReducedMotion()
   // Coming back from a case study, the page is already here: a card is about
@@ -171,43 +147,37 @@ export default function Home() {
 
   return (
     <>
+    {/* The lamp's light in pixels, gathering into the photo window on scroll. */}
+    <PixelGlow target=".photo-slot--hero" clear="#hero-copy" />
     {/* data-wall: the home page is a cream wall the work hangs on (globals.css). */}
     <main data-wall className="measure min-h-screen pb-8 pt-20 sm:pb-12 sm:pt-28 lg:pt-36">
       {/* One left edge for the whole page. The intro, the work and the closing
           sections all start where the case-study cards start, and the text
           only narrows on the right, to a reading width. Before, the edge
           stepped in for the intro, out for the work and in again at the end. */}
-      {/* The hero: words on the left, the avatar on the right as a magnet you
-          can pick up, with the lamp hanging beside it. On a phone the avatar
-          leads, as it always has. */}
-      <div className="track-wide flex flex-col lg:flex-row lg:items-start lg:justify-between lg:gap-12">
-      {/* Entrance: the text is there from the first frame; the lamp drops in
-          (see Lamp), then the magnet lands at 500ms. */}
-      <div className="relative h-[140px] w-[220px] flex-none lg:order-last lg:mt-1.5 lg:h-[190px]">
-        <div data-lamp-target className="absolute left-0 top-0 lg:left-12 lg:top-[46px]">
-          <Magnet drop={!returning} />
-        </div>
-      </div>
-
-      <div className="min-w-0 flex-1 space-y-5 lg:pt-10 [&>*]:max-w-[38rem]">
-        <Greeting />
-
-        {/* The one sentence the whole page exists to deliver, at the size the
-            case studies give their own openings. It was set at 17px — the same
-            as everything else — so the page had no element larger than body
-            copy and nothing for a scanner to land on. */}
-        <h1 className="display">
-          I’m <PencilUnderline skip={returning}><LetterSwap>Ayushman</LetterSwap></PencilUnderline>, a designer who likes figuring
-          things out.
+      {/* The hero: the words alone. The round avatar badge was removed once the
+          photo slot after the name started showing who he is. */}
+      {/* Sits low on the first screen, under the lamp's pixel light. */}
+      <div className="track-wide flex min-h-[64svh] flex-col justify-end lg:min-h-[68svh]">
+      <div id="hero-copy" className="min-w-0">
+        {/* Two levels only: the name, then one paragraph. Like dnbls.com, the
+            name is the headline and a window between first and last name
+            flips through photos from my life. The line that used to be the
+            headline opens the paragraph instead. */}
+        <h1 className="hero-name">
+          <span className="whitespace-nowrap"><LetterSwap>Ayushman</LetterSwap> <PhotoSlot className="photo-slot--hero" /></span>{' '}
+          Bharadwaj
         </h1>
 
-        <p>
-          I’m drawn to the space between people and technology: how people think and feel, what can
-          actually be built, and turning both into things that are useful, easy to use and good to
-          look at. Finishing my masters in interaction design.
-        </p>
+        {/* Work first, then the person. Written from his own notes, in his
+            voice: plain, a little loose, nothing claimed that isn't true. */}
+        {/* The intro edits itself: key points marked in colour, the rest
+            blurred; a small lens follows the pointer and sharpens what it
+            passes (his "design specs on everywhere I go").
+            The copy lives in app/components/edited-intro.jsx. */}
+        <EditedIntro skip={returning} mode="lens" />
 
-        <p>
+        <p className="mt-5">
           <Link href="/about" className="prose-link">More about me, and where I’ve worked</Link>
         </p>
       </div>

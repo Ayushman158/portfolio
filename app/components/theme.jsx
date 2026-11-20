@@ -92,7 +92,7 @@ export function ThemeProvider({ children }) {
  * The cord is a damped spring (pull) and a damped pendulum (sway).
  *
  *   hangs to     a page can mark an element with data-lamp-target and the cord
- *                grows to hang the bead level with it (the avatar on the index,
+ *                grows to hang the bead level with it (previously the avatar on the index;
  *                the bookshelf on About); elsewhere it hangs a short way down.
  *                On a narrow screen it stays up in the nav.
  *   tap          the cord jerks down, springs back, swings a little
@@ -171,7 +171,7 @@ export function Lamp() {
    *    150ms   the cord drops in from above the window and settles, with one
    *            small sway (heavier damping while it lands)
    *    350ms   the light comes on: the warm glow fades up
-   *    500ms   (the portrait magnet drops in; see Magnet)
+   *    (the home page used to drop a portrait magnet in at 500ms; removed)
    */
   const [lit, setLit] = useState(false)
   useEffect(() => {

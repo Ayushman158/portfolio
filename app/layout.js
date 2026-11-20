@@ -4,6 +4,7 @@ import { ThemeProvider, themeInitScript, Lamp } from './components/theme'
 import Dock from './components/dock'
 import AwayTitle from './components/away-title'
 import StatusBar from './components/status-bar'
+import SmoothScroll from './components/smooth-scroll'
 import PageReveal from './components/page-reveal'
 import { Inter, Instrument_Sans, Instrument_Serif, Reenie_Beanie } from 'next/font/google'
 
@@ -86,6 +87,7 @@ export default function RootLayout({ children }) {
           <Lamp />
           <AwayTitle />
           <StatusBar />
+          <SmoothScroll />
           <PageReveal />
           {children}
         </ThemeProvider>
