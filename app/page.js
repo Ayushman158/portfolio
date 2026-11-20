@@ -172,10 +172,11 @@ export default function Home() {
         {/* Work first, then the person. Written from his own notes, in his
             voice: plain, a little loose, nothing claimed that isn't true. */}
         {/* The intro edits itself: key points marked in colour, the rest
-            blurred; a small lens follows the pointer and sharpens what it
-            passes (his "design specs on everywhere I go").
+            softly blurred; hover (or tap) brings it all into focus. (A
+            "lens" mode that sharpens only under the pointer also exists in
+            edited-intro.jsx; the blur was kept as easier to read.)
             The copy lives in app/components/edited-intro.jsx. */}
-        <EditedIntro skip={returning} mode="lens" />
+        <EditedIntro skip={returning} mode="blur" />
 
         <p className="mt-5">
           <Link href="/about" className="prose-link">More about me, and where I’ve worked</Link>

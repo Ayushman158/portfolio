@@ -39,8 +39,9 @@ already made, so they are not re-litigated or rebuilt from scratch.
 1. **First screen.** The full name as the headline, "Ayushman [photo]
    Bharadwaj": a small window between first and last name crossfades through
    his photos (public/hero/frame; hover shows colour and pauses). Under it,
-   the intro edits itself: key points marked in colour, the rest blurred, and a
-   "design lens" follows the pointer to sharpen it (edited-intro.jsx). Above,
+   the intro edits itself: key points marked in colour, the rest softly
+   blurred until hover or tap (edited-intro.jsx, mode "blur"; a pointer-lens
+   mode was tried and set aside as harder to read). Above,
    the lamp's light as a pale checkerboard (kilim two-tone in light mode) that
    answers the mouse, hides Assamese motifs when the mouse rests, and gathers
    into the photo window on scroll (pixel-glow.jsx). The lamp cord at the top
