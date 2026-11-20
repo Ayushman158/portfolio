@@ -41,8 +41,10 @@ export default function LetterSwap({
     setBusy(true)
 
     const delay = stagger(staggerDuration, { from: staggerFrom })
-    const out = reverse ? '100%' : '-100%'
-    const from = reverse ? '-100%' : '100%'
+    // 140%, not 100%: the clip box has extra room above and below (so
+    // descenders aren't cut), and the parked copy has to sit beyond it.
+    const out = reverse ? '140%' : '-140%'
+    const from = reverse ? '-140%' : '140%'
 
     Promise.all([
       animate('.ls-primary', { transform: `translateY(${out})` }, { ...transition, delay }),
@@ -81,12 +83,18 @@ export default function LetterSwap({
             // translateY(100%) parks the second copy exactly one glyph-height
             // down, which the clip hides until hover.
             clipPath: 'inset(0)',
+            // The clip box is the line box, which in a tight display line is
+            // shorter than the glyphs: descenders (the y in Ayushman) got cut.
+            // Pad the box out above and below, and pull the padding back with
+            // a matching negative margin, so layout and baseline don't move.
+            padding: '0.12em 0 0.26em',
+            margin: '-0.12em 0 -0.26em',
           }}
         >
           <span className="ls-primary inline-block" style={{ whiteSpace: 'pre' }}>{char}</span>
           <span
-            className="ls-secondary absolute left-0 top-0 inline-block"
-            style={{ transform: 'translateY(100%)', whiteSpace: 'pre' }}
+            className="ls-secondary absolute left-0 inline-block"
+            style={{ top: '0.12em', transform: `translateY(${reverse ? '-140%' : '140%'})`, whiteSpace: 'pre' }}
           >
             {char}
           </span>

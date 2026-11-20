@@ -139,6 +139,28 @@ export default function Home() {
   const [returning] = useState(() => typeof window !== 'undefined' && window.__caseReturn === true)
   useEffect(() => { window.__caseReturn = false }, [])
 
+  // The intro hangs from the photo window: its left edge lines up with the
+  // window's, and it runs to the end of "Bharadwaj". The window's position
+  // depends on the font and the width, so it's measured (and re-measured on
+  // resize) and handed to the CSS as --intro-x / --intro-w (.hero in
+  // globals.css; wide screens only).
+  useEffect(() => {
+    const copy = document.querySelector('.hero__copy')
+    const name = document.querySelector('.hero-name')
+    const slot = document.querySelector('.photo-slot--hero')
+    if (!copy || !name || !slot) return undefined
+    const set = () => {
+      const c = copy.getBoundingClientRect(), n = name.getBoundingClientRect(), s = slot.getBoundingClientRect()
+      copy.style.setProperty('--intro-x', `${Math.round(s.left - c.left)}px`)
+      copy.style.setProperty('--intro-w', `${Math.round(n.right - s.left)}px`)
+    }
+    set()
+    document.fonts?.ready.then(set)
+    const ro = new ResizeObserver(set)
+    ro.observe(copy)
+    return () => ro.disconnect()
+  }, [])
+
   const rise = (delay) => returning ? { initial: false } : ({
     initial: reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 },
     animate: { opacity: 1, y: 0 },
@@ -148,7 +170,7 @@ export default function Home() {
   return (
     <>
     {/* The lamp's light in pixels, gathering into the photo window on scroll. */}
-    <PixelGlow target=".photo-slot--hero" clear="#hero-copy" />
+    <PixelGlow target=".photo-slot--hero" clear="#hero-copy" clearText="#hero-copy .hero-name, #hero-copy .ed, #hero-copy > p" />
     {/* data-wall: the home page is a cream wall the work hangs on (globals.css). */}
     <main data-wall className="measure min-h-screen pb-8 pt-20 sm:pb-12 sm:pt-28 lg:pt-36">
       {/* One left edge for the whole page. The intro, the work and the closing
@@ -157,9 +179,11 @@ export default function Home() {
           stepped in for the intro, out for the work and in again at the end. */}
       {/* The hero: the words alone. The round avatar badge was removed once the
           photo slot after the name started showing who he is. */}
-      {/* Sits low on the first screen, under the lamp's pixel light. */}
-      <div className="track-wide flex min-h-[64svh] flex-col justify-end lg:min-h-[68svh]">
-      <div id="hero-copy" className="min-w-0">
+      {/* Fills the first screen: the name centred on one line, the intro in
+          the bottom-left corner, under the lamp's pixel light (.hero in
+          globals.css). */}
+      <div className="hero track-wide flex flex-col">
+      <div id="hero-copy" className="hero__copy min-w-0">
         {/* Two levels only: the name, then one paragraph. Like dnbls.com, the
             name is the headline and a window between first and last name
             flips through photos from my life. The line that used to be the

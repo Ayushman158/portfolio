@@ -15,6 +15,8 @@ import Image from 'next/image'
  * or the tab is hidden.
  * Hover (mouse): the photo shows in full colour, leans in a little, and the
  * flipping pauses until the pointer leaves (styles in globals.css).
+ * Touch: a tap does the same for three seconds; the window dips slightly
+ * under the finger as it's pressed.
  * Reduced Motion: the first photo, still.
  *
  * To change the photos: edit PHOTOS. Any shape works; each is cropped to the
@@ -41,6 +43,15 @@ export default function PhotoSlot({ className = '' }) {
   const box = useRef(null)
   const hovered = useRef(false)
   const [i, setI] = useState(0)
+  // Touch has no hover, so a tap does the same: colour, a closer look, and a
+  // pause, for a few seconds (or until the next tap).
+  const [look, setLook] = useState(false)
+  useEffect(() => {
+    hovered.current = look
+    if (!look) return undefined
+    const t = setTimeout(() => setLook(false), 3000)
+    return () => clearTimeout(t)
+  }, [look])
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined
@@ -58,8 +69,10 @@ export default function PhotoSlot({ className = '' }) {
 
   return (
     <span ref={box} className={`photo-slot ${className}`} role="img" aria-label="A few photos from my life"
+      data-look={look || undefined}
       onPointerEnter={(e) => { if (e.pointerType === 'mouse') hovered.current = true }}
-      onPointerLeave={() => { hovered.current = false }}>
+      onPointerLeave={(e) => { if (e.pointerType === 'mouse') hovered.current = false }}
+      onPointerUp={(e) => { if (e.pointerType !== 'mouse') setLook((v) => !v) }}>
       {PHOTOS.map((p, n) => (
         <Image
           key={p.src}

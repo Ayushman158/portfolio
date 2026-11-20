@@ -1728,6 +1728,14 @@ html[data-sig-flow] .status__label { display: none !important; }
     .photo-slot:hover img { filter: none; transform: scale(1.06); }
     [data-theme="dark"] .photo-slot:hover img { filter: brightness(0.92); }
 }
+/* Touch: tap the window for the same closer look; it dips a touch while
+   pressed so the tap feels heard. */
+.photo-slot { -webkit-tap-highlight-color: transparent; transition: scale 160ms var(--ease-out); }
+.photo-slot:active { scale: 0.97; }
+.photo-slot img { transition: opacity 600ms var(--ease-in-out), filter 400ms var(--ease-out), transform 700ms var(--ease-out); }
+.photo-slot[data-look] img { filter: none; transform: scale(1.06); }
+[data-theme="dark"] .photo-slot[data-look] img { filter: brightness(0.92); }
+@media (prefers-reduced-motion: reduce) { .photo-slot[data-look] img { transform: none; } .photo-slot:active { scale: 1; } }
 @media (prefers-reduced-motion: reduce) { .photo-slot img { transition: none; } }
 [data-theme="dark"] .photo-slot img { filter: grayscale(1) sepia(0.32) contrast(1.06) brightness(0.82); }
 
@@ -1932,3 +1940,51 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 .lenis.lenis-stopped { overflow: hidden; }
+
+/* The intro on touch and keyboard. No grey flash on tap; a keyboard focus
+   reads it all, like hover; and on touch screens the blur is lighter, since a
+   phone has no hover to discover, so the full text stays half-readable until
+   a tap brings it into focus. */
+.ed { -webkit-tap-highlight-color: transparent; outline: none; }
+.ed.ed.ed:focus-visible .ed-cut { filter: none; opacity: 1; font-size: 1em; background-size: 0% 1.5px; color: inherit; transition-delay: 0ms; transition-duration: 220ms; }
+.ed:focus-visible { box-shadow: 0 0 0 2px var(--ground), 0 0 0 4px color-mix(in srgb, var(--lamp) 60%, transparent); border-radius: 4px; }
+@media (hover: none) {
+    .ed[data-mode="blur"][data-edited] .ed-cut { filter: blur(2px); opacity: 0.55; }
+}
+
+/* ---- The hero (app/page.js), after dnbls.com: the name on one line, large,
+   with the photo window between first and last name, and the intro close
+   under it. Name and intro are centred as one group, both across and down
+   the first screen; the group sits a little above the true middle (the
+   optical centre), and the intro block is centred under the name while its
+   lines stay left-aligned, so it reads easily. */
+.hero { min-height: calc(100svh - 9rem); justify-content: center; container-type: inline-size; }
+@media (min-width: 40rem) { .hero { min-height: calc(100svh - 12rem); } }
+@media (min-width: 64rem) { .hero { min-height: calc(100svh - 14rem); } }
+.hero__copy { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 4vh; }
+/* The name is sized to the text column (container units), so the one line
+   always runs edge to edge at any width: about 9.25 ems long with the window. */
+.hero .hero-name { white-space: nowrap; font-size: calc(100cqw / 9.25); line-height: 0.9; letter-spacing: -0.02em; margin-bottom: clamp(1.75rem, 5vh, 3.5rem); }
+.hero .hero-name > span { white-space: nowrap; }
+.hero .ed { width: 100%; max-width: 40rem; margin-top: 0; font-size: 1.15rem; }
+.hero__copy > p { width: 100%; max-width: 40rem; }
+/* Wide screens: the intro and the link hang from the photo window, starting
+   at its left edge and ending under the last letter of the name, so the name,
+   the window and the words line up as one composition. (Measured in
+   app/page.js.) Phones keep the simple stack. */
+@media (min-width: 60rem) {
+    .hero__copy { align-items: flex-start; }
+    .hero .hero-name { align-self: center; }
+    .hero .ed, .hero__copy > p { margin-left: var(--intro-x, 0px); width: var(--intro-w, 40rem); max-width: none; }
+}
+/* Phones and narrow windows: one line would make the name small, so it
+   stacks big, with the photo on its own line between first and last name,
+   full width, so the photos read as photographs, not thumbnails:
+   "Ayushman / [photo] / Bharadwaj". Everything shares the left edge. */
+@media (max-width: 59.99rem) {
+    .hero__copy { align-items: flex-start; }
+    .hero .hero-name { white-space: normal; font-size: calc(100cqw / 5.35); line-height: 0.92; margin-bottom: clamp(1.25rem, 4vh, 2rem); }
+    .hero .hero-name > span { display: block; }
+    .hero .photo-slot--hero { display: block; width: 100%; height: auto; aspect-ratio: 1.53; margin: 0.14em 0 0.18em; vertical-align: 0; border-radius: 0.08em; }
+    .hero .ed { font-size: 1.05rem; }
+}

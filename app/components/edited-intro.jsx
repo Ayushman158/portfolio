@@ -89,6 +89,8 @@ export default function EditedIntro({ skip = false, mode = 'strike', replay = 0,
       data-edited={edited || undefined}
       data-reading={reading || undefined}
       onClick={() => setReading((r) => !r)}
+      // Keyboard: tabbing onto the intro brings it all into focus too.
+      tabIndex={0}
       onPointerMove={onMove}
     >
       {render(false)}
