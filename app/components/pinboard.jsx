@@ -17,6 +17,9 @@ const PIECES = [
   { title: 'Koi Wishing Pond', note: 'installation · TouchDesigner', video: '/research/koi-loop.mp4', poster: '/research/koi-loop.jpg', href: '/koi-wishing-pond', kind: 'page', tilt: -3, lift: 0, tape: 'a' },
   { title: 'Gradient exploration', note: 'sketch · TouchDesigner', video: '/exploration/gradient.mp4', poster: '/exploration/gradient.jpg', href: 'https://www.instagram.com/p/Dd9XIzEylhx/', kind: 'out', tilt: 2.5, lift: 44, tape: 'b' },
   { title: 'ALBUM//ALIVE', note: 'experiment · WebAR', video: '/album-alive/scan.mp4', poster: '/album-alive/scan-poster.jpg', href: '/album-alive', kind: 'page', tilt: -1.5, lift: 12, tape: 'c' },
+  // A seat-view tool for the Guns N' Roses stadium show: pick a seat and see
+  // the stage from it. Live on Netlify, so it opens in a new tab.
+  { title: 'Seat View', note: "experiment · three.js · Guns N' Roses", video: '/seat-view/loop.mp4', poster: '/seat-view/poster.jpg', href: 'https://gnr-stadium-seat-view.netlify.app', kind: 'out', tilt: 2, lift: 26, tape: 'a' },
   { title: 'Gone or Still Here?', note: 'experiment · Teachable Machine', img: '/gone/home.jpg', href: '/gone-or-still-here', kind: 'page', tilt: 2, lift: -8, tape: 'b' },
   { title: 'Choose Assam', note: 'campaign · Tata Tea Premium', img: '/choose-assam/card.jpg', href: '/choose-assam', kind: 'static', tilt: -2.5, lift: 30, tape: 'a' },
   { title: 'Banyan Tree', note: 'client work · himanshugarg.in', img: '/shipped/banyan.jpg', href: '/banyan', kind: 'page', tilt: 1.5, lift: 4, tape: 'c' },
@@ -41,10 +44,12 @@ function Media({ piece, play }) {
   return <img src={piece.img} alt="" loading="lazy" draggable={false} />
 }
 
-export default function Pinboard({ only }) {
-  const pieces = only ? PIECES.filter((p) => only.includes(p.title)) : PIECES
+// only: titles to show, in that order (the homepage leads with the newest).
+// cols: prints per row on wide screens.
+export default function Pinboard({ only, cols = 3 }) {
+  const pieces = only ? only.map((t) => PIECES.find((p) => p.title === t)).filter(Boolean) : PIECES
   const [offsets, setOffsets] = useState({})
-  const [order, setOrder] = useState(() => (only ? PIECES.filter((p) => only.includes(p.title)) : PIECES).map((p) => p.title))
+  const [order, setOrder] = useState(() => pieces.map((p) => p.title))
   const [canDrag, setCanDrag] = useState(false)
   const [play, setPlay] = useState(false)
   const [playOverride, setPlayOverride] = useState(null)
@@ -99,7 +104,7 @@ export default function Pinboard({ only }) {
           <button type="button" className={`${styles.tidy} ${styles.playback}`} onClick={() => setPlayOverride(!playing)}>{playing ? 'Pause videos' : 'Play videos'}</button>
         </div>
       </div>
-      <ul className={styles.grid}>
+      <ul className={styles.grid} style={{ '--cols': cols }}>
         {pieces.map((p) => {
           const o = offsets[p.title] || { x: 0, y: 0 }
           const inner = (

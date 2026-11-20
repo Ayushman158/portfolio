@@ -219,7 +219,8 @@ export default function Home() {
             id="home-exploration"
             aside={<Link href="/archive" className="prose-link text-[0.95rem]">see everything →</Link>}
           />
-          <Pinboard only={['Koi Wishing Pond', 'Gradient exploration', 'ALBUM//ALIVE']} />
+          {/* Newest first: Seat View, then the three older favourites, in one row. */}
+          <Pinboard only={['Seat View', 'Koi Wishing Pond', 'Gradient exploration', 'ALBUM//ALIVE']} cols={4} />
         </section>
       </div>
 
