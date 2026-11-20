@@ -8,6 +8,7 @@ import { W } from './wayfinding'
 import { StepVideo } from './demos'
 import { Compare } from './compare'
 import { MUKTA } from './font'
+import Sheet from './sheet'
 import { BeforeAfter, ColourVision, KeyDiagram, Mismatch, ReadingDistance, REFERENCES } from './system'
 import { ArrowTurn, ForkConstruction, LiveScreen, NightZone, OutOf100, Pan, Stop, SwipeHint, Trip } from './motion'
 
@@ -188,21 +189,76 @@ function SignClip() {
   )
 }
 
-// The three stops the short version keeps from the street-to-exit trip.
-const STRIP = [
-  { label: 'Street', question: 'Where is my station?', src: `${N}/mock-street.jpg`, w: 2000, h: 1333, alt: 'Concept image: a tall black totem on a Delhi pavement at dusk showing the metro symbol, Kashmere Gate, its three lines and Gate 3' },
-  { label: 'The fork', question: 'Which of three platforms?', tested: true, src: '/signal/mockups/concourse-fork-v2.png', w: 1536, h: 1024, alt: 'Concept image: the Kashmere Gate fork sign in a metro concourse, directing riders toward platforms 3, 1, 2, 5 and 4' },
-  { label: 'Platform', question: 'Is this the right train?', src: '/signal/mockups/platform-totem-v2.png', w: 1536, h: 1024, alt: 'Concept image: a black platform 5 totem on an elevated metro platform, listing the Violet Line stations ahead' },
+// The short version's trip: all eight stops on one contact sheet. Each opens
+// large with its caption, and the viewer pages through the trip in order.
+const TRIP = [
+  { label: 'Street', note: 'Where is my station?', src: `${N}/mock-street.jpg`, w: 2000, h: 1333, alt: 'Concept image: a tall black totem on a Delhi pavement at dusk showing the metro symbol, Kashmere Gate, its three lines and Gate 3', cap: 'Station name, lines and gate. Concept, untested.' },
+  { label: 'Ticket hall', note: 'Which platform do I need?', fit: 'contain', src: `${N}/hall-board.jpg`, w: 2400, h: 1200, alt: 'The ticket hall board: a black wall of stations in two lists, Hindi order and A to Z, each with its platform circle', cap: 'Every station, in Hindi order and A to Z, with its platform. Drawn, untested.' },
+  { label: 'The fork', note: 'Which of three platforms? · tested with 84 riders', src: '/signal/mockups/concourse-fork-v2.png', w: 1536, h: 1024, alt: 'Concept image: the Kashmere Gate fork sign in a metro concourse, directing riders toward platforms 3, 1, 2, 5 and 4', cap: 'One arrow and one platform for each direction. The information was tested with 84 riders. This black design was not.' },
+  { label: 'Top of the stairs', note: 'Is this my side?', fit: 'contain', src: `${N}/night-stair.jpg`, w: 1600, h: 300, alt: 'The stair head sign for the Pink Line: platform 3 to Vinobapuri and Mayur Vihar-I, platform 4 to South Extension and INA', cap: 'The two platforms, split by direction. Same key as the fork.' },
+  { label: 'Platform', note: 'Is this the right train?', src: '/signal/mockups/platform-totem-v2.png', w: 1536, h: 1024, alt: 'Concept image: a black platform 5 totem on an elevated metro platform, listing the Violet Line stations ahead', cap: 'The platform first, then every station ahead. Concept, untested.' },
+  { label: 'Platform wall', note: 'How many stops remain?', fit: 'contain', src: `${N}/wall-strip.jpg`, w: 2400, h: 1000, alt: 'The platform wall strip: all stations ahead on the Violet Line in three rows, numbered, with line bars at interchanges', cap: 'All the stations ahead, with interchanges marked. Drawn, untested.' },
+  { label: 'Interchange', note: 'Where do I change?', fit: 'contain', src: `${N}/change-split.jpg`, w: 1600, h: 300, alt: 'Interchange sign: to the left, change to the Pink Line, marked with a pink bar; to the right on a green panel, the exit', cap: 'Changing and leaving share one panel. Drawn, untested.' },
+  { label: 'Exit', note: 'Which gate?', fit: 'contain', src: `${N}/exit-fork.jpg`, w: 1600, h: 300, alt: 'A green exit sign listing Gate 1, Gate 2 and Gate 3, each with its arrow', cap: 'The only green panel. Needs a site check.' },
 ]
 
-// The short version's "What the system covers": one picture and one sentence
-// for each part the full version shows at length. `pos` picks which part of a
-// tall or wide image stays in the 4:5 frame.
-const COVERS = [
-  { label: 'The ticket', line: 'Same paper roll. Platform, line and where to change, in both scripts.', src: `${N}/ticket-new.jpg`, w: 928, h: 1446, pos: 'top', alt: 'The redesigned paper ticket: QR beside the destination, platform 5 on the Violet Line, a line reading Change at Lajpat Nagar, then platform 3 on the Pink Line' },
-  { label: 'The gate', line: 'A QR scan confirms the first platform. A card tap shows only a tick, so nobody sees a balance.', src: `${N}/fare-gate-qr.jpg`, w: 1262, h: 756, alt: 'Concept image of a fare gate screen showing a tick and platform 5, Violet Line, Mandi House and Lajpat Nagar' },
-  { label: 'The manual', line: '34 pages, in trip order, so someone else could build it. It flags what I still need to check on site.', src: `${N}/manual-05.jpg`, w: 1400, h: 990, pos: 'left', alt: 'Standards manual page on the arrow, with eight directions and three rules' },
-  { label: 'Saathi', line: 'A QR board opens the whole trip on one screen. Read it once, put the phone away.', src: `${W}/saathi-route.jpg`, w: 780, h: 1720, pos: 'top', alt: 'Saathi route screen: platform 5, Violet Line, at Kashmere Gate, and the exit at Lajpat Nagar' },
+// The short version's "What the system covers": one frame per part, each
+// opening the full set of images the detail version shows for it.
+const SYSTEM = [
+  {
+    label: 'Station and train screens', note: 'Live times added to the same signs. A proposal.', src: '/signal/mockups/train-display.png', w: 1536, h: 1024,
+    alt: 'Concept image of an in-train display showing the next station and the door side',
+    slides: [
+      { label: 'The fork, live', src: `${N}/digital-fork.jpg`, w: 2400, h: 300, alt: 'The fork as a live screen, with minutes to the next train beside each platform', cap: 'The fork sign with minutes added. Stations don’t have screens at forks yet, so this part is a proposal; the printed signs stay.' },
+      { label: 'Above the train doors', src: '/signal/mockups/train-display.png', w: 1536, h: 1024, alt: 'Concept image of an in-train display showing Mandi House as the next station, doors opening on the left, and the following Violet Line stops', cap: 'Next station, door side and what comes after. AI-generated concept image.' },
+      { label: 'At an interchange', src: `${N}/train-interchange.jpg`, w: 1920, h: 360, alt: 'Display above the train doors showing an interchange coming up', cap: 'The same display at an interchange.' },
+      { label: 'Arriving', src: `${N}/train-arriving.jpg`, w: 1920, h: 360, alt: 'Display above the train doors on arrival at the station', cap: 'The same display on arrival.' },
+      { label: 'Station finder kiosk', src: `${N}/kiosk-home.jpg`, w: 1080, h: 1920, alt: 'Station finder kiosk start screen asking Where are you going, with common trips listed', cap: 'A kiosk asks where you’re going and offers common trips first…' },
+      { label: 'The kiosk’s answer', src: `${N}/kiosk-answer.jpg`, w: 1080, h: 1920, alt: 'Station finder kiosk answer: Lajpat Nagar, a large arrow and platform 5', cap: '…then gives one big answer.' },
+    ],
+  },
+  {
+    label: 'The ticket', note: 'Same paper roll, with platform, line and change.', src: `${N}/ticket-new.jpg`, w: 928, h: 1446, pos: 'top',
+    alt: 'The redesigned paper ticket: platform 5 on the Violet Line, Change at Lajpat Nagar, then platform 3 on the Pink Line',
+    slides: [
+      { label: 'Today’s ticket', src: `${N}/ticket-today.jpg`, w: 928, h: 1446, alt: 'Today’s ticket for Kashmere Gate to Vinobapuri: a QR code, the fare as the largest text, station names in Hindi only, then an app advert', cap: 'The fare is the largest text, station names are in Hindi only, and nothing says which platform. Sample ticket, not valid.' },
+      { label: 'The redesign', src: `${N}/ticket-new.jpg`, w: 928, h: 1446, alt: 'The redesigned ticket for the same trip: QR beside the destination, platform 5 on the Violet Line, Change at Lajpat Nagar, then platform 3 on the Pink Line', cap: 'The same two-ride trip on the same 58 mm roll: one row per ride, both stations in both scripts. About 6 mm longer. Sample ticket, not valid.' },
+    ],
+  },
+  {
+    label: 'The gate', note: 'Confirms the platform. A card tap shows only a tick.', src: `${N}/fare-gate-qr.jpg`, w: 1262, h: 756,
+    alt: 'Concept image of a fare gate screen showing a tick and platform 5, Violet Line, Mandi House and Lajpat Nagar',
+    slides: [
+      { label: 'A QR ticket at the gate', src: `${N}/fare-gate-qr.jpg`, w: 1262, h: 756, alt: 'Concept image of a fare gate screen showing a tick and platform 5, Violet Line, Mandi House and Lajpat Nagar', cap: 'A QR scan confirms the first platform. A smart card tap shows only a tick, so nobody sees a balance. AI-generated concept image.' },
+      { label: 'A problem at the gate', src: `${N}/gate-problem.jpg`, w: 1600, h: 1200, alt: 'Gate screen with a yellow block reading Please ask for help, and an arrow to Customer Care', cap: 'The screen points to Customer Care, and staff give the reason in private.' },
+    ],
+  },
+  {
+    label: 'One arrow, 24 pictograms', note: 'Drawn on one grid. Not tested yet.', src: `${N}/picto-set.jpg`, w: 1600, h: 1200,
+    alt: 'A black sheet of 24 white pictograms with Hindi and English labels',
+    slides: [
+      { label: '24 pictograms', src: `${N}/picto-set.jpg`, w: 1600, h: 1200, alt: 'A black sheet of 24 white pictograms including train, change trains, walkway, stairs, escalator, lift, exit, tickets, toilets, accessible route, bus, auto-rickshaw, taxi, railway station and airport, each with Hindi and English labels', cap: 'Drawn on the arrow’s grid, each labelled in Hindi and English. Comprehension is not tested yet.' },
+      { label: 'The arrow', src: `${N}/manual-05.jpg`, w: 1400, h: 990, alt: 'Manual page on the arrow, with eight directions and three rules', cap: 'One arrow, turned in 45° steps, with three rules for using it.' },
+    ],
+  },
+  {
+    label: 'The standards manual', note: '34 pages in trip order, so someone else could build it.', src: `${N}/manual-01.jpg`, w: 1400, h: 990,
+    alt: 'Manual cover: Delhi Metro signs and screens, with a large white arrow on black',
+    slides: [
+      { label: 'Cover', src: `${N}/manual-01.jpg`, w: 1400, h: 990, alt: 'Manual cover: Delhi Metro signs and screens, with a large white arrow on black', cap: 'Every sign and screen in trip order. It flags each number I still need to check on site.' },
+      { label: 'The arrow', src: `${N}/manual-05.jpg`, w: 1400, h: 990, alt: 'Manual page on the arrow, with eight directions and three rules', cap: 'Eight directions and three rules.' },
+      { label: 'The ticket at actual size', src: `${N}/manual-13.jpg`, w: 1400, h: 990, alt: 'Manual page showing the paper ticket at actual size', cap: 'The paper ticket at actual size.' },
+      { label: 'The platform totem', src: `${N}/manual-18.jpg`, w: 1400, h: 990, alt: 'Manual page on the platform totem with its rules', cap: 'The platform totem and its rules.' },
+    ],
+  },
+  {
+    label: 'Saathi, a route finder', note: 'A QR board opens the whole trip on one screen.', src: `${W}/saathi-route.jpg`, w: 780, h: 1720, pos: 'top',
+    alt: 'Saathi route screen: platform 5, Violet Line, at Kashmere Gate, and the exit at Lajpat Nagar',
+    slides: [
+      { label: 'The QR board', src: '/signal/gallery/board-inside.jpg', w: 780, h: 1100, alt: 'A printed Saathi board listing major places from Kashmere Gate, the platform and line to take, and the station and exit gate nearest each place', cap: 'Boards hang where riders already ask for help. Routes and gates come from OpenStreetMap; only Kashmere Gate and Lajpat Nagar were checked on site.' },
+      { label: 'The route', src: `${W}/saathi-route.jpg`, w: 780, h: 1720, alt: 'Saathi’s route to Lajpat Nagar: platform 5, Violet Line, at Kashmere Gate and the exit at Lajpat Nagar, with 11 stops folded into one line', cap: 'The whole trip on one screen, so riders can read it once and put the phone away. An unofficial student prototype, live at saathi-delhi-metro.vercel.app.' },
+    ],
+  },
 ]
 
 export default function SignalContent({ detail = false }) {
@@ -335,19 +391,9 @@ export default function SignalContent({ detail = false }) {
             </Trip>
           ) : (
             <>
-              <div className="track-wide mt-12 grid gap-6 sm:grid-cols-3">
-                {STRIP.map((stop) => (
-                  <figure key={stop.label} className="case-fig">
-                    <img src={stop.src} width={stop.w} height={stop.h} loading="lazy" alt={stop.alt} className="block aspect-[4/3] h-auto w-full rounded-lg object-cover" />
-                    <figcaption className="mt-2" style={{ fontSize: '0.9rem', lineHeight: 1.4 }}>
-                      <span className="text-ink">{stop.label}</span>
-                      <span className="text-faint"> · {stop.question}{stop.tested && ' · information tested with 84 riders'}</span>
-                    </figcaption>
-                  </figure>
-                ))}
-              </div>
-              <p className="mt-8 max-w-[36rem]">
-                The same key carries on to the stairs, the platform wall, the interchange and the exit.
+              <Sheet frames={TRIP} cols={4} />
+              <p className="mt-8 max-w-[36rem] text-faint" style={{ fontSize: '0.92rem' }}>
+                Open any sign to see it large. The arrows step through the trip.
               </p>
             </>
           )}
@@ -355,22 +401,12 @@ export default function SignalContent({ detail = false }) {
 
         {/* ---------- Short version only: the rest of the system, one tile each ---------- */}
         {!detail && (
-          <Section id="covers" title="What the system covers" next="These are the limits I know about." lede="The signs are one part. The same platform, line and two stops appear on the ticket, at the gate, in a written manual and in a route finder.">
-            <ul className="track-wide mt-12 grid list-none gap-6 p-0 grid-cols-2 lg:grid-cols-4">
-              {COVERS.map((c) => (
-                <li key={c.label}>
-                  <figure className="case-fig m-0">
-                    <img src={c.src} width={c.w} height={c.h} loading="lazy" alt={c.alt} className="block aspect-[4/5] h-auto w-full rounded-lg object-cover" style={{ objectPosition: c.pos || 'center' }} />
-                    <figcaption className="mt-3" style={{ fontSize: '0.92rem', lineHeight: 1.45 }}>
-                      <span className="block text-ink">{c.label}</span>
-                      <span className="block text-faint mt-1">{c.line}</span>
-                    </figcaption>
-                  </figure>
-                </li>
-              ))}
-            </ul>
+          <Section id="covers" title="What the system covers" next="These are the limits I know about." lede="The signs are one part. The same platform, line and two stops carry on to screens, the ticket and gate, a written manual and a route finder. Each frame opens its full set.">
+            <Sheet frames={SYSTEM} cols={3} aspect="4 / 3" />
             <p className="mt-10" style={{ fontSize: '0.95rem' }}>
-              Station screens, the 24 pictograms and the whole manual are in <a className="prose-link" href="/signal/detail">the full system</a>.
+              <a className="prose-link" href="/signal/Delhi-Metro-Standards-Manual.pdf" target="_blank" rel="noreferrer">Read the manual (PDF, 1 MB)</a>
+              <span className="text-faint"> · </span>
+              <a className="prose-link" href="https://saathi-delhi-metro.vercel.app" target="_blank" rel="noreferrer">Try Saathi ↗</a>
             </p>
           </Section>
         )}

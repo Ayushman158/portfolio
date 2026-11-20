@@ -69,6 +69,10 @@ export default function Magnet({ size = 112, drop = true }) {
           width={800}
           height={800}
           sizes={`${size}px`}
+          // The sketch is fine pencil lines on flat yellow: the default
+          // re-compression (quality 75) smears them, so serve the original
+          // file as is (800px, about 90 KB) and let the browser scale it.
+          unoptimized
           priority
           draggable={false}
           className="magnet-img pointer-events-none absolute inset-0 h-full w-full object-cover"

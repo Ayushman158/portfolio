@@ -11,6 +11,7 @@ import VerticalCutReveal from './components/vertical-cut-reveal'
 import ListeningCorner from './components/listening-corner'
 import Pinboard from './components/pinboard'
 import CheckerStrip from './components/checker-strip'
+import PencilUnderline from './components/pencil-underline'
 
 // Live, client-run, and reachable by anyone — so these are shown, not listed.
 const SHIPPED = [
@@ -193,7 +194,7 @@ export default function Home() {
             as everything else — so the page had no element larger than body
             copy and nothing for a scanner to land on. */}
         <h1 className="display">
-          I’m <LetterSwap>Ayushman</LetterSwap>, a designer who likes figuring
+          I’m <PencilUnderline skip={returning}><LetterSwap>Ayushman</LetterSwap></PencilUnderline>, a designer who likes figuring
           things out.
         </h1>
 
