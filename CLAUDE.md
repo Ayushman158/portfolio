@@ -36,10 +36,15 @@ already made, so they are not re-litigated or rebuilt from scratch.
 
 ## Storyboard: what a visitor meets, in order
 
-1. **First screen.** A greeting in English, Assamese and Hindi; the display
-   line "I'm Ayushman, a designer who likes figuring things out."; two
-   sentences about him; his pencil avatar as a magnet you can drag; the lamp
-   cord at the top right (pull it to switch light and dark). No loader.
+1. **First screen.** The full name as the headline, "Ayushman [photo]
+   Bharadwaj": a small window between first and last name crossfades through
+   his photos (public/hero/frame; hover shows colour and pauses). Under it,
+   the intro edits itself: key points marked in colour, the rest blurred, and a
+   "design lens" follows the pointer to sharpen it (edited-intro.jsx). Above,
+   the lamp's light as a pale checkerboard (kilim two-tone in light mode) that
+   answers the mouse, hides Assamese motifs when the mouse rests, and gathers
+   into the photo window on scroll (pixel-glow.jsx). The lamp cord at the top
+   right. No loader.
 2. **Selected work.** Three rows, one project each: a framed image (dark frame,
    cream mat), the title, one line, Role and Outcome, tags, "read the story".
    A card grows into its case study on click (view transition) and shrinks back.
@@ -89,8 +94,8 @@ cards.
 
 **Motion.**
 - One scroll motion site-wide (`app/components/page-reveal.jsx`): figures and
-  headings below the fold rise 28px once, 0.8s. Native scrolling everywhere;
-  no smooth-scroll library.
+  headings below the fold rise 28px once, 0.8s. Inertia scrolling (Lenis,
+  gentle, wheel only) is on site-wide since Nov 2026, at his request.
 - Hover never moves a copy of an illustration off itself. On the footer art,
   hover brightens the object in place; anything that moves (a door, the rug's
   dust, a poster) is its own layer.
@@ -132,7 +137,6 @@ plant tag and the sign-off are the only words in the room.
 - Per-object captions in the footer, and the rug lifting to show sketches with
   an "under the rug" line.
 - The strip placed under the Exploration title (unbalanced).
-- Smooth scrolling (Lenis) on Signal or anywhere else.
 
 ## References he likes
 
