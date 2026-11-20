@@ -95,7 +95,7 @@ export default function Pinboard({ only }) {
       <div className={styles.top}>
         {canDrag && <p className={styles.hint}>drag things around</p>}
         <div className={styles.actions}>
-          {untidy && <button type="button" className={styles.tidy} onClick={() => setOffsets({})}>tidy up</button>}
+          {untidy && <button type="button" className={`${styles.tidy} ${styles.tidyIn}`} onClick={() => setOffsets({})}>tidy up</button>}
           <button type="button" className={`${styles.tidy} ${styles.playback}`} onClick={() => setPlayOverride(!playing)}>{playing ? 'Pause videos' : 'Play videos'}</button>
         </div>
       </div>

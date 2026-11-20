@@ -108,6 +108,30 @@ export default function ListeningCorner() {
     return () => io.disconnect()
   }, [])
 
+  // When the needle lifts, the shine coasts to a stop from wherever it is
+  // (see .lc__record in globals.css): work out its current angle, hand it to
+  // the CSS as --from, and mark it as stopping for the length of the slow-down.
+  // The angle is worked out from the time since the needle dropped, because by
+  // the time this runs the spin animation has already been removed. It mirrors
+  // the CSS: a quarter turn over 0.9s speeding up, then 200deg a second.
+  const shine = useRef(null)
+  const wasDown = useRef(false)
+  const droppedAt = useRef(0)
+  useEffect(() => {
+    const el = shine.current
+    if (!el) return undefined
+    const stopping = wasDown.current && !needleDown
+    wasDown.current = needleDown
+    if (needleDown) { droppedAt.current = performance.now(); el.removeAttribute('data-stopping'); return undefined }
+    if (!stopping) return undefined
+    const t = (performance.now() - droppedAt.current) / 1000
+    const angle = t < 0.9 ? 90 * (t / 0.9) ** 2 : 90 + 200 * (t - 0.9)
+    el.style.setProperty('--from', `${(angle % 360).toFixed(1)}deg`)
+    el.setAttribute('data-stopping', '')
+    const done = setTimeout(() => el.removeAttribute('data-stopping'), 720)
+    return () => clearTimeout(done)
+  }, [needleDown])
+
   // While the record plays, notes keep rising from it.
   useEffect(() => {
     if (!needleDown || reduced()) return
@@ -217,7 +241,7 @@ export default function ListeningCorner() {
             else record.start()
           }}
         />
-        <span className="lc__record" aria-hidden="true"><span /></span>
+        <span className="lc__record" aria-hidden="true"><span ref={shine} /></span>
         {needleDown && effects.record > 0 && <MusicNotes key={`record-${effects.record}`} source="record" />}
 
         <button

@@ -1532,11 +1532,24 @@ html[data-sig-flow] .status__label { display: none !important; }
     height: 100%;
     border-radius: 50%;
     background: conic-gradient(from 45deg, transparent 0 42%, #fff8e2 44% 48%, transparent 50%);
-    animation: lc-spin 1.8s linear infinite paused;
     opacity: 0;
+    transition: opacity 700ms var(--ease-out);
 }
-.lc__scene[data-needle-down="true"] .lc__record span { animation-play-state: running; opacity: .6; }
-@keyframes lc-spin { to { transform: rotate(360deg); } }
+/* Like a real platter: it speeds up from rest, and when the needle lifts it
+   coasts to a stop instead of freezing.
+   Spin-up: a quarter turn that accelerates (ease-in) and ends at exactly the
+   steady speed (360deg per 1.8s), so the hand-off to the loop has no jolt.
+   Spin-down: listening-corner.jsx reads the angle the shine is at, stores it
+   as --from, and sets data-stopping; it then slows over 70deg to rest. */
+.lc__scene[data-needle-down="true"] .lc__record span {
+    opacity: .6;
+    transition-duration: 400ms;
+    animation: lc-spin-up 900ms cubic-bezier(.11, 0, .5, 0) both, lc-spin 1.8s linear 900ms infinite;
+}
+.lc__record span[data-stopping] { animation: lc-spin-down 700ms cubic-bezier(.5, 1, .89, 1) forwards; }
+@keyframes lc-spin-up { from { rotate: 0deg; } to { rotate: 90deg; } }
+@keyframes lc-spin { from { rotate: 90deg; } to { rotate: 450deg; } }
+@keyframes lc-spin-down { from { rotate: var(--from, 0deg); } to { rotate: calc(var(--from, 0deg) + 70deg); } }
 
 .lc__effect { position: absolute; pointer-events: none; }
 .lc__notes { width: 15%; height: 14%; }
@@ -1602,7 +1615,9 @@ html[data-sig-flow] .status__label { display: none !important; }
     .lc__glow { width: 50%; }
 }
 @media (prefers-reduced-motion: reduce) {
-    .lc__record span { animation: none; }
+    .lc__record span,
+    .lc__scene[data-needle-down="true"] .lc__record span,
+    .lc__record span[data-stopping] { animation: none; transition-duration: 200ms; }
     .lc__notes span, .lc__steam, .lc__can, .lc__drops path { animation-name: lc-fade; }
     .lc__can { transform: rotate(22deg); }
     .lc__drops path { animation-iteration-count: 1; }

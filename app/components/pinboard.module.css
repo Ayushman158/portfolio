@@ -41,6 +41,18 @@
 }
 .playback { border-color: transparent; background: transparent; color: var(--faint); }
 .tidy:active:enabled { background: var(--raised); }
+/* "tidy up" appears after the first drag: it eases in rather than popping.
+   Leaving, it can vanish at once; the prints sliding home carry that moment. */
+.tidyIn {
+  transition: opacity 160ms var(--ease-out), scale 160ms var(--ease-out), background-color 150ms ease;
+}
+@starting-style {
+  .tidyIn { opacity: 0; scale: .96; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tidyIn { transition: opacity 160ms var(--ease-out); }
+  @starting-style { .tidyIn { scale: 1; } }
+}
 
 .grid {
   display: grid;
