@@ -666,15 +666,18 @@ html[data-room] .status { display: none; }
    loudness. `scale` is separate from `transform`, so it stretches the tick on
    top of its position length without fighting that transition. */
 .status__tick { scale: calc(1 + var(--a, 0) * 1.8) 1; }
+/* Written down the margin, under the ticks, reading upwards like a book
+   spine: lying flat, it ran into the body text on narrower screens. */
 .status__record {
     position: absolute;
-    top: calc(100% + 18px);
-    left: -4px;
-    width: max-content;
-    padding: 2px 4px;
+    top: calc(100% + 14px);
+    left: -3px;
+    padding: 4px 2px;
+    writing-mode: vertical-rl;
     color: var(--faint);
-    font: 400 1.15rem/1 var(--font-reenie-beanie), cursive;
-    transform: rotate(-4deg);
+    font: 400 1.1rem/1 var(--font-reenie-beanie), cursive;
+    white-space: nowrap;
+    transform: rotate(180deg);
     transition: color 0.15s ease;
     animation: status-label 0.4s ease-out;
 }
