@@ -183,7 +183,10 @@ export default function Home() {
           the bottom-left corner, under the lamp's pixel light (.hero in
           globals.css). */}
       <div className="hero track-wide flex flex-col">
-      <div id="hero-copy" className="hero__copy min-w-0">
+      {/* suppressHydrationWarning: the inline script below sets --intro-x /
+          --intro-w on this div before React hydrates, so React would
+          otherwise complain about the style it didn't render. */}
+      <div id="hero-copy" className="hero__copy min-w-0" suppressHydrationWarning>
         {/* Two levels only: the name, then one paragraph. Like dnbls.com, the
             name is the headline and a window between first and last name
             flips through photos from my life. The line that used to be the
@@ -206,6 +209,13 @@ export default function Home() {
           <Link href="/about" className="prose-link">More about me, and where I’ve worked</Link>
         </p>
       </div>
+      {/* Lines the intro up under the photo window the moment the HTML
+          arrives, instead of waiting for the page's JavaScript (on a slow
+          first visit that took seconds, and the intro visibly jumped from
+          the left edge). Same measurement as the effect above, which still
+          handles resizes and in-site navigation. Runs again once the fonts
+          load, since the name's width depends on them. */}
+      <script dangerouslySetInnerHTML={{ __html: `(function(){var c=document.querySelector('.hero__copy'),n=document.querySelector('.hero-name'),s=document.querySelector('.photo-slot--hero');if(!c||!n||!s)return;function set(){var a=c.getBoundingClientRect(),b=n.getBoundingClientRect(),d=s.getBoundingClientRect();c.style.setProperty('--intro-x',Math.round(d.left-a.left)+'px');c.style.setProperty('--intro-w',Math.round(b.right-d.left)+'px')}set();document.fonts&&document.fonts.ready.then(set)})()` }} />
       </div>
 
       <motion.div {...rise(0.12)}>
