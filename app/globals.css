@@ -1773,6 +1773,16 @@ html[data-sig-flow] .status__label { display: none !important; }
   list-style: none;
 }
 @media (min-width: 48rem) { .sheet { grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); gap: 1.5rem 1.1rem; } }
+/* Justified rows (Sheet justify): each frame's flex-grow is its image ratio
+   and the basis is 0, so a row's frames end up the same height with their
+   own widths. On a phone they wrap two to a line instead. */
+.sheet-rows { display: grid; gap: 1.5rem; }
+.sheet-row { display: flex; flex-wrap: wrap; gap: 1.25rem 1rem; margin: 0; padding: 0; list-style: none; align-items: flex-start; }
+.sheet-row > li { flex: 1 1 40%; min-width: 0; }
+@media (min-width: 48rem) {
+    .sheet-row { flex-wrap: nowrap; gap: 1.1rem; }
+    .sheet-row > li { flex-basis: 0; flex-shrink: 1; }
+}
 .sheet__frame {
   display: grid;
   width: 100%;

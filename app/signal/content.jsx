@@ -402,7 +402,7 @@ export default function SignalContent({ detail = false }) {
         {/* ---------- Short version only: the rest of the system, one tile each ---------- */}
         {!detail && (
           <Section id="covers" title="What the system covers" next="These are the limits I know about." lede="The signs are one part. The same platform, line and two stops carry on to screens, the ticket and gate, a written manual and a route finder. Each frame opens its full set.">
-            <Sheet frames={SYSTEM} cols={3} aspect="4 / 3" />
+            <Sheet frames={SYSTEM} cols={3} justify />
             <p className="mt-10" style={{ fontSize: '0.95rem' }}>
               <a className="prose-link" href="/signal/Delhi-Metro-Standards-Manual.pdf" target="_blank" rel="noreferrer">Read the manual (PDF, 1 MB)</a>
               <span className="text-faint"> · </span>
