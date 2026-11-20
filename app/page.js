@@ -42,6 +42,7 @@ const SHIPPED = [
       </>
     ),
     facts: [
+      ['Problem', 'Every WhatsApp order went through the owner. Half of the busy hours went on clarifying orders and matching payments.'],
       ['Role', 'Research, design, build (AI-assisted) and pilot'],
       ['Outcome', 'Payment mismatches went from about 8–10 a week to 1–2, by the owner’s figures from a two-week pilot'],
     ],
@@ -94,6 +95,7 @@ const RESEARCH = [
     cardAlt: 'Two Kizuku screens: the app asks what future worry is on your mind, then gives one action for today',
     what: 'An iOS app for people who overthink the future. You give it one worry and get one small thing to do today.',
     facts: [
+      ['Problem', 'Wellness apps treat anxiety as one broad thing. None of them helps you work through a worry about the future.'],
       ['Role', 'Sole designer and developer'],
       ['Outcome', 'The loop runs end to end on a real iPhone. Not yet tested with users.'],
     ],
@@ -108,8 +110,9 @@ const RESEARCH = [
     // A still sign in a moving crowd; the view moves in toward the sign on hover.
     visual: 'signal',
     alt: 'Concept image: the redesigned black sign hanging still above a blurred crowd, platform 3 Tis Hazari · Inderlok to the left, platform 5 Mandi House · Lajpat Nagar straight ahead, platform 4 Shastri Park · Welcome to the right',
-    what: 'For first-time and occasional riders. Delhi Metro signs name a train by the last station on its line. I redesigned them around the stations riders travel to, and tested the first version with 84 riders. Then I drew one system of signs, screens and tickets from the street to the exit.',
+    what: 'For first-time and occasional riders. I redesigned the signs around the stations riders travel to, and tested the first version with 84 riders. Then I drew one system of signs, screens and tickets from the street to the exit.',
     facts: [
+      ['Problem', 'Delhi Metro signs name a train by the last station on its line, which doesn’t help a rider who only knows where they’re going.'],
       ['Role', 'Solo: research, design, prototype'],
       ['Outcome', 'On the first sign, riders who picked the right platform first try: 45% → 80%, in a photo test'],
     ],

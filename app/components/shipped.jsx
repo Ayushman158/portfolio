@@ -184,8 +184,10 @@ function Row({ p, i, cards, turns, reduceMotion, router }) {
         <p className="mt-3">{p.what}</p>
         {p.facts && (
           <dl className="mt-4 grid gap-x-6 gap-y-3 sm:grid-cols-2">
+            {/* Problem reads first and takes the full width; Role and Outcome
+                sit side by side under it. */}
             {p.facts.map(([k, v]) => (
-              <div key={k}>
+              <div key={k} className={k === 'Problem' ? 'sm:col-span-2' : undefined}>
                 <dt className="section-n" style={{ marginBottom: '0.2rem' }}>{k}</dt>
                 <dd className="m-0" style={{ fontSize: '0.95rem', lineHeight: 1.45 }}>{v}</dd>
               </div>
