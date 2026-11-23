@@ -73,8 +73,6 @@ const METHODS = ['UX Research', 'Usability Design', 'Design Thinking', 'Design S
 export default function About() {
   const reduceMotion = useReducedMotion()
   const [hover, setHover] = useState(null)
-  const [selected, setSelected] = useState(null)
-  const active = hover || selected
 
   const rise = (delay) => ({
     initial: reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 },
@@ -91,14 +89,14 @@ export default function About() {
             I’m Ayushman, a designer who likes figuring things out.
           </p>
           <p>
-            I’m drawn to the space between people and technology: understanding how people think and
-            feel, working within real-world constraints, and turning that into things that are useful,
-            easy to use and good to look at.
-          </p>
-          <p>
             People tell me I’m calm, and I am. When something interests me I focus on it, a little
             obsessively. Outside design I’m fairly disciplined and I like working on myself. I care about
             my peace, my family, my dog, and staying curious about what’s going on around me.
+          </p>
+          <p>
+            I’m drawn to the space between people and technology: understanding how people think and
+            feel, working within real-world constraints, and turning that into things that are useful,
+            easy to use and good to look at.
           </p>
           <p>
             I care a lot about taste: in design, in music, in objects, in the choices people make. I want
@@ -115,17 +113,20 @@ export default function About() {
           <p className="text-[0.95rem]">
             <a href="mailto:ayushman15899@gmail.com" className="prose-link">ayushman15899@gmail.com</a>
             <span className="text-faint"> · </span>
+            <a href="/resume" className="prose-link">Résumé (PDF)</a>
+            <span className="text-faint"> · </span>
             <a href="https://linkedin.com/in/ayushman-bharadwaj-660759289" target="_blank" rel="noopener noreferrer" className="prose-link">LinkedIn</a>
           </p>
         </motion.div>
 
         <motion.div {...rise(0.1)} className="flex-none">
-          <Shelf active={active} setHover={setHover} selected={selected} setSelected={setSelected} />
+          <Shelf active={hover} setHover={setHover} />
         </motion.div>
       </div>
 
       {/* One entry per book. Hover either and the other three step back. */}
-      <motion.section {...rise(0.14)} className="track-wide mt-20 grid gap-x-12 gap-y-10 lg:grid-cols-2" aria-label="Where I’ve worked and studied">
+      <motion.section {...rise(0.14)} className="track-wide mt-20 grid gap-x-12 gap-y-10 lg:grid-cols-2" aria-labelledby="experience-heading">
+        <h2 id="experience-heading" className="text-ink lg:col-span-2">Work and education</h2>
         {BOOKS.map((b) => {
           const r = b.ref
           const title = b.kind === 'role' ? `${r.org} — ${r.title}` : r.school
@@ -133,15 +134,17 @@ export default function About() {
           return (
             <article
               key={b.id}
+              id={`experience-${b.id}`}
+              tabIndex={-1}
               onMouseEnter={() => setHover(b.id)}
               onMouseLeave={() => setHover(null)}
-              className="transition-opacity duration-300"
-              style={{ opacity: !active || active === b.id ? 1 : 0.35 }}
+              className="scroll-mt-24 transition-opacity duration-300"
+              style={{ opacity: !hover || hover === b.id ? 1 : 0.35 }}
             >
-              <h2 className="flex items-center gap-2.5 text-ink">
+              <h3 className="flex items-center gap-2.5 text-ink">
                 <span aria-hidden="true" className="block h-2 w-2 flex-none rounded-[2px]" style={{ background: bookColor(b.hue) }} />
                 {title}
-              </h2>
+              </h3>
               <p className="tnum text-faint mt-1 pl-[1.1rem] text-[0.9rem]">{r.dates}</p>
               <ul className="mt-2 space-y-1.5 pl-[1.1rem]">
                 {points.map((pt, i) => (
@@ -172,11 +175,9 @@ export default function About() {
 
 /**
  * A small shelf of four books, one per job and degree. Hover lifts a book a
- * little; click (or Enter) takes it half out and keeps it there, and its entry
- * below stays lit. The lamp hangs beside it.
+ * little, and activating it takes the reader to the matching entry.
  */
-function Shelf({ active, setHover, selected, setSelected }) {
-  const pick = (id) => setSelected((cur) => (cur === id ? null : id))
+function Shelf({ active, setHover }) {
   let x = 30
   return (
     <div data-lamp-target className="relative h-[250px] w-[260px]">
@@ -184,15 +185,14 @@ function Shelf({ active, setHover, selected, setSelected }) {
       {BOOKS.map((b) => {
         const left = x
         x += b.w + 2
-        const lift = selected === b.id ? -18 : active === b.id ? -6 : 0
+        const lift = active === b.id ? -6 : 0
         const label = b.kind === 'role' ? `${b.ref.org}, ${b.ref.dates}` : `${b.ref.school}, ${b.ref.detail}`
         return (
-          <button
+          <a
             key={b.id}
-            type="button"
-            aria-pressed={selected === b.id}
+            href={`#experience-${b.id}`}
             aria-label={label}
-            onClick={() => pick(b.id)}
+            onClick={() => setHover(null)}
             onMouseEnter={() => setHover(b.id)}
             onMouseLeave={() => setHover(null)}
             onFocus={() => setHover(b.id)}
@@ -204,7 +204,7 @@ function Shelf({ active, setHover, selected, setSelected }) {
             <span aria-hidden="true" className="absolute inset-x-0 top-[14px] h-px" style={{ background: 'rgba(255,240,200,.25)' }} />
             <span aria-hidden="true" className="absolute inset-x-0 bottom-3 h-0.5" style={{ background: 'rgba(255,240,200,.35)' }} />
             <span aria-hidden="true" className="book-spine">{b.spine}</span>
-          </button>
+          </a>
         )
       })}
       <div className="shelf-wood shelf-board absolute bottom-5 left-2.5 h-2 w-[170px] rounded-[1px]" />

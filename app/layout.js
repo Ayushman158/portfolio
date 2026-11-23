@@ -69,13 +69,13 @@ export const metadata = {
   },
 }
 
-export const viewport = { themeColor: '#F6F0E4' }
+export const viewport = { themeColor: '#121110' }
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${sans.variable} ${serif.variable} ${inter.variable} ${reenieBeanie.variable}`} suppressHydrationWarning>
+    <html lang="en" data-theme="dark" className={`${sans.variable} ${serif.variable} ${inter.variable} ${reenieBeanie.variable}`} suppressHydrationWarning>
       <head>
-        {/* Sets the theme before first paint so a dark-preferring machine never flashes light. */}
+        {/* Apply any saved preference before first paint. */}
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         {/* Without scripts nothing runs the entrance, so show what it reveals. */}
         <noscript><style>{'.magnet-drop{opacity:1!important}'}</style></noscript>

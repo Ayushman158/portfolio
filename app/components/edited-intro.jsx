@@ -3,16 +3,14 @@
 import { useEffect, useRef, useState } from 'react'
 
 /*
- * The intro under the name, edited in front of you. It shows in full, then a
- * pencil strikes through the filler, phrase by phrase, and a coloured marker
+ * The introduction under the homepage headline, edited in front of you. It shows in full, then a
+ * pencil strikes through the supporting details, phrase by phrase, and a coloured marker
  * picks out the key points, as if he were editing his own bio. What's left
  * reads in a few seconds; hover (or tap) and the full text comes back.
  *
  * Each piece of text is one of:
- *   k  key point: gets the marker, in colour c (one colour per idea, after
- *      bimanshu.com: blue for curiosity, green for the design lens, pink for
- *      sport, yellow for music)
- *   x  filler: struck through and faded
+ *   k  key phrase: gets the marker in colour c
+ *   x  supporting detail: softens in blur mode
  *   (plain string) stays as it is
  * Pieces animate in reading order, one after another (STEP_MS apart).
  * The whole text stays in the page, so screen readers read all of it.
@@ -20,20 +18,15 @@ import { useEffect, useRef, useState } from 'react'
  */
 const PARAS = [
   [
-    'A designer who likes ', { k: 'figuring things out', c: 'blue' }, '. ',
-    { x: 'I’m ' }, { k: 'always learning', c: 'blue' }, { x: ', and I keep my ' },
-    { k: 'design specs on everywhere I go', c: 'green' }, { x: ', so the real world keeps handing me ' },
-    { k: 'problems worth solving', c: 'green' }, { x: ', like metro signs or how a café takes its orders' }, '.',
+    'I’m pretty calm, and I get a little obsessive about ',
+    { k: 'figuring out where people get stuck', c: 'blue' }, '.',
   ],
   [
-    { x: 'Off work, I ' }, { k: 'work out', c: 'pink' }, ', ', { k: 'swim', c: 'pink' },
-    { x: ' and pick up ' }, { k: 'things I can’t do yet', c: 'blue' }, '. ',
-    { x: 'I’ve always dreamt of being an ' }, { k: 'athlete', c: 'pink' },
-    { x: ' and the ' }, { k: 'guitarist in a rock band', c: 'yellow' }, '. ',
-    { x: 'Still working on both.' },
+    'Outside work, I ', { x: 'swim and ' }, 'still dream of playing ',
+    { k: 'guitar in a rock band', c: 'yellow' }, '.',
   ],
 ]
-const START_MS = 1600 // after the name and photo have settled
+const START_MS = 1600
 const STEP_MS = 160
 
 /*

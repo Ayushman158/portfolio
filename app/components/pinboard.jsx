@@ -46,7 +46,7 @@ function Media({ piece, play }) {
 
 // only: titles to show, in that order (the homepage leads with the newest).
 // cols: prints per row on wide screens.
-export default function Pinboard({ only, cols = 3 }) {
+export default function Pinboard({ only, cols = 3, showHint = false }) {
   const pieces = only ? only.map((t) => PIECES.find((p) => p.title === t)).filter(Boolean) : PIECES
   const [offsets, setOffsets] = useState({})
   const [order, setOrder] = useState(() => pieces.map((p) => p.title))
@@ -98,7 +98,9 @@ export default function Pinboard({ only, cols = 3 }) {
   return (
     <section className={styles.board} aria-label="Explorations">
       <div className={styles.top}>
-        {canDrag && <p className={styles.hint}>drag things around</p>}
+        {showHint
+          ? <p className={styles.hint}>Open a project{canDrag && ' or drag the prints'}</p>
+          : canDrag && <p className={styles.hint}>drag things around</p>}
         <div className={styles.actions}>
           {untidy && <button type="button" className={`${styles.tidy} ${styles.tidyIn}`} onClick={() => setOffsets({})}>tidy up</button>}
           <button type="button" className={`${styles.tidy} ${styles.playback}`} onClick={() => setPlayOverride(!playing)}>{playing ? 'Pause videos' : 'Play videos'}</button>

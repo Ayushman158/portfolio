@@ -119,18 +119,20 @@ export default function Kizuku() {
 
       <motion.header {...rise(0.06)} className="mt-10 space-y-5">
         <p className="text-faint" style={{ fontSize: '0.95rem' }}>Kizuku · 2026 · Research, brand and iOS build</p>
-        <h1 className="display">Kizuku: an iOS app for people who overthink the future</h1>
+        <h1 className="display">Kizuku</h1>
+        <p className="max-w-[38rem] text-ink">I built an iOS app that turns a worry about the future into one small action for today. The full loop runs on an iPhone. User testing is still ahead.</p>
       </motion.header>
+
+      {/* Not faded in: the card on the index grows into this. */}
+      <div data-case-hero className="track-full mt-8 overflow-hidden rounded-xl">
+        <KizukuHero className="rounded-xl" />
+      </div>
+      <SkipTo target="trees">skip to the illustrations</SkipTo>
+
       <motion.div {...rise(0.08)}><Overview items={OVERVIEW} /></motion.div>
       <motion.div {...rise(0.1)}>
         <Impact items={IMPACT} note="In development. Reviewed with professors, not yet tested with users." />
       </motion.div>
-
-      {/* Not faded in: the card on the index grows into this. */}
-      <div data-case-hero className="track-full mt-12 overflow-hidden rounded-xl">
-        <KizukuHero className="rounded-xl" />
-      </div>
-      <SkipTo target="trees">skip to the illustrations</SkipTo>
 
       <motion.div {...rise(0.12)}><Facts rows={FACTS} /></motion.div>
       <motion.p {...rise(0.14)} className="mt-8">

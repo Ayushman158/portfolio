@@ -12,12 +12,12 @@ import { useEffect, useRef } from 'react'
  * slowly. Move the mouse over it and more tiles light up in a soft spot that
  * follows the pointer, then fade when the mouse rests.
  *
- * As you scroll, the field gathers into the photo window between
- * "Ayushman" and "Bharadwaj": the visible area shrinks (a clip-path) from the
+ * As you scroll, the field gathers into the photo window in the headline.
+ * The visible area shrinks (a clip-path) from the
  * whole hero down to that window, then fades, and the photos carry on there.
  * Scrolling back up lets the light out again.
  *
- * The area around the name and intro is kept clear so the text stays easy
+ * The area around the headline and intro is kept clear so the text stays easy
  * to read. Reduced Motion: a still field, no drift and no gathering.
  *
  *   target   CSS selector of the window the light gathers into
@@ -177,17 +177,14 @@ export default function PixelGlow({ target, clear, clearText }) {
         const b = el.getBoundingClientRect()
         return { x: b.left - r.left, y: b.top - r.top, w: b.width, h: b.height }
       }) : []
-      // On wide screens the intro hangs from the photo window, leaving open
-      // wall under "Ayushman". There, a little light laps in from the left
-      // edge of the page and draws back, slowly, like water on a shore.
-      // (Phones have no such gap.)
+      // On wide screens light drifts below the headline, to the left of the photo.
       tide = null
       const slot = target && document.querySelector(target)
-      const intro = document.querySelector('.hero .ed')
+      const intro = document.querySelector('.hero__intro')
       if (clearBox && slot && intro && w >= 960) {
         const sb = slot.getBoundingClientRect(), ib = intro.getBoundingClientRect()
         const left = clearBox.x, right = sb.left - r.left
-        const nb = document.querySelector('.hero .hero-name')?.getBoundingClientRect()
+        const nb = document.querySelector('.hero-title')?.getBoundingClientRect()
         if (right - left > 160 && nb) tide = { top: nb.bottom - r.top, bottom: ib.bottom - r.top, reach: right - 40 }
       }
       readPalette()

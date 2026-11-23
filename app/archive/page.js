@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { motion, useReducedMotion } from 'motion/react'
 import Pinboard from '../components/pinboard'
 import CheckerStrip from '../components/checker-strip'
@@ -19,9 +20,13 @@ export default function Exploration() {
     <main className="measure min-h-screen pb-28 pt-20 sm:pt-28 lg:pt-36">
       <motion.header {...rise(0)} className="track-wide">
         <CheckerStrip as="h1" />
+        <p className="mt-5 max-w-[34rem] text-ink">
+          A projected pond that ripples when you move your hand.{' '}
+          <Link href="/koi-wishing-pond/pond" className="prose-link font-semibold">Play Koi Wishing Pond</Link>
+        </p>
       </motion.header>
       <motion.div {...rise(0.08)} className="track-wide mt-6">
-        <Pinboard />
+        <Pinboard showHint />
       </motion.div>
     </main>
   )

@@ -4,14 +4,14 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState } f
 import { flushSync } from 'react-dom'
 import { usePathname } from 'next/navigation'
 
-const ThemeContext = createContext({ theme: 'light', setTo: () => {}, themable: false })
+const ThemeContext = createContext({ theme: 'dark', setTo: () => {}, themable: false })
 export const useTheme = () => useContext(ThemeContext)
 
 /*
  * Sunrise and sunset in Assam (Guwahati, 26.14°N 91.74°E) for today, in IST
  * minutes after midnight. A standard solar approximation: declination, the
  * hour angle at -0.83°, and the equation of time. Good to a few minutes, which
- * is all a lamp needs. Shared as a string with the pre-paint script below.
+ * is all the lamp's dusk animation needs.
  */
 const SUN_SRC = `function(){
   var d=new Date(),n=Math.floor((d-new Date(d.getFullYear(),0,0))/864e5),lat=26.14*Math.PI/180;
@@ -26,28 +26,26 @@ const SUN_SRC = `function(){
 const assamSky = new Function(`return (${SUN_SRC})()`)
 
 /**
- * Runs before first paint. A visitor's own choice wins; otherwise the site
- * follows the sky where Ayushman is: light while the sun is up in Assam, dark
- * after it sets.
+ * Runs before first paint so a saved light preference takes effect immediately.
  */
 export const themeInitScript = `
-(function(){try{
-  var s=localStorage.getItem('theme');
-  if(!s){var k=(${SUN_SRC})();s=(k.now<k.rise||k.now>k.set)?'dark':'light';}
-  document.documentElement.dataset.theme=s;
-}catch(e){}})();
+(function(){
+  var theme = 'dark';
+  try { if (localStorage.getItem('theme') === 'light') theme = 'light'; } catch(e) {}
+  document.documentElement.dataset.theme = theme;
+})();
 `
 
 const reducedMotion = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState('light')
+  const [theme, setTheme] = useState('dark')
   const themable = true
 
   // The pre-paint script already decided; read its answer rather than decide twice.
   useEffect(() => {
-    setTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light')
+    setTheme(document.documentElement.dataset.theme === 'light' ? 'light' : 'dark')
     delete document.documentElement.dataset.lightOnly
   }, [])
 

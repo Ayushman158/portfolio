@@ -57,7 +57,7 @@ export default function Sheet({ frames, cols = 4, aspect = '4 / 3', justify = fa
       <span className="sheet__thumb" data-fit={(!justify && f.fit) || undefined} style={{ aspectRatio: shape }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={f.src} width={f.w} height={f.h} alt={f.alt} loading="lazy" style={!justify && f.pos ? { objectPosition: f.pos } : undefined} />
-        {f.slides && f.slides.length > 1 && <span className="sheet__count">{f.slides.length}</span>}
+        {f.slides && f.slides.length > 1 && <span className="sheet__count">{f.slides.length} images</span>}
       </span>
       <span className="sheet__label">{f.label}</span>
       {f.note && <span className="sheet__note">{f.note}</span>}

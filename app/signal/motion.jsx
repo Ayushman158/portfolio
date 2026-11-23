@@ -89,7 +89,7 @@ export function Trip({ children }) {
   )
 }
 
-export function Stop({ label, question, status, tested = false, src, alt, w, h, cap, framed = false, wide = false }) {
+export function Stop({ label, question, src, alt, w, h, cap, compact = false, wide = false }) {
   const ref = useRef(null)
   const reduce = useReducedMotion()
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.62', 'start 0.52'] })
@@ -100,16 +100,16 @@ export function Stop({ label, question, status, tested = false, src, alt, w, h, 
       <span aria-hidden="true" className="absolute top-[0.32rem] h-[15px] w-[15px] rounded-full" style={{ left: 'calc(0px - var(--p))', background: 'var(--ground)', border: '3px solid var(--rule)' }} />
       <motion.span aria-hidden="true" className="sig-lit absolute top-[0.32rem] h-[15px] w-[15px] rounded-full" style={{ left: 'calc(0px - var(--p))', background: 'var(--ink)', opacity: reduce ? 1 : lit, scale: reduce ? 1 : lit }} />
       <motion.div className="sig-lit mb-4" style={{ opacity: reduce ? 1 : fade }}>
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <p className="text-faint" style={{ fontSize: '0.72rem', letterSpacing: '0.08em', textTransform: 'uppercase' }}>{label}</p>
-          {status && <span className={`sig-evidence${tested ? ' sig-evidence--tested' : ''}`}>{status}</span>}
-        </div>
-        {question && <p className="text-ink mt-2" style={{ fontSize: 'clamp(1.3rem, 2.4vw, 2rem)', lineHeight: 1.18, textWrap: 'balance' }}>{question}</p>}
+        <p className="text-faint" style={{ fontSize: '0.72rem', letterSpacing: '0.08em', textTransform: 'uppercase' }}>{label}</p>
+        <h3 className="text-ink mt-2" style={{ fontSize: 'clamp(1.3rem, 2.4vw, 2rem)', lineHeight: 1.18, textWrap: 'balance' }}>{question}</h3>
       </motion.div>
       {wide
         ? <Pan label={label}><img src={src} alt={alt} width={w} height={h} loading="lazy" className="block h-auto w-full" /></Pan>
-        : <img src={src} alt={alt} width={w} height={h} loading="lazy" className="block h-auto w-full rounded-lg" style={framed ? { border: '1px solid var(--rule)' } : undefined} />}
-      {cap && <Cap>{wide && <SwipeHint />}{cap}</Cap>}
+        : <img src={src} alt={alt} width={w} height={h} loading="lazy" className={`block h-auto w-full rounded-lg${compact ? ' max-w-[18rem]' : ''}`} />}
+      <Cap>
+        {wide && <SwipeHint />}{cap}{' '}
+        <a className="prose-link" href={src} aria-label={`Open ${label.toLowerCase()} image at full size`}>Open full size</a>
+      </Cap>
     </figure>
   )
 }
@@ -196,9 +196,9 @@ export function SignHead({ n, title, hi, colour, rot = 0, darkNumber = false, ri
 }
 
 /*
- * The test result, counted out. One dot is one rider in a hundred. When the
+ * The test result, counted out. One dot is one attempt in a hundred. When the
  * figure scrolls into view, today's grid fills to 45, then the new sign's grid
- * fills to 80: its first 45 dots in ink like today's, and the 35 extra riders
+ * fills to 80: its first 45 dots in ink like today's, and the 35 extra correct attempts
  * in the accent, so the gain is its own colour. Counters tick with the dots.
  * Reduced Motion shows the finished grids at once.
  */
@@ -208,7 +208,7 @@ const GRID_W = 10 * DOT + 9 * DOT_GAP
 
 function DotGrid({ shown, base, label, total }) {
   return (
-    <svg role="img" aria-label={`${total} of 100 riders reached the right platform first, ${label}`} viewBox={`0 0 ${GRID_W} ${GRID_W}`} className="block h-auto w-full">
+    <svg role="img" aria-label={`${total}% of first attempts picked the right platform, ${label}`} viewBox={`0 0 ${GRID_W} ${GRID_W}`} className="block h-auto w-full">
       {Array.from({ length: 100 }, (_, i) => {
         const row = Math.floor(i / 10)
         const col = i % 10
@@ -256,7 +256,7 @@ export function OutOf100({ before, after }) {
           <p className="mt-3"><span className="headline tnum" style={big}>{a}</span><span className="text-faint"> of 100</span></p>
         </figure>
         <p aria-hidden="true" className="mb-10 text-center text-faint transition-opacity duration-500" style={{ opacity: done ? 1 : 0, fontSize: '0.95rem', lineHeight: 1.2 }}>
-          →<br /><span style={{ color: 'var(--signal-text)' }}>+{after - before}</span><br />riders
+          →<br /><span style={{ color: 'var(--signal-text)' }}>+{after - before}</span><br />points
         </p>
         <figure className="min-w-0">
           <p className="mb-3 text-faint" style={{ fontSize: '0.92rem' }}>New sign</p>
@@ -266,7 +266,7 @@ export function OutOf100({ before, after }) {
       </div>
       <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-faint" style={{ fontSize: '0.85rem' }}>
         <span className="inline-flex items-center gap-2"><span aria-hidden="true" className="inline-block h-2.5 w-2.5 rounded-full" style={{ background: 'var(--ink)' }} />right platform, first try</span>
-        <span className="inline-flex items-center gap-2"><span aria-hidden="true" className="inline-block h-2.5 w-2.5 rounded-full" style={{ background: 'var(--accent)' }} />the extra riders the new sign helped</span>
+        <span className="inline-flex items-center gap-2"><span aria-hidden="true" className="inline-block h-2.5 w-2.5 rounded-full" style={{ background: 'var(--accent)' }} />gain in correct attempts per 100</span>
       </div>
     </div>
   )

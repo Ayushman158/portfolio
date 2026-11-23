@@ -95,7 +95,7 @@ const RESEARCH = [
     cardAlt: 'Two Kizuku screens: the app asks what future worry is on your mind, then gives one action for today',
     what: 'An iOS app for people who overthink the future. You give it one worry and get one small thing to do today.',
     facts: [
-      ['Problem', 'Wellness apps treat anxiety as one broad thing. None of them helps you work through a worry about the future.'],
+      ['Problem', 'The wellness apps I reviewed dealt with general stress or self-care. I focused on what to do when you’re stuck on a specific worry about the future.'],
       ['Role', 'Sole designer and developer'],
       ['Outcome', 'The loop runs end to end on a real iPhone. Not yet tested with users.'],
     ],
@@ -139,28 +139,6 @@ export default function Home() {
   const [returning] = useState(() => typeof window !== 'undefined' && window.__caseReturn === true)
   useEffect(() => { window.__caseReturn = false }, [])
 
-  // The intro hangs from the photo window: its left edge lines up with the
-  // window's, and it runs to the end of "Bharadwaj". The window's position
-  // depends on the font and the width, so it's measured (and re-measured on
-  // resize) and handed to the CSS as --intro-x / --intro-w (.hero in
-  // globals.css; wide screens only).
-  useEffect(() => {
-    const copy = document.querySelector('.hero__copy')
-    const name = document.querySelector('.hero-name')
-    const slot = document.querySelector('.photo-slot--hero')
-    if (!copy || !name || !slot) return undefined
-    const set = () => {
-      const c = copy.getBoundingClientRect(), n = name.getBoundingClientRect(), s = slot.getBoundingClientRect()
-      copy.style.setProperty('--intro-x', `${Math.round(s.left - c.left)}px`)
-      copy.style.setProperty('--intro-w', `${Math.round(n.right - s.left)}px`)
-    }
-    set()
-    document.fonts?.ready.then(set)
-    const ro = new ResizeObserver(set)
-    ro.observe(copy)
-    return () => ro.disconnect()
-  }, [])
-
   const rise = (delay) => returning ? { initial: false } : ({
     initial: reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 },
     animate: { opacity: 1, y: 0 },
@@ -170,55 +148,30 @@ export default function Home() {
   return (
     <>
     {/* The lamp's light in pixels, gathering into the photo window on scroll. */}
-    <PixelGlow target=".photo-slot--hero" clear="#hero-copy" clearText="#hero-copy .hero-name, #hero-copy .ed, #hero-copy > p" />
+    <PixelGlow target=".photo-slot--hero" clear="#hero-copy" clearText="#hero-copy .hero-title, #hero-copy .hero__intro" />
     {/* data-wall: the home page is a cream wall the work hangs on (globals.css). */}
     <main data-wall className="measure min-h-screen pb-8 pt-20 sm:pb-12 sm:pt-28 lg:pt-36">
-      {/* One left edge for the whole page. The intro, the work and the closing
-          sections all start where the case-study cards start, and the text
-          only narrows on the right, to a reading width. Before, the edge
-          stepped in for the intro, out for the work and in again at the end. */}
-      {/* The hero: the words alone. The round avatar badge was removed once the
-          photo slot after the name started showing who he is. */}
-      {/* Fills the first screen: the name centred on one line, the intro in
-          the bottom-left corner, under the lamp's pixel light (.hero in
-          globals.css). */}
-      <div className="hero track-wide flex flex-col">
-      {/* suppressHydrationWarning: the inline script below sets --intro-x /
-          --intro-w on this div before React hydrates, so React would
-          otherwise complain about the style it didn't render. */}
-      <div id="hero-copy" className="hero__copy min-w-0" suppressHydrationWarning>
-        {/* Two levels only: the name, then one paragraph. Like dnbls.com, the
-            name is the headline and a window between first and last name
-            flips through photos from my life. The line that used to be the
-            headline opens the paragraph instead. */}
-        <h1 className="hero-name">
-          <span className="whitespace-nowrap"><LetterSwap>Ayushman</LetterSwap> <PhotoSlot className="photo-slot--hero" /></span>{' '}
-          Bharadwaj
-        </h1>
-
-        {/* Work first, then the person. Written from his own notes, in his
-            voice: plain, a little loose, nothing claimed that isn't true. */}
-        {/* The intro edits itself: key points marked in colour, the rest
-            softly blurred; hover (or tap) brings it all into focus. (A
-            "lens" mode that sharpens only under the pointer also exists in
-            edited-intro.jsx; the blur was kept as easier to read.)
-            The copy lives in app/components/edited-intro.jsx. */}
-        <EditedIntro skip={returning} mode="blur" />
-
-        <p className="mt-5">
-          <Link href="/about" className="prose-link">More about me, and where I’ve worked</Link>
-        </p>
-      </div>
-      {/* Lines the intro up under the photo window the moment the HTML
-          arrives, instead of waiting for the page's JavaScript (on a slow
-          first visit that took seconds, and the intro visibly jumped from
-          the left edge). Same measurement as the effect above, which still
-          handles resizes and in-site navigation. Runs again once the fonts
-          load, since the name's width depends on them. */}
-      <script dangerouslySetInnerHTML={{ __html: `(function(){var c=document.querySelector('.hero__copy'),n=document.querySelector('.hero-name'),s=document.querySelector('.photo-slot--hero');if(!c||!n||!s)return;function set(){var a=c.getBoundingClientRect(),b=n.getBoundingClientRect(),d=s.getBoundingClientRect();c.style.setProperty('--intro-x',Math.round(d.left-a.left)+'px');c.style.setProperty('--intro-w',Math.round(b.right-d.left)+'px')}set();document.fonts&&document.fonts.ready.then(set)})()` }} />
+      <div className="hero track-wide">
+        <div id="hero-copy" className="hero__copy">
+          <h1 className="hero-title" aria-label="I make the next step clear.">
+            <LetterSwap>I make the</LetterSwap>{' '}
+            <PhotoSlot className="photo-slot--hero" />{' '}
+            <span className="hero-title__end">next step clear.</span>
+          </h1>
+          <div className="hero__intro">
+            <p>I’m Ayushman, a designer.</p>
+            <EditedIntro skip={returning} mode="blur" className="" />
+            <div className="mt-2 flex flex-wrap items-baseline gap-x-6 gap-y-2">
+              <a href="#work" className="prose-link font-semibold">
+                Selected work <span aria-hidden="true">↓</span>
+              </a>
+              <Link href="/about" className="prose-link">More about me</Link>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <motion.div {...rise(0.12)}>
+      <motion.div id="work" tabIndex={-1} className="scroll-mt-24" {...rise(0.12)}>
         {/* Only work with a full case study, strongest first, one per row. */}
         <Shipped label="selected work" items={SELECTED} rows />
       </motion.div>

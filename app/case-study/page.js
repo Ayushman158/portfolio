@@ -170,17 +170,16 @@ export default function Hoychoy() {
 
       <motion.header {...rise(0.06)} className="mt-10 space-y-5">
         <p className="text-faint" style={{ fontSize: '0.95rem' }}>Hoychoy Cafe · 2025 · Service design and build</p>
-        <h1 className="display">Hoychoy Cafe: moving a café’s orders out of WhatsApp</h1>
-      </motion.header>
-      <motion.div {...rise(0.08)}><Overview items={OVERVIEW} /></motion.div>
-
-      {/* Before and after, near the top: one order, then and now. */}
-      <motion.div {...rise(0.09)}>
-        <p className="mt-12 text-ink" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.45rem)', lineHeight: 1.35, maxWidth: '36rem', textWrap: 'balance' }}>
-          Before, each order stopped at the owner five times and took 6–8 minutes. Now it stops once and takes 2–3.
+        <h1 className="display">Hoychoy Cafe</h1>
+        <p className="max-w-[38rem] text-ink">I moved a café’s orders from WhatsApp to a web checkout that sends each order to the kitchen.</p>
+        <p className="max-w-[38rem] text-ink">
+          Handling time fell from <strong>6–8 minutes to 2–3 per order</strong>, based on the owner’s two-week pilot and estimates from earlier logs.
         </p>
+      </motion.header>
+      <motion.div {...rise(0.08)}>
         <OrderRelay rows={RELAY} />
       </motion.div>
+      <motion.div {...rise(0.09)}><Overview items={OVERVIEW} /></motion.div>
       <motion.div {...rise(0.1)}>
         <Impact
           items={OUTCOMES.map(([label, before, after]) => [after, label, before])}
