@@ -1,0 +1,184 @@
+/* The drifting Exploration band (exploration-band.jsx). */
+
+/* Breaks out of the page column to the full window width. */
+.wrap {
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+}
+
+.band {
+  position: relative;
+  height: calc(var(--card-h) + 9rem);
+  /* Clip sideways only: the WebGL canvas reaches above and below the band
+     for the curved flare at the edges. */
+  overflow-x: clip;
+  overflow-y: visible;
+  /* Touch: sideways drags move the band; vertical ones still scroll the page. */
+  touch-action: pan-y;
+}
+
+/* Optional: both the canvas and the plain row dissolve into the wall at the sides. */
+.canvas, .row {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--dissolve), #000 calc(100% - var(--dissolve)), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 var(--dissolve), #000 calc(100% - var(--dissolve)), transparent);
+}
+
+/* The WebGL drawing of the band (band-lens.js). Sized and placed from JS. */
+.canvas {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+}
+.band:not([data-mode="gl"]) .canvas { display: none; }
+
+/* The videos the WebGL version reads from: kept on screen but invisible,
+   so the browser keeps playing them. */
+.pool {
+  position: absolute;
+  left: 50%;
+  top: var(--top);
+  width: 2px;
+  height: 2px;
+  overflow: hidden;
+  opacity: .01;
+  pointer-events: none;
+}
+.pool video { width: 2px; height: 2px; }
+
+/* One faint lamp glow behind the middle, the page's only bright colour. */
+.band::before {
+  content: "";
+  position: absolute;
+  inset: 0 20%;
+  background: radial-gradient(closest-side, rgba(232, 115, 26, var(--glow)), transparent);
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.row {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transform-style: preserve-3d;
+}
+
+/* Each photo is placed and bent from JS (transform, filter, opacity). */
+.item {
+  position: absolute;
+  top: var(--top);
+  left: 0;
+  will-change: transform, filter;
+}
+
+.card {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--radius);
+  outline-offset: 4px;
+}
+.card:focus-visible { outline: 2px solid var(--ink); }
+
+/* WebGL version: the links are invisible boxes over the drawing (for focus
+   and screen readers); the band itself takes the clicks. */
+.band[data-mode="gl"] .row { pointer-events: none; }
+.ghost { display: block; width: 100%; aspect-ratio: 320 / 226; border-radius: var(--radius); }
+
+.photo {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--raised);
+  box-shadow: 0 1px 2px rgba(40, 25, 15, .1), 0 14px 30px -8px rgba(40, 25, 15, .22);
+  transition: transform 260ms cubic-bezier(.23, 1, .32, 1), box-shadow 260ms cubic-bezier(.23, 1, .32, 1);
+}
+.photo :global(video), .photo :global(img) {
+  display: block;
+  width: 100%;
+  aspect-ratio: 320 / 226;
+  object-fit: cover;
+  pointer-events: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .card:hover .photo {
+    transform: translateY(-4px);
+    box-shadow: 0 2px 4px rgba(40, 25, 15, .12), 0 22px 36px -10px rgba(40, 25, 15, .3);
+  }
+}
+
+/* Caption text, shared by the cursor caption and the phone caption. */
+.title {
+  display: block;
+  font-family: var(--font-serif), serif;
+  font-size: 1.2rem;
+  line-height: 1.15;
+  color: var(--ink);
+}
+.out { display: inline-block; margin-left: .3rem; vertical-align: .1em; }
+.note {
+  display: block;
+  margin-top: .15rem;
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: .72rem;
+  letter-spacing: .02em;
+  color: var(--faint);
+}
+
+/* Phones and touch screens: no hover, so the photo in the middle is named
+   under the band instead. */
+.centreCap { display: none; margin-top: .25rem; text-align: center; }
+@media (hover: none) { .centreCap { display: block; } }
+
+/* The hover pill beside the cursor: small, dark, one line. Placed from JS;
+   fades in quickly. */
+.cursorCap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0;
+  scale: .94;
+  transition: opacity 140ms ease-out, scale 160ms cubic-bezier(.23, 1, .32, 1);
+}
+.cursorCap[data-on] { opacity: 1; scale: 1; }
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .36rem .75rem .4rem;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--ground);
+  font-size: .8rem;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  box-shadow: 0 6px 18px -8px rgba(40, 25, 15, .45);
+}
+.pill .out { margin: 0; vertical-align: 0; }
+@media (hover: none) { .cursorCap { display: none; } }
+
+.pause {
+  display: block;
+  margin: 0 0 0 auto;
+  padding: .3rem .5rem;
+  border: 0;
+  background: transparent;
+  color: var(--faint);
+  font: inherit;
+  font-size: .95rem;
+  text-decoration: underline;
+  text-underline-offset: .2em;
+  cursor: pointer;
+}
+.pause:hover { color: var(--ink); }
+.pause:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .item { will-change: auto; }
+  .photo, .cursorCap { transition: none; }
+}

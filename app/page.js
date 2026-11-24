@@ -7,7 +7,7 @@ import GradientText from './components/gradient-text'
 import LetterSwap from './components/letter-swap'
 import Shipped from './components/shipped'
 import ListeningCorner from './components/listening-corner'
-import Pinboard from './components/pinboard'
+import CraftBand from './components/exploration-band'
 import CheckerStrip from './components/checker-strip'
 import PhotoSlot from './components/photo-slot'
 import EditedIntro from './components/edited-intro'
@@ -176,14 +176,14 @@ export default function Home() {
         <Shipped label="selected work" items={SELECTED} rows />
       </motion.div>
       <div className="track-wide">
-        {/* The title sits on the checkered strip; Hazel lives behind it, beside the word. */}
-        <section aria-labelledby="home-exploration" className="mt-24 sm:mt-28">
-          <CheckerStrip
-            id="home-exploration"
-            aside={<Link href="/archive" className="prose-link text-[0.95rem]">see everything →</Link>}
-          />
-          {/* Newest first: Seat View, then the three older favourites, in one row. */}
-          <Pinboard only={['Seat View', 'Koi Wishing Pond', 'Gradient exploration', 'ALBUM//ALIVE']} cols={4} />
+        {/* Craft: the experiments and smaller work. The title sits on the
+            checkered strip (Hazel lives behind it), then every piece in one
+            drifting band seen through a curved lens (exploration-band.jsx).
+            This replaced the separate Exploration page; /archive now comes here. */}
+        <section id="craft" aria-labelledby="home-craft" className="mt-24 scroll-mt-24 sm:mt-28">
+          <CheckerStrip id="home-craft" />
+          {/* Newest first: Seat View, then the older pieces. */}
+          <CraftBand only={['Seat View', 'Koi Wishing Pond', 'Gradient exploration', 'ALBUM//ALIVE', 'Gone or Still Here?', 'Choose Assam', 'Banyan Tree']} />
         </section>
       </div>
 

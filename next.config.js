@@ -12,6 +12,8 @@ const nextConfig = {
   async redirects() {
     return [
       { source: '/resume', destination: '/Ayushman_Bharadwaj_Resume.pdf', permanent: false },
+      // The Exploration page became the Craft band on the homepage.
+      { source: '/archive', destination: '/#craft', permanent: true },
     ]
   },
   async rewrites() {

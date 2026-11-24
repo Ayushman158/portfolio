@@ -14,7 +14,7 @@ already made, so they are not re-litigated or rebuilt from scratch.
   supports it.
 - Three selected case studies, in this order: Signal (Delhi Metro wayfinding),
   Kizuku (iOS app), Hoychoy Cafe (shipped client service, real orders).
-  Everything else lives in Exploration (`/archive`).
+  Everything else lives in Craft, the drifting band on the homepage (`/#craft`).
 - Before changing any design decision, show him 2–3 options with the trade-off
   and a recommendation. Do not overwrite work with your own pick.
 
@@ -49,17 +49,24 @@ already made, so they are not re-litigated or rebuilt from scratch.
 2. **Selected work.** Three rows, one project each: a framed image (dark frame,
    cream mat), the title, one line, Role and Outcome, tags, "read the story".
    A card grows into its case study on click (view transition) and shrinks back.
-3. **Exploration.** The checkered strip, then the display title "Exploration"
-   with "see everything →"; Hazel peeks over the strip above the title's end.
-   Then a pinboard of three taped video prints.
+3. **Craft** (was "Exploration", renamed Nov 2026). The checkered strip, then
+   the display title "Craft"; Hazel peeks over the strip above the title's end.
+   Then every experiment in one band of rounded photos that drifts left on its
+   own, seen through a curved "VR screen" lens after hanif.rest: flat and sharp
+   in the middle, flaring taller with a sideways smear and a faint pink/cyan
+   fringe at the edges (WebGL, `app/components/band-lens.js`; the band is
+   `exploration-band.jsx`, tuned values in its BAND). Hover: the band stops and
+   a small dark pill with the piece's name sits beside the cursor. Touch: drag and flick it; tap to open; the
+   middle piece is named under the band. A Pause link under it. Live dials for
+   tuning at `/lab/band` (DialKit, noindex).
 4. **Ending: the listening corner.** "Email me ↗", socials and nav on the left;
    on the right, his room: a record console with plants, a moka pot, a mushroom
    lamp, a guitar, two posters (Koi Wishing Pond, Aipan art) and a rug. Every
    object responds to a tap. The bottom line: copyright, "thanks for rolling
    by", back to top.
 
-- `/archive` (Exploration): strip + title + Hazel, then the full pinboard
-  (six pieces), draggable on desktop with "tidy up" and play/pause.
+- There is no separate Exploration page any more: `/archive` redirects to
+  `/#craft`, and every "back to" link and the nav point there.
 - Case studies: Signal, Kizuku, Hoychoy, Banyan, Koi. A ticked status bar on
   the left edge marks the section you are in.
 

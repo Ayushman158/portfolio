@@ -150,7 +150,7 @@ export default function ListeningCorner() {
         </nav>
         <nav className="lc__nav" aria-label="Footer navigation">
           <Link href="/">Index</Link>
-          <Link href="/archive">Exploration</Link>
+          <Link href="/#craft">Craft</Link>
           <Link href="/about">About</Link>
           <a href="/Ayushman_Bharadwaj_Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a>
         </nav>

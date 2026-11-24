@@ -5,7 +5,8 @@ import Link from 'next/link'
 import styles from './pinboard.module.css'
 
 /*
- * The Exploration page as a pinboard: every piece is a print taped to a dotted
+ * The old Exploration pinboard (no longer on any page; PIECES and Media are
+ * shared with the Craft band, exploration-band.jsx). It showed the work as a pinboard: every piece is a print taped to a dotted
  * board at a slight angle, labelled by hand. On a mouse or trackpad the pieces
  * can be dragged around, and "tidy up" puts them back. Videos play while they
  * are on screen; under Reduced Motion they rest on their posters.
@@ -13,7 +14,7 @@ import styles from './pinboard.module.css'
  * `kind`: 'page' opens a page of this site, 'static' a static page of this site
  * (a plain link), 'out' another site in a new tab.
  */
-const PIECES = [
+export const PIECES = [
   { title: 'Koi Wishing Pond', note: 'installation · TouchDesigner', video: '/research/koi-loop.mp4', poster: '/research/koi-loop.jpg', href: '/koi-wishing-pond', kind: 'page', tilt: -3, lift: 0, tape: 'a' },
   { title: 'Gradient exploration', note: 'sketch · TouchDesigner', video: '/exploration/gradient.mp4', poster: '/exploration/gradient.jpg', href: 'https://www.instagram.com/p/Dd9XIzEylhx/', kind: 'out', tilt: 2.5, lift: 44, tape: 'b' },
   { title: 'ALBUM//ALIVE', note: 'experiment · WebAR', video: '/album-alive/scan.mp4', poster: '/album-alive/scan-poster.jpg', href: '/album-alive', kind: 'page', tilt: -1.5, lift: 12, tape: 'c' },
@@ -25,7 +26,7 @@ const PIECES = [
   { title: 'Banyan Tree', note: 'client work · himanshugarg.in', img: '/shipped/banyan.jpg', href: '/banyan', kind: 'page', tilt: 1.5, lift: 4, tape: 'c' },
 ]
 
-function Media({ piece, play }) {
+export function Media({ piece, play }) {
   const ref = useRef(null)
   useEffect(() => {
     const v = ref.current
