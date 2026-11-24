@@ -160,7 +160,7 @@ export default function Home() {
           </h1>
           <div className="hero__intro">
             <p>I’m Ayushman, a designer.</p>
-            <EditedIntro skip={returning} mode="blur" className="" />
+            <EditedIntro skip={returning} mode="mark" className="" />
             <div className="mt-2 flex flex-wrap items-baseline gap-x-6 gap-y-2">
               <a href="#work" className="prose-link font-semibold">
                 Selected work <span aria-hidden="true">↓</span>
@@ -181,7 +181,13 @@ export default function Home() {
             drifting band seen through a curved lens (exploration-band.jsx).
             This replaced the separate Exploration page; /archive now comes here. */}
         <section id="craft" aria-labelledby="home-craft" className="mt-24 scroll-mt-24 sm:mt-28">
-          <CheckerStrip id="home-craft" />
+          {/* The heading is a plain sentence in his voice; the typed note on the
+              right says what kind of work sits in the band. */}
+          <CheckerStrip
+            id="home-craft"
+            title="I explore a lot."
+            aside={<span className="text-[0.78rem] tracking-[0.02em] text-faint" style={{ fontFamily: "'Geist Mono', ui-monospace, monospace" }}>experiments · sketches · small tools</span>}
+          />
           {/* Newest first: Seat View, then the older pieces. */}
           <CraftBand only={['Seat View', 'Koi Wishing Pond', 'Gradient exploration', 'ALBUM//ALIVE', 'Gone or Still Here?', 'Choose Assam', 'Banyan Tree']} />
         </section>

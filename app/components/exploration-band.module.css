@@ -15,7 +15,12 @@
   overflow-y: visible;
   /* Touch: sideways drags move the band; vertical ones still scroll the page. */
   touch-action: pan-y;
+  /* Drag it like hanif.rest: an open hand, closed while dragging. */
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
 }
+.band[data-dragging] { cursor: grabbing; }
 
 /* Optional: both the canvas and the plain row dissolve into the wall at the sides. */
 .canvas, .row {
@@ -161,22 +166,6 @@
 }
 .pill .out { margin: 0; vertical-align: 0; }
 @media (hover: none) { .cursorCap { display: none; } }
-
-.pause {
-  display: block;
-  margin: 0 0 0 auto;
-  padding: .3rem .5rem;
-  border: 0;
-  background: transparent;
-  color: var(--faint);
-  font: inherit;
-  font-size: .95rem;
-  text-decoration: underline;
-  text-underline-offset: .2em;
-  cursor: pointer;
-}
-.pause:hover { color: var(--ink); }
-.pause:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 4px; }
 
 @media (prefers-reduced-motion: reduce) {
   .item { will-change: auto; }

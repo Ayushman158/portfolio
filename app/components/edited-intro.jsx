@@ -31,6 +31,8 @@ const STEP_MS = 160
 
 /*
  * mode: how the filler steps back once the edit runs.
+ *   mark    it doesn't: the whole intro stays readable and only the key
+ *           points get their coloured marker (in use since Nov 2026)
  *   strike  a pencil line through it, faded (the first version)
  *   blur    it softens out of focus, like Apple's focus effects; the key
  *           points stay sharp

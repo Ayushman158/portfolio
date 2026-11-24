@@ -29,7 +29,8 @@ import styles from './exploration-band.module.css'
  * smaller photos and a gentler curve.
  * Keyboard: Tab moves through the pieces; the focused one glides to the middle
  * and its caption shows at its corner.
- * The Pause button stops the drift for good. Reduced Motion: no drift.
+ * Mouse and trackpad can also drag it, or swipe it sideways with two fingers.
+ * Reduced Motion: no drift.
  *
  * The links themselves stay in the page (invisible in the WebGL version) so
  * keyboards, screen readers and middle-clicks work as normal.
@@ -92,18 +93,19 @@ export default function ExplorationBand({ only, tune = BAND }) {
   const held = useRef(false)          // pointer over the band, or keyboard focus inside
   const hoverKey = useRef(-1)         // index of the photo under the mouse (WebGL mode)
   const seek = useRef(-1)             // keyboard: the photo gliding to the middle
-  const drag = useRef(null)           // touch: the finger dragging the band
+  const drag = useRef(null)           // a finger or the mouse dragging the band
+  const dragged = useRef(false)       // the last press was a drag, so it isn't also a click
+  const wheel = useRef(0)             // trackpad sideways swipe, px, not yet applied
   const flat = useRef({ lefts: [], f: null, mid: 0, pad: 0, W: 0 }) // last frame's layout, for taps
   const pointer = useRef({ x: 0, y: 0, cx: 0, cy: 0, fresh: true, inside: false })
   const [mode, setMode] = useState('css') // 'gl' once WebGL is up
   const gl = useRef(false)            // the same, readable inside the animation loop
   const [shown, setShown] = useState(null) // the piece whose caption is up
   const [centre, setCentre] = useState(pieces[0])
-  const [paused, setPaused] = useState(false)
   const [calm, setCalm] = useState(false)
   const [onScreen, setOnScreen] = useState(false)
   const stop = useRef(false)
-  stop.current = paused || calm
+  stop.current = calm
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -117,10 +119,10 @@ export default function ExplorationBand({ only, tune = BAND }) {
   useEffect(() => {
     Object.values(videos.current).forEach((v) => {
       if (!v) return
-      if (mode === 'gl' && onScreen && !paused && !calm) v.play().catch(() => {})
+      if (mode === 'gl' && onScreen && !calm) v.play().catch(() => {})
       else v.pause()
     })
-  }, [mode, onScreen, paused, calm])
+  }, [mode, onScreen, calm])
 
   useEffect(() => {
     // Images (and video posters) for the WebGL textures.
@@ -140,6 +142,14 @@ export default function ExplorationBand({ only, tune = BAND }) {
     const lifts = new Map()
     const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; setOnScreen(e.isIntersecting) })
     io.observe(band.current)
+    // Trackpad: a sideways two-finger swipe slides the band (vertical ones still scroll the page).
+    const onWheel = (e) => {
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return
+      e.preventDefault()
+      wheel.current -= e.deltaX
+    }
+    const bandEl = band.current
+    bandEl.addEventListener('wheel', onWheel, { passive: false })
 
     const frame = (now) => {
       raf = requestAnimationFrame(frame)
@@ -158,6 +168,7 @@ export default function ExplorationBand({ only, tune = BAND }) {
       // Speed: a dragging finger moves the band directly; otherwise coast
       // toward the drift (0 while held or paused), so stops and flicks ease out.
       const d = drag.current
+      if (wheel.current) { x += wheel.current; wheel.current = 0 }
       if (d && d.moved) {
         x += d.dx
         v = -d.vx // keep the finger's speed for the glide after release
@@ -214,7 +225,6 @@ export default function ExplorationBand({ only, tune = BAND }) {
         }
         if (under !== hoverKey.current) {
           hoverKey.current = under
-          band.current.style.cursor = under >= 0 ? 'pointer' : ''
           if (seek.current < 0) setShown(under >= 0 ? pieces[under % pieces.length] : null)
           if (under >= 0) ptr.fresh = true
         }
@@ -280,7 +290,7 @@ export default function ExplorationBand({ only, tune = BAND }) {
       }
     }
     raf = requestAnimationFrame(frame)
-    return () => { cancelAnimationFrame(raf); io.disconnect(); lens?.dispose() }
+    return () => { cancelAnimationFrame(raf); io.disconnect(); bandEl.removeEventListener('wheel', onWheel); lens?.dispose() }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pieces.length])
 
@@ -304,16 +314,20 @@ export default function ExplorationBand({ only, tune = BAND }) {
     else a.click()
   }
 
-  // Touch: drag the band; a tap (no real movement) opens the photo under the finger.
+  // Drag the band with a finger or the mouse; it follows, then glides on after
+  // a flick. A tap or click without movement opens the photo under it.
   const onDown = (e) => {
-    if (e.pointerType === 'mouse') return
+    if (e.pointerType === 'mouse' && e.button !== 0) return
+    dragged.current = false
     drag.current = { id: e.pointerId, x0: e.clientX, y0: e.clientY, lastX: e.clientX, lastT: performance.now(), dx: 0, vx: 0, moved: false }
   }
-  const onMoveTouch = (e) => {
+  const onDrag = (e) => {
     const d = drag.current
     if (!d || e.pointerId !== d.id) return
     if (!d.moved && Math.abs(e.clientX - d.x0) > 8 && Math.abs(e.clientX - d.x0) > Math.abs(e.clientY - d.y0)) {
       d.moved = true
+      dragged.current = true
+      band.current.dataset.dragging = ''
       e.currentTarget.setPointerCapture?.(e.pointerId)
     }
     if (!d.moved) return
@@ -328,14 +342,16 @@ export default function ExplorationBand({ only, tune = BAND }) {
     const d = drag.current
     if (!d || e.pointerId !== d.id) return
     if (!d.moved) {
-      // (The plain version's photos are real links and take the tap themselves.)
-      if (!gl.current) { drag.current = null; return }
+      // A mouse click is handled by onBandClick; the plain version's photos
+      // are real links and take the tap themselves.
+      if (e.pointerType === 'mouse' || !gl.current) { drag.current = null; return }
       const r = band.current.getBoundingClientRect()
       const i = hit(e.clientX - r.left, e.clientY - r.top)
       if (i >= 0) open(i)
       drag.current = null
       return
     }
+    delete band.current.dataset.dragging
     drag.current = { ...d, moved: false } // released: glide, then ease back to the drift
     setTimeout(() => { if (drag.current && !drag.current.moved) drag.current = null }, 1200)
   }
@@ -354,6 +370,7 @@ export default function ExplorationBand({ only, tune = BAND }) {
   }
   // WebGL version: a mouse click on the band opens the photo under the pointer.
   const onBandClick = (e) => {
+    if (dragged.current) { dragged.current = false; return }
     if (mode !== 'gl' || hoverKey.current < 0) return
     if (e.target.closest('a')) return
     open(hoverKey.current, e.metaKey || e.ctrlKey)
@@ -377,10 +394,12 @@ export default function ExplorationBand({ only, tune = BAND }) {
         }}
         onPointerEnter={(e) => { if (e.pointerType === 'mouse') { held.current = true; pointer.current.inside = true } }}
         onPointerLeave={(e) => { if (e.pointerType !== 'mouse') return; held.current = false; pointer.current.inside = false; if (mode !== 'gl') setShown(null) }}
-        onPointerMove={(e) => { if (e.pointerType === 'mouse') onMove(e); else onMoveTouch(e) }}
+        onPointerMove={(e) => { if (e.pointerType === 'mouse') onMove(e); onDrag(e) }}
         onPointerDown={onDown}
         onPointerUp={onUp}
-        onPointerCancel={() => { drag.current = null }}
+        onPointerCancel={() => { drag.current = null; delete band.current.dataset.dragging }}
+        // After a drag, the release must not also open a link (plain version: the links are real).
+        onClickCapture={(e) => { if (dragged.current && e.target.closest('a')) { e.preventDefault(); e.stopPropagation(); dragged.current = false } }}
         onClick={onBandClick}
         onFocus={() => { held.current = true }}
         onBlur={() => { held.current = false; seek.current = -1; setShown(null) }}
@@ -401,7 +420,7 @@ export default function ExplorationBand({ only, tune = BAND }) {
             const echo = c !== 1
             const inner = mode === 'gl'
               ? <span className={styles.ghost} />
-              : <span className={styles.photo}><Media piece={p} play={!calm && !paused} /></span>
+              : <span className={styles.photo}><Media piece={p} play={!calm} /></span>
             const common = {
               className: styles.card,
               tabIndex: echo ? -1 : undefined,
@@ -427,12 +446,6 @@ export default function ExplorationBand({ only, tune = BAND }) {
     </div>
     {/* Phones (no hover): the photo in the middle, named under the band. */}
     <div className={styles.centreCap} aria-hidden="true"><Caption piece={centre} /></div>
-    {/* Back on the page column, under the band's right end. */}
-    {!calm && (
-      <button type="button" className={styles.pause} onClick={() => setPaused((v) => !v)} aria-pressed={paused}>
-        {paused ? 'Play' : 'Pause'}
-      </button>
-    )}
     </>
   )
 }

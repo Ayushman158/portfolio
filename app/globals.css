@@ -1684,6 +1684,11 @@ html[data-sig-flow] .status__label { display: none !important; }
     margin: clamp(1rem, 2.2vw, 1.5rem) 0 clamp(1.2rem, 2.5vw, 1.8rem);
 }
 .xh__row .display { margin: 0; }
+/* Phones: the title takes the full width and the note sits on its own line
+   under it, instead of squeezing beside it. */
+@media (max-width: 640px) {
+    .xh__row { flex-direction: column; align-items: flex-start; gap: .5rem; }
+}
 
 /* Photo slot in the hero line (app/components/photo-slot.jsx): a small
    rounded window the height of the capitals, set on the baseline right after

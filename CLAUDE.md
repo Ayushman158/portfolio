@@ -39,9 +39,9 @@ already made, so they are not re-litigated or rebuilt from scratch.
 1. **First screen.** Fills the screen, after dnbls.com: the full name on one
    line, centred and sized to the column, "Ayushman [photo] Bharadwaj": a small window between first and last name crossfades through
    his photos (public/hero/frame; hover shows colour and pauses). In the
-   bottom-left corner, the intro edits itself: key points marked in colour, the rest softly
-   blurred until hover or tap (edited-intro.jsx, mode "blur"; a pointer-lens
-   mode was tried and set aside as harder to read). Above,
+   bottom-left corner, the intro: key points marked in colour, the rest plain and fully readable
+   (edited-intro.jsx, mode "mark"; the blurred filler was removed at his request
+   in Nov 2026, and a pointer-lens mode was set aside as harder to read). Above,
    the lamp's light as a pale checkerboard (kilim two-tone in light mode) that
    answers the mouse, hides Assamese motifs when the mouse rests, and gathers
    into the photo window on scroll (pixel-glow.jsx). The lamp cord at the top
@@ -50,14 +50,17 @@ already made, so they are not re-litigated or rebuilt from scratch.
    cream mat), the title, one line, Role and Outcome, tags, "read the story".
    A card grows into its case study on click (view transition) and shrinks back.
 3. **Craft** (was "Exploration", renamed Nov 2026). The checkered strip, then
-   the display title "Craft"; Hazel peeks over the strip above the title's end.
+   the display line "I explore a lot." with a typed note on the right
+   ("experiments · sketches · small tools"); the nav calls it "craft". Hazel peeks over the strip above the title's end.
    Then every experiment in one band of rounded photos that drifts left on its
    own, seen through a curved "VR screen" lens after hanif.rest: flat and sharp
    in the middle, flaring taller with a sideways smear and a faint pink/cyan
    fringe at the edges (WebGL, `app/components/band-lens.js`; the band is
    `exploration-band.jsx`, tuned values in its BAND). Hover: the band stops and
-   a small dark pill with the piece's name sits beside the cursor. Touch: drag and flick it; tap to open; the
-   middle piece is named under the band. A Pause link under it. Live dials for
+   a small dark pill with the piece's name sits beside the cursor. Drag it with a finger or
+   the mouse (grab cursor), or swipe it sideways on a trackpad; it glides after
+   a flick. Tap or click to open; on phones the middle piece is named under the
+   band. No Pause button (removed at his request; hover stops it). Live dials for
    tuning at `/lab/band` (DialKit, noindex).
 4. **Ending: the listening corner.** "Email me ↗", socials and nav on the left;
    on the right, his room: a record console with plants, a moka pot, a mushroom
