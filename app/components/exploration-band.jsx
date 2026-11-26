@@ -156,6 +156,9 @@ export default function ExplorationBand({ only, tune = BAND }) {
       const dt = Math.min(0.05, (now - last) / 1000)
       last = now
       if (!visible) return
+      // Leaving the page: React lets go of the band a moment before this loop
+      // is stopped, so a last frame can find it gone. Skip that frame.
+      if (!band.current || !canvas.current) return
       const p = params.current
       const W = band.current.clientWidth
       const f = fit(p, W)
