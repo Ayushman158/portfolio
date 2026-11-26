@@ -15,7 +15,9 @@ import styles from './pinboard.module.css'
  * (a plain link), 'out' another site in a new tab.
  */
 export const PIECES = [
-  { title: 'Koi Wishing Pond', note: 'installation · TouchDesigner', video: '/research/koi-loop.mp4', poster: '/research/koi-loop.jpg', href: '/koi-wishing-pond', kind: 'page', tilt: -3, lift: 0, tape: 'a' },
+  // The hand on camera (MediaPipe skeleton) inset over the pond it moves: cut
+  // from the reel (~/Desktop/Koi_Wishing_Pond_Reel.mp4, 19.5–26s).
+  { title: 'Koi Wishing Pond', note: 'installation · TouchDesigner · MediaPipe', video: '/research/koi-hands.mp4', poster: '/research/koi-hands.jpg', href: '/koi-wishing-pond', kind: 'page', tilt: -3, lift: 0, tape: 'a' },
   { title: 'Gradient exploration', note: 'sketch · TouchDesigner', video: '/exploration/gradient.mp4', poster: '/exploration/gradient.jpg', href: 'https://www.instagram.com/p/Dd9XIzEylhx/', kind: 'out', tilt: 2.5, lift: 44, tape: 'b' },
   { title: 'ALBUM//ALIVE', note: 'experiment · WebAR', video: '/album-alive/scan.mp4', poster: '/album-alive/scan-poster.jpg', href: '/album-alive', kind: 'page', tilt: -1.5, lift: 12, tape: 'c' },
   // A seat-view tool for the Guns N' Roses stadium show: pick a seat and see

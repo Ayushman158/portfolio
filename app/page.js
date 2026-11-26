@@ -161,10 +161,9 @@ export default function Home() {
           <div className="hero__intro">
             <p>I’m Ayushman, a designer.</p>
             <EditedIntro skip={returning} mode="mark" className="" />
+            {/* No "Selected work ↓" link here any more: he chose no scroll cue
+                (Nov 2026); the work starts right under the first screen. */}
             <div className="mt-2 flex flex-wrap items-baseline gap-x-6 gap-y-2">
-              <a href="#work" className="prose-link font-semibold">
-                Selected work <span aria-hidden="true">↓</span>
-              </a>
               <Link href="/about" className="prose-link">More about me</Link>
             </div>
           </div>
